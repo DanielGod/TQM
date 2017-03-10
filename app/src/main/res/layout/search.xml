@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout android:id="@+id/top"
+                    android:layout_width="fill_parent"
+                    android:paddingLeft="@dimen/smallmdp"
+                    android:paddingRight="@dimen/smallmdp"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:layout_height="?actionBarSize">
+
+        <ImageView
+            android:id="@+id/back_search"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+
+            />
+
+
+
+        <RelativeLayout android:id="@+id/rlSearchFrameDelete"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_toRightOf="@+id/back_search"
+            >
+
+
+
+            <EditText android:id="@+id/etSearch"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:singleLine="true"
+                      android:background="@drawable/search_frame"
+                      android:layout_marginRight="@dimen/smallmdp"
+                      android:paddingLeft="32dp"
+                      android:textSize="@dimen/smallsp"
+                      android:hint="输入公司名称查询"/>
+
+            <ImageView android:id="@+id/ivDeleteText"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentRight="true"
+                       android:src="@drawable/delete"
+                       android:layout_centerInParent="true"
+                       android:paddingRight="@dimen/bigmdp"
+                       android:visibility="gone"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_head_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/top"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_category"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_item_clicked"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_image"
+                android:layout_centerHorizontal="true"
+                android:text="@string/all"
+                android:textColor="@color/font_black_2"
+                android:textSize="13sp"/>
+
+            <ImageView
+                android:id="@+id/iv_category_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/home_down_arrow"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="20dp"
+            android:background="@color/font_black_5"/>
+
+        <LinearLayout
+            android:id="@+id/ll_sort"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_item_clicked"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_image"
+                android:layout_centerHorizontal="true"
+                android:text="@string/mostFocus"
+                android:textColor="@color/font_black_2"
+                android:textSize="13sp"/>
+
+            <ImageView
+                android:id="@+id/iv_sort_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:visibility="gone"
+                android:src="@drawable/home_down_arrow"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="20dp"
+            android:background="@color/font_black_5"/>
+
+        <LinearLayout
+            android:id="@+id/ll_filter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_item_clicked"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_image"
+                android:layout_centerHorizontal="true"
+                android:text="@string/screening"
+                android:textColor="@color/font_black_2"
+                android:textSize="13sp"/>
+
+            <ImageView
+                android:id="@+id/iv_filter_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/home_down_arrow"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_fragment_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:layout_alignParentStart="true">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/YBJ_loding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/YBJ_loding_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="加载中..."
+        android:layout_below="@+id/YBJ_loding"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/bigsp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>
