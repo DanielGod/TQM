@@ -1,5 +1,6 @@
 package tqm.bianfeng.com.tqm.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,8 +15,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.User.UserFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements UserFragment.mListener{
     private static final String HOME_TAG = "home_flag";
     private static final String LAWHELP_TAG = "lawhelp_flag";
     private static final String INSTITUTIONSIN_TAG = "institutionsin_flag";
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     HomeFragment homeFragment;
     LawHelpFragment lawHelpFragment;
     InstitutionsInFragment institutionsInFragment;
-    CatHomeFragment catHomeFragment;
+    UserFragment userFragemnt;
 
     public void setContent(int contentHome) {
         switch (contentHome) {
@@ -134,11 +136,11 @@ public class MainActivity extends AppCompatActivity {
             case CONTENT_CATHOME:
                 String catHome_str = getResources().getString(R.string.catHome);
                 toolbarTitle.setText(catHome_str);
-                catHomeFragment = (CatHomeFragment) getSupportFragmentManager().findFragmentByTag(CATHOME_TAG);
-                if (catHomeFragment == null) {
-                    catHomeFragment = CatHomeFragment.newInstance();
+                userFragemnt = (UserFragment) getSupportFragmentManager().findFragmentByTag(CATHOME_TAG);
+                if (userFragemnt == null) {
+                    userFragemnt = UserFragment.newInstance("猫舍");
                 }
-                setFragment(catHomeFragment, CATHOME_TAG);
+                setFragment(userFragemnt, CATHOME_TAG);
                 break;
         }
 
@@ -153,5 +155,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment, tag);
         fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    public void changeActivity(
+            Class activityClass){
+        startActivity(new Intent(MainActivity.this,activityClass));
     }
 }
