@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:background="@android:color/white"
+              android:background="@color/whitesmoke"
+              android:orientation="vertical"
     >
     <!--反馈界面-->
     <android.support.design.widget.AppBarLayout
@@ -22,5 +22,133 @@
     </android.support.design.widget.AppBarLayout>
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/smallhdp"
+        android:layout_marginLeft="@dimen/smallmdp"
+        android:layout_marginRight="@dimen/smallmdp"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:background="@drawable/write_radius_bg_shap"
+        android:orientation="horizontal">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_phone"
+            />
+
+        <EditText
+            android:id="@+id/phone_num_edi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:hint="输入手机号，即时收到反馈"
+            android:inputType="number"
+            android:paddingLeft="@dimen/smallmdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gary_dark"
+            android:textSize="@dimen/mediumxsp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hugehxxxxdp"
+        android:layout_marginLeft="@dimen/smallmdp"
+        android:layout_marginRight="@dimen/smallmdp"
+        android:layout_marginTop="@dimen/smallmdp"
+        android:background="@drawable/write_radius_bg_shap"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/smallhdp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/bigmdp"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_user"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:text="亲："
+                android:textSize="@dimen/mediumxsp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/smallhdp"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:text="请有什么问题请与我们联系，客服看到会即时与您联系"
+            android:textSize="@dimen/smallsp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hugehxxxxxxxxxdp"
+        android:layout_marginLeft="@dimen/smallmdp"
+        android:layout_marginRight="@dimen/smallmdp"
+        android:layout_marginTop="@dimen/smallmdp"
+        android:background="@drawable/write_radius_bg_shap"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/smallhdp"
+            android:src="@drawable/ic_edi"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:paddingLeft="@dimen/smallmdp"
+            android:id="@+id/imageView"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/whitesmoke"/>
+
+        <EditText
+            android:id="@+id/feedback_txt_edi"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:hint="输入您的问题或者建议"
+            android:textColorHint="@color/gary_dark"
+            android:gravity="top"
+            android:textColor="@color/black"
+            android:textSize="@dimen/mediumsp"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:id="@+id/feedback_commit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/smallhdp"
+        android:background="@drawable/apply_for_selector"
+        android:layout_margin="@dimen/smallmdp"
+        android:text="提交"
+        android:textSize="@dimen/mediumxsp"
+        android:textColor="@drawable/apply_for_text_color_selector"
+        />
 </LinearLayout>

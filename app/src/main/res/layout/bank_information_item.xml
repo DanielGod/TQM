@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/smallhdp"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_point"
+        android:layout_gravity="bottom"
+        android:layout_marginRight="@dimen/tinymdp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        />
+    <TextView
+        android:id="@+id/bank_info_title_txt"
+        android:layout_width="0dp"
+        android:layout_weight="6"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="@dimen/mediumsp"
+        android:text="上海艾付网络在华尔街上市"
+        android:lines="1"
+        android:ellipsize="end"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:text="2017.1.10"
+        android:gravity="center_vertical|right"
+        />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:text="好买财富"
+        android:gravity="center"
+        android:textSize="@dimen/mediumsp"
+        android:textColor="@color/orange_light"
+        />
+</LinearLayout>

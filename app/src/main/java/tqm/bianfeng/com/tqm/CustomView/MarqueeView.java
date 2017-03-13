@@ -156,40 +156,18 @@ public class MarqueeView extends ViewFlipper {
         LinearLayout lin=new LinearLayout(mContext);
         lin.setOrientation(LinearLayout.HORIZONTAL);
 
-        String []txt=text.split(",");
-
         LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(0,LayoutParams.MATCH_PARENT);
         lp.weight=1;
         TextView tv = new TextView(mContext);
         tv.setGravity(gravity);
-        tv.setText(txt[0]);
+        tv.setText(text);
         tv.setTextColor(textColor);
         tv.setTextSize(textSize);
         tv.setSingleLine(singleLine);
         tv.setTag(position);
         tv.setLayoutParams(lp);
 
-        TextView tv2 = new TextView(mContext);
-        tv2.setGravity(Gravity.CENTER);
-        tv2.setText(txt[1]);
-        tv2.setTextColor(textColor);
-        tv2.setTextSize(textSize);
-        tv2.setSingleLine(singleLine);
-        tv2.setTag(position);
-        tv2.setLayoutParams(lp);
-
-        TextView tv3 = new TextView(mContext);
-        tv3.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
-        tv3.setText(txt[2]);
-        tv3.setTextColor(textColor);
-        tv3.setTextSize(textSize);
-        tv3.setSingleLine(singleLine);
-        tv3.setTag(position);
-        tv3.setLayoutParams(lp);
-
         lin.addView(tv);
-        lin.addView(tv2);
-        lin.addView(tv3);
         return lin;
     }
 

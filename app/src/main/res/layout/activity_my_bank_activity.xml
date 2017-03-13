@@ -3,7 +3,8 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+    >
 <!--我的关注的银行活动列表-->
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -18,4 +19,19 @@
             app:popupTheme="@style/ToolbarTheme">
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tinymdp"
+        android:background="@color/whitesmoke"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_bank_activity_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+
+
 </LinearLayout>

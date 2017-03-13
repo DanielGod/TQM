@@ -20,7 +20,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/smallmdp"
             android:clickable="true"
-            android:src="@drawable/ic_user"
+            android:src="@drawable/ic_user_head_img"
             />
 
         <TextView
@@ -76,9 +76,11 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/smallmdp"
             android:layout_marginRight="@dimen/smallmdp"
             android:adjustViewBounds="true"
+            android:src="@drawable/ic_my_focus"
+            android:scaleType="centerInside"
             />
 
         <TextView
@@ -255,9 +257,11 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/smallmdp"
             android:layout_marginRight="@dimen/smallmdp"
             android:adjustViewBounds="true"
+            android:src="@drawable/ic_feedback"
+            android:scaleType="centerInside"
             />
 
         <TextView
@@ -267,7 +271,17 @@
             android:gravity="center_vertical"
             android:text="反馈"
             android:textColor="@color/black"
-            android:textSize="@dimen/mediumxsp"/>
+            android:textSize="@dimen/mediumxsp"
+            android:id="@+id/textView3"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_right_arrow"
+            android:scaleType="centerInside"
+            />
     </LinearLayout>
 
     <View
@@ -283,9 +297,11 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/smallmdp"
             android:layout_marginRight="@dimen/smallmdp"
             android:adjustViewBounds="true"
+            android:src="@drawable/ic_setting"
+            android:scaleType="centerInside"
             />
 
         <TextView
@@ -311,9 +327,11 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/smallmdp"
             android:layout_marginRight="@dimen/smallmdp"
             android:adjustViewBounds="true"
+            android:src="@drawable/ic_about_bianfeng"
+            android:scaleType="centerInside"
             />
 
         <TextView
