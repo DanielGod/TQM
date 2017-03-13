@@ -18,16 +18,21 @@
             android:orientation="horizontal"
             android:paddingLeft="@dimen/activity_horizontal_margin">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
+            <ImageButton
+                android:id="@+id/close_fragment"
+                android:layout_width="?actionBarSize"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_close"
+                android:scaleType="centerInside"
+                android:background="#00000000"
+                />
 
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/smallhdp"
-            android:gravity="center"
+            android:gravity="top|center_horizontal"
             android:text="请输入短信验证码"
             android:textColor="@color/black"
             android:textSize="@dimen/bigsp"
@@ -36,32 +41,39 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/smallhdp"
-            android:layout_margin="@dimen/smallmdp"
+            android:layout_marginBottom="@dimen/smallmdp"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin">
 
             <EditText
+                android:id="@+id/phone_num_edi"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:hint="输入手机号"
+                android:background="@drawable/writesmoke_gray_border_shap"
+                android:paddingLeft="@dimen/smallmdp"
                 android:inputType="number"
                 android:layout_weight="2.5"/>
 
             <Button
+                android:id="@+id/get_verification_code_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.2"
                 android:text="获取验证码"
                 android:textSize="@dimen/mediumsp"
-                android:textColor="@android:color/white"
-                android:background="@android:color/darker_gray"/>
+                android:textColor="@drawable/apply_for_text_color_selector"
+                android:background="@drawable/apply_for_no_radius_selector"/>
         </LinearLayout>
 
         <EditText
+            android:id="@+id/verification_code_edi"
             android:layout_width="match_parent"
             android:layout_height="@dimen/smallhdp"
             android:hint="输入短信验证码"
+            android:background="@drawable/writesmoke_gray_border_shap"
+            android:paddingLeft="@dimen/smallmdp"
             android:inputType="number"
             android:layout_marginBottom="@dimen/smallmdp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -69,12 +81,13 @@
 
 
         <Button
+            android:id="@+id/login_registered_btn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/smallhdp"
             android:layout_marginBottom="@dimen/smallmdp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/apply_for_selector"
             android:text="提交"
             android:textColor="@android:color/white"
             android:textSize="@dimen/mediumxsp"/>
