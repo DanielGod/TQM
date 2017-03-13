@@ -5,6 +5,5 @@ package tqm.bianfeng.com.tqm.User.View;
  */
 
 public interface ILoginAndRegistered {
-
     public void loginOrRegisteredResult(boolean isSuccess,String msg);
 }

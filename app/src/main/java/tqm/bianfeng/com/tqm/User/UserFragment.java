@@ -124,6 +124,7 @@ public class UserFragment extends Fragment implements ILoginAndRegistered{
     public void onDestroy() {
         super.onDestroy();
         realm.close();
+        iLoginRegisterPresenter.onClose();
     }
     public void showDialog() {
         dialogFragment = new LoginRegisteredDialogFragment();

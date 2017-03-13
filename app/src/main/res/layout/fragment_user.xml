@@ -56,7 +56,7 @@
             android:layout_marginLeft="@dimen/tinyhdp"
             android:layout_marginRight="@dimen/tinyhdp"
             android:background="@drawable/apply_for_selector"
-            android:text="免费注册登录"
+            android:text="免注册登录"
             android:textColor="@android:color/white"
             android:textSize="@dimen/mediumxsp"
             />

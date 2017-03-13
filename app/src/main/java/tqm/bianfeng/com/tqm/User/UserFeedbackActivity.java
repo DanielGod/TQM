@@ -71,13 +71,13 @@ public class UserFeedbackActivity extends AppCompatActivity {
                 boolean usernameBl = !TextUtils.isEmpty(charSequence);
                 boolean passwordBl = !TextUtils.isEmpty(charSequence2);
                 if (!usernameBl) {
-                    phoneNumEdi.setError("请您的手机号");
+                    phoneNumEdi.setError("请输入您的手机号");
                 } else {
                     phoneNumEdi.setError(null);
                 }
 
                 if (!passwordBl)
-                    feedbackTxtEdi.setError("请您的意见或者建议");
+                    feedbackTxtEdi.setError("请输入您的意见或者建议");
                 else
                     feedbackTxtEdi.setError(null);
 

@@ -34,7 +34,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/smallmdp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
             android:src="@drawable/ic_phone"
@@ -76,7 +76,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_user"
-                />
+                android:id="@+id/imageView2"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
     <Button
         android:id="@+id/feedback_commit"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/smallhdp"
+        android:layout_height="@dimen/mediumhdp"
         android:background="@drawable/apply_for_selector"
         android:layout_margin="@dimen/smallmdp"
         android:text="提交"
