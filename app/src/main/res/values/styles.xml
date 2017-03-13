@@ -23,50 +23,6 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="apply_for_text_style2">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">@dimen/mediumsp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:layout_gravity">center_vertical</item>
-    </style>
-
-    <style name="apply_for_text_style">
-        <item name="android:layout_width">@dimen/hugehxxxdp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:gravity">center_vertical|right</item>
-        <item name="android:textSize">@dimen/mediumsp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:layout_gravity">center_vertical</item>
-    </style>
-    <style name="apply_for_edi_style">
-        <item name="android:maxLength">20</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/tinyhdp</item>
-        <item name="android:gravity">left|center_vertical</item>
-        <item name="android:textSize">@dimen/mediumsp</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:cursorVisible">true</item>
-        <item name="android:paddingLeft">@dimen/tinymdp</item>
-        <item name="android:background">@drawable/bg_edit_unselected</item>
-        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
-        <item name="android:textCursorDrawable">@drawable/edi_cursor_red_shap</item>
-    </style>
-
-    <style name="apply_address_for_edi_style">
-        <item name="android:maxLength">20</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/tinyhdp</item>
-        <item name="android:gravity">left|center_vertical</item>
-        <item name="android:textSize">@dimen/mediumsp</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:cursorVisible">true</item>
-        <item name="android:paddingLeft">@dimen/tinymdp</item>
-        <item name="android:background">@drawable/bg_edit_unselected</item>
-        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
-        <item name="android:textCursorDrawable">@drawable/edi_cursor_red_shap</item>
-    </style>
 
     <!-- toolbar菜单样式 -->
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
