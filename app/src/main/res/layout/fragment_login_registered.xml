@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/transparent"
+              android:orientation="vertical">
+    <!--我的登录注册页面-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_horizontal_margin">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/smallhdp"
+            android:gravity="center"
+            android:text="请输入短信验证码"
+            android:textColor="@color/black"
+            android:textSize="@dimen/bigsp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/smallhdp"
+            android:layout_margin="@dimen/smallmdp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:hint="输入手机号"
+                android:inputType="number"
+                android:layout_weight="2.5"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.2"
+                android:text="获取验证码"
+                android:textSize="@dimen/mediumsp"
+                android:textColor="@android:color/white"
+                android:background="@android:color/darker_gray"/>
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/smallhdp"
+            android:hint="输入短信验证码"
+            android:inputType="number"
+            android:layout_marginBottom="@dimen/smallmdp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/smallhdp"
+            android:layout_marginBottom="@dimen/smallmdp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@android:color/darker_gray"
+            android:text="提交"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/mediumxsp"/>
+    </LinearLayout>
+</LinearLayout>

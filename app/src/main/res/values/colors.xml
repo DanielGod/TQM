@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <color name="whitesmoke">#f4f4f4</color> <!-- 烟白色 -->
+    <color name="transparent">#50000000</color> <!-- 半透明 -->
+    <color name="black">#444444</color>
+    <color name="gary_dark">#979797</color> <!-- 深灰色 -->
 </resources>
