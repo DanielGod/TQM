@@ -3,7 +3,6 @@ package tqm.bianfeng.com.tqm.User;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +15,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.realm.Realm;
-import tqm.bianfeng.com.tqm.CustomView.ToastType;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.Presenter.ILoginRegisterPresenter;
 import tqm.bianfeng.com.tqm.User.Presenter.ILoginRegisterPresenterImpl;
 import tqm.bianfeng.com.tqm.User.View.ILoginAndRegistered;
+import tqm.bianfeng.com.tqm.application.BaseFragment;
 
 /**
  * Created by johe on 2017/3/13.
  */
 
-public class UserFragment extends Fragment implements ILoginAndRegistered{
+public class UserFragment extends BaseFragment implements ILoginAndRegistered{
 
-    Realm realm;
+
     @BindView(R.id.user_circle_img)
     CircleImageView userCircleImg;
     @BindView(R.id.user_register_phone_num_txt)
@@ -61,7 +59,6 @@ public class UserFragment extends Fragment implements ILoginAndRegistered{
     @BindView(R.id.user_feedback_lin)
     LinearLayout userFeedbackLin;
     ILoginRegisterPresenter iLoginRegisterPresenter;
-    ToastType toastType;
     LoginRegisteredDialogFragment dialogFragment;
     public static UserFragment newInstance(String param1) {
         UserFragment fragment = new UserFragment();
@@ -86,7 +83,7 @@ public class UserFragment extends Fragment implements ILoginAndRegistered{
             case R.id.browsing_history_lin:
                 break;
             case R.id.user_feedback_lin:
-                mListener.changeActivity(MyBankActivityActivity.class);
+                mListener.changeActivity(UserFeedbackActivity.class);
                 break;
             case R.id.user_login_registered_btn:
                 showDialog();
@@ -112,9 +109,7 @@ public class UserFragment extends Fragment implements ILoginAndRegistered{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, view);
-        realm = Realm.getDefaultInstance();
         iLoginRegisterPresenter=new ILoginRegisterPresenterImpl(this);
-        toastType=new ToastType();
         //判断用户是否登录
 
 
@@ -123,7 +118,6 @@ public class UserFragment extends Fragment implements ILoginAndRegistered{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        realm.close();
         iLoginRegisterPresenter.onClose();
     }
     public void showDialog() {

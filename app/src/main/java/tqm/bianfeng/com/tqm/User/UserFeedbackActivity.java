@@ -1,7 +1,6 @@
 package tqm.bianfeng.com.tqm.User;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,22 +12,19 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.functions.Func2;
-import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.application.BaseActivity;
 
 /**
  * Created by johe on 2017/3/13.
  */
 
-public class UserFeedbackActivity extends AppCompatActivity {
+public class UserFeedbackActivity extends BaseActivity {
 
-    Realm realm;
-    CompositeSubscription compositeSubscription;
     @BindView(R.id.my_initiate_sign_toolbar)
     Toolbar myInitiateSignToolbar;
     @BindView(R.id.phone_num_edi)
@@ -56,8 +52,6 @@ public class UserFeedbackActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_feedback);
         ButterKnife.bind(this);
-        realm = Realm.getDefaultInstance();
-        compositeSubscription = new CompositeSubscription();
         setToolbar("用户反馈");
         initBtn();
     }
@@ -104,12 +98,6 @@ public class UserFeedbackActivity extends AppCompatActivity {
         compositeSubscription.add(etSc);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        realm.close();
-        compositeSubscription.unsubscribe();
-    }
 
     @OnClick(R.id.feedback_commit)
     public void onClick() {

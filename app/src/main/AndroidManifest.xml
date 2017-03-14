@@ -3,12 +3,12 @@
           package="tqm.bianfeng.com.tqm">
 
     <application
+        android:name=".application.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".application.BaseApplication"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -16,22 +16,26 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".User.MyBankActivityActivity"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".User.MyBankLoanActivity"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".User.MyBankMakeMoneyActivity"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".User.UserFeedbackActivity"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".User.MyBankActivityActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".User.MyBankLoanActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".User.MyBankMakeMoneyActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".User.UserFeedbackActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

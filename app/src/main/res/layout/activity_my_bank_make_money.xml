@@ -5,19 +5,15 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <!--我的关注的银行理财列表-->
-    <android.support.design.widget.AppBarLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_bank_make_money_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/my_bank_make_money_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/ToolbarTheme">
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/tinymdp"

@@ -1,25 +1,21 @@
 package tqm.bianfeng.com.tqm.User;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
-import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.application.BaseActivity;
 
 /**
  * Created by johe on 2017/3/13.
  */
 
-public class MyBankLoanActivity extends AppCompatActivity {
+public class MyBankLoanActivity extends BaseActivity {
 
-    Realm realm;
-    CompositeSubscription compositeSubscription;
     @BindView(R.id.my_bank_loan_toolbar)
     Toolbar myBankLoanToolbar;
     @BindView(R.id.my_bank_loan_list)
@@ -43,15 +39,7 @@ public class MyBankLoanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_bank_loan);
         ButterKnife.bind(this);
-        realm = Realm.getDefaultInstance();
-        compositeSubscription = new CompositeSubscription();
         setToolbar("我关注的银行贷款");
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        realm.close();
-        compositeSubscription.unsubscribe();
-    }
 }

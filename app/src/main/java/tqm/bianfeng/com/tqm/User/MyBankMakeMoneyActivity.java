@@ -1,7 +1,6 @@
 package tqm.bianfeng.com.tqm.User;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,15 +10,14 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.application.BaseActivity;
 
 /**
  * Created by johe on 2017/3/13.
  */
 
-public class MyBankMakeMoneyActivity extends AppCompatActivity {
+public class MyBankMakeMoneyActivity extends BaseActivity {
 
-    Realm realm;
-    CompositeSubscription compositeSubscription;
     @BindView(R.id.my_bank_make_money_toolbar)
     Toolbar myBankMakeMoneyToolbar;
     @BindView(R.id.my_bank_make_money_list)
@@ -48,10 +46,4 @@ public class MyBankMakeMoneyActivity extends AppCompatActivity {
         setToolbar("我关注的银行理财");
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        realm.close();
-        compositeSubscription.unsubscribe();
-    }
 }

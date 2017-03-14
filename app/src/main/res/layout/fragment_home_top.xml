@@ -17,230 +17,233 @@
             >
 
             <com.daimajia.slider.library.SliderLayout
-                android:id="@+id/home_slider"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/hugehxxxxxxdp"
-                app:auto_cycle="false"
-                />
+            android:id="@+id/home_slider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hugehxxxxxxdp"
+            app:auto_cycle="false"
+            />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/tinymdp"
-                android:background="@color/whitesmoke"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hugehdp"
+                android:layout_height="wrap_content"
                 android:background="@color/whitesmoke"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/smallmdp"
-                android:paddingRight="@dimen/smallmdp"
-                android:paddingTop="@dimen/tinymdp">
+                android:orientation="vertical"
+                android:padding="@dimen/smallmdp">
+
 
                 <LinearLayout
-                    android:id="@+id/home_bank_activity_lin"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="1dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:clickable="true">
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/hugehdp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/white"
-                        android:padding="@dimen/smallmdp"
-                        android:src="@drawable/ic_bank_activity"
-                        />
+                    >
 
                     <LinearLayout
+                        android:id="@+id/home_bank_activity_lin"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:background="@android:color/white"
-                        android:orientation="vertical">
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginBottom="@dimen/smallmdp"
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="bottom"
-                            android:paddingLeft="@dimen/smallmdp"
-                            android:text="银行活动"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/mediumsp"/>
+                            android:padding="@dimen/smallmdp"
+                            android:src="@drawable/ic_bank_activity"
+                            />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginBottom="@dimen/smallmdp"
+                                android:layout_weight="1"
+                                android:gravity="bottom"
+                                android:paddingLeft="@dimen/smallmdp"
+                                android:text="银行活动"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/mediumsp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="top"
+                                android:paddingLeft="@dimen/smallmdp"
+                                android:text="投资良机不错过"
+                                android:textColor="@color/gary_dark"
+                                android:textSize="@dimen/smallsp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/whitesmoke"/>
+                    <LinearLayout
+                        android:id="@+id/home_bank_make_money_lin"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="top"
-                            android:paddingLeft="@dimen/smallmdp"
-                            android:text="投资良机不错过"
-                            android:textColor="@color/gary_dark"
-                            android:textSize="@dimen/smallsp"/>
+                            android:padding="@dimen/smallmdp"
+                            android:src="@drawable/ic_bank_make_money"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginBottom="@dimen/smallmdp"
+                                android:layout_weight="1"
+                                android:gravity="bottom"
+                                android:paddingLeft="@dimen/smallmdp"
+                                android:text="银行理财"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/mediumsp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="top"
+                                android:paddingLeft="@dimen/smallmdp"
+                                android:text="轻松随意攒钱"
+                                android:textColor="@color/gary_dark"
+                                android:textSize="@dimen/smallsp"/>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/home_bank_make_money_lin"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="1dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:clickable="true">
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/white"
-                        android:padding="@dimen/smallmdp"
-                        android:src="@drawable/ic_bank_make_money"
-                        />
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/hugehdp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="1dp">
 
                     <LinearLayout
+                        android:id="@+id/home_bank_loan_lin"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:background="@android:color/white"
-                        android:orientation="vertical">
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginBottom="@dimen/smallmdp"
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="bottom"
-                            android:paddingLeft="@dimen/smallmdp"
-                            android:text="银行理财"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/mediumsp"/>
+                            android:padding="@dimen/smallmdp"
+                            android:src="@drawable/ic_bank_loan"
+                            />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginBottom="@dimen/smallmdp"
+                                android:layout_weight="1"
+                                android:gravity="bottom"
+                                android:paddingLeft="@dimen/smallmdp"
+                                android:text="银行贷款"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/mediumsp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="top"
+                                android:paddingLeft="@dimen/smallmdp"
+                                android:text="利率早知道"
+                                android:textColor="@color/gary_dark"
+                                android:textSize="@dimen/smallsp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/whitesmoke"/>
+                    <LinearLayout
+                        android:id="@+id/home_select_branches_lin"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="top"
-                            android:paddingLeft="@dimen/smallmdp"
-                            android:text="轻松随意攒钱"
-                            android:textColor="@color/gary_dark"
-                            android:textSize="@dimen/smallsp"/>
+                            android:padding="@dimen/smallmdp"
+                            android:src="@drawable/ic_select_branches"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView4"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginBottom="@dimen/smallmdp"
+                                android:layout_weight="1"
+                                android:gravity="bottom"
+                                android:paddingLeft="@dimen/smallmdp"
+                                android:text="网点查询"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/mediumsp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="top"
+                                android:paddingLeft="@dimen/smallmdp"
+                                android:text="投资良机不错过"
+                                android:textColor="@color/gary_dark"
+                                android:textSize="@dimen/smallsp"/>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
+
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/hugehdp"
-                android:background="@color/whitesmoke"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/smallmdp"
-                android:paddingRight="@dimen/smallmdp">
-
-                <LinearLayout
-                    android:id="@+id/home_bank_loan_lin"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="1dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:clickable="true">
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/white"
-                        android:padding="@dimen/smallmdp"
-                        android:src="@drawable/ic_bank_loan"
-                        />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:background="@android:color/white"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginBottom="@dimen/smallmdp"
-                            android:layout_weight="1"
-                            android:gravity="bottom"
-                            android:paddingLeft="@dimen/smallmdp"
-                            android:text="银行贷款"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/mediumsp"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="top"
-                            android:paddingLeft="@dimen/smallmdp"
-                            android:text="利率早知道"
-                            android:textColor="@color/gary_dark"
-                            android:textSize="@dimen/smallsp"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/home_select_branches_lin"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="1dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:clickable="true">
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/white"
-                        android:padding="@dimen/smallmdp"
-                        android:src="@drawable/ic_select_branches"
-                        />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:background="@android:color/white"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginBottom="@dimen/smallmdp"
-                            android:layout_weight="1"
-                            android:gravity="bottom"
-                            android:paddingLeft="@dimen/smallmdp"
-                            android:text="网点查询"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/mediumsp"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="top"
-                            android:paddingLeft="@dimen/smallmdp"
-                            android:text="投资良机不错过"
-                            android:textColor="@color/gary_dark"
-                            android:textSize="@dimen/smallsp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -254,7 +257,6 @@
                     android:layout_height="@dimen/hugehdp"
                     android:layout_marginLeft="@dimen/smallmdp"
                     android:layout_marginRight="@dimen/smallmdp"
-                    android:layout_marginTop="@dimen/smallmdp"
                     android:background="@android:color/white"
                     android:orientation="horizontal">
 
@@ -265,6 +267,7 @@
                         android:layout_weight="1.3"
                         android:background="@drawable/ic_hot_msg"
                         android:gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/smallmdp"
                         android:paddingLeft="@dimen/smallmdp"
                         android:text="热点资讯"
                         android:textColor="@color/white"/>
@@ -328,6 +331,7 @@
                         android:gravity="center"
                         android:text="更多.."
                         android:textColor="@color/gary_dark"
+                        android:paddingRight="@dimen/smallmdp"
                         android:textSize="@dimen/mediumsp"/>
                 </LinearLayout>
 

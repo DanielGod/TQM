@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:orientation="vertical"
     >
-<!--我的关注的银行活动列表-->
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <!--我的关注的银行活动列表-->
+
+        <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/my_bank_activity_toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:fitsSystemWindows="true"-->
+        <!--app:popupTheme="@style/ToolbarTheme">-->
+        <!--</android.support.v7.widget.Toolbar>-->
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_bank_activity_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            app:popupTheme="@style/ToolbarTheme">
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+            android:fitsSystemWindows="true"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/tinymdp"
         android:background="@color/whitesmoke"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_bank_activity_list"
         android:layout_width="match_parent"

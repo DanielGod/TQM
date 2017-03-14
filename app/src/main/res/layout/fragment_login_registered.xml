@@ -54,7 +54,7 @@
                 android:textColorHint="@color/gary_dark"
                 android:background="@drawable/writesmoke_gray_border_shap"
                 android:paddingLeft="@dimen/smallmdp"
-                android:inputType="number"
+                android:inputType="phone"
                 android:layout_weight="2.5"/>
 
             <Button

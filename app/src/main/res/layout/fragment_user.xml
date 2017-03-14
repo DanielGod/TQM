@@ -39,26 +39,28 @@
         <EditText
             android:id="@+id/user_phong_num_edi"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/smallhdp"
+            android:layout_height="@dimen/tinyhdp"
             android:layout_above="@+id/user_login_registered_btn"
             android:layout_marginBottom="@dimen/smallmdp"
             android:layout_marginLeft="@dimen/tinyhdp"
             android:layout_marginRight="@dimen/tinyhdp"
             android:background="@drawable/write_radius_bg_shap"
+            android:inputType="phone"
             android:paddingLeft="@dimen/smallmdp"
-            android:hint="请输入手机号"/>
+            android:hint="请输入手机号"
+            android:textSize="@dimen/mediumsp"/>
 
         <Button
             android:id="@+id/user_login_registered_btn"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/smallhdp"
+            android:layout_height="@dimen/tinyhdp"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/tinyhdp"
             android:layout_marginRight="@dimen/tinyhdp"
             android:background="@drawable/apply_for_selector"
             android:text="免注册登录"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/mediumxsp"
+            android:textSize="@dimen/mediumsp"
             />
 
     </RelativeLayout>
