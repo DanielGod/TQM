@@ -16,8 +16,6 @@ import android.widget.ImageButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
-import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
 
 /**
@@ -90,7 +88,7 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
                     }
                 }
             }
-        });
+        }).start();
     }
     Handler mHandler=new Handler(){
         @Override
@@ -120,10 +118,6 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
         dimssLinsener = dimssLinsene;
     }
 
-    Realm realm;
-    CompositeSubscription compositeSubscription;
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,8 +129,6 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         //setStyle(DialogFragment.STYLE_NORMAL, R.style.Transparent);
         View view = inflater.inflate(R.layout.fragment_login_registered, container);
-        realm = Realm.getDefaultInstance();
-        compositeSubscription = new CompositeSubscription();
         ButterKnife.bind(this, view);
         phoneNumEdi.setText(phoneNum);
         return view;
@@ -146,7 +138,6 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        realm.close();
-        compositeSubscription.unsubscribe();
+        dimssLinsener.getCode(false);
     }
 }

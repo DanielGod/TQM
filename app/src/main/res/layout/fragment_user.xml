@@ -7,6 +7,7 @@
     <!--我的界面-->
 
     <RelativeLayout
+        android:id="@+id/user_top_rel"
         android:layout_width="match_parent"
         android:layout_height="@dimen/hugehxxxxxxxxxdp"
         android:background="@drawable/user_bg"
@@ -30,7 +31,7 @@
             android:layout_above="@+id/user_login_registered_btn"
             android:layout_marginBottom="@dimen/smallmdp"
             android:gravity="center"
-            android:text="15670702651"
+            android:text=""
             android:textColor="@android:color/black"
             android:textSize="@dimen/mediumxsp"
             android:visibility="invisible"
@@ -92,7 +93,7 @@
             android:gravity="center_vertical"
             android:text="我的关注"
             android:textColor="@color/black"
-            android:textSize="@dimen/mediumxsp"/>
+            android:textSize="@dimen/mediumsp"/>
     </LinearLayout>
 
     <View
@@ -273,7 +274,7 @@
             android:gravity="center_vertical"
             android:text="反馈"
             android:textColor="@color/black"
-            android:textSize="@dimen/mediumxsp"
+            android:textSize="@dimen/mediumsp"
             android:id="@+id/textView3"/>
         <ImageView
             android:layout_width="wrap_content"
@@ -313,7 +314,7 @@
             android:gravity="center_vertical"
             android:text="设置"
             android:textColor="@color/black"
-            android:textSize="@dimen/mediumxsp"/>
+            android:textSize="@dimen/mediumsp"/>
     </LinearLayout>
 
     <View
@@ -343,7 +344,7 @@
             android:gravity="center_vertical"
             android:text="关于我们"
             android:textColor="@color/black"
-            android:textSize="@dimen/mediumxsp"/>
+            android:textSize="@dimen/mediumsp"/>
     </LinearLayout>
 
     <View

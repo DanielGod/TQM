@@ -117,5 +117,21 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
     </style>
-
+    <!-- 底部弹框样式 -->
+    <style name="bottom_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <!-- 弹窗动画 -->
+    <style name="PopMenuAnimation">
+        <item name="@android:windowEnterAnimation">@anim/main_translatey100to0</item>
+        <item name="@android:windowExitAnimation">@anim/main_translatey0to100</item>
+    </style>
 </resources>

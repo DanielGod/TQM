@@ -254,7 +254,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/hugehdp"
+                    android:layout_height="@dimen/smallhdp"
                     android:layout_marginLeft="@dimen/smallmdp"
                     android:layout_marginRight="@dimen/smallmdp"
                     android:background="@android:color/white"
@@ -278,11 +278,11 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="2"
+                        android:layout_marginLeft="@dimen/smallmdp"
                         app:mvAnimDuration="1000"
                         app:mvInterval="3000"
-                        app:mvSingleLine="true"
                         app:mvTextColor="@color/colorPrimary"
-                        app:mvTextSize="@dimen/smallsp"
+                        app:mvTextSize="@dimen/mediumxsp"
                         />
 
                     <TextView
@@ -336,6 +336,7 @@
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
+                    android:id="@+id/bank_info_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/smallmdp"

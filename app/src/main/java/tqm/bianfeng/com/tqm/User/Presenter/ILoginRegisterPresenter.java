@@ -9,4 +9,6 @@ public interface ILoginRegisterPresenter {
     public void setOldCode(boolean isGet) ;
     public void loginOrRegister(String phone,String code);
     public void onClose();
+
+
 }

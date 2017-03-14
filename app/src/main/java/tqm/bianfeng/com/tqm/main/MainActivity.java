@@ -1,6 +1,7 @@
 package tqm.bianfeng.com.tqm.main;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -11,11 +12,19 @@ import android.widget.TextView;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import tqm.bianfeng.com.tqm.Dialog.BaseDialog;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.UserFragment;
+import tqm.bianfeng.com.tqm.Util.PhotoGet;
+import tqm.bianfeng.com.tqm.network.NetWork;
 
 public class MainActivity extends AppCompatActivity implements UserFragment.mListener{
     private static final String HOME_TAG = "home_flag";
@@ -26,13 +35,19 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     private static final int CONTENT_LAWHELP = 2;
     private static final int CONTENT_INSTITUTIONSIN = 3;
     private static final int CONTENT_CATHOME = 4;
+
+    private static final int TAKEPHOTO = 1; // 拍照
+    private static final int GALLERY = 2; // 从相册中选择
+    private static final int PHOTO_REQUEST_CUT = 3; // 结果
+
+    PhotoGet photoGet;
     @BindView(R.id.bottomBar)
     BottomNavigationBar bottomBar;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
+    BaseDialog baseDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,4 +176,39 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
             Class activityClass){
         startActivity(new Intent(MainActivity.this,activityClass));
     }
+    public void changeUserHeadImg(){
+        //修改用户头像
+        if(photoGet==null) {
+            photoGet = PhotoGet.getInstance();
+        }
+        if(baseDialog==null){
+            baseDialog=new BaseDialog(this);
+        }
+        photoGet.showAvatarDialog(MainActivity.this, baseDialog);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case TAKEPHOTO:
+                String headIconPath=photoGet.getHeadIconPath();
+                if (headIconPath!=null)
+                    photoGet.startPhotoZoom(Uri.fromFile(new File(headIconPath)), 150);
+                break;
+            case GALLERY:
+                if (data != null) {
+                    photoGet.startPhotoZoom(data.getData(), 150);
+                }
+                break;
+            case PHOTO_REQUEST_CUT:
+                if (data != null) {
+                    photoGet.saveImage(data);
+                    userFragemnt.setUserHeadImg(photoGet.getHeadFile());
+
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

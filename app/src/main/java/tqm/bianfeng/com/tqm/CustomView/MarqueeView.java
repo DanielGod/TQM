@@ -155,8 +155,7 @@ public class MarqueeView extends ViewFlipper {
     private LinearLayout createTextView(String text, int position) {
         LinearLayout lin=new LinearLayout(mContext);
         lin.setOrientation(LinearLayout.HORIZONTAL);
-
-        LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(0,LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(0,LayoutParams.WRAP_CONTENT);
         lp.weight=1;
         TextView tv = new TextView(mContext);
         tv.setGravity(gravity);
@@ -166,7 +165,6 @@ public class MarqueeView extends ViewFlipper {
         tv.setSingleLine(singleLine);
         tv.setTag(position);
         tv.setLayoutParams(lp);
-
         lin.addView(tv);
         return lin;
     }
