@@ -3,7 +3,6 @@ package tqm.bianfeng.com.tqm.User;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -23,7 +22,7 @@ import tqm.bianfeng.com.tqm.application.BaseActivity;
  * Created by johe on 2017/3/13.
  */
 
-public class UserFeedbackActivity extends BaseActivity {
+public class UserFeedbackActivity extends BaseActivity{
 
     @BindView(R.id.my_initiate_sign_toolbar)
     Toolbar myInitiateSignToolbar;
@@ -34,25 +33,12 @@ public class UserFeedbackActivity extends BaseActivity {
     @BindView(R.id.feedback_commit)
     Button feedbackCommit;
 
-    private void setToolbar(String toolstr) {
-        myInitiateSignToolbar.setTitle(toolstr);
-        myInitiateSignToolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        myInitiateSignToolbar.setNavigationIcon(R.drawable.barcode__back_arrow);
-        setSupportActionBar(myInitiateSignToolbar);
-        myInitiateSignToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_feedback);
         ButterKnife.bind(this);
-        setToolbar("用户反馈");
+        setToolbar(myInitiateSignToolbar,"用户反馈");
         initBtn();
     }
 
@@ -97,6 +83,7 @@ public class UserFeedbackActivity extends BaseActivity {
 
         compositeSubscription.add(etSc);
     }
+
 
 
     @OnClick(R.id.feedback_commit)

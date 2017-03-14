@@ -18,7 +18,6 @@ public class BaseFragment extends Fragment{
     public CompositeSubscription compositeSubscription;
     public ToastType toastType;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
