@@ -6,11 +6,15 @@
     <string name="institutionsIn">机构入住</string>
     <string name="catHome">猫舍</string>
     <!--银行理财-->
+    <string name="bankFinancing">银行理财</string>
     <string name="all">全部</string>
     <string name="mostFocus">关注最多</string>
     <string name="screening">筛选</string>
+    <!--银行活动-->
+    <string name="bankActivity">银行活动</string>
+    <!--银行贷款-->
+    <string name="bankloan">银行贷款</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

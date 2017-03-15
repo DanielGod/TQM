@@ -9,6 +9,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.antfortune.freeline.FreelineCore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +71,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        FreelineCore.init(this);
         //        LeakCanary.install(this);
         mList = new ArrayList<>();
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).schemaVersion(2).deleteRealmIfMigrationNeeded().build();
