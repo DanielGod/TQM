@@ -9,6 +9,28 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".main.MainActivity">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>-->
+        </activity>
+        <activity android:name=".bank.bankfinancing.BankFinancingActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait"
+            >
+        </activity>
+        <activity android:name=".bank.bankactivitys.BankActivitonsActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait"
+            >
+
+        </activity>
+        <activity android:name=".bank.bankloan.BankLoanActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait"
+            >
         <activity android:name=".main.MainActivity"
                   android:windowSoftInputMode="stateHidden">
             <intent-filter>

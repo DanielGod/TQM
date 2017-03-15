@@ -3,33 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
-    android:background="@color/white"
+    android:background="@color/whitesmoke"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout android:id="@+id/top"
                     android:layout_width="fill_parent"
-                    android:paddingLeft="@dimen/smallmdp"
-                    android:paddingRight="@dimen/smallmdp"
-                    android:background="@color/colorPrimary"
                     android:gravity="center"
                     android:layout_height="?actionBarSize">
 
-        <ImageView
-            android:id="@+id/back_search"
-            android:layout_width="@dimen/tinyhdp"
-            android:layout_height="match_parent"
-            android:src="@drawable/back"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
 
-            />
 
 
         <RelativeLayout android:id="@+id/rlSearchFrameDelete"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/back_search"
                         android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/mediummdp"
+                        android:paddingRight="@dimen/smallmdp"
                         >
 
 
@@ -54,15 +44,19 @@
                        android:visibility="gone"/>
 
         </RelativeLayout>
-
-
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@+id/top"
+        android:background="@color/font_black_5"
+        />
     <LinearLayout
         android:id="@+id/ll_head_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_below="@+id/top"
-        android:background="@color/white"
+        android:background="@color/whitesmoke"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -163,17 +157,6 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_fragment_home"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/top"
-        android:background="@color/white"
-        android:visibility="gone"
-        android:layout_alignParentStart="true">
-
-    </android.support.v7.widget.RecyclerView>
-
     <ImageView
         android:id="@+id/YBJ_loding"
         android:layout_width="wrap_content"
@@ -191,4 +174,16 @@
         android:textSize="@dimen/bigsp"
         android:visibility="gone"
         android:layout_centerHorizontal="true"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_bank"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_below="@+id/ll_head_layout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+    </android.support.v7.widget.RecyclerView>
+
+
 </RelativeLayout>

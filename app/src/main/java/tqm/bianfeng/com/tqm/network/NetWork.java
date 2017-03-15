@@ -5,22 +5,30 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import tqm.bianfeng.com.tqm.network.api.BankService;
 import tqm.bianfeng.com.tqm.network.api.UserService;
+
 
 /**
  * Created by wjy on 16/9/1.
  */
 public class NetWork {
     private static UserService userService;
-
-
-
+    private static BankService bankService;
     public static UserService getUserService() {
         if (userService == null) {
             Retrofit retrofit = getRetrofit();
             userService = retrofit.create(UserService.class);
         }
         return userService;
+    }
+
+    public static BankService getBankService() {
+        if (bankService == null) {
+            Retrofit retrofit = getRetrofit();
+            bankService = retrofit.create(BankService.class);
+        }
+        return bankService;
     }
 
 
