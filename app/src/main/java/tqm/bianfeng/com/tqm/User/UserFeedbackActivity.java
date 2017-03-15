@@ -15,6 +15,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.functions.Func2;
+import tqm.bianfeng.com.tqm.CustomView.ToastType;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 
@@ -89,6 +90,8 @@ public class UserFeedbackActivity extends BaseActivity{
     @OnClick(R.id.feedback_commit)
     public void onClick() {
         //提交反馈
-
+        ToastType toastType=new ToastType();
+        toastType.showToastWithImg(getApplicationContext(),true,"提交成功");
+        onBackPressed();
     }
 }

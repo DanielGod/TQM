@@ -223,6 +223,7 @@
             android:layout_weight="1"
             android:background="?android:selectableItemBackground"
             android:clickable="true"
+            android:visibility="gone"
             android:orientation="vertical">
 
             <TextView
