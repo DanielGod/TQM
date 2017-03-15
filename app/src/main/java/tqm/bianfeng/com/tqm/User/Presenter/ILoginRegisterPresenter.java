@@ -6,7 +6,7 @@ package tqm.bianfeng.com.tqm.User.Presenter;
 
 public interface ILoginRegisterPresenter {
 
-    public void setOldCode(boolean isGet) ;
+    public void setOldCode(String phone,boolean isGet) ;
     public void loginOrRegister(String phone,String code);
     public void onClose();
 

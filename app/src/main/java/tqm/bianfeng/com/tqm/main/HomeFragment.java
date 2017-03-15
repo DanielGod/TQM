@@ -1,5 +1,7 @@
 package tqm.bianfeng.com.tqm.main;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -60,7 +62,17 @@ public class HomeFragment extends BaseFragment {
         return fragment;
     }
 
+    public interface mListener {
+        public void detailActivity(Intent intent);
+    }
 
+    private mListener mListener;
+
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mListener = (mListener) activity;
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -102,6 +114,7 @@ public class HomeFragment extends BaseFragment {
         compositeSubscription.add(subscription);
     }
 
+    //初始化银行资讯列表
     public void initBankLoanItemList(List<BankInformItem> bankInformItems) {
         if (homeBankInfoListAdapter == null) {
             homeBankInfoListAdapter = new HomeBankInfoListAdapter(getActivity(), bankInformItems);
@@ -110,7 +123,11 @@ public class HomeFragment extends BaseFragment {
             homeBankInfoListAdapter.setOnItemClickListener(new HomeBankInfoListAdapter.MyItemClickListener() {
                 @Override
                 public void OnClickListener(int position) {
-
+                    //跳转银行咨询详情
+                    Intent intent=new Intent(getActivity(),DetailActivity.class);
+                    intent.putExtra("detailType","04");
+                    intent.putExtra("detailId",homeBankInfoListAdapter.getDataItem(position).getInformId());
+                    mListener.detailActivity(intent);
                 }
             });
         }else{
@@ -119,6 +136,7 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+    //初始化热点资讯轮播
     public void initHotMsgList(List<BankInformItem> bankInformItems) {
         List<String> titles = new ArrayList<>();
         for (BankInformItem bankInformItem : bankInformItems) {

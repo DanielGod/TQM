@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,23 +91,17 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bank_activity_lin:
-                if (realm.where(User.class).findFirst() == null) {
-                    Toast.makeText(getActivity(), "请您先登录后使用", Toast.LENGTH_SHORT).show();
-                } else {
+                if(isLogin()){
                     mListener.changeActivity(MyBankActivityActivity.class);
                 }
                 break;
             case R.id.bank_make_money_lin:
-                if (realm.where(User.class).findFirst() == null) {
-                    Toast.makeText(getActivity(), "请您先登录后使用", Toast.LENGTH_SHORT).show();
-                } else {
+                if(isLogin()){
                     mListener.changeActivity(MyBankMakeMoneyActivity.class);
                 }
                 break;
             case R.id.bank_loan_lin:
-                if (realm.where(User.class).findFirst() == null) {
-                    Toast.makeText(getActivity(), "请您先登录后使用", Toast.LENGTH_SHORT).show();
-                } else {
+                if(isLogin()){
                     mListener.changeActivity(MyBankLoanActivity.class);
                 }
                 break;
@@ -120,9 +115,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
                 break;
             case R.id.user_circle_img:
                 //弹出popuwindow，修改头像
-                if (realm.where(User.class).findFirst() == null) {
-                    Toast.makeText(getActivity(), "请您先登录后使用", Toast.LENGTH_SHORT).show();
-                } else {
+                if(isLogin()){
                     mListener.changeUserHeadImg();
                 }
                 break;
@@ -144,6 +137,17 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
 
     }
 
+
+    //登录判断
+    public boolean isLogin(){
+        if (realm.where(User.class).findFirst() == null) {
+            Toast.makeText(getActivity(), "请您先登录后使用", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -152,27 +156,30 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         ButterKnife.bind(this, view);
         iLoginRegisterPresenter = new ILoginRegisterPresenterImpl(this);
         iUserWorkPresenter = new IUserWorkPresenterImpl(this);
-        //判断用户是否登录
-        initView();
         return view;
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            initView();
-        }
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initView();
+
     }
 
+    //初始化显示数据
     public void initView() {
-        if (realm.where(User.class).findFirst() != null && userRegisterPhoneNumTxt.getText().equals("")) {
+        if (realm.where(User.class).findFirst() != null) {
+
             mUser = realm.where(User.class).findFirst();
+            //获取关注数量
+            iUserWorkPresenter.getMyFocusMsgNum(mUser.getUserId());
+            //显示账户信息
             userRegisterPhoneNumTxt.setVisibility(View.VISIBLE);
             userRegisterPhoneNumTxt.setText(mUser.getUserPhone());
             userPhongNumEdi.setVisibility(View.GONE);
             userLoginRegisteredBtn.setVisibility(View.INVISIBLE);
             userTopRel.setBackgroundResource(R.drawable.user_top_bg);
+            //显示头像
             resetUserHeadImg(true);
         }
     }
@@ -181,11 +188,13 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     public void resetUserHeadImg(boolean isChange) {
         if (isChange) {
             mUser = realm.where(User.class).findFirst();
-            if (!mUser.getUserAvatar().equals("")) {
-                Picasso.with(getContext()).load(mUser.getUserAvatar())
-                        .placeholder(R.drawable.ic_user_head_img)
-                        .error(R.drawable.ic_user_head_img)
-                        .into(userCircleImg);
+            if(mUser.getUserAvatar()!=null) {
+                if (!mUser.getUserAvatar().equals("")) {
+                    Picasso.with(getContext()).load(mUser.getUserAvatar())
+                            .placeholder(R.drawable.ic_user_head_img)
+                            .error(R.drawable.ic_user_head_img)
+                            .into(userCircleImg);
+                }
             }
         } else {
             Toast.makeText(getActivity(), "上传头像失败", Toast.LENGTH_SHORT).show();
@@ -199,6 +208,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         iUserWorkPresenter.onClose();
     }
 
+    //显示登录注册界面
     public void showDialog() {
         dialogFragment = new LoginRegisteredDialogFragment();
         dialogFragment.setPhoneNum(userPhongNumEdi.getText().toString());
@@ -213,13 +223,14 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
 
             @Override
             public void onOk(String ediTxt, String code) {
+                //验证并注册或登录
                 iLoginRegisterPresenter.loginOrRegister(ediTxt, code);
             }
 
             @Override
-            public void getCode(boolean isGet) {
+            public void getCode(String phone,boolean isGet) {
                 //Presenter层获取验证码
-                iLoginRegisterPresenter.setOldCode(isGet);
+                iLoginRegisterPresenter.setOldCode(phone,isGet);
             }
         });
     }
@@ -246,6 +257,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             if (dialogFragment != null) {
                 //成功后关闭dialog
                 dialogFragment.closeDialog();
+                initView();
             }
         }
     }

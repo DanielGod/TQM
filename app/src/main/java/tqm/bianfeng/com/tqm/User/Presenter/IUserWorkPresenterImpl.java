@@ -1,5 +1,7 @@
 package tqm.bianfeng.com.tqm.User.Presenter;
 
+import android.util.Log;
+
 import java.io.File;
 
 import okhttp3.MediaType;
@@ -26,6 +28,7 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
     ILoginAndRegistered iLoginAndRegistered;
 
     public IUserWorkPresenterImpl(ILoginAndRegistered iLoginAndRegistered){
+        super();
         this.iLoginAndRegistered=iLoginAndRegistered;
     }
     public void getMyFocusMsgNum(int userId){
@@ -46,11 +49,13 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
 
                     @Override
                     public void onNext(MyAttention myAttention) {
+                        Log.e("gqf","onNext"+myAttention.toString());
                         iLoginAndRegistered.setTextNum(myAttention.get_$01(),myAttention.get_$02(),myAttention.get_$03(),0);
                     }
                 });
         compositeSubscription.add(subscription);
     }
+    //头像上传
     public void uploadUserHeadImg(File img,int userId){
         RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/*"), img);
 
@@ -78,8 +83,8 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                     public void onNext(ResultCodeWithUserHeadImg resultCodeWithUserHeadImg) {
                         if(resultCodeWithUserHeadImg.getCode()== ResultCode.SECCESS){
                             User user=realm.where(User.class).findFirst();
-                            user.setUserAvatar(resultCodeWithUserHeadImg.getUserAvatar());
                             realm.beginTransaction();
+                            user.setUserAvatar(resultCodeWithUserHeadImg.getUserAvatar());
                             realm.copyToRealmOrUpdate(user);
                             realm.commitTransaction();
                             iLoginAndRegistered.resetUserHeadImg(true);

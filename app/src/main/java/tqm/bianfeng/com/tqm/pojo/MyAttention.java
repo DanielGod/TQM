@@ -43,4 +43,13 @@ public class MyAttention {
     public void set_$03(int _$03) {
         this._$03 = _$03;
     }
+
+    @Override
+    public String toString() {
+        return "MyAttention{" +
+                "_$01=" + _$01 +
+                ", _$02=" + _$02 +
+                ", _$03=" + _$03 +
+                '}';
+    }
 }

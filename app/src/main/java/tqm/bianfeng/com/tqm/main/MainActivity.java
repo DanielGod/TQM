@@ -17,16 +17,12 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.Dialog.BaseDialog;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.UserFragment;
 import tqm.bianfeng.com.tqm.Util.PhotoGet;
-import tqm.bianfeng.com.tqm.network.NetWork;
 
-public class MainActivity extends AppCompatActivity implements UserFragment.mListener{
+public class MainActivity extends AppCompatActivity implements UserFragment.mListener,HomeFragment.mListener{
     private static final String HOME_TAG = "home_flag";
     private static final String LAWHELP_TAG = "lawhelp_flag";
     private static final String INSTITUTIONSIN_TAG = "institutionsin_flag";
@@ -210,5 +206,8 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
+    //带intent的页面跳转
+    public void detailActivity(Intent intent){
+        startActivity(intent);
+    }
 }

@@ -78,6 +78,13 @@ public interface UserService {
     @POST("register")
     Observable<ResultCodeWithUser> register(@Field("userPhone") String userPhone);
 
+    /**
+     * 短信验证
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("shortMsg/identifyCode")
+    Observable<String> shortMsg(@Field("phone") String  phone);
 
 
 }

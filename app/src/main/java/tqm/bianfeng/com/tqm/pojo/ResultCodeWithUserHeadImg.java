@@ -14,4 +14,11 @@ public class ResultCodeWithUserHeadImg extends ResultCode{
     public void setUserAvatar(String userAvatar) {
         this.userAvatar = userAvatar;
     }
+
+    @Override
+    public String toString() {
+        return "ResultCodeWithUserHeadImg{" +
+                "userAvatar='" + userAvatar + '\'' +
+                '}';
+    }
 }

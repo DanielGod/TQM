@@ -38,6 +38,7 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
 
     String phoneNum="";
 
+    boolean isRun=true;
     public String getPhoneNum() {
         return phoneNum;
     }
@@ -55,16 +56,18 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
                 break;
             case R.id.get_verification_code_btn:
                 //获取验证码
-                dimssLinsener.getCode(true);
+                dimssLinsener.getCode(phoneNumEdi.getText().toString(),true);
                 timeRun();
                 break;
             case R.id.login_registered_btn:
                 //提交
+                dimssLinsener.onOk(phoneNumEdi.getText().toString(),verificationCodeEdi.getText().toString());
                 break;
         }
     }
 
     public void closeDialog(){
+        isRun=false;
         dimssLinsener.fragmentDimss();
         this.dismiss();
     }
@@ -75,7 +78,7 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
             @Override
             public void run() {
                 int i=120;
-                while(i>=0){
+                while(i>=0&&isRun){
                     i--;
                     Message msg=new Message();
                     msg.what=1;
@@ -98,7 +101,7 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
                 if(msg.arg1==0){
                     getVerificationCodeBtn.setEnabled(true);
                     getVerificationCodeBtn.setText("点击获取验证码");
-                    dimssLinsener.getCode(false);
+                    dimssLinsener.getCode("",false);
                 }else{
                     getVerificationCodeBtn.setText("重试（"+msg.arg1+"）");
                 }
@@ -109,7 +112,7 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
     public interface DimssLinsener {
         public void fragmentDimss();
         public void onOk(String ediTxt,String code);
-        public void getCode(boolean isGet);
+        public void getCode(String phone,boolean isGet);
     }
 
     DimssLinsener dimssLinsener;
@@ -138,6 +141,6 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        dimssLinsener.getCode(false);
+        dimssLinsener.getCode("",false);
     }
 }

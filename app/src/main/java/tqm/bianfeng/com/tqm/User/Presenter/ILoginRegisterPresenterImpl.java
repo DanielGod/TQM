@@ -22,11 +22,29 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
     Handler handler;
     String oldCode="";
 
-    public void setOldCode(boolean isGet) {
+    public void setOldCode(String phone,boolean isGet) {
         if(isGet){
             //网络获取验证码
+            Subscription subscription = NetWork.getUserService().shortMsg(phone)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<String>() {
+                        @Override
+                        public void onCompleted() {
 
+                        }
 
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(String s) {
+                            oldCode=s;
+                        }
+                    });
+            compositeSubscription.add(subscription);
         }else{
             oldCode="";
         }
@@ -36,6 +54,7 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
         this.iLoginAndRegistered = iLoginAndRegistered;
         handler = new Handler(Looper.getMainLooper());
     }
+    //验证并注册或登录
     public void loginOrRegister(String phone,String code){
         if(oldCode.equals("")||!oldCode.equals(code)){
             //验证码错误
@@ -59,10 +78,13 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
                         @Override
                         public void onNext(ResultCodeWithUser resuleCodeWithUser) {
                             if(resuleCodeWithUser.getCode()== ResultCode.SECCESS){
-
+                                //重置验证码
+                                oldCode="";
+                                //保存用户信息
                                 realm.beginTransaction();
                                 realm.insertOrUpdate(resuleCodeWithUser.getUser());
                                 realm.commitTransaction();
+                                //页面显示
                                 iLoginAndRegistered.loginOrRegisteredResult(true,"注册成功");
                             }else{
                                 iLoginAndRegistered.loginOrRegisteredResult(false,"注册失败");
@@ -75,6 +97,7 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
 
     public void onClose(){
         super.onClose();
+        oldCode="";
     }
 
 

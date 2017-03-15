@@ -51,4 +51,14 @@ public class User extends RealmObject{
     public void setUserAvatar(String userAvatar) {
         this.userAvatar = userAvatar;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userPhone='" + userPhone + '\'' +
+                ", userNickname='" + userNickname + '\'' +
+                ", userAvatar='" + userAvatar + '\'' +
+                '}';
+    }
 }
