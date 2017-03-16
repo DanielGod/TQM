@@ -1,12 +1,19 @@
 package tqm.bianfeng.com.tqm.main;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -17,10 +24,20 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.Dialog.BaseDialog;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.UserFragment;
 import tqm.bianfeng.com.tqm.Util.PhotoGet;
+import tqm.bianfeng.com.tqm.application.BaseApplication;
+import tqm.bianfeng.com.tqm.network.NetWork;
+import tqm.bianfeng.com.tqm.update.UpdateInformation;
+import tqm.bianfeng.com.tqm.update.UpdateMsg;
+import tqm.bianfeng.com.tqm.update.UpdateService;
 
 public class MainActivity extends AppCompatActivity implements UserFragment.mListener,HomeFragment.mListener{
     private static final String HOME_TAG = "home_flag";
@@ -31,11 +48,12 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     private static final int CONTENT_LAWHELP = 2;
     private static final int CONTENT_INSTITUTIONSIN = 3;
     private static final int CONTENT_CATHOME = 4;
-
+    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE=1234;
     private static final int TAKEPHOTO = 1; // 拍照
     private static final int GALLERY = 2; // 从相册中选择
     private static final int PHOTO_REQUEST_CUT = 3; // 结果
 
+    CompositeSubscription compositeSubscription;
     PhotoGet photoGet;
     @BindView(R.id.bottomBar)
     BottomNavigationBar bottomBar;
@@ -49,10 +67,12 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        compositeSubscription=new CompositeSubscription();
         setContent(CONTENT_HOME);
         //设置底部栏
         initBottomBar();
+        //版本更新
+        updateApp();
 
     }
 
@@ -209,5 +229,76 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     //带intent的页面跳转
     public void detailActivity(Intent intent){
         startActivity(intent);
+    }
+    UpdateMsg mUpdateMsg;
+    Observer<UpdateMsg> observer=new Observer<UpdateMsg>() {
+        @Override
+        public void onCompleted() {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.e("gqf","updateMsg"+e.getMessage());
+        }
+
+        @Override
+        public void onNext(UpdateMsg updateMsg) {
+            Log.e("gqf","updateMsg"+updateMsg.toString());
+            //与本地版本号对比
+            if(BaseApplication.isUpdateForVersion(updateMsg.getVersionCode(), UpdateInformation.localVersion)) {
+                // Log.i("gqf","updateMsg"+updateMsg.toString());
+                mUpdateMsg=updateMsg;
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                alert.setTitle("软件升级")
+                        .setMessage(updateMsg.getUpdateContent())
+                        .setPositiveButton("更新", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //开启更新服务UpdateService
+                                //这里为了把update更好模块化，可以传一些updateService依赖的值
+                                //如布局ID，资源ID，动态获取的标题,这里以app_name为例
+                                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                        != PackageManager.PERMISSION_GRANTED) {
+                                    //申请WRITE_EXTERNAL_STORAGE权限
+                                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                            WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+                                }else{
+                                    startUpdateService(mUpdateMsg);
+                                }
+                            }
+                        })
+                        .setNegativeButton("取消",new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+
+                            }
+                        });
+                alert.create().show();
+            }
+        }
+    };
+
+    public void startUpdateService(UpdateMsg updateMsg){
+        Intent updateIntent =new Intent(MainActivity.this, UpdateService.class);
+        updateIntent.putExtra("getUpdateContent",updateMsg.getUpdateContent());
+        updateIntent.putExtra("getVersionCode",updateMsg.getVersionCode());
+        updateIntent.putExtra("getVersionUrl",updateMsg.getVersionUrl());
+        startService(updateIntent);
+    }
+
+    //检测更新
+    public void updateApp(){
+        //判断本地数据库是否有版本号
+        Subscription subscription = NetWork.getUpdateService().getVersion()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        compositeSubscription.add(subscription);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeSubscription.unsubscribe();
     }
 }

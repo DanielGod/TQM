@@ -24,6 +24,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/white"
+        android:layoutAnimation="@anim/layout_animation"
         >
 
     </android.support.v7.widget.RecyclerView>

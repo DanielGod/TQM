@@ -72,12 +72,20 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
 
                         @Override
                         public void onError(Throwable e) {
-
+                            iLoginAndRegistered.loginOrRegisteredResult(false,"注册或登录超时，请检查网路设置");
                         }
 
                         @Override
                         public void onNext(ResultCodeWithUser resuleCodeWithUser) {
+                            String tosat="";
                             if(resuleCodeWithUser.getCode()== ResultCode.SECCESS){
+                                //注册
+                                tosat="注册";
+                            }else{
+                                //登录
+                                tosat="登录";
+                            }
+                            if(resuleCodeWithUser.getUser()!=null){
                                 //重置验证码
                                 oldCode="";
                                 //保存用户信息
@@ -85,9 +93,9 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
                                 realm.insertOrUpdate(resuleCodeWithUser.getUser());
                                 realm.commitTransaction();
                                 //页面显示
-                                iLoginAndRegistered.loginOrRegisteredResult(true,"注册成功");
+                                iLoginAndRegistered.loginOrRegisteredResult(true,tosat+"成功");
                             }else{
-                                iLoginAndRegistered.loginOrRegisteredResult(false,"注册失败");
+                                iLoginAndRegistered.loginOrRegisteredResult(true,tosat+"失败");
                             }
                         }
                     });

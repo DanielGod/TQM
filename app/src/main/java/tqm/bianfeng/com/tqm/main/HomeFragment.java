@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +83,7 @@ public class HomeFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         getBankLoanItem();
         getBankLoanItemHot();
+        initImagesData();
         return view;
     }
 
@@ -168,6 +171,39 @@ public class HomeFragment extends BaseFragment {
                     }
                 });
         compositeSubscription.add(subscription);
+    }
+    public void initImagesData(){
+        //获取首页轮播图
+        Subscription subscription = NetWork.getUserService().getImages("02")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<String>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(List<String> strings) {
+                        initImages(strings);
+                    }
+                });
+        compositeSubscription.add(subscription);
+    }
+    public void initImages(List<String> strings){
+        //加载首页轮播图
+        if(strings.size()>0) {
+            for (String url : strings) {
+                DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
+                textSliderView.image(NetWork.LOAD+url)
+                        .setScaleType(BaseSliderView.ScaleType.Fit);
+                homeSlider.addSlider(textSliderView);
+            }
+        }
     }
 
 
