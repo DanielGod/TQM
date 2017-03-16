@@ -164,13 +164,16 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         super.onActivityCreated(savedInstanceState);
         initView();
 
+
+
     }
 
     //初始化显示数据
     public void initView() {
         if (realm.where(User.class).findFirst() != null) {
-
             mUser = realm.where(User.class).findFirst();
+            //开起信息同步
+            iUserWorkPresenter.getUserMsg(mUser.getUserPhone());
             //获取关注数量
             iUserWorkPresenter.getMyFocusMsgNum(mUser.getUserId());
             //显示账户信息

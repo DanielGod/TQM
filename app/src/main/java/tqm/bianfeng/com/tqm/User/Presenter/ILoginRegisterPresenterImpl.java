@@ -103,6 +103,7 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
         }
     }
 
+
     public void onClose(){
         super.onClose();
         oldCode="";

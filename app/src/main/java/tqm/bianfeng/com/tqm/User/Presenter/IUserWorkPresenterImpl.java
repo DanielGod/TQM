@@ -16,6 +16,7 @@ import tqm.bianfeng.com.tqm.application.BasePresenterImpl;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.MyAttention;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
+import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.User;
 
@@ -96,7 +97,41 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                 });
         compositeSubscription.add(subscription);
     }
+    public void getUserMsg(String phone){
+        Subscription subscription = NetWork.getUserService().register(phone)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResultCodeWithUser>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultCodeWithUser resultCodeWithUser) {
+                        if(resultCodeWithUser.getUser()!=null) {
+                            if(realm.where(User.class).findFirst()!=null) {
+                                if (realm.where(User.class).findFirst().getUserId()!=resultCodeWithUser.getUser().getUserId()||
+                                        !resultCodeWithUser.getUser().getUserAvatar().equals(realm.where(User.class).findFirst().getUserAvatar())) {
+                                    User user = realm.where(User.class).findFirst();
+                                    realm.beginTransaction();
+                                    user.setUserId(resultCodeWithUser.getUser().getUserId());
+                                    user.setUserAvatar(resultCodeWithUser.getUser().getUserAvatar());
+                                    realm.copyToRealmOrUpdate(user);
+                                    realm.commitTransaction();
+                                    iLoginAndRegistered.resetUserHeadImg(true);
+                                }
+                            }
+                        }
+                    }
+                });
+        compositeSubscription.add(subscription);
+    }
     public void onClose(){
         super.onClose();
     }

@@ -10,4 +10,5 @@ public interface IUserWorkPresenter {
     public void getMyFocusMsgNum(int userId);
     public void onClose();
     public void uploadUserHeadImg(File img,int userId);
+    public void getUserMsg(String phone);
 }

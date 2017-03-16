@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,8 +95,8 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void getBankLoanItem() {
-        //热点资讯
-        Subscription subscription = NetWork.getUserService().getBankInformItem(2, "01", 1, 3)
+        //银行咨询
+        Subscription subscription = NetWork.getUserService().getBankInformItem(0, "01", 1, 3)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<BankInformItem>>() {
@@ -111,6 +112,7 @@ public class HomeFragment extends BaseFragment {
 
                     @Override
                     public void onNext(List<BankInformItem> bankInformItems) {
+                        Log.e("gqf","bankInformItems"+bankInformItems.toString());
                         initBankLoanItemList(bankInformItems);
                     }
                 });
@@ -150,8 +152,8 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void getBankLoanItemHot() {
-        //银行资讯
-        Subscription subscription = NetWork.getUserService().getBankInformItem(1, "01", 1, 3)
+        //热点资讯
+        Subscription subscription = NetWork.getUserService().getBankInformItem(2, "01", 1, 3)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<BankInformItem>>() {
