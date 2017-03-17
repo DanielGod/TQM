@@ -47,5 +47,11 @@
     <color name="view_background">#f1f1f1</color>
     <color name="back_darkgray">#f7f7f7</color>
 
+    <!--filter-->
+    <color name="gray_text">#909497</color>
+    <color name="patrol_finish_blue">#44B2FE</color>
+    <color name="blue_text">#3cafff</color>
+    <color name="jd_gray">#EFF2F5</color>
+
 
 </resources>

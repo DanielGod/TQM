@@ -24,6 +24,7 @@
             android:adjustViewBounds="true"
             />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -42,28 +43,57 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:ellipsize="end"
+                android:paddingLeft="23dp"
                 android:text="宋江支行年收益4.5%，起购5000元"
+                android:textColor="@color/black"
                 />
-            <TextView
-                android:id="@+id/institutionName_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/institution"
+                    android:adjustViewBounds="true"
+                    android:paddingRight="5dp"
+                    />
+            <TextView
+                android:id="@+id/institutionName_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:lines="1"
                 android:ellipsize="end"
                 android:text="发行机构"
+                android:textColor="@color/black"
                 />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/activityViews_tv"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:lines="1"
-                android:text="10000"
-                android:textColor="@color/colorAccent"
-                />
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/attention"
+                    android:adjustViewBounds="true"
+                    android:paddingRight="5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/activityViews_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+
         </LinearLayout>
 
 

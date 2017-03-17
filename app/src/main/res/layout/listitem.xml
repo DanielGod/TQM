@@ -5,7 +5,7 @@
               android:focusable="true"
               android:clickable="true"
               android:background="?android:selectableItemBackground"
-              android:layout_height="?attr/actionBarSize">
+              android:layout_height="@dimen/hugehxxxxxdp">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -27,7 +27,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="年利率"
-            android:gravity="center_horizontal|bottom"
+            android:gravity="center_horizontal"
             />
 
 
@@ -38,7 +38,6 @@
         android:layout_height="match_parent"
         android:layout_weight="3"
         android:orientation="vertical"
-        android:paddingLeft="30dp"
         android:paddingRight="16dp"
         >
         <LinearLayout
@@ -52,66 +51,113 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:textColor="@color/black"
                 android:lines="1"
                 android:textSize="@dimen/mediumxsp"
                 android:gravity="center_vertical"
                 android:text="111111111111111"
                 android:id="@+id/title_tv"/>
-
             <TextView
-                android:id="@+id/institutionName_tv"
+                android:id="@+id/loanTypeName_tv"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:lines="1"
-                android:textSize="@dimen/mediumsp"
-                android:gravity="center_vertical"
-                android:text="111111111111111"
+                android:text="贷款类型："
+                android:textColor="@color/black"
                 />
+                <TextView
+                    android:id="@+id/loanMoney_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="最高贷款："
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/purchaseMoney_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="起购金额："
+                    android:textColor="@color/black"
+                    />
+
+            <TextView
+                android:id="@+id/riskGradeName_tv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="风险："
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/investmentTerm_tv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="期限："
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                />
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             >
-            <TextView
-                android:id="@+id/riskGradeName_tv"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="中等"
-                />
-            <TextView
-                android:id="@+id/investmentTerm_tv"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/institution"
+                    android:adjustViewBounds="true"
+                    android:paddingRight="5dp"
+                    />
+                <TextView
+                    android:id="@+id/institutionName_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:lines="1"
+                    android:textSize="@dimen/mediumsp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="36期"
-                />
-            <TextView
-                android:id="@+id/loanMoney_tv"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:text="最高贷款20万"
-                />
-            <TextView
-                android:id="@+id/purchaseMoney_tv"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:text="起购金额"
-                />
-            <TextView
-                android:id="@+id/financViews_tv"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:text="浏览量"
-                />
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/eye"
+                    android:scaleType="centerInside"
+                    android:adjustViewBounds="true"
+                    android:paddingRight="5dp"
+                    />
+                <TextView
+                    android:id="@+id/financViews_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="5dp"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    />
 
+            </LinearLayout>
         </LinearLayout>
 
 
