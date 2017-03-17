@@ -52,7 +52,7 @@ public interface BankService {
      * @return
      */
     @GET("queryConditions/{module}")
-    Observable<List<QueryCondition>> queryConditions(@Path("module") Integer module);
+    Observable<List<QueryCondition>> queryConditions(@Path("module") String module);
 
 
     /**

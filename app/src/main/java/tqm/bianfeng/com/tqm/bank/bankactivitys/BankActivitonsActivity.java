@@ -1,21 +1,18 @@
 package tqm.bianfeng.com.tqm.bank.bankactivitys;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.PopupWindow;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ListView;
+
+import com.handmark.pulltorefresh.library.ILoadingLayout;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.List;
 
@@ -34,11 +31,18 @@ import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 
-public class BankActivitonsActivity extends AppCompatActivity implements BankActivitionsAdapter.BankActivityItemClickListener {
-    @BindView(R.id.recyclerview_bank)
-    RecyclerView recyclerviewBank;
+public class BankActivitonsActivity extends AppCompatActivity  {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.drawer_content)
+    FrameLayout drawerContent;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.etSearch)
+    EditText etSearch;
+
+    @BindView(R.id.main_pull_refresh_lv)
+    PullToRefreshListView mainPullRefreshLv;
 
     private CompositeSubscription mCompositeSubscription;
     private Unbinder unbinder;
@@ -51,8 +55,43 @@ public class BankActivitonsActivity extends AppCompatActivity implements BankAct
         setContentView(R.layout.activity_bank_financing);
         unbinder = ButterKnife.bind(this);
         mCompositeSubscription = new CompositeSubscription();
+//        initDrawLayout();
         setToolBar(getResources().getString(R.string.bankActivity));
         initDate(pagNum);
+        initRefreshlv();
+    }
+
+    private void initRefreshlv() {
+        //设置可上拉刷新和下拉刷新
+        mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
+
+        //设置刷新时显示的文本
+        ILoadingLayout startLayout = mainPullRefreshLv.getLoadingLayoutProxy(true, false);
+        startLayout.setPullLabel("正在下拉刷新...");
+        startLayout.setRefreshingLabel("正在玩命加载中...");
+        startLayout.setReleaseLabel("放开以刷新");
+
+
+        ILoadingLayout endLayout = mainPullRefreshLv.getLoadingLayoutProxy(false, true);
+        endLayout.setPullLabel("正在上拉刷新...");
+        endLayout.setRefreshingLabel("正在玩命加载中...");
+        endLayout.setReleaseLabel("放开以刷新");
+
+        mainPullRefreshLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                Log.i("Daniel", "---onPullDownToRefresh---");
+                initDate( pagNum);
+
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                Log.i("Daniel", "---onPullDownToRefresh---");
+                pagNum = pagNum + 1;
+                initDate(pagNum);
+            }
+        });
 
     }
 
@@ -94,85 +133,42 @@ public class BankActivitonsActivity extends AppCompatActivity implements BankAct
                 });
         mCompositeSubscription.add(getBankFinancItem_subscription);
     }
-
     private void setAdapter(List<BankActivityItem> bankActivityItems) {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerviewBank.setNestedScrollingEnabled(false);
-        BankActivitionsAdapter bankActivitionsAdapter = new BankActivitionsAdapter(bankActivityItems, BankActivitonsActivity.this);
-        recyclerviewBank.setLayoutManager(linearLayoutManager);
-        recyclerviewBank.setAdapter(bankActivitionsAdapter);
-        bankActivitionsAdapter.setOnItemClickListener(this);
-    }
-
-    private void initPopuwindow() {
-        //PopupWindow----START-----这里开始到下面标记的地方是实现点击头像弹出PopupWindow，实现用户从PopupWindow中选择更换头像的方式
-        backgroundAlpha(0.3f);
-        View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.popu_window, null);
-        TextView tv = (TextView) view.findViewById(R.id.left_popuwindow);
-        final PopupWindow popupWindow = new PopupWindow(view, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.MATCH_PARENT, true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setFocusable(true);
-        //获取屏幕宽度
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        popupWindow.setWidth(dm.widthPixels);
-        popupWindow.setAnimationStyle(R.style.popuwindow);
-        //显示位置
-        popupWindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
-        popupWindow.setOnDismissListener(new poponDismissListener());
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-
-        //PopupWindow-----END
-
+        BankActivitionsAdapter bankActivitionsAdapter = new BankActivitionsAdapter(bankActivityItems,BankActivitonsActivity.this);
+        mainPullRefreshLv.setAdapter(bankActivitionsAdapter);
+        mainPullRefreshLv.onRefreshComplete();
 
     }
+//
+//    private void initDrawLayout() {
+//        Fragment fragment = new FilterFragment();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("departmentName", "");
+//        fragment.setArguments(bundle);
+//        fragmentManager.beginTransaction().replace(R.id.drawer_content, fragment).commit();
+//
+//    }
 
-    /**
-     * 设置添加屏幕的背景透明度
-     *
-     * @param bgAlpha
-     */
-    public void backgroundAlpha(float bgAlpha) {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = bgAlpha; //0.0-1.0
-        getWindow().setAttributes(lp);
-    }
 
-    @OnClick({R.id.ll_filter})
-    public void onClick() {
-        initPopuwindow();
 
-    }
-
-    @Override
-    public void onItemClick(View view, int postion) {
-        Toast.makeText(this, "" + postion, Toast.LENGTH_SHORT).show();
-
-    }
-
-    /**
-     * 添加PopupWindow关闭的事件，主要是为了将背景透明度改回来
-     */
-    class poponDismissListener implements PopupWindow.OnDismissListener {
-
-        @Override
-        public void onDismiss() {
-            //Log.v("List_noteTypeActivity:", "我是关闭事件");
-            backgroundAlpha(1f);
-        }
-
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
         mCompositeSubscription.unsubscribe();
+    }
+
+    @OnClick({R.id.etSearch, R.id.ll_filter})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.etSearch:
+                etSearch.setFocusableInTouchMode(true);
+                break;
+            case R.id.ll_filter:
+//                drawerLayout.openDrawer(drawerContent);
+                break;
+        }
     }
 }
