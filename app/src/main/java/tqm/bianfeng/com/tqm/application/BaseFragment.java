@@ -14,9 +14,9 @@ import tqm.bianfeng.com.tqm.CustomView.ToastType;
 
 public class BaseFragment extends Fragment{
 
-    public Realm realm;
-    public CompositeSubscription compositeSubscription;
-    public ToastType toastType;
+    protected Realm realm;
+    protected CompositeSubscription compositeSubscription;
+    protected ToastType toastType;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

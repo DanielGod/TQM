@@ -20,8 +20,8 @@ import tqm.bianfeng.com.tqm.R;
 public class BaseActivity extends AppCompatActivity implements InitViewInterface{
 
     protected Realm realm;
-    public CompositeSubscription compositeSubscription;
-    public ToastType toastType;
+    protected CompositeSubscription compositeSubscription;
+    protected ToastType toastType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -9,8 +9,8 @@ import rx.subscriptions.CompositeSubscription;
 
 public class BasePresenterImpl implements BasePresenter{
 
-    public Realm realm;
-    public CompositeSubscription compositeSubscription;
+    protected Realm realm;
+    protected CompositeSubscription compositeSubscription;
 
     public BasePresenterImpl(){
         realm=Realm.getDefaultInstance();
