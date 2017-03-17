@@ -117,6 +117,7 @@ public class BankFinancingAdapter extends RecyclerView.Adapter<BankFinancingAdap
 
         }
 
+
         @Override
         public void onClick(View view) {
             if (mListener != null) {

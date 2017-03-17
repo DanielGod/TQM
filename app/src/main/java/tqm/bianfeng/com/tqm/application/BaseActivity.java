@@ -19,7 +19,7 @@ import tqm.bianfeng.com.tqm.R;
 
 public class BaseActivity extends AppCompatActivity implements InitViewInterface{
 
-    public Realm realm;
+    protected Realm realm;
     public CompositeSubscription compositeSubscription;
     public ToastType toastType;
     @Override
