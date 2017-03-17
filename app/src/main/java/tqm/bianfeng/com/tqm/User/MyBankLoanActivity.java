@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import java.util.List;
 
@@ -74,6 +76,10 @@ public class MyBankLoanActivity extends BaseActivity {
         if(bankLoanAdapter==null){
             bankLoanAdapter=new BankLoanAdapter(bankLoanItems,this);
             myBankLoanList.setLayoutManager(new LinearLayoutManager(this));
+            LayoutAnimationController lac=new LayoutAnimationController(AnimationUtils.loadAnimation(this, R.anim.slide_in_left));
+            lac.setOrder(LayoutAnimationController.ORDER_NORMAL);
+            lac.setDelay(1);
+            myBankLoanList.setLayoutAnimation(lac);
             myBankLoanList.setAdapter(bankLoanAdapter);
             bankLoanAdapter.setOnItemClickListener(new BankLoanAdapter.BankLoanItemClickListener() {
                 @Override
