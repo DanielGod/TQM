@@ -1,12 +1,9 @@
 package tqm.bianfeng.com.tqm.User;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
 import java.util.List;
 
@@ -19,7 +16,6 @@ import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.bank.bankfinancing.BankFinancingAdapter;
-import tqm.bianfeng.com.tqm.main.DetailActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.User;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
@@ -72,22 +68,22 @@ public class MyBankMakeMoneyActivity extends BaseActivity {
         compositeSubscription.add(subscription);
     }
     public void initList(List<BankFinancItem> bankFinancItems){
-        if(bankFinancingAdapter==null){
-            bankFinancingAdapter=new BankFinancingAdapter(bankFinancItems,this);
-            myBankMakeMoneyList.setLayoutManager(new LinearLayoutManager(this));
-            myBankMakeMoneyList.setAdapter(bankFinancingAdapter);
-            bankFinancingAdapter.setOnItemClickListener(new BankFinancingAdapter.BankFinancingItemClickListener() {
-                @Override
-                public void onItemClick(View view, int postion) {
-                    Intent intent=new Intent(MyBankMakeMoneyActivity.this,DetailActivity.class);
-                    intent.putExtra("detailType","02");
-                    intent.putExtra("detailId",datas.get(postion).getFinancId());
-                    startActivity(intent);
-                }
-            });
-        }else{
-            bankFinancingAdapter.setdatas(bankFinancItems);
-        }
+//        if(bankFinancingAdapter==null){
+//            bankFinancingAdapter=new BankFinancingAdapter(bankFinancItems,this);
+//            myBankMakeMoneyList.setLayoutManager(new LinearLayoutManager(this));
+//            myBankMakeMoneyList.setAdapter(bankFinancingAdapter);
+//            bankFinancingAdapter.setOnItemClickListener(new BankFinancingAdapter.BankFinancingItemClickListener() {
+//                @Override
+//                public void onItemClick(View view, int postion) {
+//                    Intent intent=new Intent(MyBankMakeMoneyActivity.this,DetailActivity.class);
+//                    intent.putExtra("detailType","02");
+//                    intent.putExtra("detailId",datas.get(postion).getFinancId());
+//                    startActivity(intent);
+//                }
+//            });
+//        }else{
+//            bankFinancingAdapter.setdatas(bankFinancItems);
+//        }
     }
 
 }

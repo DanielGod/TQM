@@ -1,12 +1,9 @@
 package tqm.bianfeng.com.tqm.User;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
 import java.util.List;
 
@@ -19,7 +16,6 @@ import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.bank.bankloan.BankLoanAdapter;
-import tqm.bianfeng.com.tqm.main.DetailActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.User;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
@@ -71,22 +67,22 @@ public class MyBankLoanActivity extends BaseActivity {
         compositeSubscription.add(subscription);
     }
     public void initList(List<BankLoanItem> bankLoanItems){
-        if(bankLoanAdapter==null){
-            bankLoanAdapter=new BankLoanAdapter(bankLoanItems,this);
-            myBankLoanList.setLayoutManager(new LinearLayoutManager(this));
-            myBankLoanList.setAdapter(bankLoanAdapter);
-            bankLoanAdapter.setOnItemClickListener(new BankLoanAdapter.BankLoanItemClickListener() {
-                @Override
-                public void onItemClick(View view, int postion) {
-                    Intent intent=new Intent(MyBankLoanActivity.this,DetailActivity.class);
-                    intent.putExtra("detailType","03");
-                    intent.putExtra("detailId",datas.get(postion).getLoanId());
-                    startActivity(intent);
-                }
-            });
-        }else{
-            bankLoanAdapter.setdatas(bankLoanItems);
-        }
+//        if(bankLoanAdapter==null){
+//            bankLoanAdapter=new BankLoanAdapter(bankLoanItems,this);
+//            myBankLoanList.setLayoutManager(new LinearLayoutManager(this));
+//            myBankLoanList.setAdapter(bankLoanAdapter);
+//            bankLoanAdapter.setOnItemClickListener(new BankLoanAdapter.BankLoanItemClickListener() {
+//                @Override
+//                public void onItemClick(View view, int postion) {
+//                    Intent intent=new Intent(MyBankLoanActivity.this,DetailActivity.class);
+//                    intent.putExtra("detailType","03");
+//                    intent.putExtra("detailId",datas.get(postion).getLoanId());
+//                    startActivity(intent);
+//                }
+//            });
+//        }else{
+//            bankLoanAdapter.setdatas(bankLoanItems);
+//        }
     }
 
 }
