@@ -1,10 +1,12 @@
 package tqm.bianfeng.com.tqm.User;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import java.util.List;
 
@@ -16,7 +18,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
-import tqm.bianfeng.com.tqm.bank.bankactivitys.BankActivitionsAdapter;
+import tqm.bianfeng.com.tqm.User.adapter.BankActivitionsAdapter;
+import tqm.bianfeng.com.tqm.main.DetailActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.User;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
@@ -74,18 +77,18 @@ public class MyBankActivityActivity extends BaseActivity {
         if(bankActivitionsAdapter==null){
             bankActivitionsAdapter=new BankActivitionsAdapter(bankActivityItems,this);
             myBankActivityList.setLayoutManager(new LinearLayoutManager(this));
-//            myBankActivityList.setAdapter(bankActivitionsAdapter);
-//            bankActivitionsAdapter.setOnItemClickListener(new BankActivitionsAdapter.BankActivityItemClickListener() {
-//                @Override
-//                public void onItemClick(View view, int postion) {
-//                    Intent intent=new Intent(MyBankActivityActivity.this,DetailActivity.class);
-//                    intent.putExtra("detailType","01");
-//                    intent.putExtra("detailId",datas.get(postion).getActivityId());
-//                    startActivity(intent);
-//                }
-//            });
-//        }else{
-//            bankActivitionsAdapter.setdatas(bankActivityItems);
+            myBankActivityList.setAdapter(bankActivitionsAdapter);
+            bankActivitionsAdapter.setOnItemClickListener(new BankActivitionsAdapter.BankActivityItemClickListener() {
+                @Override
+                public void onItemClick(View view, int postion) {
+                    Intent intent=new Intent(MyBankActivityActivity.this,DetailActivity.class);
+                    intent.putExtra("detailType","01");
+                    intent.putExtra("detailId",datas.get(postion).getActivityId());
+                    startActivity(intent);
+                }
+            });
+        }else{
+            bankActivitionsAdapter.setdatas(bankActivityItems);
         }
     }
 

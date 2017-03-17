@@ -1,16 +1,14 @@
 package tqm.bianfeng.com.tqm.bank.bankfinancing;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 
@@ -18,112 +16,72 @@ import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
  * Created by wjy on 2016/11/7.
  */
 
-public class BankFinancingAdapter extends RecyclerView.Adapter<BankFinancingAdapter.ViewHolder> {
+public class BankFinancingAdapter extends BaseAdapter {
 
     List<BankFinancItem> datas;
-    BankFinancingItemClickListener mItemClickListener;
-
-
 
     private Context mContext;
-    private LayoutInflater mLayoutInflater;
-    BankFinancItem data;
 
-
-    public int getLayout() {
-        return R.layout.listitem;
-    }
-
-    public BankFinancingAdapter(List<BankFinancItem> datas, Context mContext) {
-        this.mContext = mContext;
+    public BankFinancingAdapter(Context mContext,List<BankFinancItem> datas ) {
         this.datas = datas;
-        mLayoutInflater = LayoutInflater.from(mContext);
-    }
-
-    /**
-     * 设置Item点击监听
-     *
-     * @param listener
-     */
-    public void setOnItemClickListener(BankFinancingItemClickListener listener) {
-        this.mItemClickListener = listener;
-    }
-
-
-    public interface BankFinancingItemClickListener {
-        public void onItemClick(View view, int postion);
-    }
-
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mLayoutInflater.inflate(getLayout(), parent, false);
-
-        return new ViewHolder(view, mItemClickListener);
+        this.mContext = mContext;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        data = datas.get(position);
+    public int getCount() {
+        return datas!=null ?datas.size():0;
+    }
+
+    @Override
+    public BankFinancItem getItem(int position) {
+        return datas.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder ;
+        if (convertView==null){
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.listitem, parent, false);
+            holder = new ViewHolder();
+            holder.annualReturnTv = (TextView) convertView.findViewById(R.id.annualReturn_tv);
+            holder.titleTv = (TextView) convertView.findViewById(R.id.title_tv);
+            holder.loanMoneyTv = (TextView) convertView.findViewById(R.id.loanMoney_tv);
+            holder.purchaseMoneyTv = (TextView) convertView.findViewById(R.id.purchaseMoney_tv);
+            holder.riskGradeNameTv = (TextView) convertView.findViewById(R.id.riskGradeName_tv);
+            holder.investmentTermTv = (TextView) convertView.findViewById(R.id.investmentTerm_tv);
+            holder.institutionNameTv = (TextView) convertView.findViewById(R.id.institutionName_tv);
+            holder.financViewsTv = (TextView) convertView.findViewById(R.id.financViews_tv);
+            holder.loanTypeNameTv = (TextView) convertView.findViewById(R.id.loanTypeName_tv);
+            convertView.setTag(holder);
+        }else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        BankFinancItem data = getItem(position);
         holder.loanMoneyTv.setVisibility(View.GONE);
         holder.titleTv.setText(data.getProductName());
         holder.institutionNameTv.setText(data.getInstitutionName());
         holder.annualReturnTv.setText(data.getAnnualReturn()+"");
-        holder.riskGradeNameTv.setText(data.getRiskGradeName());
-        holder.investmentTermTv.setText(data.getInvestmentTerm());
-        holder.purchaseMoneyTv.setText(data.getPurchaseMoney()+"");
-
-
+        holder.riskGradeNameTv.setText("风险："+data.getRiskGradeName());
+        holder.investmentTermTv.setText("期限："+data.getInvestmentTerm());
+        holder.purchaseMoneyTv.setText("起购金额："+data.getPurchaseMoney()+"");
+        return convertView;
     }
 
-    @Override
-    public int getItemCount() {
-        //        Log.i("Daniel","---datas.size()---"+datas.size());
-        return datas != null ? datas.size() : 0;
-    }
 
-    public void setdatas(List<BankFinancItem> datas) {
-        this.datas = datas;
-        notifyDataSetChanged();
-    }
-
-    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        View rootView;
-        BankFinancingItemClickListener mListener;
-        @BindView(R.id.title_tv)
-        TextView titleTv;
-        @BindView(R.id.institutionName_tv)
-        TextView institutionNameTv;
-        @BindView(R.id.riskGradeName_tv)
-        TextView riskGradeNameTv;
-        @BindView(R.id.investmentTerm_tv)
-        TextView investmentTermTv;
-        @BindView(R.id.loanMoney_tv)
-        TextView loanMoneyTv;
-        @BindView(R.id.purchaseMoney_tv)
-        TextView purchaseMoneyTv;
-        @BindView(R.id.financViews_tv)
-        TextView financViewsTv;
-        @BindView(R.id.annualReturn_tv)
+    static class ViewHolder {
         TextView annualReturnTv;
-
-
-        ViewHolder(View view, BankFinancingItemClickListener listener) {
-            super(view);
-            rootView = view;
-            ButterKnife.bind(this, view);
-            this.mListener = listener;
-            view.setOnClickListener(this);
-
-        }
-
-
-        @Override
-        public void onClick(View view) {
-            if (mListener != null) {
-                mListener.onItemClick(view, getPosition());
-            }
-
-        }
+        TextView titleTv;
+        TextView loanTypeNameTv;
+        TextView loanMoneyTv;
+        TextView purchaseMoneyTv;
+        TextView riskGradeNameTv;
+        TextView investmentTermTv;
+        TextView institutionNameTv;
+        TextView financViewsTv;
     }
 }
