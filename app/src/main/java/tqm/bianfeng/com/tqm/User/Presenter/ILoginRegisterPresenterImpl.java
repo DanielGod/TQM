@@ -36,7 +36,7 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
 
                         @Override
                         public void onError(Throwable e) {
-
+                            iLoginAndRegistered.loginOrRegisteredResult(1,false,"无法获取验证码，请检查网络");
                         }
 
                         @Override
@@ -58,7 +58,7 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
     public void loginOrRegister(String phone,String code){
         if(oldCode.equals("")||!oldCode.equals(code)){
             //验证码错误
-            iLoginAndRegistered.loginOrRegisteredResult(false,"验证码不正确");
+            iLoginAndRegistered.loginOrRegisteredResult(1,false,"验证码不正确");
         }else{
             //网络验证
             Subscription subscription = NetWork.getUserService().register(phone)
@@ -72,7 +72,7 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
 
                         @Override
                         public void onError(Throwable e) {
-                            iLoginAndRegistered.loginOrRegisteredResult(false,"注册或登录超时，请检查网路设置");
+                            iLoginAndRegistered.loginOrRegisteredResult(1,false,"注册或登录超时，请检查网路设置");
                         }
 
                         @Override
@@ -93,9 +93,9 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
                                 realm.insertOrUpdate(resuleCodeWithUser.getUser());
                                 realm.commitTransaction();
                                 //页面显示
-                                iLoginAndRegistered.loginOrRegisteredResult(true,tosat+"成功");
+                                iLoginAndRegistered.loginOrRegisteredResult(1,true,tosat+"成功");
                             }else{
-                                iLoginAndRegistered.loginOrRegisteredResult(true,tosat+"失败");
+                                iLoginAndRegistered.loginOrRegisteredResult(1,true,tosat+"失败");
                             }
                         }
                     });

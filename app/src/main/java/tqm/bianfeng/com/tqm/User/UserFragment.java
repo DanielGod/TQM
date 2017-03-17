@@ -254,8 +254,12 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     }
 
     //注册登录后返回
-    public void loginOrRegisteredResult(boolean isSuccess, String msg) {
-        toastType.showToastWithImg(getActivity(), isSuccess, msg);
+    public void loginOrRegisteredResult(int type,boolean isSuccess, String msg) {
+        if(type==0){
+            toastType.showToast(getActivity(),msg);
+        }else{
+            toastType.showToastWithImg(getActivity(), isSuccess, msg);
+        }
         if (isSuccess) {
             if (dialogFragment != null) {
                 //成功后关闭dialog

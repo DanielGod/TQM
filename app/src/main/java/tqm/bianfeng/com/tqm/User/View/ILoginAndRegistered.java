@@ -7,7 +7,7 @@ import java.io.File;
  */
 
 public interface ILoginAndRegistered {
-    public void loginOrRegisteredResult(boolean isSuccess,String msg);
+    public void loginOrRegisteredResult(int toastType,boolean isSuccess,String msg);
     public void setTextNum(int num1,int num2,int num3,int num4);
     public void setUserHeadImg(File bitmap);
     public void resetUserHeadImg(boolean isChange);

@@ -40,6 +40,7 @@ public class UserFeedbackActivity extends BaseActivity{
         setContentView(R.layout.activity_user_feedback);
         ButterKnife.bind(this);
         setToolbar(myInitiateSignToolbar,"用户反馈");
+        feedbackCommit.setEnabled(false);
         initBtn();
     }
 
@@ -77,7 +78,6 @@ public class UserFeedbackActivity extends BaseActivity{
 
             @Override
             public void onNext(Boolean aBoolean) {
-
                 feedbackCommit.setEnabled(aBoolean);
             }
         });
