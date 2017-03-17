@@ -184,10 +184,4 @@
             android:layout_below="@+id/ll_head_layout"
             app:ptrHeaderBackground="@android:color/transparent"
             app:ptrHeaderTextColor="#919191"/>
-
-
-
-
-
-
 </RelativeLayout>

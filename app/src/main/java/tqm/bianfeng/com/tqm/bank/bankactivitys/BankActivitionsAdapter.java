@@ -14,6 +14,7 @@ import java.util.List;
 
 import hugo.weaving.DebugLog;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 
 /**
@@ -54,7 +55,7 @@ public class BankActivitionsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder ;
         if (convertView==null){
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.listitem, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.bank_activity_item, parent, false);
             holder = new ViewHolder();
             holder.logoImg = (ImageView) convertView.findViewById(R.id.logo_img);
             holder.activityTitleTv = (TextView) convertView.findViewById(R.id.activityTitle_tv);
@@ -65,7 +66,7 @@ public class BankActivitionsAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         BankActivityItem data = getItem(position);
-        Picasso.with(mContext).load(data.getInstitutionIcon()).placeholder(R.drawable.banklogo).into(holder.logoImg);
+        Picasso.with(mContext).load(NetWork.LOAD+data.getInstitutionIcon()).placeholder(R.drawable.banklogo).into(holder.logoImg);
         holder.activityTitleTv.setText(data.getActivityTitle());
         holder.institutionNameTv.setText(data.getInstitutionName());
         holder.activityViewsTv.setText(data.getActivityViews()+"");
