@@ -1,5 +1,6 @@
 package tqm.bianfeng.com.tqm.bank.bankloan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
@@ -48,11 +50,16 @@ public class BankLoanActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     @BindView(R.id.main_pull_refresh_lv)
     PullToRefreshListView mainPullRefreshLv;
+    @BindView(R.id.etSearch)
+    EditText etSearch;
 
 
     private CompositeSubscription mCompositeSubscription;
     private Unbinder unbinder;
     private int pagNum = 1;
+    private int mPagItemSize = 0;
+    private mListener mListener;
+
 
 
     @Override
@@ -61,6 +68,7 @@ public class BankLoanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bank_financing);
         unbinder = ButterKnife.bind(this);
         EventBus.getDefault().register(this);//订阅
+//        mListener = (mListener) BankLoanActivity.this;
         setToolBar(getResources().getString(R.string.bankloan));
         mCompositeSubscription = new CompositeSubscription();
         initDrawLayout();
@@ -70,8 +78,7 @@ public class BankLoanActivity extends AppCompatActivity {
 
     }
     private void initRefreshlv() {
-        //设置可上拉刷新和下拉刷新
-        mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
+
 
         //设置刷新时显示的文本
         ILoadingLayout startLayout = mainPullRefreshLv.getLoadingLayoutProxy(true, false);
@@ -132,7 +139,13 @@ public class BankLoanActivity extends AppCompatActivity {
                 .subscribe(new Observer<List<BankLoanItem>>() {
                     @Override
                     public void onCompleted() {
-
+                        //设置可上拉刷新和下拉刷新
+                        Log.e("Daniel", "---mPagItemSize---" + mPagItemSize);
+                        if (mPagItemSize > Constan.PAGESIZE) {
+                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
+                        } else {
+                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                        }
                     }
 
                     @DebugLog
@@ -144,6 +157,7 @@ public class BankLoanActivity extends AppCompatActivity {
                     @DebugLog
                     @Override
                     public void onNext(List<BankLoanItem> bankloanItems) {
+                        mPagItemSize = bankloanItems.size();
                         setAdapter(bankloanItems);
 //
 
@@ -152,21 +166,45 @@ public class BankLoanActivity extends AppCompatActivity {
         mCompositeSubscription.add(getBankFinancItem_subscription);
     }
 
+    public interface mListener {
+        public void detailActivity(Intent intent);
+    }
+
+
+
+
+
     private void setAdapter(List<BankLoanItem> bankloanItems) {
 
-        BankLoanAdapter loanAdapter = new BankLoanAdapter(BankLoanActivity.this,bankloanItems);
+        final BankLoanAdapter loanAdapter = new BankLoanAdapter(BankLoanActivity.this,bankloanItems);
         mainPullRefreshLv.setAdapter(loanAdapter);
         Log.i("Daniel", "---isRefreshing---"+mainPullRefreshLv.isRefreshing());
         mainPullRefreshLv.onRefreshComplete();
+//        mainPullRefreshLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @DebugLog
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //跳转银行贷款详情
+//                Intent intent = new Intent(BankLoanActivity.this, DetailActivity.class);
+//                intent.putExtra("detailType", "03");
+//                intent.putExtra("detailId", loanAdapter.getItem(position).getLoanId());
+//                mListener.detailActivity(intent);
+//            }
+//        });
 
     }
 
 
-    @OnClick({R.id.ll_filter})
-    public void onClick() {
-        drawerLayout.openDrawer(drawerContent);
-
-
+    @OnClick({R.id.etSearch, R.id.ll_filter})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.etSearch:
+                etSearch.setFocusableInTouchMode(true);
+                break;
+            case R.id.ll_filter:
+                drawerLayout.openDrawer(drawerContent);
+                break;
+        }
     }
 
     private void initDrawLayout() {

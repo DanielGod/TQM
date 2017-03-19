@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import hugo.weaving.DebugLog;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 
@@ -41,7 +42,6 @@ public class BankFinancingAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder ;
@@ -57,21 +57,29 @@ public class BankFinancingAdapter extends BaseAdapter {
             holder.institutionNameTv = (TextView) convertView.findViewById(R.id.institutionName_tv);
             holder.financViewsTv = (TextView) convertView.findViewById(R.id.financViews_tv);
             holder.loanTypeNameTv = (TextView) convertView.findViewById(R.id.loanTypeName_tv);
+            holder.rateName = (TextView) convertView.findViewById(R.id.rateName_tv);
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
         BankFinancItem data = getItem(position);
         holder.loanMoneyTv.setVisibility(View.GONE);
+        holder.loanTypeNameTv.setVisibility(View.GONE);
         holder.titleTv.setText(data.getProductName());
         holder.institutionNameTv.setText(data.getInstitutionName());
-        holder.annualReturnTv.setText(data.getAnnualReturn()+"");
+        holder.annualReturnTv.setText(data.getAnnualReturn()+"%");
         holder.riskGradeNameTv.setText("风险："+data.getRiskGradeName());
         holder.investmentTermTv.setText("期限："+data.getInvestmentTerm());
         holder.purchaseMoneyTv.setText("起购金额："+data.getPurchaseMoney()+"");
+        holder.financViewsTv.setText(""+data.getFinancViews());
+        holder.rateName.setText("预期年化");
         return convertView;
     }
-
+    @DebugLog
+    public void setdatas(List<BankFinancItem> decoCompanyItemList) {
+        this.datas = decoCompanyItemList;
+        notifyDataSetChanged();
+    }
 
     static class ViewHolder {
         TextView annualReturnTv;
@@ -83,5 +91,6 @@ public class BankFinancingAdapter extends BaseAdapter {
         TextView investmentTermTv;
         TextView institutionNameTv;
         TextView financViewsTv;
+        TextView rateName;
     }
 }

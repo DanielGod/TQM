@@ -47,6 +47,8 @@ public class BankActivitonsActivity extends AppCompatActivity  {
     private CompositeSubscription mCompositeSubscription;
     private Unbinder unbinder;
     private int pagNum = 1;
+    private int mPagItemSize = 0 ;
+
 
 
     @Override
@@ -59,37 +61,42 @@ public class BankActivitonsActivity extends AppCompatActivity  {
         setToolBar(getResources().getString(R.string.bankActivity));
         initDate(pagNum);
         initRefreshlv();
+
     }
 
     private void initRefreshlv() {
-        //设置可上拉刷新和下拉刷新
-        mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
 
         //设置刷新时显示的文本
         ILoadingLayout startLayout = mainPullRefreshLv.getLoadingLayoutProxy(true, false);
         startLayout.setPullLabel("正在下拉刷新...");
-        startLayout.setRefreshingLabel("正在玩命加载中...");
+        startLayout.setRefreshingLabel("正在刷新...");
         startLayout.setReleaseLabel("放开以刷新");
 
 
         ILoadingLayout endLayout = mainPullRefreshLv.getLoadingLayoutProxy(false, true);
         endLayout.setPullLabel("正在上拉刷新...");
-        endLayout.setRefreshingLabel("正在玩命加载中...");
+        endLayout.setRefreshingLabel("加载中...");
         endLayout.setReleaseLabel("放开以刷新");
 
         mainPullRefreshLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @DebugLog
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Log.i("Daniel", "---onPullDownToRefresh---");
-                initDate( pagNum);
+                initDate(1);
 
             }
-
+            @DebugLog
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Log.i("Daniel", "---onPullDownToRefresh---");
-                pagNum = pagNum + 1;
-                initDate(pagNum);
+                if (mPagItemSize>Constan.PAGESIZE){
+                    pagNum = pagNum + 1;
+                    initDate(pagNum);
+                }else {
+                    mainPullRefreshLv.onRefreshComplete();
+                }
+
             }
         });
 
@@ -113,9 +120,16 @@ public class BankActivitonsActivity extends AppCompatActivity  {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<BankActivityItem>>() {
+                    @DebugLog
                     @Override
                     public void onCompleted() {
-
+                        //设置可上拉刷新和下拉刷新
+                        Log.e("Daniel","---mPagItemSize---"+mPagItemSize);
+                        if (mPagItemSize>Constan.PAGESIZE){
+                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
+                        }else {
+                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                        }
                     }
 
                     @DebugLog
@@ -127,6 +141,7 @@ public class BankActivitonsActivity extends AppCompatActivity  {
                     @DebugLog
                     @Override
                     public void onNext(List<BankActivityItem> bankActivityItems) {
+                        mPagItemSize= bankActivityItems.size();
                         setAdapter(bankActivityItems);
 
                     }
@@ -167,7 +182,6 @@ public class BankActivitonsActivity extends AppCompatActivity  {
                 etSearch.setFocusableInTouchMode(true);
                 break;
             case R.id.ll_filter:
-//                drawerLayout.openDrawer(drawerContent);
                 break;
         }
     }

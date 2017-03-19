@@ -33,6 +33,8 @@
                       android:layout_marginRight="@dimen/smallmdp"
                       android:paddingLeft="32dp"
                       android:textSize="@dimen/smallsp"
+                      android:focusableInTouchMode="false"
+                      android:textColor="@color/black"
                       android:hint="输入名称查询"/>
 
             <ImageView android:id="@+id/ivDeleteText"
@@ -179,6 +181,9 @@
     <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/smallmdp"
+            android:layout_marginRight="@dimen/smallmdp"
+            android:layout_marginTop="@dimen/smallmdp"
             android:id="@+id/main_pull_refresh_lv"
             app:ptrAnimationStyle="flip"
             android:layout_below="@+id/ll_head_layout"

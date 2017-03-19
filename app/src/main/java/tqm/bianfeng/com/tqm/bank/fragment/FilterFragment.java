@@ -54,15 +54,16 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
     private ImageView iv_back;
 
     private List<QueryCondition> mQueryConditions;
-    private Map<String, List<String>> mMap;
+    private Map<String, List<Integer>> mMapFilterId;
+    private Map<String, List<String>> mMapFilterName;
     public static boolean filter_item = false;
     FilterAdapter filterAdapter;
-    List<String> list_RiskGrade;
-    List<String> list_Institution;
-    List<String> list_ProductType;
-    public static List<String> filter_value_RiskGrade ;
-    public static List<String> filter_value_Institution ;
-    public static List<String> filter_value_ProductType ;
+    List<Integer> list_RiskGrade;
+    List<Integer> list_Institution;
+    List<Integer> list_ProductType;
+    public static List<Integer> filter_value_RiskGrade ;
+    public static List<Integer> filter_value_Institution ;
+    public static List<Integer> filter_value_ProductType ;
 
     @Nullable
     @Override
@@ -70,7 +71,8 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
         View view = inflater.inflate(R.layout.fragment_patrol_filter, null);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);//订阅
-        mMap = new HashMap();
+        mMapFilterName = new HashMap();
+        mMapFilterId = new HashMap();
         initView(view);
         initEvent();
         initdata();
@@ -133,15 +135,15 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
     private String removeType(String value) {
         if (list_RiskGrade==null){
 
-            list_RiskGrade = mMap.get("风险等级");
+            list_RiskGrade = mMapFilterId.get("风险等级");
         }
         if (list_Institution==null){
 
-            list_Institution = mMap.get("发行机构");
+            list_Institution = mMapFilterId.get("发行机构");
         }
         if (list_ProductType==null){
 
-            list_ProductType = mMap.get("产品类型");
+            list_ProductType = mMapFilterId.get("产品类型");
         }
         for (int i = 0; i <list_RiskGrade.size(); i++) {
             if (value.equals(list_RiskGrade.get(i))){
@@ -201,12 +203,14 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
         @DebugLog
         @Override
         public void onNext(List<ProductType> productTypes) {
+            List<Integer> list_int = new ArrayList<>();
             List<String> list_str = new ArrayList<>();
             for (ProductType productType : productTypes) {
+                list_int.add(productType.getProductTypeId());
                 list_str.add(productType.getProductTypeName());
-
             }
-            mMap.put("产品类型", list_str);
+            mMapFilterId.put("产品类型", list_int);
+            mMapFilterName.put("产品类型",list_str);
             getQueryConditions();
             //            setGridViewAdapter(list_str);
 
@@ -234,12 +238,14 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
         @DebugLog
         @Override
         public void onNext(List<Institution> institutions) {
+            List<Integer> list_int = new ArrayList<>();
             List<String> list_str = new ArrayList<>();
             for (Institution institution : institutions) {
+                list_int.add(institution.getInstitutionId());
                 list_str.add(institution.getInstitutionName());
-
             }
-            mMap.put("发行机构", list_str);
+            mMapFilterId.put("发行机构", list_int);
+            mMapFilterName.put("发行机构", list_str);
 
             getProductTypes();
             //            setGridViewAdapter(list_str);
@@ -261,11 +267,14 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
         @DebugLog
         @Override
         public void onNext(List<RiskGrade> RiskGrades) {
+            List<Integer> list_int = new ArrayList<>();
             List<String> list_str = new ArrayList<>();
             for (RiskGrade riskGrade : RiskGrades) {
+                list_int.add(riskGrade.getRiskGradeId());
                 list_str.add(riskGrade.getRiskGradeName());
             }
-            mMap.put("风险等级", list_str);
+            mMapFilterId.put("风险等级", list_int);
+            mMapFilterName.put("风险等级", list_str);
 
             getInstitutions();
             //            setGridViewAdapter(list_str);
@@ -276,9 +285,9 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
     @DebugLog
     public String getType(String value){
 
-            list_RiskGrade = mMap.get("风险等级");
-            list_Institution = mMap.get("发行机构");
-            list_ProductType = mMap.get("产品类型");
+            list_RiskGrade = mMapFilterId.get("风险等级");
+            list_Institution = mMapFilterId.get("发行机构");
+            list_ProductType = mMapFilterId.get("产品类型");
         for (int i = 0; i <list_RiskGrade.size(); i++) {
             if (value.equals(list_RiskGrade.get(i))){
                 filter_value_RiskGrade.add(list_RiskGrade.get(i));
@@ -304,7 +313,7 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
     private void setAdapter(List<QueryCondition> queryConditions) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setNestedScrollingEnabled(false);
-        filterAdapter = new FilterAdapter(queryConditions, mMap, getActivity());
+        filterAdapter = new FilterAdapter(queryConditions, mMapFilterName, getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(filterAdapter);
         filterAdapter.setOnItemClickListener(this);
@@ -349,7 +358,7 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
                     StringBuffer strRiskGrade =  new StringBuffer();
                     for (int i = 0; i <filter_value_RiskGrade.size() ; i++) {
                         if (i==0){
-                            strRiskGrade.append(filter_value_RiskGrade.get(i));
+                            strRiskGrade.append(""+filter_value_RiskGrade.get(i));
                         }else {
                             strRiskGrade.append(","+filter_value_RiskGrade.get(i));
                         }
@@ -360,22 +369,24 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
                    StringBuffer strInstitution =  new StringBuffer();
                    for (int i = 0; i <filter_value_Institution.size() ; i++) {
                        if (i==0){
-                           strInstitution.append(filter_value_Institution.get(i));
+                           strInstitution.append(""+filter_value_Institution.get(i));
                        }else {
                            strInstitution.append(","+filter_value_Institution.get(i));
                        }
                    }
+                   Log.i("Daniel", "---strProductType.toString()---"+strInstitution.toString());
                    filterValues.setInstitutionId(strInstitution.toString());
                }
                 if (filter_value_ProductType.size()!=0){
                     StringBuffer strProductType = new StringBuffer();
                     for (int i = 0; i <filter_value_ProductType.size() ; i++) {
                         if (i==0){
-                            strProductType.append(filter_value_ProductType.get(i));
+                            strProductType.append(""+filter_value_ProductType.get(i));
                         }else {
                             strProductType.append(","+filter_value_ProductType.get(i));
                         }
                     }
+                    Log.i("Daniel", "---strProductType.toString()---"+strProductType.toString());
                     filterValues.setProductTypeId(strProductType.toString());
 
                 }
