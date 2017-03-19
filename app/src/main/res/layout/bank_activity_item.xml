@@ -5,6 +5,7 @@
               android:layout_height="@dimen/hugehxxxdp"
               android:focusable="true"
               android:clickable="true"
+              android:layout_margin="@dimen/smallmdp"
               android:background="?android:selectableItemBackground"
 
     >
@@ -12,6 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:paddingTop="@dimen/smallmdp"
+        android:paddingBottom="@dimen/smallmdp"
         >
 
     <LinearLayout

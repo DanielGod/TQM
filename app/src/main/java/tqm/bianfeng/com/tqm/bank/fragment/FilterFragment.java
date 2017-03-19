@@ -33,13 +33,14 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.network.NetWork;
-import tqm.bianfeng.com.tqm.pojo.bank.buttonViewEven;
 import tqm.bianfeng.com.tqm.pojo.bank.FilterEvens;
+import tqm.bianfeng.com.tqm.pojo.bank.FilterInfo;
 import tqm.bianfeng.com.tqm.pojo.bank.FilterValues;
 import tqm.bianfeng.com.tqm.pojo.bank.Institution;
 import tqm.bianfeng.com.tqm.pojo.bank.ProductType;
 import tqm.bianfeng.com.tqm.pojo.bank.QueryCondition;
 import tqm.bianfeng.com.tqm.pojo.bank.RiskGrade;
+import tqm.bianfeng.com.tqm.pojo.bank.buttonViewEven;
 
 /**
  * 作者：chs on 2016/10/10 10:07
@@ -58,12 +59,11 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
     private Map<String, List<String>> mMapFilterName;
     public static boolean filter_item = false;
     FilterAdapter filterAdapter;
-    List<Integer> list_RiskGrade;
-    List<Integer> list_Institution;
-    List<Integer> list_ProductType;
-    public static List<Integer> filter_value_RiskGrade ;
-    public static List<Integer> filter_value_Institution ;
-    public static List<Integer> filter_value_ProductType ;
+    public static List<Integer> filter_value_RiskGrade;
+    public static List<Integer> filter_value_Institution;
+    public static List<Integer> filter_value_ProductType;
+    private FilterInfo mFilterInfo;
+    private Map<String, Object> mapFilterInfo;
 
     @Nullable
     @Override
@@ -81,9 +81,15 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
     }
 
     private void initdata() {
-         filter_value_RiskGrade = new ArrayList<>();
-         filter_value_Institution = new ArrayList<>();
-         filter_value_ProductType = new ArrayList<>();
+        if (mFilterInfo == null) {
+            mFilterInfo = new FilterInfo();
+        }
+        if (mapFilterInfo == null) {
+            mapFilterInfo = new HashMap<>();
+        }
+        filter_value_RiskGrade = new ArrayList<>();
+        filter_value_Institution = new ArrayList<>();
+        filter_value_ProductType = new ArrayList<>();
         getRiskGrades();
 
 
@@ -123,47 +129,46 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
     @DebugLog
     public void onEventMainThread(buttonViewEven event) {
         String value = event.getButtonView();
-        if (event.isFlag()){
+        if (event.isFlag()) {
             getType(value);
-        }else {
+        } else {
             removeType(value);
         }
 
 
     }
+
     @DebugLog
-    private String removeType(String value) {
-        if (list_RiskGrade==null){
-
-            list_RiskGrade = mMapFilterId.get("风险等级");
-        }
-        if (list_Institution==null){
-
-            list_Institution = mMapFilterId.get("发行机构");
-        }
-        if (list_ProductType==null){
-
-            list_ProductType = mMapFilterId.get("产品类型");
-        }
-        for (int i = 0; i <list_RiskGrade.size(); i++) {
-            if (value.equals(list_RiskGrade.get(i))){
-                filter_value_RiskGrade.remove(list_RiskGrade.get(i));
-                return "riskGradeId";
+    private boolean removeType(String value) {
+        boolean bStop = false;
+        if (!bStop) {
+            List<RiskGrade> lRiskGrades = (List<RiskGrade>) mapFilterInfo.get("风险等级");
+            for (int i = 0; i < lRiskGrades.size(); i++) {
+                if (value.equals(lRiskGrades.get(i).getRiskGradeName())) {
+                    filter_value_RiskGrade.remove(lRiskGrades.get(i).getRiskGradeId());
+                    return bStop = true;
+                }
             }
         }
-        for (int i = 0; i <list_Institution.size(); i++) {
-            if (value.equals(list_Institution.get(i))){
-                filter_value_Institution.remove(list_Institution.get(i));
-                return "institutionId";
+        if (!bStop) {
+            List<Institution> lInstitution = (List<Institution>) mapFilterInfo.get("发行机构");
+            for (int i = 0; i < lInstitution.size(); i++) {
+                if (value.equals(lInstitution.get(i).getInstitutionName())) {
+                    filter_value_Institution.remove(lInstitution.get(i).getInstitutionId());
+                    return bStop = true;
+                }
             }
         }
-        for (int i = 0; i <list_ProductType.size(); i++) {
-            if (value.equals(list_ProductType.get(i))){
-                filter_value_ProductType.remove(list_ProductType.get(i));
-                return "riskGradeId";
+        if (!bStop) {
+            List<ProductType> lProductType = (List<ProductType>) mapFilterInfo.get("产品类型");
+            for (int i = 0; i < lProductType.size(); i++) {
+                if (value.equals(lProductType.get(i).getProductTypeName())) {
+                    filter_value_ProductType.remove(lProductType.get(i).getProductTypeId());
+                    return bStop = true;
+                }
             }
         }
-        return "";
+        return bStop = true;
     }
 
 
@@ -210,7 +215,11 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
                 list_str.add(productType.getProductTypeName());
             }
             mMapFilterId.put("产品类型", list_int);
-            mMapFilterName.put("产品类型",list_str);
+            mMapFilterName.put("产品类型", list_str);
+
+            mFilterInfo.setlProductType(productTypes);
+            mapFilterInfo.put("产品类型", productTypes);
+
             getQueryConditions();
             //            setGridViewAdapter(list_str);
 
@@ -247,6 +256,9 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
             mMapFilterId.put("发行机构", list_int);
             mMapFilterName.put("发行机构", list_str);
 
+            mFilterInfo.setlInstitution(institutions);
+            mapFilterInfo.put("发行机构", institutions);
+
             getProductTypes();
             //            setGridViewAdapter(list_str);
 
@@ -276,6 +288,8 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
             mMapFilterId.put("风险等级", list_int);
             mMapFilterName.put("风险等级", list_str);
 
+            mFilterInfo.setlRiskGrade(RiskGrades);
+            mapFilterInfo.put("风险等级", RiskGrades);
             getInstitutions();
             //            setGridViewAdapter(list_str);
 
@@ -283,30 +297,36 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
     };
 
     @DebugLog
-    public String getType(String value){
-
-            list_RiskGrade = mMapFilterId.get("风险等级");
-            list_Institution = mMapFilterId.get("发行机构");
-            list_ProductType = mMapFilterId.get("产品类型");
-        for (int i = 0; i <list_RiskGrade.size(); i++) {
-            if (value.equals(list_RiskGrade.get(i))){
-                filter_value_RiskGrade.add(list_RiskGrade.get(i));
-                return "riskGradeId";
+    public boolean getType(String value) {
+        boolean bStop = false;
+        if (!bStop) {
+            List<RiskGrade> lRiskGrades = (List<RiskGrade>) mapFilterInfo.get("风险等级");
+            for (int i = 0; i < lRiskGrades.size(); i++) {
+                if (value.equals(lRiskGrades.get(i).getRiskGradeName())) {
+                    filter_value_RiskGrade.add(lRiskGrades.get(i).getRiskGradeId());
+                    return bStop = true;
+                }
             }
         }
-        for (int i = 0; i <list_Institution.size(); i++) {
-            if (value.equals(list_Institution.get(i))){
-                filter_value_Institution.add(list_Institution.get(i));
-                return "institutionId";
+        if (!bStop) {
+            List<Institution> lInstitution = (List<Institution>) mapFilterInfo.get("发行机构");
+            for (int i = 0; i < lInstitution.size(); i++) {
+                if (value.equals(lInstitution.get(i).getInstitutionName())) {
+                    filter_value_Institution.add(lInstitution.get(i).getInstitutionId());
+                    return bStop = true;
+                }
             }
         }
-        for (int i = 0; i <list_ProductType.size(); i++) {
-            if (value.equals(list_ProductType.get(i))){
-                filter_value_ProductType.add(list_ProductType.get(i));
-                return "riskGradeId";
+        if (!bStop) {
+            List<ProductType> lProductType = (List<ProductType>) mapFilterInfo.get("产品类型");
+            for (int i = 0; i < lProductType.size(); i++) {
+                if (value.equals(lProductType.get(i).getProductTypeName())) {
+                    filter_value_ProductType.add(lProductType.get(i).getProductTypeId());
+                    return bStop = true;
+                }
             }
         }
-        return "";
+        return bStop = true;
 
     }
 
@@ -342,6 +362,7 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
     public void onItemClick(View view, int postion) {
         //        setGridViewAdapter(mQueryConditions.get(postion));
     }
+
     @DebugLog
     @OnClick({R.id.btn_reset, R.id.btn_confirm})
     public void onClick(View view) {
@@ -354,44 +375,45 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
                 Gson gson = new Gson();
                 FilterValues filterValues = new FilterValues();
 
-                if (filter_value_RiskGrade.size()!=0){
-                    StringBuffer strRiskGrade =  new StringBuffer();
-                    for (int i = 0; i <filter_value_RiskGrade.size() ; i++) {
-                        if (i==0){
-                            strRiskGrade.append(""+filter_value_RiskGrade.get(i));
-                        }else {
-                            strRiskGrade.append(","+filter_value_RiskGrade.get(i));
+                if (filter_value_RiskGrade.size() != 0) {
+                    StringBuffer strRiskGrade = new StringBuffer();
+                    for (int i = 0; i < filter_value_RiskGrade.size(); i++) {
+                        if (i == 0) {
+                            strRiskGrade.append("" + filter_value_RiskGrade.get(i));
+                        } else {
+                            strRiskGrade.append("," + filter_value_RiskGrade.get(i));
                         }
                     }
+                    Log.i("Daniel", "---strRiskGrade.toString()---" + strRiskGrade.toString());
                     filterValues.setRiskGradeId(strRiskGrade.toString());
                 }
-               if (filter_value_Institution.size()!=0){
-                   StringBuffer strInstitution =  new StringBuffer();
-                   for (int i = 0; i <filter_value_Institution.size() ; i++) {
-                       if (i==0){
-                           strInstitution.append(""+filter_value_Institution.get(i));
-                       }else {
-                           strInstitution.append(","+filter_value_Institution.get(i));
-                       }
-                   }
-                   Log.i("Daniel", "---strProductType.toString()---"+strInstitution.toString());
-                   filterValues.setInstitutionId(strInstitution.toString());
-               }
-                if (filter_value_ProductType.size()!=0){
-                    StringBuffer strProductType = new StringBuffer();
-                    for (int i = 0; i <filter_value_ProductType.size() ; i++) {
-                        if (i==0){
-                            strProductType.append(""+filter_value_ProductType.get(i));
-                        }else {
-                            strProductType.append(","+filter_value_ProductType.get(i));
+                if (filter_value_Institution.size() != 0) {
+                    StringBuffer strInstitution = new StringBuffer();
+                    for (int i = 0; i < filter_value_Institution.size(); i++) {
+                        if (i == 0) {
+                            strInstitution.append("" + filter_value_Institution.get(i));
+                        } else {
+                            strInstitution.append("," + filter_value_Institution.get(i));
                         }
                     }
-                    Log.i("Daniel", "---strProductType.toString()---"+strProductType.toString());
+                    Log.i("Daniel", "---strProductType.toString()---" + strInstitution.toString());
+                    filterValues.setInstitutionId(strInstitution.toString());
+                }
+                if (filter_value_ProductType.size() != 0) {
+                    StringBuffer strProductType = new StringBuffer();
+                    for (int i = 0; i < filter_value_ProductType.size(); i++) {
+                        if (i == 0) {
+                            strProductType.append("" + filter_value_ProductType.get(i));
+                        } else {
+                            strProductType.append("," + filter_value_ProductType.get(i));
+                        }
+                    }
+                    Log.i("Daniel", "---strProductType.toString()---" + strProductType.toString());
                     filterValues.setProductTypeId(strProductType.toString());
 
                 }
                 String json = gson.toJson(filterValues);
-                Log.i("Daniel", "---json---"+json);
+                Log.i("Daniel", "---json---" + json);
                 EventBus.getDefault().post(new FilterEvens(json));
                 mDrawerLayout.closeDrawer(mDrawerContent);
 

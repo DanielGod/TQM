@@ -364,7 +364,7 @@
                         android:layout_marginRight="@dimen/smallmdp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
-                        android:src="@drawable/home_bankFinaning"
+                        android:src="@drawable/home_bankfinaning"
                         />
 
                     <TextView
@@ -420,7 +420,7 @@
                             android:layout_marginRight="@dimen/smallmdp"
                             android:adjustViewBounds="true"
                             android:scaleType="centerInside"
-                            android:src="@drawable/home_bankLoan"
+                            android:src="@drawable/home_bankloan"
                             />
 
                         <TextView
@@ -476,7 +476,7 @@
                             android:layout_marginRight="@dimen/smallmdp"
                             android:adjustViewBounds="true"
                             android:scaleType="centerInside"
-                            android:src="@drawable/home_bankActivitys"
+                            android:src="@drawable/home_bankactivitys"
                             />
 
                         <TextView

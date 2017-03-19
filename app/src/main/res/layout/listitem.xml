@@ -7,13 +7,13 @@
               android:layout_marginTop="@dimen/smallmdp"
               android:layout_marginBottom="@dimen/smallmdp"
               android:descendantFocusability="blocksDescendants"
-              android:layout_height="@dimen/hugehxxxxxdp">
+              android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:paddingTop="@dimen/smallmdp"
-        android:paddingBottom="@dimen/smallmdp"
+        android:paddingTop="@dimen/horizontal_margin"
+        android:paddingBottom="@dimen/horizontal_margin"
         >
 
 
@@ -39,6 +39,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="年利率"
+            android:textColor="@color/black"
             android:gravity="center_horizontal"
             />
 

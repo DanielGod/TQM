@@ -30,6 +30,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
     QueryConditionItemClickListener mItemClickListener;
     List<String> list_str;
     Map<String,List<String>> mMap;
+    private Map<String,Object> mapFilterInfo;
     private static int mPosition;
 
 
@@ -46,7 +47,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
     public FilterAdapter(List<QueryCondition> datas,  Map<String,List<String>> mMap,Context mContext) {
         this.mContext = mContext;
         this.datas = datas;
-        this.mMap  = mMap;
+        this.mMap = mMap;
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 

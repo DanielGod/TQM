@@ -1,5 +1,6 @@
 package tqm.bianfeng.com.tqm.bank.util;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -25,10 +26,12 @@ public class ListViewHeight {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(0, 0);
             totalHeight += listItem.getMeasuredHeight();
+            Log.e("Daniel","----totalHeight----"+totalHeight);
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        Log.e("Daniel","----params.height----"+params.height);
         listView.setLayoutParams(params);
     }
 }

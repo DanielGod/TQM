@@ -20,6 +20,7 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -69,6 +70,7 @@ public class BankFinancingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_financing);
         unbinder = ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
         setToolBar(getResources().getString(R.string.bankFinancing));
         mCompositeSubscription = new CompositeSubscription();

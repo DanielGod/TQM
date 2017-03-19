@@ -72,6 +72,11 @@ public class BankLoanAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public void setdatas(List<BankLoanItem> decoCompanyItemList) {
+        this.datas = decoCompanyItemList;
+        notifyDataSetChanged();
+    }
+
     static class ViewHolder {
         TextView annualReturnTv;
         TextView titleTv;

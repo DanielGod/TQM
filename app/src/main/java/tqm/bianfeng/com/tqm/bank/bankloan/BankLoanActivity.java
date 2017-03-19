@@ -7,8 +7,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -21,6 +24,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,6 +39,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.bank.fragment.FilterFragment;
+import tqm.bianfeng.com.tqm.main.DetailActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
@@ -58,9 +63,6 @@ public class BankLoanActivity extends AppCompatActivity {
     private Unbinder unbinder;
     private int pagNum = 1;
     private int mPagItemSize = 0;
-    private mListener mListener;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,13 +149,10 @@ public class BankLoanActivity extends AppCompatActivity {
                             mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                         }
                     }
-
                     @DebugLog
                     @Override
                     public void onError(Throwable e) {
-
                     }
-
                     @DebugLog
                     @Override
                     public void onNext(List<BankLoanItem> bankloanItems) {
@@ -166,32 +165,58 @@ public class BankLoanActivity extends AppCompatActivity {
         mCompositeSubscription.add(getBankFinancItem_subscription);
     }
 
-    public interface mListener {
-        public void detailActivity(Intent intent);
-    }
-
-
-
-
-
     private void setAdapter(List<BankLoanItem> bankloanItems) {
-
         final BankLoanAdapter loanAdapter = new BankLoanAdapter(BankLoanActivity.this,bankloanItems);
         mainPullRefreshLv.setAdapter(loanAdapter);
         Log.i("Daniel", "---isRefreshing---"+mainPullRefreshLv.isRefreshing());
         mainPullRefreshLv.onRefreshComplete();
-//        mainPullRefreshLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @DebugLog
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                //跳转银行贷款详情
-//                Intent intent = new Intent(BankLoanActivity.this, DetailActivity.class);
-//                intent.putExtra("detailType", "03");
-//                intent.putExtra("detailId", loanAdapter.getItem(position).getLoanId());
-//                mListener.detailActivity(intent);
-//            }
-//        });
+        initEdi(loanAdapter,bankloanItems);
+        mainPullRefreshLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @DebugLog
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //跳转银行贷款详情
+                Intent intent = new Intent(BankLoanActivity.this, DetailActivity.class);
+                intent.putExtra("detailType", "03");
+                intent.putExtra("detailId", loanAdapter.getItem(position).getLoanId());
+                startActivity(intent);
+            }
+        });
 
+    }
+    public void initEdi(final BankLoanAdapter loanAdapter, final List<BankLoanItem> bankFinancItems) {
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @DebugLog
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!editable.toString().equals("")) {
+                    List<BankLoanItem> decoCompanyItemList = new ArrayList();
+                    for (BankLoanItem decoCompanyItem : bankFinancItems) {
+                        Log.e("Daniel","----editable.toString()---"+editable.toString());
+                        Log.e("Daniel","----decoCompanyItem.getProductName()---"+decoCompanyItem.getLoanName());
+                        if (editable.toString().contains(decoCompanyItem.getLoanName())) {
+                            decoCompanyItemList.add(decoCompanyItem);
+                        } else if (decoCompanyItem.getLoanName().contains(editable.toString())) {
+                            decoCompanyItemList.add(decoCompanyItem);
+                        }
+                    }
+                    Log.e("Daniel","----decoCompanyItemList.size()---"+decoCompanyItemList.size());
+                    loanAdapter.setdatas(decoCompanyItemList);
+                } else {
+                    loanAdapter.setdatas(bankFinancItems);
+                }
+
+            }
+        });
     }
 
 
