@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -151,8 +154,44 @@ public class BankActivitonsActivity extends AppCompatActivity  {
     private void setAdapter(List<BankActivityItem> bankActivityItems) {
         BankActivitionsAdapter bankActivitionsAdapter = new BankActivitionsAdapter(bankActivityItems,BankActivitonsActivity.this);
         mainPullRefreshLv.setAdapter(bankActivitionsAdapter);
+        initEdi(bankActivitionsAdapter,bankActivityItems);
         mainPullRefreshLv.onRefreshComplete();
 
+    }
+
+    public void initEdi(final BankActivitionsAdapter bankFinancingAdapter, final List<BankActivityItem> bankFinancItems) {
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @DebugLog
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!editable.toString().equals("")) {
+                    List<BankActivityItem> decoCompanyItemList = new ArrayList();
+                    for (BankActivityItem decoCompanyItem : bankFinancItems) {
+                        Log.e("Daniel","----editable.toString()---"+editable.toString());
+                        Log.e("Daniel","----decoCompanyItem.getProductName()---"+decoCompanyItem.getInstitutionName());
+                        if (editable.toString().contains(decoCompanyItem.getInstitutionName())) {
+                            decoCompanyItemList.add(decoCompanyItem);
+                        } else if (decoCompanyItem.getInstitutionName().contains(editable.toString())) {
+                            decoCompanyItemList.add(decoCompanyItem);
+                        }
+                    }
+                    Log.e("Daniel","----decoCompanyItemList.size()---"+decoCompanyItemList.size());
+                    bankFinancingAdapter.setdatas(decoCompanyItemList);
+                } else {
+                    bankFinancingAdapter.setdatas(bankFinancItems);
+                }
+
+            }
+        });
     }
 //
 //    private void initDrawLayout() {

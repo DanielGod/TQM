@@ -73,6 +73,11 @@ public class BankActivitionsAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public void setdatas(List<BankActivityItem> decoCompanyItemList) {
+        this.datas = decoCompanyItemList;
+        notifyDataSetChanged();
+    }
+
     static class ViewHolder  {
 
         ImageView logoImg;
