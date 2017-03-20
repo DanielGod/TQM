@@ -246,9 +246,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/home_info_lin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/whitesmoke"
+                android:visibility="invisible"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -364,7 +366,7 @@
                         android:layout_marginRight="@dimen/smallmdp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
-                        android:src="@drawable/home_bankfinaning"
+                        android:src="@drawable/home_bank_finaning"
                         />
 
                     <TextView
@@ -420,7 +422,7 @@
                             android:layout_marginRight="@dimen/smallmdp"
                             android:adjustViewBounds="true"
                             android:scaleType="centerInside"
-                            android:src="@drawable/home_bankloan"
+                            android:src="@drawable/home_bank_loan"
                             />
 
                         <TextView
@@ -476,7 +478,7 @@
                             android:layout_marginRight="@dimen/smallmdp"
                             android:adjustViewBounds="true"
                             android:scaleType="centerInside"
-                            android:src="@drawable/home_bankactivitys"
+                            android:src="@drawable/home_bank_activitys"
                             />
 
                         <TextView

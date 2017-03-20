@@ -64,6 +64,7 @@
                 android:hint="输入手机号"
                 android:inputType="phone"
                 android:paddingLeft="@dimen/smallmdp"
+                android:textColor="@color/black"
                 android:textColorHint="@color/gary_dark"/>
 
             <Button
@@ -106,6 +107,7 @@
                 android:hint="输入短信验证码"
                 android:inputType="number"
                 android:paddingLeft="@dimen/smallmdp"
+                android:textColor="@color/black"
                 android:textColorHint="@color/gary_dark"/>
         </LinearLayout>
 

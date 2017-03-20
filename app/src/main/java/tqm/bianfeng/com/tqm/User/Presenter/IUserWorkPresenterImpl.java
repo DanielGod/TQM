@@ -78,6 +78,7 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                     @Override
                     public void onError(Throwable e) {
                         iLoginAndRegistered.loginOrRegisteredResult(0,false,"无法上传，请检查网络");
+                        iLoginAndRegistered.shouNetWorkActivity();
                     }
 
                     @Override

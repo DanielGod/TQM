@@ -32,6 +32,7 @@ import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.Dialog.BaseDialog;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.UserFragment;
+import tqm.bianfeng.com.tqm.Util.NetUtils;
 import tqm.bianfeng.com.tqm.Util.PhotoGet;
 import tqm.bianfeng.com.tqm.application.BaseApplication;
 import tqm.bianfeng.com.tqm.network.NetWork;
@@ -39,7 +40,7 @@ import tqm.bianfeng.com.tqm.update.UpdateInformation;
 import tqm.bianfeng.com.tqm.update.UpdateMsg;
 import tqm.bianfeng.com.tqm.update.UpdateService;
 
-public class MainActivity extends AppCompatActivity implements UserFragment.mListener,HomeFragment.mListener{
+public class MainActivity extends AppCompatActivity implements UserFragment.mListener, HomeFragment.mListener {
     private static final String HOME_TAG = "home_flag";
     private static final String LAWHELP_TAG = "lawhelp_flag";
     private static final String INSTITUTIONSIN_TAG = "institutionsin_flag";
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     private static final int CONTENT_LAWHELP = 2;
     private static final int CONTENT_INSTITUTIONSIN = 3;
     private static final int CONTENT_CATHOME = 4;
-    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE=1234;
+    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1234;
     private static final int TAKEPHOTO = 1; // 拍照
     private static final int GALLERY = 2; // 从相册中选择
     private static final int PHOTO_REQUEST_CUT = 3; // 结果
@@ -62,18 +63,26 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     BaseDialog baseDialog;
+    boolean isUpdateApp = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        compositeSubscription=new CompositeSubscription();
+        compositeSubscription = new CompositeSubscription();
         setContent(CONTENT_HOME);
         //设置底部栏
         initBottomBar();
         //版本更新
         updateApp();
+        //网络判断
+        initNetWork(true);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     /**
@@ -88,9 +97,9 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 .setInActiveColor(R.color.bottom_img)
                 .setBarBackgroundColor(R.color.whitesmoke);
         bottomBar.addItem(new BottomNavigationItem(R.drawable.home, R.string.home))
-                .addItem(new BottomNavigationItem(R.drawable.law_help,  R.string.lawHelp))
+                .addItem(new BottomNavigationItem(R.drawable.law_help, R.string.lawHelp))
                 .addItem(new BottomNavigationItem(R.drawable.institutions_in, R.string.institutionsIn))
-                .addItem(new BottomNavigationItem(R.drawable.cat_home,  R.string.catHome))
+                .addItem(new BottomNavigationItem(R.drawable.cat_home, R.string.catHome))
                 .initialise();
 
         bottomBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
@@ -176,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         }
 
     }
+
     /**
      * 设置fragment
      *
@@ -189,26 +199,28 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     }
 
     public void changeActivity(
-            Class activityClass){
-        startActivity(new Intent(MainActivity.this,activityClass));
+            Class activityClass) {
+        startActivity(new Intent(MainActivity.this, activityClass));
     }
-    public void changeUserHeadImg(){
+
+    public void changeUserHeadImg() {
         //修改用户头像
-        if(photoGet==null) {
+        if (photoGet == null) {
             photoGet = PhotoGet.getInstance();
         }
-        if(baseDialog==null){
-            baseDialog=new BaseDialog(this);
+        if (baseDialog == null) {
+            baseDialog = new BaseDialog(this);
         }
         photoGet.showAvatarDialog(MainActivity.this, baseDialog);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case TAKEPHOTO:
-                String headIconPath=photoGet.getHeadIconPath();
-                if (headIconPath!=null)
+                String headIconPath = photoGet.getHeadIconPath();
+                if (headIconPath != null)
                     photoGet.startPhotoZoom(Uri.fromFile(new File(headIconPath)), 150);
                 break;
             case GALLERY:
@@ -220,18 +232,19 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 if (data != null) {
                     photoGet.saveImage(data);
                     userFragemnt.setUserHeadImg(photoGet.getHeadFile());
-
                 }
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
     //带intent的页面跳转
-    public void detailActivity(Intent intent){
+    public void detailActivity(Intent intent) {
         startActivity(intent);
     }
+
     UpdateMsg mUpdateMsg;
-    Observer<UpdateMsg> observer=new Observer<UpdateMsg>() {
+    Observer<UpdateMsg> observer = new Observer<UpdateMsg>() {
         @Override
         public void onCompleted() {
 
@@ -239,16 +252,16 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
 
         @Override
         public void onError(Throwable e) {
-            Log.e("gqf","updateMsg"+e.getMessage());
+            Log.e("gqf", "updateMsg" + e.getMessage());
         }
 
         @Override
         public void onNext(UpdateMsg updateMsg) {
-            Log.e("gqf","updateMsg"+updateMsg.toString());
+            Log.e("gqf", "updateMsg" + updateMsg.toString());
             //与本地版本号对比
-            if(BaseApplication.isUpdateForVersion(updateMsg.getVersionCode(), UpdateInformation.localVersion)) {
+            if (BaseApplication.isUpdateForVersion(updateMsg.getVersionCode(), UpdateInformation.localVersion)) {
                 // Log.i("gqf","updateMsg"+updateMsg.toString());
-                mUpdateMsg=updateMsg;
+                mUpdateMsg = updateMsg;
                 AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
                 alert.setTitle("软件升级")
                         .setMessage(updateMsg.getUpdateContent())
@@ -262,15 +275,15 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                                     //申请WRITE_EXTERNAL_STORAGE权限
                                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                                             WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
-                                }else{
+                                } else {
                                     startUpdateService(mUpdateMsg);
                                 }
                             }
                         })
-                        .setNegativeButton("取消",new DialogInterface.OnClickListener(){
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-
+                                isUpdateApp = false;
                             }
                         });
                 alert.create().show();
@@ -278,22 +291,69 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         }
     };
 
-    public void startUpdateService(UpdateMsg updateMsg){
-        Intent updateIntent =new Intent(MainActivity.this, UpdateService.class);
-        updateIntent.putExtra("getUpdateContent",updateMsg.getUpdateContent());
-        updateIntent.putExtra("getVersionCode",updateMsg.getVersionCode());
-        updateIntent.putExtra("getVersionUrl",updateMsg.getVersionUrl());
+    //开起后台更新服务
+    public void startUpdateService(UpdateMsg updateMsg) {
+        Intent updateIntent = new Intent(MainActivity.this, UpdateService.class);
+        updateIntent.putExtra("getUpdateContent", updateMsg.getUpdateContent());
+        updateIntent.putExtra("getVersionCode", updateMsg.getVersionCode());
+        updateIntent.putExtra("getVersionUrl", updateMsg.getVersionUrl());
         startService(updateIntent);
     }
 
     //检测更新
-    public void updateApp(){
-        //判断本地数据库是否有版本号
-        Subscription subscription = NetWork.getUpdateService().getVersion()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
-        compositeSubscription.add(subscription);
+    public void updateApp() {
+        if (isUpdateApp) {
+            //判断本地数据库是否有版本号
+            Subscription subscription = NetWork.getUpdateService().getVersion()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(observer);
+            compositeSubscription.add(subscription);
+        }
+    }
+
+    //弹出网络设置dialog
+    public void shouNetWorkActivity() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("当前没有网络")
+                .setMessage("是否跳转系统网络设置界面?")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        NetUtils.openSetting(MainActivity.this);
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+        alert.create().show();
+
+    }
+
+    //检测网络
+    public void initNetWork(boolean isShowDialog) {
+        Log.i("gqf", "initNetWork" + NetUtils.isConnected(this));
+        if (!NetUtils.isConnected(this)) {
+            if (isShowDialog) {
+                shouNetWorkActivity();
+            }
+            if (homeFragment != null) {
+                homeFragment.showViewWhenNetWork(false);
+            }
+        } else {
+            if (homeFragment != null) {
+                homeFragment.showViewWhenNetWork(true);
+            }
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initNetWork(false);
+        updateApp();
     }
 
     @Override

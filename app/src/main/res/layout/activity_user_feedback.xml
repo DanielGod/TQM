@@ -79,8 +79,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="bottom"
+                android:paddingLeft="@dimen/tinymdp"
                 android:text="亲："
                 android:textSize="@dimen/mediumxsp"
+                android:textColor="@color/black"
                 />
         </LinearLayout>
 
@@ -91,6 +93,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:text="请有什么问题请与我们联系，客服看到会即时与您联系"
             android:textSize="@dimen/smallsp"
+            android:textColor="@color/black"
             />
     </LinearLayout>
 

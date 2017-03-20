@@ -1,7 +1,9 @@
 package tqm.bianfeng.com.tqm.application;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,6 +14,7 @@ import io.realm.Realm;
 import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.CustomView.ToastType;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.Util.NetUtils;
 
 /**
  * Created by johe on 2017/3/14.
@@ -48,6 +51,25 @@ public class BaseActivity extends AppCompatActivity implements InitViewInterface
                 onBackPressed();
             }
         });
+    }
+
+    //弹出网络设置dialog
+    public void shouNetWorkActivity() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("当前没有网络")
+                .setMessage("是否跳转系统网络设置界面?")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        NetUtils.openSetting(BaseActivity.this);
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+        alert.create().show();
     }
 
     @Override

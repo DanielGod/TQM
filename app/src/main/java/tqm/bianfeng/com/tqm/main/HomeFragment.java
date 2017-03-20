@@ -48,7 +48,7 @@ import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 
 
-public class HomeFragment extends BaseFragment  {
+public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.home_slider)
     SliderLayout homeSlider;
@@ -81,7 +81,10 @@ public class HomeFragment extends BaseFragment  {
 
     @BindView(R.id.bank_finaning_list)
     ListView bankFinaningList;
+    @BindView(R.id.home_info_lin)
+    LinearLayout homeInfoLin;
 
+    boolean isNetWork=true;
     private CompositeSubscription mCompositeSubscription;
 
     public static HomeFragment newInstance() {
@@ -91,9 +94,8 @@ public class HomeFragment extends BaseFragment  {
     }
 
 
-
     public interface mListener {
-        public  void detailActivity(Intent intent);
+        public void detailActivity(Intent intent);
     }
 
     private mListener mListener;
@@ -111,15 +113,13 @@ public class HomeFragment extends BaseFragment  {
         View view = inflater.inflate(R.layout.fragment_home_top, container, false);
         ButterKnife.bind(this, view);
         mCompositeSubscription = new CompositeSubscription();
-        getBankLoanItem();
-        getBankLoanItemHot();
 
-        getBankFinaningItem();
-        getBankLoanServiceItem();
-        getBankActivitys();
-        initImagesData();
+        if(isNetWork){
+            showViewWhenNetWork(isNetWork);
+        }
         return view;
     }
+
 
     /**
      * 银行贷款
@@ -412,6 +412,28 @@ public class HomeFragment extends BaseFragment  {
             case R.id.home_bank_make_money_lin:
                 startActivity(new Intent(getActivity(), BankFinancingActivity.class));
                 break;
+        }
+    }
+
+    //网络设置显示判断
+    public void showViewWhenNetWork(boolean isNetWork) {
+        Log.i("gqf","showViewWhenNetWork"+isNetWork);
+        this.isNetWork=isNetWork;
+        if(homeInfoLin!=null){
+            if(isNetWork){
+                if(homeInfoLin.getVisibility()!=View.VISIBLE) {
+                    homeInfoLin.setVisibility(View.VISIBLE);
+                    getBankLoanItem();
+                    getBankLoanItemHot();
+                    getBankFinaningItem();
+                    getBankLoanServiceItem();
+                    getBankActivitys();
+                    initImagesData();
+                }
+            }else{
+                homeInfoLin.setVisibility(View.INVISIBLE);
+                Log.i("gqf","showViewWhenNetWork"+isNetWork);
+            }
         }
     }
 

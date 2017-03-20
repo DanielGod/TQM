@@ -127,6 +127,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
                 Class activityClass);
 
         public void changeUserHeadImg();
+        public void shouNetWorkActivity( );
     }
 
     private mListener mListener;
@@ -136,8 +137,6 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         mListener = (mListener) activity;
 
     }
-
-
     //登录判断
     public boolean isLogin(){
         if (realm.where(User.class).findFirst() == null) {
@@ -163,9 +162,6 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
-
-
-
     }
 
     //初始化显示数据
@@ -267,5 +263,9 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
                 initView();
             }
         }
+    }
+    //提示是否打开网络设置
+    public void shouNetWorkActivity(){
+        mListener.shouNetWorkActivity();
     }
 }

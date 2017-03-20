@@ -68,7 +68,11 @@ public class BankActivitionsAdapter extends RecyclerView.Adapter<BankActivitions
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         data = datas.get(position);
-        Picasso.with(mContext).load(data.getInstitutionIcon()).placeholder(R.drawable.banklogo).into(holder.logoImg);
+        if(data.getInstitutionIcon()!=null){
+            if(!data.getInstitutionIcon().equals("")){
+                Picasso.with(mContext).load(data.getInstitutionIcon()).placeholder(R.drawable.banklogo).into(holder.logoImg);
+            }
+        }
         holder.activityTitleTv.setText(data.getActivityTitle());
         holder.institutionNameTv.setText(data.getInstitutionName());
         holder.activityViewsTv.setText(data.getActivityViews()+"");

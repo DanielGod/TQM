@@ -39,16 +39,17 @@ public class MyBankLoanActivity extends BaseActivity {
     List<BankLoanItem> datas;
 
     BankLoanAdapter bankLoanAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_bank_loan);
         ButterKnife.bind(this);
-        setToolbar(myBankLoanToolbar,"我关注的银行贷款");
+        setToolbar(myBankLoanToolbar, "我关注的银行贷款");
         initData();
     }
 
-    public void initData(){
+    public void initData() {
         Subscription subscription = NetWork.getUserService().getMyAttentionOfBankLoan(realm.where(User.class).findFirst().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -60,23 +61,31 @@ public class MyBankLoanActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        shouNetWorkActivity();
                     }
 
                     @Override
                     public void onNext(List<BankLoanItem> bankLoanItems) {
-                        datas=bankLoanItems;
-                        Log.i("gqf","onNext"+datas.toString());
+                        datas = bankLoanItems;
+                        Log.i("gqf", "onNext" + datas.toString());
                         initList(bankLoanItems);
                     }
                 });
         compositeSubscription.add(subscription);
     }
-    public void initList(List<BankLoanItem> bankLoanItems){
-        if(bankLoanAdapter==null){
-            bankLoanAdapter=new BankLoanAdapter(bankLoanItems,this);
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initData();
+
+    }
+
+    public void initList(List<BankLoanItem> bankLoanItems) {
+        if (bankLoanAdapter == null) {
+            bankLoanAdapter = new BankLoanAdapter(bankLoanItems, this);
             myBankLoanList.setLayoutManager(new LinearLayoutManager(this));
-            LayoutAnimationController lac=new LayoutAnimationController(AnimationUtils.loadAnimation(this, R.anim.slide_in_left));
+            LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(this, R.anim.slide_in_left));
             lac.setOrder(LayoutAnimationController.ORDER_NORMAL);
             lac.setDelay(1);
             myBankLoanList.setLayoutAnimation(lac);
@@ -84,13 +93,13 @@ public class MyBankLoanActivity extends BaseActivity {
             bankLoanAdapter.setOnItemClickListener(new BankLoanAdapter.BankLoanItemClickListener() {
                 @Override
                 public void onItemClick(View view, int postion) {
-                    Intent intent=new Intent(MyBankLoanActivity.this,DetailActivity.class);
-                    intent.putExtra("detailType","03");
-                    intent.putExtra("detailId",datas.get(postion).getLoanId());
+                    Intent intent = new Intent(MyBankLoanActivity.this, DetailActivity.class);
+                    intent.putExtra("detailType", "03");
+                    intent.putExtra("detailId", datas.get(postion).getLoanId());
                     startActivity(intent);
                 }
             });
-        }else{
+        } else {
             bankLoanAdapter.setdatas(bankLoanItems);
         }
     }

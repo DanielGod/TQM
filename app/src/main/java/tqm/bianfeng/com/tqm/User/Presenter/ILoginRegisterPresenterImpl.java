@@ -37,6 +37,7 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
                         @Override
                         public void onError(Throwable e) {
                             iLoginAndRegistered.loginOrRegisteredResult(1,false,"无法获取验证码，请检查网络");
+                            iLoginAndRegistered.shouNetWorkActivity();
                         }
 
                         @Override
@@ -73,6 +74,7 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
                         @Override
                         public void onError(Throwable e) {
                             iLoginAndRegistered.loginOrRegisteredResult(1,false,"注册或登录超时，请检查网路设置");
+                            iLoginAndRegistered.shouNetWorkActivity();
                         }
 
                         @Override
