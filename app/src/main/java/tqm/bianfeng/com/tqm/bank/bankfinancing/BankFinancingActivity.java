@@ -11,9 +11,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.handmark.pulltorefresh.library.ILoadingLayout;
@@ -44,6 +44,7 @@ import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.pojo.bank.FilterEvens;
+import tqm.bianfeng.com.tqm.pojo.bank.ListItemPositioin;
 
 public class BankFinancingActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
@@ -56,13 +57,15 @@ public class BankFinancingActivity extends AppCompatActivity {
     PullToRefreshListView mainPullRefreshLv;
     @BindView(R.id.etSearch)
     EditText etSearch;
+    @BindView(R.id.ivDeleteText)
+    ImageView ivDeleteText;
 
 
     private CompositeSubscription mCompositeSubscription;
     private Unbinder unbinder;
     private int pagNum = 1;
     private int mPagItemSize = 0;
-
+    private BankFinancingAdapter bankFinancingAdapter;
 
 
     @Override
@@ -77,6 +80,7 @@ public class BankFinancingActivity extends AppCompatActivity {
         initDrawLayout();
         initDate(null, pagNum);
         initRefreshlv();
+
     }
 
     private void initRefreshlv() {
@@ -128,7 +132,8 @@ public class BankFinancingActivity extends AppCompatActivity {
     }
 
     private void initDate(String json, int pagNum) {
-        Subscription getBankFinancItem_subscription = NetWork.getBankService().getBankFinancItem(json, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE)
+        Subscription getBankFinancItem_subscription = NetWork.getBankService()
+                .getBankFinancItem(json, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<BankFinancItem>>() {
@@ -166,23 +171,32 @@ public class BankFinancingActivity extends AppCompatActivity {
         initDate(event.getFilterValue(), pagNum);
 
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread2(ListItemPositioin event) {
+        Integer position = event.getPosition();
+        Log.i("Daniel", "---onEventMainThread2---" + event.getPosition());
+        //跳转银行理财详情
+        Log.i("Daniel", "---getFinancId---" + bankFinancingAdapter.getItem(position).getFinancId());
+        Log.i("Daniel", "---position---" + position);
+        Intent intent = new Intent(BankFinancingActivity.this, DetailActivity.class);
+        intent.putExtra("detailType", "02");
+        intent.putExtra("detailId", bankFinancingAdapter.getItem(position).getFinancId());
+        startActivity(intent);
+
+    }
+
     private void setAdapter(List<BankFinancItem> bankFinancItems) {
-        final BankFinancingAdapter bankFinancingAdapter = new BankFinancingAdapter(BankFinancingActivity.this, bankFinancItems);
-        mainPullRefreshLv.setAdapter(bankFinancingAdapter);
+        if (bankFinancingAdapter==null){
+            bankFinancingAdapter = new BankFinancingAdapter(BankFinancingActivity.this, bankFinancItems,false);
+            mainPullRefreshLv.setAdapter(bankFinancingAdapter);
+        }else {
+
+            bankFinancingAdapter.setdatas(bankFinancItems);
+        }
         Log.i("Daniel", "---isRefreshing---" + mainPullRefreshLv.isRefreshing());
         mainPullRefreshLv.onRefreshComplete();
-        initEdi(bankFinancingAdapter,bankFinancItems);
-        mainPullRefreshLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //跳转银行理财详情
-                Intent intent = new Intent(BankFinancingActivity.this, DetailActivity.class);
-                intent.putExtra("detailType", "02");
-                intent.putExtra("detailId", bankFinancingAdapter.getItem(position).getFinancId());
-                startActivity(intent);
+        initEdi(bankFinancingAdapter, bankFinancItems);
 
-            }
-        });
 
     }
 
@@ -195,23 +209,25 @@ public class BankFinancingActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                ivDeleteText.setVisibility(View.VISIBLE);
             }
+
             @DebugLog
             @Override
             public void afterTextChanged(Editable editable) {
+
                 if (!editable.toString().equals("")) {
                     List<BankFinancItem> decoCompanyItemList = new ArrayList();
                     for (BankFinancItem decoCompanyItem : bankFinancItems) {
-                        Log.e("Daniel","----editable.toString()---"+editable.toString());
-                        Log.e("Daniel","----decoCompanyItem.getProductName()---"+decoCompanyItem.getProductName());
+                        Log.e("Daniel", "----editable.toString()---" + editable.toString());
+                        Log.e("Daniel", "----decoCompanyItem.getProductName()---" + decoCompanyItem.getProductName());
                         if (editable.toString().contains(decoCompanyItem.getProductName())) {
                             decoCompanyItemList.add(decoCompanyItem);
                         } else if (decoCompanyItem.getProductName().contains(editable.toString())) {
                             decoCompanyItemList.add(decoCompanyItem);
                         }
                     }
-                    Log.e("Daniel","----decoCompanyItemList.size()---"+decoCompanyItemList.size());
+                    Log.e("Daniel", "----decoCompanyItemList.size()---" + decoCompanyItemList.size());
                     bankFinancingAdapter.setdatas(decoCompanyItemList);
                 } else {
                     bankFinancingAdapter.setdatas(bankFinancItems);
@@ -232,7 +248,7 @@ public class BankFinancingActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.etSearch, R.id.ll_filter})
+    @OnClick({R.id.etSearch, R.id.ll_filter,R.id.ivDeleteText})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.etSearch:
@@ -240,6 +256,11 @@ public class BankFinancingActivity extends AppCompatActivity {
                 break;
             case R.id.ll_filter:
                 drawerLayout.openDrawer(drawerContent);
+                break;
+            case R.id.ivDeleteText:
+               etSearch.setText("");
+                ivDeleteText.setVisibility(View.GONE);
+                etSearch.setFocusableInTouchMode(false);
                 break;
         }
     }

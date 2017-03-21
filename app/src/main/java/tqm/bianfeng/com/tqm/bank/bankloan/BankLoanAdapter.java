@@ -5,12 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
+import tqm.bianfeng.com.tqm.pojo.bank.ListItemPositioin;
 
 /**
  * Created by Daniel on 2017/3/16.
@@ -19,10 +23,12 @@ import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 public class BankLoanAdapter extends BaseAdapter {
     Context mContext;
     List<BankLoanItem> datas;
+    boolean isFistPage=false;
 
-    public BankLoanAdapter(Context mContext, List<BankLoanItem> datas) {
+    public BankLoanAdapter(Context mContext, List<BankLoanItem> datas,boolean isFistPage) {
         this.mContext = mContext;
         this.datas = datas;
+        this.isFistPage = isFistPage;
     }
 
     @Override
@@ -41,7 +47,7 @@ public class BankLoanAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder ;
         if (convertView==null){
             convertView = LayoutInflater.from(mContext).inflate(R.layout.listitem, parent, false);
@@ -55,6 +61,7 @@ public class BankLoanAdapter extends BaseAdapter {
             holder.institutionNameTv = (TextView) convertView.findViewById(R.id.institutionName_tv);
             holder.financViewsTv = (TextView) convertView.findViewById(R.id.financViews_tv);
             holder.loanTypeNameTv = (TextView) convertView.findViewById(R.id.loanTypeName_tv);
+            holder.linearLayout = (LinearLayout) convertView.findViewById(R.id.linearlayout);
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder) convertView.getTag();
@@ -69,6 +76,14 @@ public class BankLoanAdapter extends BaseAdapter {
         holder.investmentTermTv.setText("贷款期限：" + data.getLoanPeriod());
         holder.financViewsTv.setText(data.getLoanViews() + "");
         holder.loanTypeNameTv.setText("贷款类型："+data.getLoanTypeName());
+        if (!isFistPage){
+            holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new ListItemPositioin(position));
+                }
+            });
+        }
         return convertView;
     }
 
@@ -87,5 +102,6 @@ public class BankLoanAdapter extends BaseAdapter {
         TextView investmentTermTv;
         TextView institutionNameTv;
         TextView financViewsTv;
+        LinearLayout linearLayout;
     }
 }

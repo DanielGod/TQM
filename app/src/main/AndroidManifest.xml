@@ -25,23 +25,26 @@
             android:windowSoftInputMode="stateHidden"
                   android:screenOrientation="portrait">
 
+        <!-- 银行理财-->
+        <activity
+            android:name=".bank.bankfinancing.BankFinancingActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".bank.bankfinancing.BankFinancingActivity"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"
-            >
-
+        <!-- 银行活动-->
+        <activity
+            android:name=".bank.bankactivitys.BankActivitonsActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".bank.bankactivitys.BankActivitonsActivity"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"
-            >
-
-        </activity>
-        <activity android:name=".bank.bankloan.BankLoanActivity"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"
-            >
+        <!-- 银行贷款-->
+        <activity
+            android:name=".bank.bankloan.BankLoanActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
 
         </activity>
         <activity
@@ -69,7 +72,13 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
+
         <service android:name=".update.UpdateService"/>
+
+        <activity android:name=".bank.bankinformations.BankInformationActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

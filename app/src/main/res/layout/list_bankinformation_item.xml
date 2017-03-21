@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/hugehxxxdp"
+              android:layout_margin="@dimen/smallmdp"
+              android:background="@color/white"
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingTop="@dimen/smallmdp"
+        android:paddingBottom="@dimen/smallmdp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
+        >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/Title_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/mediumsp"
+                    android:text="宋江支行年收益4.5%，起购5000元"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+                <ImageView
+                    android:layout_width="@dimen/hugemdp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/institution"
+                    android:adjustViewBounds="true"
+                    android:paddingRight="5dp"
+                    />
+                <TextView
+                    android:id="@+id/institutionName_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:text="发行机构"
+                    android:textSize="@dimen/smallsp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5">
+                <ImageView
+                    android:layout_width="@dimen/hugemdp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/bankinformation_time"
+                    android:adjustViewBounds="true"
+                    android:paddingRight="5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/time_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="0"
+                    android:textSize="@dimen/smallsp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="@dimen/hugemdp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/attention"
+                    android:adjustViewBounds="true"
+                    android:paddingRight="5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/Views_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="0"
+                    android:textSize="@dimen/smallsp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+</LinearLayout>

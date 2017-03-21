@@ -56,12 +56,15 @@ public interface BankService {
 
 
     /**
-     * 获取银行咨询
+     * 获取银行资讯
      * @return
      */
     @FormUrlEncoded
     @POST("getBankInformItem")
-    Observable<List<BankInformItem>> getBankInformItem(@Field("informType") Integer informType, @Field("homeShow") String homeShow,  @Field("pageNum") String pageNum, @Field("pageSize") String pageSize);
+    Observable<List<BankInformItem>> getBankInformItem(@Field("informType") Integer informType,
+                                                       @Field("homeShow") String homeShow,
+                                                       @Field("pageNum") Integer pageNum,
+                                                       @Field("pageSize") Integer pageSize);
 
     /**
      * 获取银行理财
