@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         //设置底部栏
         initBottomBar();
         //版本更新
-        updateApp();
+//        updateApp();
         //网络判断
         initNetWork(true);
     }
@@ -292,6 +292,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
             }
         }
     };
+
 
     //开起后台更新服务
     public void startUpdateService(UpdateMsg updateMsg) {
