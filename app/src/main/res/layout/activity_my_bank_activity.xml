@@ -26,10 +26,6 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/tinymdp"
-        android:background="@color/whitesmoke"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_bank_activity_list"
