@@ -15,6 +15,11 @@
     <!--银行贷款-->
     <string name="bankloan">银行贷款</string>
 
+    <!--银行资讯-->
+    <string name="bankInfromations">银行资讯</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

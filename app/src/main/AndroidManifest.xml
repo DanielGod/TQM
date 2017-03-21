@@ -12,6 +12,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".main.MainActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
         <activity android:name=".main.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,27 +25,29 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity"
-            android:windowSoftInputMode="stateHidden">
 
+        <!-- 银行理财-->
+        <activity
+            android:name=".bank.bankfinancing.BankFinancingActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".bank.bankfinancing.BankFinancingActivity"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"
-            >
-
+        <!-- 银行活动-->
+        <activity
+            android:name=".bank.bankactivitys.BankActivitonsActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".bank.bankactivitys.BankActivitonsActivity"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"
-            >
+        <!-- 银行贷款-->
+        <activity
+            android:name=".bank.bankloan.BankLoanActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
 
-        </activity>
-        <activity android:name=".bank.bankloan.BankLoanActivity"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"
             >
-
         </activity>
         <activity
             android:name=".User.MyBankActivityActivity"
@@ -66,7 +74,13 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
+
         <service android:name=".update.UpdateService"/>
+
+        <activity android:name=".bank.bankinformations.BankInformationActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

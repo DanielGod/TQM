@@ -37,6 +37,7 @@ import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.bank.bankactivitys.BankActivitonsActivity;
 import tqm.bianfeng.com.tqm.bank.bankfinancing.BankFinancingActivity;
 import tqm.bianfeng.com.tqm.bank.bankfinancing.BankFinancingAdapter;
+import tqm.bianfeng.com.tqm.bank.bankinformations.BankInformationActivity;
 import tqm.bianfeng.com.tqm.bank.bankloan.BankLoanActivity;
 import tqm.bianfeng.com.tqm.bank.bankloan.BankLoanAdapter;
 import tqm.bianfeng.com.tqm.bank.util.ListViewHeight;
@@ -152,7 +153,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void setBankLoanListAdapter(final List<BankLoanItem> bankloanItems) {
-        final BankLoanAdapter bankLoanAdapter = new BankLoanAdapter(getActivity(), bankloanItems);
+        final BankLoanAdapter bankLoanAdapter = new BankLoanAdapter(getActivity(), bankloanItems,true);
         bankLoanList.setAdapter(bankLoanAdapter);
         ListViewHeight.setListViewHeightBasedOnChildren(bankLoanList);//注意：一定要在notifyDataSetChanged()方法之前执行
         bankLoanList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -250,7 +251,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void setBankFinancListAdapter(List<BankFinancItem> bankFinancItems) {
-        final BankFinancingAdapter bankFinancingAdapter = new BankFinancingAdapter(getActivity(), bankFinancItems);
+        final BankFinancingAdapter bankFinancingAdapter = new BankFinancingAdapter(getActivity(), bankFinancItems,true);
         bankFinaningList.setAdapter(bankFinancingAdapter);
         ListViewHeight.setListViewHeightBasedOnChildren(bankFinaningList);//注意：一定要在notifyDataSetChanged()方法之前执行
         bankFinaningList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -391,7 +392,7 @@ public class HomeFragment extends BaseFragment {
 
 
     @OnClick({R.id.select_more_bankFinancing_txt, R.id.select_more_bankLoan_txt, R.id.select_more_bankActivitys_txt,
-            R.id.home_bank_activity_lin, R.id.home_bank_loan_lin, R.id.home_bank_make_money_lin})
+            R.id.home_bank_activity_lin, R.id.home_bank_loan_lin, R.id.home_bank_make_money_lin,R.id.select_more_bank_make_money_txt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.select_more_bankFinancing_txt:
@@ -411,6 +412,9 @@ public class HomeFragment extends BaseFragment {
                 break;
             case R.id.home_bank_make_money_lin:
                 startActivity(new Intent(getActivity(), BankFinancingActivity.class));
+                break;
+            case R.id.select_more_bank_make_money_txt:
+                startActivity(new Intent(getActivity(), BankInformationActivity.class));
                 break;
         }
     }

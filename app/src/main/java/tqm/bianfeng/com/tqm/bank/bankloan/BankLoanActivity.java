@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -44,6 +43,7 @@ import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.pojo.bank.FilterEvens;
+import tqm.bianfeng.com.tqm.pojo.bank.ListItemPositioin;
 
 public class BankLoanActivity extends AppCompatActivity {
 
@@ -63,6 +63,7 @@ public class BankLoanActivity extends AppCompatActivity {
     private Unbinder unbinder;
     private int pagNum = 1;
     private int mPagItemSize = 0;
+    BankLoanAdapter loanAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +121,20 @@ public class BankLoanActivity extends AppCompatActivity {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread2(ListItemPositioin event) {
+        Integer position = event.getPosition();
+        Log.i("Daniel", "---onEventMainThread2---" + event.getPosition());
+        //跳转银行贷款详情
+        Log.i("Daniel", "---getFinancId---" + loanAdapter.getItem(position).getLoanId());
+        Log.i("Daniel", "---position---" + position);
+        Intent intent = new Intent(BankLoanActivity.this, DetailActivity.class);
+        intent.putExtra("detailType", "02");
+        intent.putExtra("detailId", loanAdapter.getItem(position).getLoanId());
+        startActivity(intent);
+
+    }
+
     private void setToolBar(String s) {
         toolbar.setTitle(s);
         setSupportActionBar(toolbar);
@@ -166,22 +181,17 @@ public class BankLoanActivity extends AppCompatActivity {
     }
 
     private void setAdapter(List<BankLoanItem> bankloanItems) {
-        final BankLoanAdapter loanAdapter = new BankLoanAdapter(BankLoanActivity.this,bankloanItems);
-        mainPullRefreshLv.setAdapter(loanAdapter);
+        if (loanAdapter==null){
+            loanAdapter = new BankLoanAdapter(BankLoanActivity.this,bankloanItems,false);
+            mainPullRefreshLv.setAdapter(loanAdapter);
+        }else {
+            loanAdapter.setdatas(bankloanItems);
+        }
+
+
         Log.i("Daniel", "---isRefreshing---"+mainPullRefreshLv.isRefreshing());
         mainPullRefreshLv.onRefreshComplete();
         initEdi(loanAdapter,bankloanItems);
-        mainPullRefreshLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @DebugLog
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //跳转银行贷款详情
-                Intent intent = new Intent(BankLoanActivity.this, DetailActivity.class);
-                intent.putExtra("detailType", "03");
-                intent.putExtra("detailId", loanAdapter.getItem(position).getLoanId());
-                startActivity(intent);
-            }
-        });
 
     }
     public void initEdi(final BankLoanAdapter loanAdapter, final List<BankLoanItem> bankFinancItems) {

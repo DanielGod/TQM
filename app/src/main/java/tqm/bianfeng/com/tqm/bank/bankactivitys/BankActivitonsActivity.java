@@ -67,8 +67,10 @@ public class BankActivitonsActivity extends AppCompatActivity  {
 
     }
 
+    /**
+     * 初始化下拉刷新，上拉加载
+     */
     private void initRefreshlv() {
-
         //设置刷新时显示的文本
         ILoadingLayout startLayout = mainPullRefreshLv.getLoadingLayoutProxy(true, false);
         startLayout.setPullLabel("正在下拉刷新...");
@@ -159,6 +161,11 @@ public class BankActivitonsActivity extends AppCompatActivity  {
 
     }
 
+    /**
+     * 查询
+     * @param bankFinancingAdapter
+     * @param bankFinancItems
+     */
     public void initEdi(final BankActivitionsAdapter bankFinancingAdapter, final List<BankActivityItem> bankFinancItems) {
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
