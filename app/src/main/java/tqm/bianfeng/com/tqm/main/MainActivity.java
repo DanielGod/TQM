@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     BaseDialog baseDialog;
-
+    AlertDialog.Builder alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,7 +262,9 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
             if (BaseApplication.isUpdateForVersion(updateMsg.getVersionCode(), UpdateInformation.localVersion)) {
                 // Log.i("gqf","updateMsg"+updateMsg.toString());
                 mUpdateMsg = updateMsg;
-                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                if (alert == null) {
+                    alert = new AlertDialog.Builder(MainActivity.this);
+                }
                 alert.setTitle("软件升级")
                         .setMessage(updateMsg.getUpdateContent())
                         .setPositiveButton("更新", new DialogInterface.OnClickListener() {
@@ -302,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
 
     //检测更新
     public void updateApp() {
-        if (ISUPDATEAPP) {
+        if (ISUPDATEAPP && alert == null) {
             //判断本地数据库是否有版本号
             Subscription subscription = NetWork.getUpdateService().getVersion()
                     .subscribeOn(Schedulers.io())
@@ -314,7 +316,9 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
 
     //弹出网络设置dialog
     public void shouNetWorkActivity() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        if (alert == null) {
+            alert = new AlertDialog.Builder(this);
+        }
         alert.setTitle("当前没有网络")
                 .setMessage("是否跳转系统网络设置界面?")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -329,6 +333,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                     }
                 });
         alert.create().show();
+
     }
 
     //检测网络

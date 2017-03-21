@@ -2,6 +2,7 @@ package tqm.bianfeng.com.tqm.User.Presenter;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import rx.Observer;
 import rx.Subscription;
@@ -36,13 +37,18 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
 
                         @Override
                         public void onError(Throwable e) {
-                            iLoginAndRegistered.loginOrRegisteredResult(1,false,"无法获取验证码，请检查网络");
+                            iLoginAndRegistered.loginOrRegisteredResult(0,false,"无法获取验证码，请检查网络");
                             iLoginAndRegistered.shouNetWorkActivity();
                         }
 
                         @Override
                         public void onNext(String s) {
-                            oldCode=s;
+                            Log.e("gqf","onNext"+s);
+                            if(s==null||s.equals("")){
+                                iLoginAndRegistered.loginOrRegisteredResult(0,false,"请您验证您的手机号码是否正确");
+                            }else{
+                                oldCode=s;
+                            }
                         }
                     });
             compositeSubscription.add(subscription);
@@ -73,7 +79,7 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
 
                         @Override
                         public void onError(Throwable e) {
-                            iLoginAndRegistered.loginOrRegisteredResult(1,false,"注册或登录超时，请检查网路设置");
+                            iLoginAndRegistered.loginOrRegisteredResult(0,false,"注册或登录超时，请检查网路设置");
                             iLoginAndRegistered.shouNetWorkActivity();
                         }
 

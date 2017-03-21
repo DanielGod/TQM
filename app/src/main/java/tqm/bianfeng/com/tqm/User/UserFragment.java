@@ -140,7 +140,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     //登录判断
     public boolean isLogin(){
         if (realm.where(User.class).findFirst() == null) {
-            Toast.makeText(getActivity(), "请您先登录后使用", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "请您先登录后使用该功能", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;

@@ -17,6 +17,7 @@ import rx.Subscription;
 import rx.functions.Func2;
 import tqm.bianfeng.com.tqm.CustomView.ToastType;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.Util.Phone;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 
 /**
@@ -85,13 +86,16 @@ public class UserFeedbackActivity extends BaseActivity{
         compositeSubscription.add(etSc);
     }
 
-
-
     @OnClick(R.id.feedback_commit)
     public void onClick() {
         //提交反馈
-        ToastType toastType=new ToastType();
-        toastType.showToastWithImg(getApplicationContext(),true,"提交成功");
-        onBackPressed();
+        if(Phone.IsMobileNO(phoneNumEdi.getText().toString())){
+            ToastType toastType=new ToastType();
+            toastType.showToastWithImg(getApplicationContext(),true,"提交成功");
+            onBackPressed();
+        }else{
+            phoneNumEdi.setError("手机号码格式不正确");
+        }
+
     }
 }

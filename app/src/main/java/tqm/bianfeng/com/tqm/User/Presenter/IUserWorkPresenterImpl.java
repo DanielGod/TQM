@@ -92,6 +92,7 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                             iLoginAndRegistered.resetUserHeadImg(true);
                         }else{
                             iLoginAndRegistered.resetUserHeadImg(false);
+                            iLoginAndRegistered.loginOrRegisteredResult(1,true,"头像上传失败");
                         }
 
                     }

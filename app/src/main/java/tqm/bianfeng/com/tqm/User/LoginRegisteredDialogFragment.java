@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.Util.Phone;
 
 /**
  * Created by johe on 2017/3/13.
@@ -57,8 +58,12 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
                 break;
             case R.id.get_verification_code_btn:
                 //获取验证码
-                dimssLinsener.getCode(phoneNumEdi.getText().toString(), true);
-                timeRun();
+                if(Phone.IsMobileNO(phoneNumEdi.getText().toString())) {
+                    dimssLinsener.getCode(phoneNumEdi.getText().toString(), true);
+                    timeRun();
+                }else{
+                    phoneNumEdi.setError("手机号格式不正确");
+                }
                 break;
             case R.id.login_registered_btn:
                 //提交
@@ -100,9 +105,9 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 1) {
-                if (msg.arg1 == 0) {
+                if (msg.arg1 == -1) {
                     getVerificationCodeBtn.setEnabled(true);
-                    getVerificationCodeBtn.setText("点击获取验证码");
+                    getVerificationCodeBtn.setText("获取验证码");
                     dimssLinsener.getCode("", false);
                 } else {
                     getVerificationCodeBtn.setText("重试（" + msg.arg1 + "）");
