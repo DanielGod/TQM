@@ -13,6 +13,7 @@ import retrofit2.http.Path;
 import rx.Observable;
 import tqm.bianfeng.com.tqm.pojo.BankInformItem;
 import tqm.bianfeng.com.tqm.pojo.MyAttention;
+import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
@@ -97,4 +98,23 @@ public interface UserService {
     Observable<List<String>> getImages(@Path("imageType")String imageType);
 
 
+    /**
+     * http://ip/app/attention关注
+     * "objectId":Integer 文章ID
+     "attentionType":String 01-活动;02-理财;02-贷款
+     "userId":Integer 用户Id
+     "attentionStatus":String  关注状态:01-关注;02-取消
+     */
+    @FormUrlEncoded
+    @POST("attention")
+    Observable<ResultCode> attention(@Field("objectId") Integer objectId,@Field("attentionType") String attentionType,
+                                     @Field("userId") Integer userId,@Field("attentionStatus") String attentionStatus);
+
+    /**
+     * 判断用户是否已关注
+     */
+    @FormUrlEncoded
+    @POST("isAttention")
+    Observable<String> isAttention(@Field("objectId") Integer objectId,@Field("attentionType") String attentionType,
+                                     @Field("userId") Integer userId);
 }
