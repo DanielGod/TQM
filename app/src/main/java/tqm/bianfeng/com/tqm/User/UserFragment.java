@@ -148,6 +148,13 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        //获取关注数量
+        iUserWorkPresenter.getMyFocusMsgNum(mUser.getUserId());
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -170,8 +177,6 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             mUser = realm.where(User.class).findFirst();
             //开起信息同步
             iUserWorkPresenter.getUserMsg(mUser.getUserPhone());
-            //获取关注数量
-            iUserWorkPresenter.getMyFocusMsgNum(mUser.getUserId());
             //显示账户信息
             userRegisterPhoneNumTxt.setVisibility(View.VISIBLE);
             userRegisterPhoneNumTxt.setText(mUser.getUserPhone());
