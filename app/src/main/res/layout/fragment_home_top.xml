@@ -281,7 +281,6 @@
                         android:layout_gravity="center"
                         android:layout_weight="2"
                         android:layout_marginLeft="@dimen/smallmdp"
-                        android:paddingTop="@dimen/tinymdp"
                         app:mvAnimDuration="1000"
                         app:mvInterval="3000"
                         app:mvTextColor="@color/colorPrimary"
