@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".main.MainActivity"
             android:windowSoftInputMode="stateHidden"
-                  android:screenOrientation="portrait">
+                  android:screenOrientation="portrait"/>
 
         <!-- 银行理财-->
         <activity
@@ -44,9 +44,8 @@
             android:name=".bank.bankloan.BankLoanActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+            android:screenOrientation="portrait"/>
 
-        </activity>
         <activity
             android:name=".User.MyBankActivityActivity"
             android:launchMode="singleTask"
