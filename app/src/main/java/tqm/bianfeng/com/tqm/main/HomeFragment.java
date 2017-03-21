@@ -37,7 +37,7 @@ import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.bank.bankactivitys.BankActivitonsActivity;
 import tqm.bianfeng.com.tqm.bank.bankfinancing.BankFinancingActivity;
 import tqm.bianfeng.com.tqm.bank.bankfinancing.BankFinancingAdapter;
-import tqm.bianfeng.com.tqm.bank.bankinformations.BankInformationActivity;
+import tqm.bianfeng.com.tqm.bank.bankinformations.NewBankInformationActivity;
 import tqm.bianfeng.com.tqm.bank.bankloan.BankLoanActivity;
 import tqm.bianfeng.com.tqm.bank.bankloan.BankLoanAdapter;
 import tqm.bianfeng.com.tqm.bank.util.ListViewHeight;
@@ -414,7 +414,7 @@ public class HomeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), BankFinancingActivity.class));
                 break;
             case R.id.select_more_bank_make_money_txt:
-                startActivity(new Intent(getActivity(), BankInformationActivity.class));
+               startActivity(new Intent(getActivity(), NewBankInformationActivity.class));
                 break;
         }
     }

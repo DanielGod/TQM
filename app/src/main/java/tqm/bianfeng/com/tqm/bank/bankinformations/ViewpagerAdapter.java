@@ -15,7 +15,7 @@ public class ViewpagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return BankInformationFragment.newInstance(position);
+        return RecyclerViewFragment.newInstance(position);
     }
 
     @Override
