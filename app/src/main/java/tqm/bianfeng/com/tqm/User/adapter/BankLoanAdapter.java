@@ -80,7 +80,6 @@ public class BankLoanAdapter extends RecyclerView.Adapter<BankLoanAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        //        Log.i("Daniel","---datas.size()---"+datas.size());
         return datas != null ? datas.size() : 0;
     }
 

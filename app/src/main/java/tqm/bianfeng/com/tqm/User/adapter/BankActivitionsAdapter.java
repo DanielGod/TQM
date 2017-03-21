@@ -83,7 +83,6 @@ public class BankActivitionsAdapter extends RecyclerView.Adapter<BankActivitions
 
     @Override
     public int getItemCount() {
-        //        Log.i("Daniel","---datas.size()---"+datas.size());
         return datas != null ? datas.size() : 0;
     }
 

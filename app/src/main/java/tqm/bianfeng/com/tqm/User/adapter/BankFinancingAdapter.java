@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -66,19 +67,21 @@ public class BankFinancingAdapter extends RecyclerView.Adapter<BankFinancingAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
         data = datas.get(position);
         holder.loanMoneyTv.setVisibility(View.GONE);
+        holder.loanTypeNameTv.setVisibility(View.GONE);
         holder.titleTv.setText(data.getProductName());
         holder.institutionNameTv.setText(data.getInstitutionName());
-        holder.annualReturnTv.setText(data.getAnnualReturn()+"");
-        holder.riskGradeNameTv.setText(data.getRiskGradeName());
-        holder.investmentTermTv.setText(data.getInvestmentTerm());
-        holder.purchaseMoneyTv.setText(data.getPurchaseMoney()+"");
+        holder.annualReturnTv.setText(data.getAnnualReturn() + "%");
+        holder.riskGradeNameTv.setText("风险：" + data.getRiskGradeName());
+        holder.investmentTermTv.setText("期限：" + data.getInvestmentTerm());
+        holder.purchaseMoneyTv.setText("起购金额：" + data.getPurchaseMoney() + "");
+        holder.financViewsTv.setText("" + data.getFinancViews());
+        holder.rateNameTv.setText("预期年化");
 
 
     }
 
     @Override
     public int getItemCount() {
-        //        Log.i("Daniel","---datas.size()---"+datas.size());
         return datas != null ? datas.size() : 0;
     }
 
@@ -90,10 +93,14 @@ public class BankFinancingAdapter extends RecyclerView.Adapter<BankFinancingAdap
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         View rootView;
         BankFinancingItemClickListener mListener;
+        @BindView(R.id.annualReturn_tv)
+        TextView annualReturnTv;
+        @BindView(R.id.rateName_tv)
+        TextView rateNameTv;
         @BindView(R.id.title_tv)
         TextView titleTv;
-        @BindView(R.id.institutionName_tv)
-        TextView institutionNameTv;
+        @BindView(R.id.loanTypeName_tv)
+        TextView loanTypeNameTv;
         @BindView(R.id.riskGradeName_tv)
         TextView riskGradeNameTv;
         @BindView(R.id.investmentTerm_tv)
@@ -102,10 +109,12 @@ public class BankFinancingAdapter extends RecyclerView.Adapter<BankFinancingAdap
         TextView loanMoneyTv;
         @BindView(R.id.purchaseMoney_tv)
         TextView purchaseMoneyTv;
+        @BindView(R.id.institutionName_tv)
+        TextView institutionNameTv;
         @BindView(R.id.financViews_tv)
         TextView financViewsTv;
-        @BindView(R.id.annualReturn_tv)
-        TextView annualReturnTv;
+        @BindView(R.id.linearlayout)
+        LinearLayout linearlayout;
 
 
         ViewHolder(View view, BankFinancingItemClickListener listener) {

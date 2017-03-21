@@ -5,8 +5,8 @@
               android:id="@+id/linearlayout"
               android:layout_marginLeft="@dimen/smallmdp"
               android:layout_marginRight="@dimen/smallmdp"
-              android:layout_marginTop="@dimen/smallmdp"
-              android:layout_marginBottom="@dimen/smallmdp"
+              android:layout_marginTop="@dimen/tinymdp"
+              android:layout_marginBottom="@dimen/tinymdp"
               android:descendantFocusability="blocksDescendants"
               android:layout_height="wrap_content">
     <LinearLayout
