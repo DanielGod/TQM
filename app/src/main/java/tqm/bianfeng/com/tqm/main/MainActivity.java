@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     private static final int TAKEPHOTO = 1; // 拍照
     private static final int GALLERY = 2; // 从相册中选择
     private static final int PHOTO_REQUEST_CUT = 3; // 结果
-
+    private static boolean ISUPDATEAPP = true;//本程序是否在此次开起后更新
     CompositeSubscription compositeSubscription;
     PhotoGet photoGet;
     @BindView(R.id.bottomBar)
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     BaseDialog baseDialog;
-    boolean isUpdateApp = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-                                isUpdateApp = false;
+                                ISUPDATEAPP = false;
                             }
                         });
                 alert.create().show();
@@ -302,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
 
     //检测更新
     public void updateApp() {
-        if (isUpdateApp) {
+        if (ISUPDATEAPP) {
             //判断本地数据库是否有版本号
             Subscription subscription = NetWork.getUpdateService().getVersion()
                     .subscribeOn(Schedulers.io())
@@ -329,7 +329,6 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                     }
                 });
         alert.create().show();
-
     }
 
     //检测网络

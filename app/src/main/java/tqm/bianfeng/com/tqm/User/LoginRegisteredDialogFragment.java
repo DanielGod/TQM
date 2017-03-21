@@ -36,9 +36,10 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
     @BindView(R.id.login_registered_btn)
     Button loginRegisteredBtn;
 
-    String phoneNum="";
+    String phoneNum = "";
 
-    boolean isRun=true;
+    boolean isRun = true;
+
     public String getPhoneNum() {
         return phoneNum;
     }
@@ -56,54 +57,55 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
                 break;
             case R.id.get_verification_code_btn:
                 //获取验证码
-                dimssLinsener.getCode(phoneNumEdi.getText().toString(),true);
+                dimssLinsener.getCode(phoneNumEdi.getText().toString(), true);
                 timeRun();
                 break;
             case R.id.login_registered_btn:
                 //提交
-                dimssLinsener.onOk(phoneNumEdi.getText().toString(),verificationCodeEdi.getText().toString());
+                dimssLinsener.onOk(phoneNumEdi.getText().toString(), verificationCodeEdi.getText().toString());
                 break;
         }
     }
 
-    public void closeDialog(){
-        isRun=false;
+    public void closeDialog() {
+        isRun = false;
         dimssLinsener.fragmentDimss();
         this.dismiss();
     }
 
-    public void timeRun(){
+    public void timeRun() {
         getVerificationCodeBtn.setEnabled(false);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                int i=120;
-                while(i>=0&&isRun){
-                    i--;
-                    Message msg=new Message();
-                    msg.what=1;
-                    msg.arg1=i;
-                    mHandler.sendMessage(msg);
-                    try {
+                int i = 120;
+                try {
+                    while (i >= 0 && isRun) {
+                        i--;
+                        Message msg = new Message();
+                        msg.what = 1;
+                        msg.arg1 = i;
+                        mHandler.sendMessage(msg);
                         Thread.sleep(1000);
-                    }catch (Exception e){
-
                     }
+                } catch (Exception e) {
+
                 }
             }
         }).start();
     }
-    Handler mHandler=new Handler(){
+
+    Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if(msg.what==1){
-                if(msg.arg1==0){
+            if (msg.what == 1) {
+                if (msg.arg1 == 0) {
                     getVerificationCodeBtn.setEnabled(true);
                     getVerificationCodeBtn.setText("点击获取验证码");
-                    dimssLinsener.getCode("",false);
-                }else{
-                    getVerificationCodeBtn.setText("重试（"+msg.arg1+"）");
+                    dimssLinsener.getCode("", false);
+                } else {
+                    getVerificationCodeBtn.setText("重试（" + msg.arg1 + "）");
                 }
             }
         }
@@ -111,8 +113,10 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
 
     public interface DimssLinsener {
         public void fragmentDimss();
-        public void onOk(String ediTxt,String code);
-        public void getCode(String phone,boolean isGet);
+
+        public void onOk(String ediTxt, String code);
+
+        public void getCode(String phone, boolean isGet);
     }
 
     DimssLinsener dimssLinsener;
@@ -141,6 +145,6 @@ public class LoginRegisteredDialogFragment extends DialogFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        dimssLinsener.getCode("",false);
+        dimssLinsener.getCode("", false);
     }
 }
