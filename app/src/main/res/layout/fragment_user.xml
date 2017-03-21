@@ -83,7 +83,7 @@
             android:layout_marginLeft="@dimen/smallmdp"
             android:layout_marginRight="@dimen/smallmdp"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_my_focus"
+            android:src="@drawable/ic_focus"
             android:scaleType="centerInside"
             />
 
