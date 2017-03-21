@@ -127,10 +127,12 @@ public class DetailActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (isCollection == false&&!detailType.equals("04")) {
-            getMenuInflater().inflate(R.menu.collection_article_false, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.collection_article_true, menu);
+        if( !detailType.equals("04")) {
+            if (isCollection == false ) {
+                getMenuInflater().inflate(R.menu.collection_article_false, menu);
+            } else {
+                getMenuInflater().inflate(R.menu.collection_article_true, menu);
+            }
         }
         return super.onCreateOptionsMenu(menu);
     }
