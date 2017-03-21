@@ -320,7 +320,7 @@
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_bank_hot_msg"
-                        android:layout_margin="@dimen/smallmdp"
+                        android:layout_margin="@dimen/mediummdp"
                         />
 
                     <TextView
