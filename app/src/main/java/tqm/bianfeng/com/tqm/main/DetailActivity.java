@@ -171,7 +171,7 @@ public class DetailActivity extends BaseActivity {
 
         @Override
         public void onError(Throwable e) {
-
+            isInCollection=false;
         }
 
         @Override
