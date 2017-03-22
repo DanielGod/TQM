@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--<in.srain.cube.views.loadmore.LoadMoreListViewContainer-->
+    <!--android:id="@+id/load_more_list_view_container"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@color/cube_mints_white"-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android">-->
 <android.support.v7.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     />
-
+<!--</in.srain.cube.views.loadmore.LoadMoreListViewContainer>-->

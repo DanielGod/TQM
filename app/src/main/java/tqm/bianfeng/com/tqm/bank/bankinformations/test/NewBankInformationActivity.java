@@ -50,7 +50,7 @@ public class NewBankInformationActivity extends AppCompatActivity implements Rec
                         logo.setText(getResources().getString(R.string.hotInfromations));
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.green,
-                                "http://211.149.235.17:8080/tqm-web/upload/20170316112619160.jpg");
+                                "http://mpic.tiankong.com/ced/bf9/cedbf90668823a39b4da08499bbcf860/640.jpg@360h");
                     case 2:
                         logo.setText(getResources().getString(R.string.moneyInfromations));
                         return HeaderDesign.fromColorResAndUrl(

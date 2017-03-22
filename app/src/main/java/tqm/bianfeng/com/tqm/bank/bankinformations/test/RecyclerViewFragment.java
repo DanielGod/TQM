@@ -38,17 +38,17 @@ public class RecyclerViewFragment extends Fragment {
 
     private static final boolean GRID_LAYOUT = false;
     private static final int ITEM_COUNT = 100;
-//    @BindView(R.id.recyclerView)
-//    PullToRefreshListView mainPullRefreshLv;
 
-
-        @BindView(R.id.recyclerView)
-        RecyclerView mRecyclerView;
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
+//    @BindView(R.id.load_more_list_view_container)
+//    LoadMoreListViewContainer loadMoreListViewContainer;
 
     private int position = 0;
     private int pagNum = 1;
     private int mPagItemSize = 0;
     private CompositeSubscription mCompositeSubscription;
+    List<BankInformItem> AllBankInformItems;
 
     public static RecyclerViewFragment newInstance(int position) {
         RecyclerViewFragment recyclerViewFragment = new RecyclerViewFragment();
@@ -73,41 +73,6 @@ public class RecyclerViewFragment extends Fragment {
         return view;
     }
 
-//    private void initRefreshlv() {
-//        //设置刷新时显示的文本
-//        ILoadingLayout startLayout = mainPullRefreshLv.getLoadingLayoutProxy(true, false);
-//        startLayout.setPullLabel("正在下拉刷新...");
-//        startLayout.setRefreshingLabel("正在刷新...");
-//        startLayout.setReleaseLabel("放开以刷新");
-//
-//
-//        ILoadingLayout endLayout = mainPullRefreshLv.getLoadingLayoutProxy(false, true);
-//        endLayout.setPullLabel("正在上拉刷新...");
-//        endLayout.setRefreshingLabel("加载中...");
-//        endLayout.setReleaseLabel("放开以刷新");
-//
-//        mainPullRefreshLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
-//            @Override
-//            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-//                Log.i("Daniel", "---onPullDownToRefresh---");
-//                initDate(null, 1);
-//
-//            }
-//
-//            @Override
-//            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-//                Log.i("Daniel", "---onPullDownToRefresh---");
-//                if (mPagItemSize > Constan.PAGESIZE) {
-//                    pagNum = pagNum + 1;
-//                    initDate(null, pagNum);
-//                } else {
-//                    mainPullRefreshLv.onRefreshComplete();
-//                }
-//            }
-//        });
-//
-//    }
-
     private void initDate(Integer type, int pagNum) {
         Log.e("Daniel", "---type---" + type);
         Log.e("Daniel", "---pagNum---" + pagNum);
@@ -118,25 +83,24 @@ public class RecyclerViewFragment extends Fragment {
                 .subscribe(new Observer<List<BankInformItem>>() {
                     @Override
                     public void onCompleted() {
-                        //设置可上拉刷新和下拉刷新
-//                        Log.e("Daniel", "---mPagItemSize---" + mPagItemSize);
-//                        if (mPagItemSize > Constan.PAGESIZE) {
-//                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
-//                        } else {
-//                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-//                        }
+
+
                     }
 
                     @DebugLog
                     @Override
                     public void onError(Throwable e) {
-
+//                        loadMoreListViewContainer.loadMoreError(0, errorMessage);
                     }
 
                     @DebugLog
                     @Override
                     public void onNext(List<BankInformItem> bankInformItems) {
                         mPagItemSize = bankInformItems.size();
+//                        if (AllBankInformItems==null){
+//                            AllBankInformItems = new ArrayList<>();
+//                        }
+//                        AllBankInformItems.addAll(bankInformItems);
                         setBankInformItemAdapter(bankInformItems);
 
                     }
@@ -170,6 +134,7 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
         final TestRecyclerViewAdapter recyclerViewAdapter = new TestRecyclerViewAdapter(getActivity(), bankInformItems);
         mRecyclerView.setAdapter(recyclerViewAdapter);
+//        loadMoreListViewContainer.loadMoreFinish(false, true);
         recyclerViewAdapter.setOnItemClickListener(new TestRecyclerViewAdapter.BankInformItemClickListener() {
             @Override
             public void OnClickListener(int position) {
@@ -181,7 +146,7 @@ public class RecyclerViewFragment extends Fragment {
             }
         });
 
-//        mainPullRefreshLv.setAdapter(new BankInfromationAdapter(getActivity(), bankInformItems));
+        //        mainPullRefreshLv.setAdapter(new BankInfromationAdapter(getActivity(), bankInformItems));
     }
 
     @Override
@@ -189,18 +154,24 @@ public class RecyclerViewFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mCompositeSubscription = new CompositeSubscription();
-//        initRefreshlv();
+        //        initRefreshlv();
         initDate(position + 1, pagNum);
-
-        //        final List<Object> items = new ArrayList<>();
-        //
-        //        for (int i = 0; i < ITEM_COUNT; ++i) {
-        //            items.add(new Object());
-        //        }
-
-
-        //setup materialviewpager
-
-
+//
+//        loadMoreListViewContainer.setAutoLoadMore(true);//设置是否自动加载更多
+//        loadMoreListViewContainer.useDefaultHeader();
+//        //5.添加加载更多的事件监听
+//        loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
+//            @Override
+//            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
+//                //模拟加载更多的业务处理
+//                loadMoreListViewContainer.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        pagNum = pagNum+1;
+//                        initDate(position + 1, pagNum);
+//                    }
+//                }, 1000);
+//            }
+//        });
     }
 }
