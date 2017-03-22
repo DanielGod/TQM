@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import tqm.bianfeng.com.tqm.R;
@@ -72,7 +73,7 @@ public class BankLoanAdapter extends BaseAdapter {
         holder.annualReturnTv.setText(data.getRate() + "");
         holder.institutionNameTv.setText(data.getInstitutionName());
         holder.titleTv.setText(data.getLoanName());
-        holder.loanMoneyTv.setText("最高贷款（万）：" + data.getLoanMoney() + "");
+        holder.loanMoneyTv.setText("最高贷款（万）：" + data.getLoanMoney().setScale(0, BigDecimal.ROUND_DOWN));
         holder.investmentTermTv.setText("贷款期限：" + data.getLoanPeriod());
         holder.financViewsTv.setText(data.getLoanViews() + "");
         holder.loanTypeNameTv.setText("贷款类型："+data.getLoanTypeName());

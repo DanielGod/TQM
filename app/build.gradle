@@ -89,11 +89,13 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     debugCompile 'com.antfortune.freeline:runtime:0.6.2'
     releaseCompile 'com.antfortune.freeline:runtime-no-op:0.6.2'
-    compile 'com.github.florent37:materialviewpager:1.2.1'
-
     //dependencies
+    compile 'com.github.florent37:materialviewpager:1.2.1'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
     compile 'com.jpardogo.materialtabstrip:library:1.1.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
+
 
 }

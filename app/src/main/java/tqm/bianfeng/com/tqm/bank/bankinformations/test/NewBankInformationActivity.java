@@ -1,5 +1,6 @@
-package tqm.bianfeng.com.tqm.bank.bankinformations;
+package tqm.bianfeng.com.tqm.bank.bankinformations.test;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,8 +12,9 @@ import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.bank.bankinformations.ViewpagerAdapter;
 
-public class NewBankInformationActivity extends AppCompatActivity {
+public class NewBankInformationActivity extends AppCompatActivity implements RecyclerViewFragment.mListener {
     private MaterialViewPager mViewPager;
 
     @Override
@@ -73,5 +75,10 @@ public class NewBankInformationActivity extends AppCompatActivity {
             });
         }
 
+    }
+
+    @Override
+    public void detailActivity(Intent intent) {
+        startActivity(intent);
     }
 }

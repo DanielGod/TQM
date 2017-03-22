@@ -76,7 +76,7 @@
                 android:gravity="center_vertical"
                 android:layout_weight="1">
 
-                <TextView
+                1<TextView
                     android:id="@+id/loanTypeName_tv"
                     android:layout_width="@dimen/hugehxxxxxdp"
                     android:layout_height="wrap_content"
@@ -105,27 +105,50 @@
                     />
 
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
                 <TextView
-                    android:id="@+id/loanMoney_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="最高贷款："
                     android:textSize="@dimen/smallsp"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     />
+                <TextView
+                    android:id="@+id/loanMoney_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/smallsp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="起购金额："
+                    android:textSize="@dimen/smallsp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    />
                 <TextView
                     android:id="@+id/purchaseMoney_tv"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
                     android:text="起购金额："
                     android:textColor="@color/black"
                     android:textSize="@dimen/smallsp"
                     />
+                </LinearLayout>
 
 
 

@@ -2,6 +2,7 @@ package tqm.bianfeng.com.tqm.bank.bankinformations;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,12 +65,19 @@ public class BankInformationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blank_information, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mCompositeSubscription = new CompositeSubscription();
         initRefreshlv();
         initDate(mParam1+1, pagNum);
-        return view;
     }
+
     @DebugLog
     @Override
     public void onStart() {

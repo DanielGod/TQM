@@ -81,7 +81,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".bank.bankinformations.NewBankInformationActivity"
+        <activity android:name=".bank.bankinformations.test.NewBankInformationActivity"
                   android:launchMode="singleTask"
                   android:screenOrientation="portrait"
                   android:theme="@style/bankInformationTheme"

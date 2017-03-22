@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import hugo.weaving.DebugLog;
@@ -83,7 +84,7 @@ public class BankFinancingAdapter extends BaseAdapter {
         holder.annualReturnTv.setText(data.getAnnualReturn()+"%");
         holder.riskGradeNameTv.setText("风险："+data.getRiskGradeName());
         holder.investmentTermTv.setText("期限："+data.getInvestmentTerm());
-        holder.purchaseMoneyTv.setText("起购金额："+data.getPurchaseMoney()+"");
+        holder.purchaseMoneyTv.setText("起购金额："+data.getPurchaseMoney().setScale(0,BigDecimal.ROUND_DOWN));
         holder.financViewsTv.setText(""+data.getFinancViews());
         holder.rateName.setText("预期年化");
         if (!isFistPage) {

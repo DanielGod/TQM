@@ -1,4 +1,4 @@
-package tqm.bianfeng.com.tqm.bank.bankinformations;
+package tqm.bianfeng.com.tqm.bank.bankinformations.test;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -17,8 +17,8 @@ import tqm.bianfeng.com.tqm.pojo.bank.BankInformItem;
 /**
  * Created by florentchampigny on 24/04/15.
  */
-public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerViewAdapter.ViewHolder> {
+    BankInformItemClickListener mItemClickListener;
     List<BankInformItem> datas;
     Context mContext;
 
@@ -41,13 +41,30 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    public BankInformItem getItem(int position) {
+        return datas.get(position);
+    }
+
+
     @Override
     public int getItemCount() {
         return datas!=null ? datas.size():0;
     }
 
+    public interface BankInformItemClickListener {
+        public void OnClickListener(int position);
+    }
+    /**
+     * 设置Item点击监听
+     *
+     * @param listener
+     */
+    public void setOnItemClickListener(BankInformItemClickListener listener) {
+        mItemClickListener = listener;
+    }
+
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_bankinformation_item, parent, false);
 
         //        switch (viewType) {
@@ -64,12 +81,12 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         //                };
         //            }
         //        }
-        return new ViewHolder(view);
+        return new ViewHolder(view,mItemClickListener);
     }
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
 //        switch (getItemViewType(position)) {
 //            case TYPE_HEADER:
 //                break;
@@ -84,7 +101,8 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         viewHolder.ViewsTv.setText(data.getInformViews()+"");
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         @BindView(R.id.Title_tv)
         TextView TitleTv;
         @BindView(R.id.institutionName_tv)
@@ -94,12 +112,22 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         @BindView(R.id.Views_tv)
         TextView ViewsTv;
 
-        ViewHolder(View view) {
+        BankInformItemClickListener mItemClickListener;
+
+        ViewHolder(View view, BankInformItemClickListener mItemClickListener) {
             super(view);
             ButterKnife.bind(this, view);
+            this.mItemClickListener = mItemClickListener;
+            view.setOnClickListener(this);
 
         }
 
 
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener!=null){
+                mItemClickListener.OnClickListener(getPosition());
+            }
+        }
     }
 }

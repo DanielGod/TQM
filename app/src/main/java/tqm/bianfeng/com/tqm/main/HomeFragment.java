@@ -37,7 +37,7 @@ import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.bank.bankactivitys.BankActivitonsActivity;
 import tqm.bianfeng.com.tqm.bank.bankfinancing.BankFinancingActivity;
 import tqm.bianfeng.com.tqm.bank.bankfinancing.BankFinancingAdapter;
-import tqm.bianfeng.com.tqm.bank.bankinformations.NewBankInformationActivity;
+import tqm.bianfeng.com.tqm.bank.bankinformations.test.NewBankInformationActivity;
 import tqm.bianfeng.com.tqm.bank.bankloan.BankLoanActivity;
 import tqm.bianfeng.com.tqm.bank.bankloan.BankLoanAdapter;
 import tqm.bianfeng.com.tqm.bank.util.ListViewHeight;
@@ -209,9 +209,9 @@ public class HomeFragment extends BaseFragment {
         homeBankActivitysListAdapter.setOnItemClickListener(new HomeBankActivitysListAdapter.HomeBankActivitysItemClickListener() {
             @Override
             public void OnClickListener(int position) {
-                //跳转银行理财详情
+                //跳转银行活动详情
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("detailType", "02");
+                intent.putExtra("detailType", "01");
                 intent.putExtra("detailId", homeBankActivitysListAdapter.getDataItem(position).getActivityId());
                 mListener.detailActivity(intent);
             }
