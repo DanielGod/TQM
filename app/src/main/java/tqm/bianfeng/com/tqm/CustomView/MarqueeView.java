@@ -165,6 +165,8 @@ public class MarqueeView extends ViewFlipper {
         tv.setSingleLine(singleLine);
         tv.setTag(position);
         tv.setLayoutParams(lp);
+        tv.setLines(1);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
         lin.addView(tv);
         return lin;
     }

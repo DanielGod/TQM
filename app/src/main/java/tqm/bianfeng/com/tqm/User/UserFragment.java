@@ -151,7 +151,9 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     public void onResume() {
         super.onResume();
         //获取关注数量
-        iUserWorkPresenter.getMyFocusMsgNum(mUser.getUserId());
+        if (realm.where(User.class).findFirst() != null) {
+            iUserWorkPresenter.getMyFocusMsgNum(mUser.getUserId());
+        }
     }
 
     @Override

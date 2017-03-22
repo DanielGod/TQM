@@ -15,6 +15,7 @@ import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.CustomView.ToastType;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.Util.NetUtils;
+import tqm.bianfeng.com.tqm.Util.SystemBarTintManager;
 
 /**
  * Created by johe on 2017/3/14.
@@ -34,6 +35,12 @@ public class BaseActivity extends AppCompatActivity implements InitViewInterface
             window.setFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            //此处可以重新指定状态栏颜色
+            tintManager.setStatusBarTintResource(R.color.colorPrimaryDark);
         }
         realm=Realm.getDefaultInstance();
         compositeSubscription=new CompositeSubscription();

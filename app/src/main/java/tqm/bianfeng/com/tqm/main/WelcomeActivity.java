@@ -55,8 +55,10 @@ public class WelcomeActivity extends AppCompatActivity {
             Picasso.with(WelcomeActivity.this).load(R.drawable.startpage).into(startPageImg);
             countToEnter();
         }else{
+
             Subscription subscription = NetWork.getUserService().getImages("01")
                     .subscribeOn(Schedulers.io())
+                    .timeout(100,TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<List<String>>() {
                         @Override

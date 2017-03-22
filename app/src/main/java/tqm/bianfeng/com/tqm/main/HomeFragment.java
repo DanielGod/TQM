@@ -312,6 +312,7 @@ public class HomeFragment extends BaseFragment {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
                     intent.putExtra("detailType", "04");
                     intent.putExtra("detailId", homeBankInfoListAdapter.getDataItem(position).getInformId());
+                    intent.putExtra("detailTitle", homeBankInfoListAdapter.getDataItem(position).getInformTitle());
                     mListener.detailActivity(intent);
                 }
             });
@@ -333,7 +334,7 @@ public class HomeFragment extends BaseFragment {
 
     public void getBankLoanItemHot() {
         //热点资讯
-        Subscription subscription = NetWork.getUserService().getBankInformItem(2, "01", 1, 3)
+        Subscription subscription = NetWork.getUserService().getBankInformItem(2, "02", 1, 3)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<BankInformItem>>() {

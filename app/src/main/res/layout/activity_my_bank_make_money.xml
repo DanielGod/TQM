@@ -8,7 +8,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_bank_make_money_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/hugehdp"
         android:background="@color/colorPrimary"
         android:fitsSystemWindows="true"
         android:minHeight="?attr/actionBarSize"
