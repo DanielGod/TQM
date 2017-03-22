@@ -66,6 +66,7 @@ public class BankFinancingActivity extends AppCompatActivity {
     private int pagNum = 1;
     private int mPagItemSize = 0;
     private BankFinancingAdapter bankFinancingAdapter;
+    private List<BankFinancItem> mAllBankLoanItems;
 
 
     @Override
@@ -141,10 +142,12 @@ public class BankFinancingActivity extends AppCompatActivity {
                     public void onCompleted() {
                         //设置可上拉刷新和下拉刷新
                         Log.e("Daniel", "---mPagItemSize---" + mPagItemSize);
-                        if (mPagItemSize > Constan.PAGESIZE) {
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
-                        } else {
+                        if (mPagItemSize==0){
+                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
+                        }else if (mPagItemSize > 0 && mPagItemSize<Constan.PAGESIZE) {
                             mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                        } else {
+                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
                         }
                     }
 
@@ -158,7 +161,11 @@ public class BankFinancingActivity extends AppCompatActivity {
                     @Override
                     public void onNext(List<BankFinancItem> bankFinancItems) {
                         mPagItemSize = bankFinancItems.size();
-                        setAdapter(bankFinancItems);
+                        if (mAllBankLoanItems==null){
+                            mAllBankLoanItems = new ArrayList<>();
+                        }
+                        mAllBankLoanItems.addAll(bankFinancItems);
+                        setAdapter(mAllBankLoanItems);
 
                     }
                 });

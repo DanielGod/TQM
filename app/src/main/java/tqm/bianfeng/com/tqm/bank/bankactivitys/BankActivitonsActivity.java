@@ -51,6 +51,7 @@ public class BankActivitonsActivity extends AppCompatActivity  {
     private Unbinder unbinder;
     private int pagNum = 1;
     private int mPagItemSize = 0 ;
+    private List<BankActivityItem> mAllBankLoanItems;
 
 
 
@@ -129,11 +130,13 @@ public class BankActivitonsActivity extends AppCompatActivity  {
                     @Override
                     public void onCompleted() {
                         //设置可上拉刷新和下拉刷新
-                        Log.e("Daniel","---mPagItemSize---"+mPagItemSize);
-                        if (mPagItemSize>Constan.PAGESIZE){
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
-                        }else {
+                        Log.e("Daniel", "---mPagItemSize---" + mPagItemSize);
+                        if (mPagItemSize==0){
+                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
+                        }else if (mPagItemSize > 0 && mPagItemSize<Constan.PAGESIZE) {
                             mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                        } else {
+                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
                         }
                     }
 
@@ -146,8 +149,12 @@ public class BankActivitonsActivity extends AppCompatActivity  {
                     @DebugLog
                     @Override
                     public void onNext(List<BankActivityItem> bankActivityItems) {
-                        mPagItemSize= bankActivityItems.size();
-                        setAdapter(bankActivityItems);
+                        mPagItemSize = bankActivityItems.size();
+                        if (mAllBankLoanItems==null){
+                            mAllBankLoanItems = new ArrayList<>();
+                        }
+                        mAllBankLoanItems.addAll(bankActivityItems);
+                        setAdapter(mAllBankLoanItems);
 
                     }
                 });

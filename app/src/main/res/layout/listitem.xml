@@ -2,27 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
+              android:layout_height="wrap_content"
               android:id="@+id/linearlayout"
-              android:layout_marginLeft="@dimen/smallmdp"
-              android:layout_marginRight="@dimen/smallmdp"
-              android:layout_marginTop="@dimen/tinymdp"
-              android:layout_marginBottom="@dimen/tinymdp"
+              android:background="@color/white"
+              android:paddingTop="@dimen/smallmdp"
+              android:paddingBottom="@dimen/smallmdp"
               android:descendantFocusability="blocksDescendants"
-              android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:paddingTop="@dimen/horizontal_margin"
-        android:paddingBottom="@dimen/horizontal_margin"
-        >
-
-
+              >
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
+        android:layout_marginLeft="5dp"
         >
         <TextView
             android:id="@+id/annualReturn_tv"
@@ -46,7 +38,15 @@
 
 
     </LinearLayout>
-
+    <View
+        android:layout_width="1dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="@dimen/smallmdp"
+        android:layout_marginTop="@dimen/smallmdp"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/smallmdp"
+        android:background="@color/whitesmoke"
+        />
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -71,84 +71,123 @@
                 android:gravity="center_vertical"
                 android:id="@+id/title_tv"/>
             <LinearLayout
+                android:id="@+id/purchaseMoneyAndRiskGradeName_linear"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
+               android:visibility="gone"
                 android:layout_weight="1">
-
-                1<TextView
-                    android:id="@+id/loanTypeName_tv"
-                    android:layout_width="@dimen/hugehxxxxxdp"
-                    android:layout_height="wrap_content"
-                    android:text="贷款类型："
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/smallsp"
+                <LinearLayout
+                    android:id="@+id/purchaseMoney_linear"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="起购金额："
+                        android:textSize="@dimen/smallsp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        />
+                <TextView
+                    android:id="@+id/purchaseMoney_tv"
+                   style="@style/listitemLayout_tv"
+                    android:textColor="@color/blue_text"
                     />
-
+                    </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/riskGradeName_linear"
+                    android:layout_width="@dimen/hugehxxxxdp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/tinymdp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="风险："
+                        android:textSize="@dimen/smallsp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        />
                 <TextView
                     android:id="@+id/riskGradeName_tv"
-                    android:layout_width="@dimen/hugehxxxxxdp"
-                    android:layout_height="wrap_content"
-                    android:text="风险："
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/smallsp"
+                    style="@style/listitemLayout_tv"
                     />
+                    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/investmentTerm_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="期限："
-                    android:textSize="@dimen/smallsp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/black"
-                    />
+
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/loanMoneyAndloanTypeName_linear"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:visibility="gone"
                 android:layout_weight="1">
+            <LinearLayout
+                android:id="@+id/loanMoney_linear"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="最高贷款："
+                    android:text="最高贷款(万)："
                     android:textSize="@dimen/smallsp"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     />
                 <TextView
                     android:id="@+id/loanMoney_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/smallsp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/black"
+                    style="@style/listitemLayout_tv"
+                    android:textColor="@color/blue_text"
                     />
             </LinearLayout>
-
-
+                <LinearLayout
+                    android:id="@+id/loanTypeName_linear"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/tinymdp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="贷款类型："
+                        android:textSize="@dimen/smallsp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        />
+                    <TextView
+                        android:id="@+id/loanTypeName_tv"
+                        style="@style/listitemLayout_tv"
+                        />
+                </LinearLayout>
+            </LinearLayout>
             <LinearLayout
+                android:id="@+id/investmentTerm_linear"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="gone"
+                >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="起购金额："
+                    android:text="期限："
                     android:textSize="@dimen/smallsp"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     />
                 <TextView
-                    android:id="@+id/purchaseMoney_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="起购金额："
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/smallsp"
+                    android:id="@+id/investmentTerm_tv"
+                    style="@style/listitemLayout_tv"
                     />
-                </LinearLayout>
+            </LinearLayout>
 
 
 
@@ -163,9 +202,11 @@
             android:orientation="vertical"
             >
             <LinearLayout
+                android:id="@+id/institutionName_linear"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 >
                 <ImageView
                     android:layout_width="wrap_content"
@@ -181,18 +222,21 @@
                     android:lines="1"
                     android:textSize="@dimen/smallsp"
                     android:gravity="center_vertical"
-                    android:textColor="@color/black"
                     />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/financViews_linear"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 >
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/eye"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
                     android:scaleType="centerInside"
                     android:adjustViewBounds="true"
                     android:paddingRight="5dp"
@@ -206,11 +250,9 @@
                     android:paddingLeft="5dp"
                     android:textSize="@dimen/smallsp"
                     android:text="0"
-                    android:textColor="@color/black"
                     />
 
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
     </LinearLayout>
 </LinearLayout>

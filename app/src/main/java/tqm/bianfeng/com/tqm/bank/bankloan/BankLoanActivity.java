@@ -64,6 +64,7 @@ public class BankLoanActivity extends AppCompatActivity {
     private int pagNum = 1;
     private int mPagItemSize = 0;
     BankLoanAdapter loanAdapter;
+    List<BankLoanItem> mAllBankLoanItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,6 @@ public class BankLoanActivity extends AppCompatActivity {
         startLayout.setPullLabel("正在下拉刷新...");
         startLayout.setRefreshingLabel("正在玩命加载中...");
         startLayout.setReleaseLabel("放开以刷新");
-
 
         ILoadingLayout endLayout = mainPullRefreshLv.getLoadingLayoutProxy(false, true);
         endLayout.setPullLabel("正在上拉刷新...");
@@ -158,10 +158,12 @@ public class BankLoanActivity extends AppCompatActivity {
                     public void onCompleted() {
                         //设置可上拉刷新和下拉刷新
                         Log.e("Daniel", "---mPagItemSize---" + mPagItemSize);
-                        if (mPagItemSize > Constan.PAGESIZE) {
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
-                        } else {
+                        if (mPagItemSize==0){
+                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
+                        }else if (mPagItemSize > 0 && mPagItemSize<Constan.PAGESIZE) {
                             mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                        } else {
+                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
                         }
                     }
                     @DebugLog
@@ -172,7 +174,11 @@ public class BankLoanActivity extends AppCompatActivity {
                     @Override
                     public void onNext(List<BankLoanItem> bankloanItems) {
                         mPagItemSize = bankloanItems.size();
-                        setAdapter(bankloanItems);
+                        if (mAllBankLoanItems==null){
+                            mAllBankLoanItems = new ArrayList<>();
+                        }
+                        mAllBankLoanItems.addAll(bankloanItems);
+                        setAdapter(mAllBankLoanItems);
 //
 
                     }

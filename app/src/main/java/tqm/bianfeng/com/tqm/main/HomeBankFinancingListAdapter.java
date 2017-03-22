@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
  */
 
 public class HomeBankFinancingListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
 
 
     private Context mContext;
@@ -43,8 +45,9 @@ public class HomeBankFinancingListAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     public int getLayout() {
-        return R.layout.listitem;
+        return R.layout.firstpage_listitem;
     }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,8 +68,18 @@ public class HomeBankFinancingListAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int p) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder mHolder = (ViewHolder) holder;
+        BankFinancItem data = datas.get(position);
+        mHolder.loanMoneyLinear.setVisibility(View.GONE);
+        mHolder.activityViewsLinear.setVisibility(View.GONE);
+        mHolder.institutionNameLinear.setVisibility(View.GONE);
+        mHolder.titleTv.setText(data.getProductName());
+        mHolder.annualReturnTv.setText(data.getAnnualReturn() + "%");
+        mHolder.riskGradeNameTv.setText(data.getRiskGradeName());
+        mHolder.investmentTermTv.setText(data.getInvestmentTerm());
+        mHolder.investmentTermTv.setTextColor(mContext.getResources().getColor(R.color.blue_text));
+        mHolder.rateNameTv.setText("预期年化");
 
 
     }
@@ -85,22 +98,27 @@ public class HomeBankFinancingListAdapter extends RecyclerView.Adapter<RecyclerV
 
         @BindView(R.id.annualReturn_tv)
         TextView annualReturnTv;
+        @BindView(R.id.rateName_tv)
+        TextView rateNameTv;
         @BindView(R.id.title_tv)
         TextView titleTv;
-        @BindView(R.id.loanTypeName_tv)
-        TextView loanTypeNameTv;
-        @BindView(R.id.loanMoney_tv)
-        TextView loanMoneyTv;
-        @BindView(R.id.purchaseMoney_tv)
-        TextView purchaseMoneyTv;
         @BindView(R.id.riskGradeName_tv)
         TextView riskGradeNameTv;
         @BindView(R.id.investmentTerm_tv)
         TextView investmentTermTv;
-        @BindView(R.id.institutionName_tv)
-        TextView institutionNameTv;
-        @BindView(R.id.financViews_tv)
-        TextView financViewsTv;
+        @BindView(R.id.linearlayout)
+        LinearLayout linearlayout;
+        @BindView(R.id.loanMoney_tv)
+        TextView loanMoneyTv;
+        @BindView(R.id.riskGradeName_linear)
+        LinearLayout riskGradeNameLinear;
+        @BindView(R.id.loanMoney_linear)
+        LinearLayout loanMoneyLinear;
+        @BindView(R.id.activityViews_linear)
+        LinearLayout activityViewsLinear;
+        @BindView(R.id.institutionName_linear)
+        LinearLayout institutionNameLinear;
+
         ViewHolder(View view, HomeBankFinancingItemClickListener mItemClickListener) {
             super(view);
             ButterKnife.bind(this, view);

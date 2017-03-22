@@ -172,6 +172,17 @@
         <item name="color">@color/drawerArrowColor</item>
     </style>
 
+    <!--银行详情-值-text-->
+    <style name="listitemLayout_tv">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/smallsp</item>
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+
     <style name="toolbar_style" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:maxHeight">@dimen/mediumhdp</item>
     </style>

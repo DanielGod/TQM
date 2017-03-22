@@ -400,24 +400,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="更多.."
+                        android:text="更多"
                         android:textColor="@color/gary_dark"
                         android:paddingRight="@dimen/smallmdp"
                         android:textSize="@dimen/mediumsp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/header_footer_top_bottom_padding"
+                        android:adjustViewBounds="true"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_right_double"
+                        android:layout_marginRight="@dimen/smallmdp"
+                        android:scaleType="centerInside"/>
                 </LinearLayout>
 
-                    <ListView
+                    <android.support.v7.widget.RecyclerView
                         android:id="@+id/bank_finaning_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/smallmdp"
                         android:layout_marginRight="@dimen/smallmdp"
                         android:layout_marginTop="1dp"
-                        android:divider="@color/whitesmoke"
-                        android:dividerHeight="1dp"
                         android:background="@android:color/white">
 
-                    </ListView>
+                    </android.support.v7.widget.RecyclerView>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -456,24 +462,30 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="更多.."
+                            android:text="更多"
                             android:textColor="@color/gary_dark"
                             android:paddingRight="@dimen/smallmdp"
                             android:textSize="@dimen/mediumsp"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/header_footer_top_bottom_padding"
+                            android:adjustViewBounds="true"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_right_double"
+                            android:layout_marginRight="@dimen/smallmdp"
+                            android:scaleType="centerInside"/>
                     </LinearLayout>
 
-                    <ListView
+                    <android.support.v7.widget.RecyclerView
                         android:id="@+id/bank_loan_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/smallmdp"
                         android:layout_marginRight="@dimen/smallmdp"
-                        android:divider="@color/whitesmoke"
-                        android:dividerHeight="1dp"
                         android:layout_marginTop="1dp"
                         android:background="@android:color/white">
 
-                    </ListView>
+                    </android.support.v7.widget.RecyclerView>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -512,10 +524,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="更多.."
+                            android:text="更多"
                             android:textColor="@color/gary_dark"
                             android:paddingRight="@dimen/smallmdp"
                             android:textSize="@dimen/mediumsp"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/header_footer_top_bottom_padding"
+                            android:adjustViewBounds="true"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_right_double"
+                            android:layout_marginRight="@dimen/smallmdp"
+                            android:scaleType="centerInside"/>
                     </LinearLayout>
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/bank_activitys_list"

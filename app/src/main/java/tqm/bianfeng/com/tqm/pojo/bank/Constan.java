@@ -9,5 +9,6 @@ public class Constan {
     public static String HOMESHOW_FALSE = "02";
     public static int FIRSTPAGESIZE = 3;
     public static int PAGESIZE = 5;
+    public static int FIRSTPAGENUM = 1;
 
 }

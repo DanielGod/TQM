@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +30,7 @@ import hugo.weaving.DebugLog;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import tqm.bianfeng.com.tqm.CustomView.AutoHeightLayoutManager;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.FilterEvens;
@@ -331,10 +331,8 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
     }
 
     private void setAdapter(List<QueryCondition> queryConditions) {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setNestedScrollingEnabled(false);
         filterAdapter = new FilterAdapter(queryConditions, mMapFilterName, getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
         recyclerView.setAdapter(filterAdapter);
         filterAdapter.setOnItemClickListener(this);
     }

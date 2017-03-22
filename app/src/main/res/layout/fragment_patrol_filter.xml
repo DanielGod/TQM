@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white"
-              android:orientation="vertical"
     >
 
     <RelativeLayout
+        android:id="@+id/titleBar_relative"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize">
 
@@ -26,30 +26,26 @@
             android:textSize="@dimen/mediumxsp"
             android:textColor="@color/blue_text"
             android:text="筛选"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_text"/>
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray_text"/>
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
+        android:layout_below="@+id/titleBar_relative"
+        android:paddingBottom="@dimen/smallhdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_height="@dimen/smallhdp"
+        android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="horizontal"
 
@@ -57,8 +53,8 @@
 
         <Button
             android:id="@+id/btn_reset"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/blue_text"
             android:background="@drawable/shape_patrol_corners_blue_confirm"
@@ -66,8 +62,8 @@
 
         <Button
             android:id="@+id/btn_confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/blue_text"
             android:textColor="@color/white"
@@ -75,4 +71,4 @@
             android:text="确定"
             />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

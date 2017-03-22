@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
-import tqm.bianfeng.com.tqm.pojo.BankInformItem;
+import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 
 /**
  * Created by johe on 2017/3/14.
@@ -25,37 +25,36 @@ public class HomeBankLoanListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
     private Context mContext;
-    private List<BankInformItem> datas;
+    private List<BankLoanItem> datas;
     private final LayoutInflater mLayoutInflater;
-    private MyItemClickListener mItemClickListener;
+    private HomeBankLoanClickListener mItemClickListener;
 
-    private CompositeSubscription mcompositeSubscription;
 
-    public BankInformItem getDataItem(int position) {
+    public BankLoanItem getDataItem(int position) {
         return datas == null ? null : datas.get(position);
     }
 
-    public HomeBankLoanListAdapter(Context mContext, List<BankInformItem> mDatas) {
+    public HomeBankLoanListAdapter(Context mContext, List<BankLoanItem> mDatas) {
         this.mContext = mContext;
         this.datas = mDatas;
         mLayoutInflater = LayoutInflater.from(mContext);
-        mcompositeSubscription = new CompositeSubscription();
     }
 
-    public void update(List<BankInformItem> mDatas) {
+    public void update(List<BankLoanItem> mDatas) {
         this.datas = mDatas;
         this.notifyDataSetChanged();
     }
 
     public int getLayout() {
-        return R.layout.bank_information_item;
+        return R.layout.firstpage_listitem;
+
     }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(getLayout(), parent, false);
-        //View v = mLayoutInflater.inflate(R.layout.my_order_list_item, parent, false);
-        RecyclerView.ViewHolder viewHolder = new ViewHolder(v);
+        RecyclerView.ViewHolder viewHolder = new ViewHolder(v, mItemClickListener);
 
         return viewHolder;
     }
@@ -66,23 +65,25 @@ public class HomeBankLoanListAdapter extends RecyclerView.Adapter<RecyclerView.V
      *
      * @param listener
      */
-    public void setOnItemClickListener(MyItemClickListener listener) {
+    public void setOnItemClickListener(HomeBankLoanClickListener listener) {
         mItemClickListener = listener;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int p) {
-        final ViewHolder mHolder = (ViewHolder) holder;
-        mHolder.bankInfoItemLin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mItemClickListener!=null){
-                    mItemClickListener.OnClickListener(p);
-                }
-            }
-        });
-        mHolder.bankInfoTimeTxt.setText(datas.get(p).getReleaseDate());
-        mHolder.bankInfoTitleTxt.setText(datas.get(p).getInformTitle());
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        ViewHolder mHolder = (ViewHolder) holder;
+        BankLoanItem data = datas.get(position);
+        mHolder.riskGradeNameLinear.setVisibility(View.GONE);
+        mHolder.activityViewsLinear.setVisibility(View.GONE);
+        mHolder.institutionNameLinear.setVisibility(View.GONE);
+        mHolder.titleTv.setText(data.getLoanName());
+        mHolder.annualReturnTv.setText(data.getRate() + "%");
+        mHolder.investmentTermTv.setText(data.getLoanPeriod());
+        mHolder.loanMoneyTv.setText("" + data.getLoanMoney().setScale(0, BigDecimal.ROUND_DOWN));
+        mHolder.loanMoneyTv.setTextColor(mContext.getResources().getColor(R.color.blue_text));
+        mHolder.rateNameTv.setText("年利率");
+
+
     }
 
     @Override
@@ -90,20 +91,52 @@ public class HomeBankLoanListAdapter extends RecyclerView.Adapter<RecyclerView.V
         return datas == null ? 0 : datas.size();
     }
 
-    public interface MyItemClickListener {
+    public BankLoanItem getItem(int position) {
+        return datas.get(position);
+    }
+
+    public interface HomeBankLoanClickListener {
         public void OnClickListener(int position);
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.bank_info_title_txt)
-        TextView bankInfoTitleTxt;
-        @BindView(R.id.bank_info_time_txt)
-        TextView bankInfoTimeTxt;
-        @BindView(R.id.bank_info_item_lin)
-        LinearLayout bankInfoItemLin;
-        ViewHolder(View view) {
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private HomeBankLoanClickListener mItemClickListener;
+
+        @BindView(R.id.annualReturn_tv)
+        TextView annualReturnTv;
+        @BindView(R.id.rateName_tv)
+        TextView rateNameTv;
+        @BindView(R.id.title_tv)
+        TextView titleTv;
+        @BindView(R.id.riskGradeName_tv)
+        TextView riskGradeNameTv;
+        @BindView(R.id.investmentTerm_tv)
+        TextView investmentTermTv;
+        @BindView(R.id.linearlayout)
+        LinearLayout linearlayout;
+        @BindView(R.id.loanMoney_tv)
+        TextView loanMoneyTv;
+        @BindView(R.id.riskGradeName_linear)
+        LinearLayout riskGradeNameLinear;
+        @BindView(R.id.loanMoney_linear)
+        LinearLayout loanMoneyLinear;
+        @BindView(R.id.activityViews_linear)
+        LinearLayout activityViewsLinear;
+        @BindView(R.id.institutionName_linear)
+        LinearLayout institutionNameLinear;
+
+        ViewHolder(View view, HomeBankLoanClickListener mItemClickListener) {
             super(view);
             ButterKnife.bind(this, view);
+            this.mItemClickListener = mItemClickListener;
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.OnClickListener(getPosition());
+            }
         }
     }
 }
