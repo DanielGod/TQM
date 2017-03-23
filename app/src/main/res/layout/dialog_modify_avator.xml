@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_pop_content"
-    android:layout_width="fill_parent"
+              android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/mediummdp"
     android:orientation="vertical" android:background="@color/white">

@@ -3,7 +3,7 @@
     <!--MainActivity-->
     <string name="home">首页</string>
     <string name="lawHelp">法律援助</string>
-    <string name="institutionsIn">机构入住</string>
+    <string name="institutionsIn">入住机构</string>
     <string name="catHome">猫舍</string>
     <!--银行理财-->
     <string name="bankFinancing">银行理财</string>
@@ -21,7 +21,6 @@
     <string name="moneyInfromations">财富资讯</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_demo">demo</string>
 
 

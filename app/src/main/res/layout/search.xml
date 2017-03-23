@@ -15,8 +15,8 @@
 
 
 
-        <RelativeLayout android:id="@+id/rlSearchFrameDelete"
-                        android:layout_width="fill_parent"
+        <RelativeLayout
+            android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:paddingLeft="@dimen/mediummdp"
@@ -64,7 +64,6 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/ll_category"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -74,7 +73,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_image"
@@ -84,7 +82,6 @@
                 android:textSize="13sp"/>
 
             <ImageView
-                android:id="@+id/iv_category_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -97,7 +94,6 @@
             android:background="@color/font_black_5"/>
 
         <LinearLayout
-            android:id="@+id/ll_sort"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -107,7 +103,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_image"
@@ -117,7 +112,6 @@
                 android:textSize="13sp"/>
 
             <ImageView
-                android:id="@+id/iv_sort_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -141,7 +135,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_image"
@@ -151,7 +144,6 @@
                 android:textSize="13sp"/>
 
             <ImageView
-                android:id="@+id/iv_filter_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"

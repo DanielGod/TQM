@@ -37,6 +37,9 @@ public class NewBankInformationActivity extends AppCompatActivity implements Rec
         }
         ViewpagerAdapter viewpagerAdapter = new ViewpagerAdapter(getSupportFragmentManager());
         mViewPager.getViewPager().setAdapter(viewpagerAdapter);
+        if ("02".equals(getIntent().getStringExtra("02"))){
+            mViewPager.onPageSelected(2);
+        }
         mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
             public HeaderDesign getHeaderDesign(int page) {
