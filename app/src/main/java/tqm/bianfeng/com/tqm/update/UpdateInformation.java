@@ -7,7 +7,7 @@ package tqm.bianfeng.com.tqm.update;
 
 public class UpdateInformation {
     public static String appname ="TQMService";
-    public static String localVersion = "1.0.0";// 本地版本
+    public static String localVersion = "0.0.1";// 本地版本
     public static String versionName = ""; // 本地版本名
     public static int serverVersion = 1;// 服务器版本
     public static int serverFlag = 0;// 服务器标志

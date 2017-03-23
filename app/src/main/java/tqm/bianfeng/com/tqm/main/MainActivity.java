@@ -7,8 +7,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +21,6 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import hugo.weaving.DebugLog;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -71,11 +68,10 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         compositeSubscription = new CompositeSubscription();
-        setContent(CONTENT_HOME);
         //设置底部栏
         initBottomBar();
         //版本更新
-//        updateApp();
+        updateApp();
         //网络判断
         initNetWork(true);
     }
@@ -101,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 .addItem(new BottomNavigationItem(R.drawable.institutions_in, R.string.institutionsIn))
                 .addItem(new BottomNavigationItem(R.drawable.cat_home, R.string.catHome))
                 .initialise();
-
+        setContent(CONTENT_HOME);
         bottomBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
@@ -111,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                         break;
                     case 1:
                         setContent(CONTENT_LAWHELP);
-
                         break;
                     case 2:
                         setContent(CONTENT_INSTITUTIONSIN);
@@ -150,54 +145,71 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 String home_str = getResources().getString(R.string.home);
                 toolbarTitle.setText(home_str);
                 homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(HOME_TAG);
+                hideFragment(HOME_TAG);
                 if (homeFragment == null) {
                     homeFragment = HomeFragment.newInstance();
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, homeFragment, HOME_TAG).commit();
+                } else {
+                    getSupportFragmentManager().beginTransaction().show(homeFragment).commitNow();
                 }
-                setFragment(homeFragment, HOME_TAG);
                 break;
             case CONTENT_LAWHELP:
                 String lawHelp_str = getResources().getString(R.string.lawHelp);
                 toolbarTitle.setText(lawHelp_str);
                 lawHelpFragment = (LawHelpFragment) getSupportFragmentManager().findFragmentByTag(LAWHELP_TAG);
+                hideFragment(LAWHELP_TAG);
                 if (lawHelpFragment == null) {
                     lawHelpFragment = LawHelpFragment.newInstance();
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, lawHelpFragment, LAWHELP_TAG).commit();
+                } else {
+                    getSupportFragmentManager().beginTransaction().show(lawHelpFragment).commitNow();
                 }
-                setFragment(lawHelpFragment, LAWHELP_TAG);
                 break;
             case CONTENT_INSTITUTIONSIN:
                 String institutionsIn_str = getResources().getString(R.string.institutionsIn);
                 toolbarTitle.setText(institutionsIn_str);
                 institutionsInFragment = (InstitutionsInFragment) getSupportFragmentManager().findFragmentByTag(INSTITUTIONSIN_TAG);
+                hideFragment(INSTITUTIONSIN_TAG);
                 if (institutionsInFragment == null) {
                     institutionsInFragment = InstitutionsInFragment.newInstance();
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, institutionsInFragment, INSTITUTIONSIN_TAG).commit();
+                } else {
+                    getSupportFragmentManager().beginTransaction().show(institutionsInFragment).commitNow();
                 }
-                setFragment(institutionsInFragment, INSTITUTIONSIN_TAG);
                 break;
             case CONTENT_CATHOME:
                 String catHome_str = getResources().getString(R.string.catHome);
                 toolbarTitle.setText(catHome_str);
                 userFragemnt = (UserFragment) getSupportFragmentManager().findFragmentByTag(CATHOME_TAG);
+                hideFragment(CATHOME_TAG);
                 if (userFragemnt == null) {
                     userFragemnt = UserFragment.newInstance("猫舍");
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, userFragemnt, CATHOME_TAG).commit();
+                } else {
+                    getSupportFragmentManager().beginTransaction().show(userFragemnt).commitNow();
                 }
-                setFragment(userFragemnt, CATHOME_TAG);
                 break;
         }
 
     }
-
-    /**
-     * 设置fragment
-     *
-     * @param fragment
-     */
-    @DebugLog
-    private void setFragment(Fragment fragment, String tag) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment, tag);
-        fragmentTransaction.commitAllowingStateLoss();
+    private void hideFragment(String tag){
+        if(homeFragment!=null&&tag!=HOME_TAG){
+            getSupportFragmentManager().beginTransaction().hide(homeFragment).commitNow();
+        }
+        if(lawHelpFragment!=null&&tag!=LAWHELP_TAG){
+            getSupportFragmentManager().beginTransaction().hide(lawHelpFragment).commitNow();
+        }
+        if(institutionsInFragment!=null&&tag!=INSTITUTIONSIN_TAG){
+            getSupportFragmentManager().beginTransaction().hide(institutionsInFragment).commitNow();
+        }
+        if(userFragemnt!=null&&tag!=CATHOME_TAG){
+            getSupportFragmentManager().beginTransaction().hide(userFragemnt).commitNow();
+        }
     }
-
     public void changeActivity(
             Class activityClass) {
         startActivity(new Intent(MainActivity.this, activityClass));
@@ -257,10 +269,10 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
 
         @Override
         public void onNext(UpdateMsg updateMsg) {
-            Log.e("gqf", "updateMsg" + updateMsg.toString());
+            //Log.e("gqf", "updateMsg" + updateMsg.toString());
             //与本地版本号对比
             if (BaseApplication.isUpdateForVersion(updateMsg.getVersionCode(), UpdateInformation.localVersion)) {
-                // Log.i("gqf","updateMsg"+updateMsg.toString());
+                //Log.i("gqf",UpdateInformation.localVersion+"updateMsg"+updateMsg.toString());
                 mUpdateMsg = updateMsg;
                 if (alert == null) {
                     alert = new AlertDialog.Builder(MainActivity.this);
@@ -299,13 +311,15 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         Intent updateIntent = new Intent(MainActivity.this, UpdateService.class);
         updateIntent.putExtra("getUpdateContent", updateMsg.getUpdateContent());
         updateIntent.putExtra("getVersionCode", updateMsg.getVersionCode());
-        updateIntent.putExtra("getVersionUrl", updateMsg.getVersionUrl());
+        updateIntent.putExtra("getVersionUrl", updateMsg.getUpdateUrl());
         startService(updateIntent);
     }
 
     //检测更新
     public void updateApp() {
+        Log.e("gqf", "updateMsgupdateApp");
         if (ISUPDATEAPP && alert == null) {
+            Log.e("gqf", "updateMsgupdateApp2");
             //判断本地数据库是否有版本号
             Subscription subscription = NetWork.getUpdateService().getVersion()
                     .subscribeOn(Schedulers.io())

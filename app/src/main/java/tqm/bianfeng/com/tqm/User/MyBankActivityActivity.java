@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
@@ -19,9 +18,9 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.R;
-import tqm.bianfeng.com.tqm.User.adapter.BankActivitionsAdapter;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.main.DetailActivity;
+import tqm.bianfeng.com.tqm.main.HomeBankActivitysListAdapter;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.User;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
@@ -38,7 +37,7 @@ public class MyBankActivityActivity extends BaseActivity {
     @BindView(R.id.my_bank_activity_list)
     RecyclerView myBankActivityList;
 
-    BankActivitionsAdapter bankActivitionsAdapter;
+    HomeBankActivitysListAdapter bankActivitionsAdapter;
     List<BankActivityItem> datas;
 
     @Override
@@ -85,24 +84,25 @@ public class MyBankActivityActivity extends BaseActivity {
 
     public void initList(List<BankActivityItem> bankActivityItems) {
         if (bankActivitionsAdapter == null) {
-            bankActivitionsAdapter = new BankActivitionsAdapter(bankActivityItems, this);
+            bankActivitionsAdapter = new HomeBankActivitysListAdapter(this,bankActivityItems);
             myBankActivityList.setLayoutManager(new LinearLayoutManager(this));
             LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(this, R.anim.slide_in_left));
             lac.setOrder(LayoutAnimationController.ORDER_NORMAL);
             lac.setDelay(1);
             myBankActivityList.setLayoutAnimation(lac);
             myBankActivityList.setAdapter(bankActivitionsAdapter);
-            bankActivitionsAdapter.setOnItemClickListener(new BankActivitionsAdapter.BankActivityItemClickListener() {
+            bankActivitionsAdapter.setOnItemClickListener(new HomeBankActivitysListAdapter.HomeBankActivitysItemClickListener() {
                 @Override
-                public void onItemClick(View view, int postion) {
+                public void OnClickListener(int position) {
                     Intent intent = new Intent(MyBankActivityActivity.this, DetailActivity.class);
                     intent.putExtra("detailType", "01");
-                    intent.putExtra("detailId", datas.get(postion).getActivityId());
+                    intent.putExtra("detailId", datas.get(position).getActivityId());
+                    intent.putExtra("detailTitle", datas.get(position).getActivityTitle());
                     startActivity(intent);
                 }
             });
         } else {
-            bankActivitionsAdapter.setdatas(bankActivityItems);
+            bankActivitionsAdapter.update(bankActivityItems);
         }
     }
 

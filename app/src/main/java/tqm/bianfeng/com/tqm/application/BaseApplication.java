@@ -137,6 +137,7 @@ public class BaseApplication extends Application {
             String[] newNums = newVersion.split("\\.");
             String[] indexNums = indexVersion.split("\\.");
 
+
             if (newNums.length > indexNums.length) {// 服务器版本长度 比当前版本要长
                 for (int i = 0; i < newNums.length; i++) {
                     //位数不够,给当前版本补零
@@ -145,7 +146,8 @@ public class BaseApplication extends Application {
                         currentValue = Integer.parseInt(indexNums[i]);
                     }
 
-
+                    //Log.e("gqf","1isUpdateForVersion"+Integer.parseInt(newNums[i]));
+                   // Log.e("gqf","2isUpdateForVersion"+currentValue);
                     // 服务器上同位版本数如果有一个数大于 当前的，就是最新版，要更新；否则不更新
                     if (Integer.parseInt(newNums[i]) > currentValue) {
                         return true;
@@ -161,7 +163,8 @@ public class BaseApplication extends Application {
                     if(i < newNums.length){
                         newValue = Integer.parseInt(newNums[i]);
                     }
-
+                    //Log.e("gqf","1isUpdateForVersion"+Integer.parseInt(indexNums[i]));
+                    //Log.e("gqf","2isUpdateForVersion"+newValue);
                     // 服务器上同位版本数如果有一个数大于 当前的，就是最新版，要更新；否则不更新
                     if (newValue > Integer.parseInt(indexNums[i])) {
                         return true;

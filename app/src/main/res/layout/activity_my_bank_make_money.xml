@@ -3,7 +3,8 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+    >
     <!--我的关注的银行理财列表-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_bank_make_money_toolbar"
@@ -16,14 +17,16 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/tinymdp"
+        android:layout_height="@dimen/smallmdp"
         android:background="@color/whitesmoke"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_bank_make_money_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/whitesmoke"
+        android:layout_marginLeft="@dimen/smallmdp"
+        android:layout_marginRight="@dimen/smallmdp"
+        android:background="@color/white"
         android:layoutAnimation="@anim/layout_animation"
         >
 

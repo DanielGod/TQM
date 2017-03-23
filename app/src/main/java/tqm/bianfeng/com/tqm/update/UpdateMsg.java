@@ -10,11 +10,23 @@ package tqm.bianfeng.com.tqm.update;
 
 public class UpdateMsg  {
     String versionCode;
-    String versionUrl;
+    String updateUrl;
     String updateContent;
 
-    public UpdateMsg (){
+    public String getUpdateContent() {
+        return updateContent;
+    }
 
+    public void setUpdateContent(String updateContent) {
+        this.updateContent = updateContent;
+    }
+
+    public String getUpdateUrl() {
+        return updateUrl;
+    }
+
+    public void setUpdateUrl(String updateUrl) {
+        this.updateUrl = updateUrl;
     }
 
     public String getVersionCode() {
@@ -25,27 +37,11 @@ public class UpdateMsg  {
         this.versionCode = versionCode;
     }
 
-    public String getVersionUrl() {
-        return versionUrl;
-    }
-
-    public void setVersionUrl(String versionUrl) {
-        this.versionUrl = versionUrl;
-    }
-
-    public String getUpdateContent() {
-        return updateContent;
-    }
-
-    public void setUpdateContent(String updateContent) {
-        this.updateContent = updateContent;
-    }
-
     @Override
     public String toString() {
         return "UpdateMsg{" +
                 "versionCode='" + versionCode + '\'' +
-                ", versionUrl='" + versionUrl + '\'' +
+                ", updateUrl='" + updateUrl + '\'' +
                 ", updateContent='" + updateContent + '\'' +
                 '}';
     }

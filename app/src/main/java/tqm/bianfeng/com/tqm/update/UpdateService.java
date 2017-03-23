@@ -24,6 +24,7 @@ import rx.Subscriber;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.main.MainActivity;
 import tqm.bianfeng.com.tqm.network.DownloadAPI;
+import tqm.bianfeng.com.tqm.network.NetWork;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -54,7 +55,7 @@ public class UpdateService extends Service {
         updateMsg=new UpdateMsg();
         updateMsg.setUpdateContent(intent.getStringExtra("getUpdateContent"));
         updateMsg.setVersionCode(intent.getStringExtra("getVersionCode"));
-        updateMsg.setVersionUrl(intent.getStringExtra("getVersionUrl"));
+        updateMsg.setUpdateUrl(intent.getStringExtra("getVersionUrl"));
         //创建文件
         if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
             //文件夹路径
@@ -145,10 +146,10 @@ public class UpdateService extends Service {
             outputFile.delete();
         }
 
-        String baseUrl = StringUtils.getHostName(updateMsg.getVersionUrl());
+        String baseUrl = StringUtils.getHostName(NetWork.LOAD+updateMsg.getUpdateUrl());
         //开起下载
         new DownloadAPI(baseUrl, listener)
-                .downloadAPK(updateMsg.getVersionUrl(), outputFile, new Subscriber() {
+                .downloadAPK(updateMsg.getUpdateUrl(), outputFile, new Subscriber() {
             @Override
             public void onCompleted() {
                 downloadCompleted();

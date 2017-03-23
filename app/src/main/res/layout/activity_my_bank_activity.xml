@@ -25,14 +25,19 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/smallmdp"
+        android:background="@color/whitesmoke"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_bank_activity_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/whitesmoke"
+        android:layout_marginLeft="@dimen/smallmdp"
+        android:layout_marginRight="@dimen/smallmdp"
+        android:background="@color/white"
         android:layoutAnimation="@anim/layout_animation"
         >
 

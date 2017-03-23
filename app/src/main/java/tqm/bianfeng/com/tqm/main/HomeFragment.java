@@ -72,14 +72,20 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.bank_activitys_list)
     RecyclerView bankActivitysList;
 
-    @BindView(R.id.home_info_lin)
-    LinearLayout homeInfoLin;
 
     @BindView(R.id.bank_finaning_list)
     RecyclerView bankFinaningList;
     @BindView(R.id.bank_loan_list)
     RecyclerView bankLoanList;
     boolean isNetWork = true;
+    @BindView(R.id.home_bank_loan_title_lin)
+    LinearLayout homeBankLoanTitleLin;
+    @BindView(R.id.home_bank_activity_title_lin)
+    LinearLayout homeBankActivityTitleLin;
+    @BindView(R.id.home_info_lin)
+    LinearLayout homeInfoLin;
+    @BindView(R.id.home_bank_make_money_title_lin)
+    LinearLayout homeBankMakeMoneyTitleLin;
     private CompositeSubscription mCompositeSubscription;
 
     public static HomeFragment newInstance() {
@@ -120,6 +126,7 @@ public class HomeFragment extends BaseFragment {
      * 银行贷款
      */
     private void getBankLoanServiceItem() {
+        homeBankLoanTitleLin.setVisibility(View.VISIBLE);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
                 .getBankLoanItem(null, Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE)
                 .subscribeOn(Schedulers.io())
@@ -141,7 +148,7 @@ public class HomeFragment extends BaseFragment {
                     public void onNext(List<BankLoanItem> bankloanItems) {
                         Log.e("Daniel", "---BankLoanItem---");
                         setBankLoanListAdapter(bankloanItems);
-
+                        getBankActivitys();
                     }
                 });
         mCompositeSubscription.add(getBankFinancItem_subscription);
@@ -158,6 +165,7 @@ public class HomeFragment extends BaseFragment {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("detailType", "03");
                 intent.putExtra("detailId", bankLoanAdapter.getItem(position).getLoanId());
+                intent.putExtra("detailTitle", bankLoanAdapter.getDataItem(position).getLoanName());
                 mListener.detailActivity(intent);
             }
         });
@@ -167,6 +175,7 @@ public class HomeFragment extends BaseFragment {
      * 银行活动
      */
     private void getBankActivitys() {
+        homeBankActivityTitleLin.setVisibility(View.VISIBLE);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
                 .getBankActivityItem(Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE)
                 .subscribeOn(Schedulers.io())
@@ -186,7 +195,7 @@ public class HomeFragment extends BaseFragment {
                     @DebugLog
                     @Override
                     public void onNext(List<BankActivityItem> bankActivityItems) {
-                        Log.e("Daniel", "---bankActivityItems.size()---"+bankActivityItems.size());
+                        Log.e("Daniel", "---bankActivityItems.size()---" + bankActivityItems.size());
                         setBankActivitysListAdapter(bankActivityItems);
 
                     }
@@ -207,6 +216,7 @@ public class HomeFragment extends BaseFragment {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("detailType", "01");
                 intent.putExtra("detailId", homeBankActivitysListAdapter.getDataItem(position).getActivityId());
+                intent.putExtra("detailTitle", homeBankActivitysListAdapter.getDataItem(position).getActivityTitle());
                 mListener.detailActivity(intent);
             }
         });
@@ -218,6 +228,7 @@ public class HomeFragment extends BaseFragment {
      * 银行理财
      */
     private void getBankFinaningItem() {
+        homeBankMakeMoneyTitleLin.setVisibility(View.VISIBLE);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
                 .getBankFinancItem(null, Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE)
                 .subscribeOn(Schedulers.io())
@@ -239,7 +250,7 @@ public class HomeFragment extends BaseFragment {
                     public void onNext(List<BankFinancItem> bankFinancItems) {
                         Log.e("Daniel", "---BankFinancItem---");
                         setBankFinancListAdapter(bankFinancItems);
-
+                        getBankLoanServiceItem();
                     }
                 });
         mCompositeSubscription.add(getBankFinancItem_subscription);
@@ -256,6 +267,7 @@ public class HomeFragment extends BaseFragment {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("detailType", "02");
                 intent.putExtra("detailId", bankFinancingAdapter.getDataItem(position).getFinancId());
+                intent.putExtra("detailTitle", bankFinancingAdapter.getDataItem(position).getProductName());
                 mListener.detailActivity(intent);
             }
         });
@@ -288,6 +300,7 @@ public class HomeFragment extends BaseFragment {
                     public void onNext(List<BankInformItem> bankInformItems) {
                         Log.e("gqf", "bankInformItems" + bankInformItems.toString());
                         initBankLoanItemList(bankInformItems);
+                        getBankFinaningItem();
                     }
                 });
         compositeSubscription.add(subscription);
@@ -422,15 +435,9 @@ public class HomeFragment extends BaseFragment {
             if (isNetWork) {
                 if (homeInfoLin.getVisibility() != View.VISIBLE) {
                     homeInfoLin.setVisibility(View.VISIBLE);
-                    getBankLoanItem();
-                    getBankLoanItemHot();
-                    Log.e("Daniel", "---getBankFinaningItem---");
-                    getBankFinaningItem();
-                    Log.e("Daniel", "---getBankLoanServiceItem---");
-                    getBankLoanServiceItem();
-                    Log.e("Daniel", "---getBankActivitys---");
-                    getBankActivitys();
                     initImagesData();
+                    getBankLoanItemHot();
+                    getBankLoanItem();
                 }
             } else {
                 homeInfoLin.setVisibility(View.INVISIBLE);

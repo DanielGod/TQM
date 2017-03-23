@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
@@ -19,9 +18,9 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.R;
-import tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.main.DetailActivity;
+import tqm.bianfeng.com.tqm.main.HomeBankLoanListAdapter;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.User;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
@@ -38,7 +37,7 @@ public class MyBankLoanActivity extends BaseActivity {
     RecyclerView myBankLoanList;
     List<BankLoanItem> datas;
 
-    BankLoanAdapter bankLoanAdapter;
+    HomeBankLoanListAdapter bankLoanAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,24 +82,25 @@ public class MyBankLoanActivity extends BaseActivity {
 
     public void initList(List<BankLoanItem> bankLoanItems) {
         if (bankLoanAdapter == null) {
-            bankLoanAdapter = new BankLoanAdapter(bankLoanItems, this);
+            bankLoanAdapter = new HomeBankLoanListAdapter(this,bankLoanItems);
             myBankLoanList.setLayoutManager(new LinearLayoutManager(this));
             LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(this, R.anim.slide_in_left));
             lac.setOrder(LayoutAnimationController.ORDER_NORMAL);
             lac.setDelay(1);
             myBankLoanList.setLayoutAnimation(lac);
             myBankLoanList.setAdapter(bankLoanAdapter);
-            bankLoanAdapter.setOnItemClickListener(new BankLoanAdapter.BankLoanItemClickListener() {
+            bankLoanAdapter.setOnItemClickListener(new HomeBankLoanListAdapter.HomeBankLoanClickListener() {
                 @Override
-                public void onItemClick(View view, int postion) {
+                public void OnClickListener(int position) {
                     Intent intent = new Intent(MyBankLoanActivity.this, DetailActivity.class);
                     intent.putExtra("detailType", "03");
-                    intent.putExtra("detailId", datas.get(postion).getLoanId());
+                    intent.putExtra("detailId", datas.get(position).getLoanId());
+                    intent.putExtra("detailTitle", datas.get(position).getLoanName());
                     startActivity(intent);
                 }
             });
         } else {
-            bankLoanAdapter.setdatas(bankLoanItems);
+            bankLoanAdapter.update(bankLoanItems);
         }
     }
 
