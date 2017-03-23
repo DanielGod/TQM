@@ -5,10 +5,20 @@ package tqm.bianfeng.com.tqm.pojo.bank;
  */
 
 public class ListItemPositioin {
+    String module;
     Integer position;
 
-    public ListItemPositioin(Integer position) {
+    public ListItemPositioin(String module, Integer position) {
+        this.module = module;
         this.position = position;
+    }
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
     }
 
     public Integer getPosition() {

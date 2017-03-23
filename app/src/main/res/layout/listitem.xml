@@ -67,6 +67,7 @@
                 android:layout_weight="1"
                 android:textColor="@color/black"
                 android:lines="1"
+                android:ellipsize="end"
                 android:textSize="@dimen/mediumsp"
                 android:gravity="center_vertical"
                 android:id="@+id/title_tv"/>

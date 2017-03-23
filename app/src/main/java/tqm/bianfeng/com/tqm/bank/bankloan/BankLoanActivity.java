@@ -1,6 +1,7 @@
 package tqm.bianfeng.com.tqm.bank.bankloan;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,7 +14,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -57,6 +60,10 @@ public class BankLoanActivity extends AppCompatActivity {
     PullToRefreshListView mainPullRefreshLv;
     @BindView(R.id.etSearch)
     EditText etSearch;
+    @BindView(R.id.YBJ_loding)
+    ImageView YBJLoding;
+    @BindView(R.id.YBJ_loding_txt)
+    TextView YBJLodingTxt;
 
 
     private CompositeSubscription mCompositeSubscription;
@@ -72,15 +79,46 @@ public class BankLoanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bank_financing);
         unbinder = ButterKnife.bind(this);
         EventBus.getDefault().register(this);//订阅
-//        mListener = (mListener) BankLoanActivity.this;
+        //        mListener = (mListener) BankLoanActivity.this;
         setToolBar(getResources().getString(R.string.bankloan));
+        lodingIsFailOrSucess(1);
         mCompositeSubscription = new CompositeSubscription();
         initDrawLayout();
-        initDate(null, pagNum);
+        initDate(null, pagNum, Constan.NOTPULLUP);
         initRefreshlv();
 
 
     }
+
+    /**
+     * 初始化资源加载动画
+     * @param i
+     */
+    public void lodingIsFailOrSucess(int i) {
+        if (i == 1) {
+            //加载中
+            YBJLoding.setVisibility(View.VISIBLE);
+            YBJLodingTxt.setVisibility(View.VISIBLE);
+            YBJLodingTxt.setText("加载中...");
+            YBJLoding.setBackgroundResource(R.drawable.loding_anim_lists);
+            AnimationDrawable anim = (AnimationDrawable) YBJLoding.getBackground();
+            anim.start();
+
+        } else if (i == 2) {
+            //加载成功
+            YBJLoding.setBackground(null);
+            YBJLoding.setVisibility(View.GONE);
+            YBJLodingTxt.setVisibility(View.GONE);
+        } else {
+            //加载失败
+            YBJLoding.setVisibility(View.VISIBLE);
+            YBJLodingTxt.setVisibility(View.VISIBLE);
+            YBJLoding.setBackground(null);
+            YBJLodingTxt.setText("加载失败，请检查网络连接");
+            YBJLoding.setImageResource(R.drawable.ic_loding_fail);
+        }
+    }
+
     private void initRefreshlv() {
 
 
@@ -96,45 +134,55 @@ public class BankLoanActivity extends AppCompatActivity {
         endLayout.setReleaseLabel("放开以刷新");
 
         mainPullRefreshLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            //下拉监听
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Log.i("Daniel", "---onPullDownToRefresh---");
-                initDate(null, pagNum);
+                //下拉从首页开始加载
+                pagNum = 1;
+                if (mAllBankLoanItems != null) {
+                    //清空预存集合
+                    mAllBankLoanItems.clear();
+                }
+                initDate(null, pagNum, Constan.NOTPULLUP);
 
             }
-
+            //上拉监听
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                Log.i("Daniel", "---onPullDownToRefresh---");
-                pagNum = pagNum+1;
-                initDate(null, pagNum);
+                Log.i("Daniel", "---onPullUpToRefresh---");
+                pagNum = pagNum + 1;
+                initDate(null, pagNum, Constan.PULLUP);
             }
         });
 
     }
 
-
+    //接收筛选条件并请求数据
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(FilterEvens event) {
         Log.i("Daniel", "---onEventMainThread---" + event.getFilterValue());
-        initDate(event.getFilterValue(), pagNum);
+        initDate(event.getFilterValue(), pagNum, Constan.NOTPULLUP);
 
     }
-
+    //接受跳转详情广播
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread2(ListItemPositioin event) {
-        Integer position = event.getPosition();
-        Log.i("Daniel", "---onEventMainThread2---" + event.getPosition());
-        //跳转银行贷款详情
-        Log.i("Daniel", "---getFinancId---" + loanAdapter.getItem(position).getLoanId());
-        Log.i("Daniel", "---position---" + position);
-        Intent intent = new Intent(BankLoanActivity.this, DetailActivity.class);
-        intent.putExtra("detailType", "03");
-        intent.putExtra("detailId", loanAdapter.getItem(position).getLoanId());
-        startActivity(intent);
+        if ("03".equals(event.getModule())) {
+            Integer position = event.getPosition();
+            //跳转银行贷款详情
+            Intent intent = new Intent(BankLoanActivity.this, DetailActivity.class);
+            intent.putExtra("detailType", "03");
+            intent.putExtra("detailId", loanAdapter.getItem(position).getLoanId());
+            startActivity(intent);
+        }
 
     }
 
+    /**
+     * 初始化titleBar
+     * @param s
+     */
     private void setToolBar(String s) {
         toolbar.setTitle(s);
         setSupportActionBar(toolbar);
@@ -148,7 +196,8 @@ public class BankLoanActivity extends AppCompatActivity {
 
     }
 
-    private void initDate(String json, int pagNum) {
+    private void initDate(String json, int pagNum, final boolean pullUp) {
+        Log.i("Daniel", "---pagNum---" + pagNum);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
                 .getBankLoanItem(json, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE)
                 .subscribeOn(Schedulers.io())
@@ -157,29 +206,40 @@ public class BankLoanActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted() {
                         //设置可上拉刷新和下拉刷新
-                        Log.e("Daniel", "---mPagItemSize---" + mPagItemSize);
-                        if (mPagItemSize==0){
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
-                        }else if (mPagItemSize > 0 && mPagItemSize<Constan.PAGESIZE) {
+                        if (mPagItemSize == 0) {
+                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);//不能行拉
+                        } else if (mPagItemSize > 0 && mPagItemSize < Constan.PAGESIZE) {
                             mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                         } else {
                             mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
                         }
                     }
+
                     @DebugLog
                     @Override
                     public void onError(Throwable e) {
+                        lodingIsFailOrSucess(3);
+                        mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
+
                     }
+
                     @DebugLog
                     @Override
                     public void onNext(List<BankLoanItem> bankloanItems) {
                         mPagItemSize = bankloanItems.size();
-                        if (mAllBankLoanItems==null){
+                        Log.e("Daniel", "---mPagItemSize---" + mPagItemSize);
+                        Log.e("Daniel", "---pullUp---" + pullUp);
+                        lodingIsFailOrSucess(2);
+                        if (mAllBankLoanItems == null) {
                             mAllBankLoanItems = new ArrayList<>();
                         }
                         mAllBankLoanItems.addAll(bankloanItems);
-                        setAdapter(mAllBankLoanItems);
-//
+                        if (pullUp) {
+                            setAdapter(mAllBankLoanItems);
+                        } else {
+                            setAdapter(bankloanItems);
+                        }
+                        //
 
                     }
                 });
@@ -187,19 +247,19 @@ public class BankLoanActivity extends AppCompatActivity {
     }
 
     private void setAdapter(List<BankLoanItem> bankloanItems) {
-        if (loanAdapter==null){
-            loanAdapter = new BankLoanAdapter(BankLoanActivity.this,bankloanItems,false);
+        if (loanAdapter == null) {
+            Log.e("Daniel", "---loanAdapter111---" + bankloanItems.size());
+            loanAdapter = new BankLoanAdapter(BankLoanActivity.this, bankloanItems, false);
             mainPullRefreshLv.setAdapter(loanAdapter);
-        }else {
+        } else {
+            Log.e("Daniel", "---loanAdapter2222---" + bankloanItems.size());
             loanAdapter.setdatas(bankloanItems);
         }
-
-
-        Log.i("Daniel", "---isRefreshing---"+mainPullRefreshLv.isRefreshing());
         mainPullRefreshLv.onRefreshComplete();
-        initEdi(loanAdapter,bankloanItems);
+        initEdi(loanAdapter, bankloanItems);
 
     }
+
     public void initEdi(final BankLoanAdapter loanAdapter, final List<BankLoanItem> bankFinancItems) {
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -211,21 +271,21 @@ public class BankLoanActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
+
             @DebugLog
             @Override
             public void afterTextChanged(Editable editable) {
                 if (!editable.toString().equals("")) {
                     List<BankLoanItem> decoCompanyItemList = new ArrayList();
                     for (BankLoanItem decoCompanyItem : bankFinancItems) {
-                        Log.e("Daniel","----editable.toString()---"+editable.toString());
-                        Log.e("Daniel","----decoCompanyItem.getProductName()---"+decoCompanyItem.getLoanName());
+
                         if (editable.toString().contains(decoCompanyItem.getLoanName())) {
                             decoCompanyItemList.add(decoCompanyItem);
                         } else if (decoCompanyItem.getLoanName().contains(editable.toString())) {
                             decoCompanyItemList.add(decoCompanyItem);
                         }
                     }
-                    Log.e("Daniel","----decoCompanyItemList.size()---"+decoCompanyItemList.size());
+
                     loanAdapter.setdatas(decoCompanyItemList);
                 } else {
                     loanAdapter.setdatas(bankFinancItems);
