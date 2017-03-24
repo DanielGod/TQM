@@ -2,52 +2,95 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tqm.bianfeng.com.tqm.User.demo">
+    tools:context="tqm.bianfeng.com.tqm.main.DetailActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/detail_toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/hugehdp"
-            android:background="@color/colorPrimary"
-            android:fitsSystemWindows="true"
-            android:gravity="center_vertical"
-            android:minHeight="?actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="tqm.bianfeng.com.tqm.User.demo"
-            tools:showIn="@layout/activity_detail">
-
-            <WebView
-                android:id="@+id/detail_web"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/detail_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </RelativeLayout>
-    </LinearLayout>
+                android:layout_height="@dimen/hugehdp"
+                android:background="@color/colorPrimary"
+                android:fitsSystemWindows="true"
+                android:gravity="center_vertical"
+                android:minHeight="?actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_bank_activity"/>
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context="tqm.bianfeng.com.tqm.User.demo"
+                tools:showIn="@layout/activity_detail">
 
+                <WebView
+                    android:id="@+id/detail_web"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/multiple_actions_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            fab:fab_addButtonColorNormal="@color/white"
+            fab:fab_addButtonColorPressed="@color/white_pressed"
+            fab:fab_addButtonPlusIconColor="@color/half_black"
+            fab:fab_labelStyle="@style/menu_labels_style"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_a"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/colorPrimary"
+                fab:fab_title="Action A"
+                fab:fab_colorPressed="@color/colorPrimaryDark"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_icon="@drawable/ic_back_top"
+                fab:fab_colorNormal="@color/pink_pressed"
+                fab:fab_title="返回顶部"
+                fab:fab_colorPressed="@color/pink"/>
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            app:fab_icon="@drawable/ic_back_top"
+            fab:fab_colorNormal="@color/pink_pressed"
+            fab:fab_colorPressed="@color/pink"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"/>
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -11,7 +11,6 @@
     <color name="gary_dark">#979797</color> <!-- 深灰色 -->
 
 
-
     <color name="white">#ffffff</color>
     <color name="gray_light">#EBEDF0</color>
     <color name="red">#ee0000</color>
@@ -40,5 +39,13 @@
     <color name="blue_text">#3cafff</color>
     <color name="jd_gray">#EFF2F5</color>
 
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="background">#e5e5e5</color>
+    <color name="half_black">#808080</color>
+    <color name="white_pressed">#f1f1f1</color>
+    <color name="pink">#e91e63</color>
+    <color name="pink_pressed">#ec407a</color>
+    <color name="blue_semi_transparent">#805677fc</color>
+    <color name="blue_semi_transparent_pressed">#80738ffe</color>
 
 </resources>
