@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -82,44 +83,38 @@ public class DetailActivity extends BaseActivity {
         setToolbar(detailToolbar, toolbarTitle);
         initWebView();
         initCollection();
+        initFabSrc();
     }
 
     String url;
 
     public void initWebView() {
         WebSettings settings = webView.getSettings();
-        settings.setAppCacheEnabled(true);
-        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-
-        settings.setUseWideViewPort(true);
-        settings.setLoadWithOverviewMode(true);
-        //setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-        settings.setTextZoom(100);
-        settings.setUseWideViewPort(true);
-        settings.setJavaScriptEnabled(true);
-        settings.setLoadWithOverviewMode(true);
-        settings.setSupportZoom(true);
-        webView.getSettings().setLoadWithOverviewMode(true);
-        webView.setInitialScale(57);
-        webView.getSettings().setBlockNetworkImage(false);
-
-        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webView.setVerticalScrollBarEnabled(false);
+        settings.setAppCacheEnabled(true);//设置启动缓存
+        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//缓存模式
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//4.4以下版本自适应页面大小 不能左右滑动
+//        1.NARROW_COLUMNS：可能的话使所有列的宽度不超过屏幕宽度
+//        2.NORMAL：正常显示不做任何渲染
+//        3.SINGLE_COLUMN：把所有内容放大webview等宽的一列中
+        settings.setUseWideViewPort(true);//设置webview推荐使用的窗口
+        settings.setLoadWithOverviewMode(true);//设置webview加载的页面的模式
+        settings.setTextZoom(100);//字体大小
+        settings.setJavaScriptEnabled(true);//支持js
+        settings.setSupportZoom(true);//仅支持双击缩放
+        webView.setInitialScale(57);//最小缩放等级
+        webView.getSettings().setBlockNetworkImage(false);//阻止图片网络数据
+        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);//图片加载放在最后
+        webView.setVerticalScrollBarEnabled(false);//滚动条不显示
         webView.setHorizontalScrollBarEnabled(false);
-        webView.getSettings().setBuiltInZoomControls(true);// 设置缩放
-        webView.getSettings().setDisplayZoomControls(false);/*
-        webView.addJavascriptInterface(new InJavaScriptLocalObj(), "java_obj");
-        webView.setWebViewClient(new CustomWebViewClient());*/
+        webView.getSettings().setBuiltInZoomControls(true);// 出现放大缩小提示
+        webView.getSettings().setDisplayZoomControls(false);//隐藏缩放按钮
         url = "http://211.149.235.17:8080/tqm-web/app/getDetail/" + detailType + "/" + detailId;
         webView.loadUrl(url);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.getSettings().setLoadWithOverviewMode(true);
 
     }
 
     public void initCollection() {
-        if (realm.where(User.class).findFirst() != null) {
+        if (realm.where(User.class).findFirst() != null&&!detailType.equals("04") ) {
             Subscription subscription = NetWork.getUserService().isAttention(detailId, detailType, realm.where(User.class).findFirst().getUserId())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -141,7 +136,7 @@ public class DetailActivity extends BaseActivity {
                             } else {
                                 isCollection = true;
                             }
-                            invalidateOptionsMenu();
+                            initFabSrc();
                         }
                     });
             compositeSubscription.add(subscription);
@@ -150,40 +145,16 @@ public class DetailActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!detailType.equals("04")) {
-            if (isCollection == false) {
-                getMenuInflater().inflate(R.menu.collection_article_false, menu);
-            } else {
-                getMenuInflater().inflate(R.menu.collection_article_true, menu);
-            }
-        }
+            getMenuInflater().inflate(R.menu.collection_article_false, menu);
+
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //收藏当前文章
-        if (realm.where(User.class).findFirst() == null) {
-            Toast.makeText(this, "请登录后收藏", Toast.LENGTH_SHORT).show();
-        } else {
-            if (!isInCollection) {
-                if (item.getItemId() == R.id.collection_false) {
-                    //关注
-                    Subscription subscription = NetWork.getUserService().attention(detailId, detailType, realm.where(User.class).findFirst().getUserId(), "01")
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(observer);
-                    compositeSubscription.add(subscription);
-                } else {
-                    //取消
-                    Subscription subscription = NetWork.getUserService().attention(detailId, detailType, realm.where(User.class).findFirst().getUserId(), "02")
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(observer);
-                    compositeSubscription.add(subscription);
-                }
-                isInCollection = true;
-            }
+        //社会化分享
+        if (item.getItemId() == R.id.collection_false){
+            share();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -197,30 +168,35 @@ public class DetailActivity extends BaseActivity {
         @Override
         public void onError(Throwable e) {
             isInCollection = false;
+            animation.cancel();
+            Toast.makeText(DetailActivity.this,"网络问题，关注失败",Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onNext(ResultCode resultCode) {
+            if(resultCode.getCode()==ResultCode.SECCESS) {
+                isCollection = !isCollection;
+                initFabSrc();
+                toastFocuseResult();
+            }else{
+                Toast.makeText(DetailActivity.this,"关注失败，请重试",Toast.LENGTH_SHORT).show();
+            }
             isInCollection = false;
-            isCollection = !isCollection;
-            invalidateOptionsMenu();
+            animation.cancel();
         }
     };
 
     @OnClick(R.id.fab)
     public void onClick() {
-
-        refAnim();
+        fabFocuse();
     }
-
     public void share(){
         UMWeb web = new UMWeb(url);
         web.setTitle(detailTitle);//标题
         web.setDescription(detailTitle);
         //web.setThumb(thumb);  //缩略图
-        //        web.setDescription("my description");//描述
         new ShareAction(this).withMedia(web)
-                .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.ALIPAY, SHARE_MEDIA.DINGTALK)
+                .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.ALIPAY)
                 .setCallback(new UMShareListener() {
                     @Override
                     public void onStart(SHARE_MEDIA platform) {
@@ -264,18 +240,48 @@ public class DetailActivity extends BaseActivity {
             Toast.makeText(this, "请登录后再关注", Toast.LENGTH_SHORT).show();
         } else {
             if (!isInCollection) {
-                //关注
-            }else{
-                //取消关注
+                if (!isCollection) {
+                    //关注
+                    Subscription subscription = NetWork.getUserService().attention(detailId, detailType, realm.where(User.class).findFirst().getUserId(), "01")
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(observer);
+                    compositeSubscription.add(subscription);
+                } else {
+                    //取消
+                    Subscription subscription = NetWork.getUserService().attention(detailId, detailType, realm.where(User.class).findFirst().getUserId(), "02")
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(observer);
+                    compositeSubscription.add(subscription);
+                }
+                refAnim();
+                isInCollection = true;
             }
         }
     }
     //关注按钮背景变换
     public void initFabSrc(){
-        if(isInCollection){
-            //关注状态
+        if(!detailType.equals("04")) {
+            if (isCollection) {
+                //关注状态
+                fab.setImageResource(R.drawable.ic_successful);
+            } else {
+                //未关注状态
+                fab.setImageResource(R.drawable.ic_failure);
+            }
         }else{
-            //未关注状态
+            fab.setVisibility(View.GONE);
+        }
+    }
+
+    public void toastFocuseResult(){
+        if (isCollection) {
+            //关注成功
+            Toast.makeText(this, "关注成功，请在猫舍查看", Toast.LENGTH_SHORT).show();
+        } else {
+            //取消关注
+            Toast.makeText(this, "已取消关注", Toast.LENGTH_SHORT).show();
         }
     }
 

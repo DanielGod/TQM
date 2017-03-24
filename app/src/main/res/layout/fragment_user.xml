@@ -80,8 +80,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/smallmdp"
-            android:layout_marginRight="@dimen/smallmdp"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_focus"
             android:scaleType="centerInside"
@@ -265,8 +263,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/smallmdp"
-            android:layout_marginRight="@dimen/smallmdp"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_feedback"
             android:scaleType="centerInside"
@@ -305,8 +301,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/smallmdp"
-            android:layout_marginRight="@dimen/smallmdp"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_setting"
             android:scaleType="centerInside"
@@ -335,8 +329,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/smallmdp"
-            android:layout_marginRight="@dimen/smallmdp"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_about_bianfeng"
             android:scaleType="centerInside"
