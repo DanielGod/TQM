@@ -1,7 +1,6 @@
 package tqm.bianfeng.com.tqm.bank.bankfinancing;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,20 +44,17 @@ public class BankFinancingAdapter extends BaseAdapter {
 
     @Override
     public BankFinancItem getItem(int position) {
-        Log.e("Daniel", "----getItem()---position--" + position);
         return datas.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        Log.e("Daniel", "----getItemId()---position--" + position);
         return position;
     }
 
     @DebugLog
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        Log.e("Daniel", "----getView()---position--" + position);
         ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.listitem, parent, false);
@@ -67,7 +63,6 @@ public class BankFinancingAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        Log.e("Daniel", "----getCount()-----" + getCount());
         BankFinancItem data = getItem(position);
         holder.financViewsLinear.setVisibility(View.VISIBLE);
         holder.institutionNameLinear.setVisibility(View.VISIBLE);
@@ -85,7 +80,7 @@ public class BankFinancingAdapter extends BaseAdapter {
             holder.linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new ListItemPositioin(position));
+                    EventBus.getDefault().post(new ListItemPositioin("02",position));
                 }
             });
         }

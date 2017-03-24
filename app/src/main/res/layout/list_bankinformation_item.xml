@@ -11,9 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:paddingTop="@dimen/smallmdp"
-        android:paddingBottom="@dimen/smallmdp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:padding="@dimen/smallmdp"
         android:orientation="vertical"
         >
             <LinearLayout
@@ -30,7 +28,6 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/mediumsp"
-                    android:layout_marginLeft="@dimen/hugemdp"
                     android:text="宋江支行年收益4.5%，起购5000元"
                     android:textColor="@color/black"
                     />
@@ -45,13 +42,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2">
 
-                <ImageView
-                    android:layout_width="@dimen/hugemdp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/institution"
-                    android:adjustViewBounds="true"
-                    android:paddingRight="5dp"
-                    android:id="@+id/imageView3"/>
+
 
                 <TextView
                     android:id="@+id/institutionName_tv"
@@ -69,13 +60,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5">
-                <ImageView
-                    android:layout_width="@dimen/hugemdp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/bankinformation_time"
-                    android:adjustViewBounds="true"
-                    android:paddingRight="5dp"
-                    />
 
                 <TextView
                     android:id="@+id/time_tv"
@@ -93,22 +77,24 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
                 <ImageView
-                    android:layout_width="@dimen/hugemdp"
+                    android:layout_width="@dimen/bigmdp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/attention"
+                    android:src="@drawable/eye"
                     android:adjustViewBounds="true"
                     android:paddingRight="5dp"
                     />
 
                 <TextView
                     android:id="@+id/Views_tv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:lines="1"
                     android:text="0"
                     android:textSize="@dimen/smallsp"
                     android:gravity="center_vertical"
+                    android:textColor="@color/blue_text"
                     />
             </LinearLayout>
 

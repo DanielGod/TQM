@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
+              android:id="@+id/linearlayout"
               android:layout_height="@dimen/hugehxxdp"
               android:focusable="true"
               android:clickable="true"
@@ -12,11 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@color/white"
         >
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:paddingLeft="@dimen/smallmdp"
         >
         <ImageView
             android:id="@+id/logo_img"
@@ -27,6 +30,15 @@
             android:adjustViewBounds="true"
             />
     </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/smallmdp"
+            android:layout_marginTop="@dimen/smallmdp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/smallmdp"
+            android:background="@color/whitesmoke"
+            />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -57,13 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
-                <ImageView
-                    android:layout_width="@dimen/hugemdp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/institution"
-                    android:adjustViewBounds="true"
-                    android:paddingRight="5dp"
-                    />
+
             <TextView
                 android:id="@+id/institutionName_tv"
                 android:layout_width="wrap_content"
@@ -83,11 +89,11 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
                 <ImageView
-                    android:layout_width="@dimen/hugemdp"
+                    android:layout_width="@dimen/activity_horizontal_margin"
                     android:layout_height="match_parent"
-                    android:src="@drawable/attention"
+                    android:src="@drawable/eye"
                     android:adjustViewBounds="true"
-                    android:paddingRight="5dp"
+                    android:layout_marginRight="@dimen/tinymdp"
                     />
 
                 <TextView

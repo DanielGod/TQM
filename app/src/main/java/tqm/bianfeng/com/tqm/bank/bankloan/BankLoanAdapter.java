@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 import tqm.bianfeng.com.tqm.pojo.bank.ListItemPositioin;
+import tqm.bianfeng.com.tqm.update.StringUtils;
 
 /**
  * Created by Daniel on 2017/3/16.
@@ -70,12 +71,18 @@ public class BankLoanAdapter extends BaseAdapter {
         holder.loanMoneyTv.setText("" + data.getLoanMoney().setScale(0, BigDecimal.ROUND_DOWN));
         holder.investmentTermTv.setText(data.getLoanPeriod());
         holder.financViewsTv.setText(data.getLoanViews() + "");
-        holder.loanTypeNameTv.setText(data.getLoanTypeName());
+
+        if (StringUtils.isEmpty(data.getLoanTypeName())){
+            holder.loanTypeNameLinear.setVisibility(View.GONE);
+        }else {
+
+            holder.loanTypeNameTv.setText(data.getLoanTypeName());
+        }
         if (!isFistPage) {
             holder.linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new ListItemPositioin(position));
+                    EventBus.getDefault().post(new ListItemPositioin("03",position));
                 }
             });
         }

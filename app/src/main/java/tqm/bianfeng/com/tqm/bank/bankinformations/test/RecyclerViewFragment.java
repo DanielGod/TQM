@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,9 +42,6 @@ public class RecyclerViewFragment extends Fragment {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-//    @BindView(R.id.load_more_list_view_container)
-//    LoadMoreListViewContainer loadMoreListViewContainer;
-
     private int position = 0;
     private int pagNum = 1;
     private int mPagItemSize = 0;
@@ -90,18 +88,17 @@ public class RecyclerViewFragment extends Fragment {
                     @DebugLog
                     @Override
                     public void onError(Throwable e) {
-//                        loadMoreListViewContainer.loadMoreError(0, errorMessage);
                     }
 
                     @DebugLog
                     @Override
                     public void onNext(List<BankInformItem> bankInformItems) {
                         mPagItemSize = bankInformItems.size();
-//                        if (AllBankInformItems==null){
-//                            AllBankInformItems = new ArrayList<>();
-//                        }
-//                        AllBankInformItems.addAll(bankInformItems);
-                        setBankInformItemAdapter(bankInformItems);
+                        if (AllBankInformItems==null){
+                            AllBankInformItems = new ArrayList<>();
+                        }
+                        AllBankInformItems.addAll(bankInformItems);
+                        setBankInformItemAdapter(AllBankInformItems);
 
                     }
                 });
@@ -122,7 +119,6 @@ public class RecyclerViewFragment extends Fragment {
 
     @DebugLog
     private void setBankInformItemAdapter(List<BankInformItem> bankInformItems) {
-        //        BankInfromationAdapter bankInfromationAdapter = new BankInfromationAdapter(getActivity(),bankInformItems);
         if (GRID_LAYOUT) {
             mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         } else {
@@ -134,7 +130,6 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
         final TestRecyclerViewAdapter recyclerViewAdapter = new TestRecyclerViewAdapter(getActivity(), bankInformItems);
         mRecyclerView.setAdapter(recyclerViewAdapter);
-//        loadMoreListViewContainer.loadMoreFinish(false, true);
         recyclerViewAdapter.setOnItemClickListener(new TestRecyclerViewAdapter.BankInformItemClickListener() {
             @Override
             public void OnClickListener(int position) {
@@ -145,10 +140,7 @@ public class RecyclerViewFragment extends Fragment {
                 mListener.detailActivity(intent);
             }
         });
-
-        //        mainPullRefreshLv.setAdapter(new BankInfromationAdapter(getActivity(), bankInformItems));
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -156,22 +148,5 @@ public class RecyclerViewFragment extends Fragment {
         mCompositeSubscription = new CompositeSubscription();
         //        initRefreshlv();
         initDate(position + 1, pagNum);
-//
-//        loadMoreListViewContainer.setAutoLoadMore(true);//设置是否自动加载更多
-//        loadMoreListViewContainer.useDefaultHeader();
-//        //5.添加加载更多的事件监听
-//        loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
-//            @Override
-//            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-//                //模拟加载更多的业务处理
-//                loadMoreListViewContainer.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        pagNum = pagNum+1;
-//                        initDate(position + 1, pagNum);
-//                    }
-//                }, 1000);
-//            }
-//        });
     }
 }

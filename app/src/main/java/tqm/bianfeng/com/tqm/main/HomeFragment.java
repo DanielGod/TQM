@@ -156,6 +156,8 @@ public class HomeFragment extends BaseFragment {
 
     private void setBankLoanListAdapter(final List<BankLoanItem> bankloanItems) {
         bankLoanList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
+        bankFinaningList.setHasFixedSize(true);
+        bankFinaningList.setNestedScrollingEnabled(false);
         final HomeBankLoanListAdapter bankLoanAdapter = new HomeBankLoanListAdapter(getActivity(), bankloanItems);
         bankLoanList.setAdapter(bankLoanAdapter);
         bankLoanAdapter.setOnItemClickListener(new HomeBankLoanListAdapter.HomeBankLoanClickListener() {
@@ -207,6 +209,8 @@ public class HomeFragment extends BaseFragment {
     private void setBankActivitysListAdapter(List<BankActivityItem> bankActivityItems) {
 
         bankActivitysList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
+        bankFinaningList.setHasFixedSize(true);
+        bankFinaningList.setNestedScrollingEnabled(false);
         final HomeBankActivitysListAdapter homeBankActivitysListAdapter = new HomeBankActivitysListAdapter(getActivity(), bankActivityItems);
         bankActivitysList.setAdapter(homeBankActivitysListAdapter);
         homeBankActivitysListAdapter.setOnItemClickListener(new HomeBankActivitysListAdapter.HomeBankActivitysItemClickListener() {
@@ -258,6 +262,8 @@ public class HomeFragment extends BaseFragment {
 
     private void setBankFinancListAdapter(List<BankFinancItem> bankFinancItems) {
         bankFinaningList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
+        bankFinaningList.setHasFixedSize(true);
+        bankFinaningList.setNestedScrollingEnabled(false);
         final HomeBankFinancingListAdapter bankFinancingAdapter = new HomeBankFinancingListAdapter(getActivity(), bankFinancItems);
         bankFinaningList.setAdapter(bankFinancingAdapter);
         bankFinancingAdapter.setOnItemClickListener(new HomeBankFinancingListAdapter.HomeBankFinancingItemClickListener() {
@@ -310,6 +316,7 @@ public class HomeFragment extends BaseFragment {
     public void initBankLoanItemList(List<BankInformItem> bankInformItems) {
         if (homeBankInfoListAdapter == null) {
             bankInfoList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
+            bankFinaningList.setNestedScrollingEnabled(false);
             homeBankInfoListAdapter = new HomeBankInfoListAdapter(getActivity(), bankInformItems);
             bankInfoList.setAdapter(homeBankInfoListAdapter);
             homeBankInfoListAdapter.setOnItemClickListener(new HomeBankInfoListAdapter.MyItemClickListener() {
@@ -400,7 +407,8 @@ public class HomeFragment extends BaseFragment {
 
 
     @OnClick({R.id.select_more_bankFinancing_txt, R.id.select_more_bankLoan_txt, R.id.select_more_bankActivitys_txt,
-            R.id.home_bank_activity_lin, R.id.home_bank_loan_lin, R.id.home_bank_make_money_lin, R.id.select_more_bank_make_money_txt})
+            R.id.home_bank_activity_lin, R.id.home_bank_loan_lin, R.id.home_bank_make_money_lin,
+            R.id.select_more_bank_make_money_txt,R.id.select_more_hot_information_txt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.select_more_bankFinancing_txt:
@@ -422,7 +430,10 @@ public class HomeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), BankFinancingActivity.class));
                 break;
             case R.id.select_more_bank_make_money_txt:
-                startActivity(new Intent(getActivity(), NewBankInformationActivity.class));
+                startActivity(new Intent(getActivity(), NewBankInformationActivity.class).putExtra("01","01"));//01-银行资讯
+                break;
+            case R.id.select_more_hot_information_txt:
+                startActivity(new Intent(getActivity(), NewBankInformationActivity.class).putExtra("02","02"));//02-热点资讯
                 break;
         }
     }

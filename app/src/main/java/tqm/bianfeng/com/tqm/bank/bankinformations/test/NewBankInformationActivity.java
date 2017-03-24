@@ -37,6 +37,9 @@ public class NewBankInformationActivity extends AppCompatActivity implements Rec
         }
         ViewpagerAdapter viewpagerAdapter = new ViewpagerAdapter(getSupportFragmentManager());
         mViewPager.getViewPager().setAdapter(viewpagerAdapter);
+        if ("02".equals(getIntent().getStringExtra("02"))){
+            mViewPager.onPageSelected(2);
+        }
         mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
             public HeaderDesign getHeaderDesign(int page) {
@@ -45,7 +48,7 @@ public class NewBankInformationActivity extends AppCompatActivity implements Rec
                         logo.setText(getResources().getString(R.string.bankInfromations));
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,
-                                "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg");
+                                "http://mpic.tiankong.com/797/164/797164bf0915835b994f75bf98623870/640.jpg@360h");
                     case 1:
                         logo.setText(getResources().getString(R.string.hotInfromations));
                         return HeaderDesign.fromColorResAndUrl(
@@ -55,7 +58,7 @@ public class NewBankInformationActivity extends AppCompatActivity implements Rec
                         logo.setText(getResources().getString(R.string.moneyInfromations));
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.cyan,
-                                "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg");
+                                "http://mpic.tiankong.com/267/9c2/2679c2c1288b0444a6cb419bcde14ed2/640.jpg@360h");
                 }
                 return null;
             }

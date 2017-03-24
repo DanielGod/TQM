@@ -73,7 +73,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_user"
-                android:id="@+id/imageView2"/>
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -113,7 +113,7 @@
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
             android:paddingLeft="@dimen/smallmdp"
-            android:id="@+id/imageView"/>
+            />
 
         <View
             android:layout_width="match_parent"

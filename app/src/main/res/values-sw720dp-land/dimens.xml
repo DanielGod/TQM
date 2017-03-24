@@ -1,7 +1,5 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="horizontal_margin">36.0dp</dimen>
-    <dimen name="vertical_margin">36.0dp</dimen>
 
 
     <!--sp-->
@@ -11,32 +9,23 @@
     <dimen name="mediumxsp">40.5sp</dimen>
     <dimen name="bigsp">45.0sp</dimen>
     <dimen name="hugesp">56.25sp</dimen>
-    <dimen name="hugexsp">67.5sp</dimen>
-    <dimen name="hugexxsp">78.75sp</dimen>
-    <dimen name="hugexxxsp">90.0sp</dimen>
     <!--mdp-->
 
     <dimen name="tinymdp">11.25dp</dimen>
     <dimen name="smallmdp">18.0dp</dimen>
     <dimen name="mediummdp">22.5dp</dimen>
     <dimen name="bigmdp">45.0dp</dimen>
-    <dimen name="hugemdp">56.25dp</dimen>
 
     <!--hdp-->
     <dimen name="tinyhdp">67.5dp</dimen>
     <dimen name="smallhdp">90.0dp</dimen>
     <dimen name="mediumhdp">112.5dp</dimen>
-    <dimen name="bighdp">135.0dp</dimen>
     <dimen name="hugehdp">157.5dp</dimen>
     <dimen name="hugehxxdp">180.0dp</dimen>
     <dimen name="hugehxxxdp">202.5dp</dimen>
     <dimen name="hugehxxxxdp">225.0dp</dimen>
-    <dimen name="hugehxxxxxdp">270.0dp</dimen>
-    <dimen name="hugehxxxxxxdp">315.0dp</dimen>
     <dimen name="hugehxxxxxxxdp">360.0dp</dimen>
-    <dimen name="hugehxxxxxxxxdp">405.0dp</dimen>
     <dimen name="hugehxxxxxxxxxdp">450.0dp</dimen>
-    <dimen name="alert_width">652.5dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">36.0dp</dimen>
     <dimen name="activity_vertical_margin">36.0dp</dimen>

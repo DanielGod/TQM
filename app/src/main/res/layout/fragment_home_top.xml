@@ -381,7 +381,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="@dimen/smallmdp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
                         android:src="@drawable/home_bank_finaning"
@@ -445,7 +444,6 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="@dimen/smallmdp"
                             android:adjustViewBounds="true"
                             android:scaleType="centerInside"
                             android:src="@drawable/home_bank_loan"
@@ -509,7 +507,6 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="@dimen/smallmdp"
                             android:adjustViewBounds="true"
                             android:scaleType="centerInside"
                             android:src="@drawable/home_bank_activitys"
