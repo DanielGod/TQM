@@ -274,11 +274,11 @@ public class DetailActivity extends BaseActivity {
         if (!detailType.equals("04")) {
             if (isCollection) {
                 //关注状态
-                actionA.setIcon(R.drawable.ic_successful);
+                actionA.setIcon(R.drawable.ic_focuse);
                 actionA.setTitle("已关注");
             } else {
                 //未关注状态
-                actionA.setIcon(R.drawable.ic_failure);
+                actionA.setIcon(R.drawable.ic_unfocuse);
                 actionA.setTitle("未关注");
             }
             multipleActionsDown.setVisibility(View.VISIBLE);
