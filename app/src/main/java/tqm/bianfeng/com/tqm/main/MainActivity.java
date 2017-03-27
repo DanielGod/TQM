@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         if (ISUPDATEAPP && alert == null) {
             Log.e("gqf", "updateMsgupdateApp2");
             //判断本地数据库是否有版本号
-            Subscription subscription = NetWork.getUpdateService().getVersion()
+            Subscription subscription = NetWork.getUserService().getVersion()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(observer);

@@ -19,6 +19,7 @@ import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
+import tqm.bianfeng.com.tqm.update.UpdateMsg;
 
 /**
  * Created by johe on 2017/1/5.
@@ -117,4 +118,10 @@ public interface UserService {
     @POST("isAttention")
     Observable<String> isAttention(@Field("objectId") Integer objectId,@Field("attentionType") String attentionType,
                                      @Field("userId") Integer userId);
+
+    /**
+     * 版本更新
+     */
+    @GET("getVersion")
+    Observable<UpdateMsg> getVersion();
 }
