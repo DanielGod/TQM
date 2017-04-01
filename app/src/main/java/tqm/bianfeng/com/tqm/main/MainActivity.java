@@ -32,12 +32,13 @@ import tqm.bianfeng.com.tqm.User.UserFragment;
 import tqm.bianfeng.com.tqm.Util.NetUtils;
 import tqm.bianfeng.com.tqm.Util.PhotoGet;
 import tqm.bianfeng.com.tqm.application.BaseApplication;
+import tqm.bianfeng.com.tqm.lawhelp.LawHelpFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.update.UpdateInformation;
 import tqm.bianfeng.com.tqm.update.UpdateMsg;
 import tqm.bianfeng.com.tqm.update.UpdateService;
 
-public class MainActivity extends AppCompatActivity implements UserFragment.mListener, HomeFragment.mListener {
+public class MainActivity extends AppCompatActivity implements UserFragment.mListener, HomeFragment.mListener ,LawHelpFragment.mListener{
     private static final String HOME_TAG = "home_flag";
     private static final String LAWHELP_TAG = "lawhelp_flag";
     private static final String INSTITUTIONSIN_TAG = "institutionsin_flag";

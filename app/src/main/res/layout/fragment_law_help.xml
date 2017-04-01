@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:app="http://schemas.android.com/apk/res-auto"
+                 xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:orientation="vertical"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+    <tqm.bianfeng.com.tqm.CustomView.DropDownMenu
+        android:id="@+id/dropDownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ddmenuTextSize="@dimen/mediumsp"
+        app:ddtextUnselectedColor="@color/black"
+        app:ddtextSelectedColor="@color/colorPrimary"
+        app:dddividerColor="@color/whitesmoke"
+        app:ddunderlineColor="@color/gray_light"
+        app:ddmenuSelectedIcon="@drawable/drop_down_selected_icon"
+        app:ddmaskColor="@color/transparent"
+        app:ddmenuBackgroundColor="@color/white"
+        app:ddmenuUnselectedIcon="@drawable/drop_down_unselected_icon"
+        android:background="@color/white"
+        />
+
+    <ImageView
+        android:id="@+id/YBJ_loding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/YBJ_loding_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="加载中..."
+        android:layout_below="@+id/YBJ_loding"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/bigsp"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
