@@ -146,11 +146,12 @@ public class LawHelpFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (!city.equals("")) {
+        if(dropDownMenu.isWork()) {
+            lawAdd = realm.where(LawAdd.class).findFirst();
             if (!lawAdd.getCity().equals("")) {
-                if (!city.equals(lawAdd.getCity())) {
+                if (!city.equals(lawAdd.getCity()) || (city.equals("") && !lawAdd.getCity().equals(""))) {
                     city = lawAdd.getCity();
-                    dropDownMenu.setTabTxtByIndex(city,0);
+                    dropDownMenu.setTabTxtByIndex(city, 0);
                     initDistricts(lawAdd.getCity());
                     initListData(true, lawAdd.getQueryParams(), 1);
                 }
@@ -270,8 +271,8 @@ public class LawHelpFragment extends BaseFragment {
                 public void onLoadMoreRequested() {
                     //在此开起加载动画，更新数据
                     Log.e("gqf", "onLoadMoreRequested");
-                    if (lawListAdapter.getItemCount()%10==0) {
-                        initListData(false,lawAdd.getQueryParams(),nowIndex+1);
+                    if (lawListAdapter.getItemCount() % 10 == 0 && lawListAdapter.getItemCount() != 0) {
+                        initListData(false, lawAdd.getQueryParams(), nowIndex + 1);
                     }
                 }
             });

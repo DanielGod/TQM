@@ -133,7 +133,7 @@
                 android:gravity="center"
                 android:text="银行活动"
                 android:textColor="@color/black"
-                android:textSize="@dimen/mediumsp"/>
+                android:textSize="@dimen/smallsp"/>
         </LinearLayout>
 
         <View
@@ -169,7 +169,7 @@
                 android:gravity="center"
                 android:text="银行理财"
                 android:textColor="@color/black"
-                android:textSize="@dimen/mediumsp"/>
+                android:textSize="@dimen/smallsp"/>
         </LinearLayout>
 
         <View
@@ -205,7 +205,7 @@
                 android:gravity="center"
                 android:text="银行贷款"
                 android:textColor="@color/black"
-                android:textSize="@dimen/mediumsp"/>
+                android:textSize="@dimen/smallsp"/>
         </LinearLayout>
 
         <View
@@ -222,7 +222,7 @@
             android:layout_weight="1"
             android:background="?android:selectableItemBackground"
             android:clickable="true"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="vertical">
 
             <TextView
@@ -243,7 +243,7 @@
                 android:gravity="center"
                 android:text="浏览记录"
                 android:textColor="@color/black"
-                android:textSize="@dimen/mediumsp"/>
+                android:textSize="@dimen/smallsp"/>
         </LinearLayout>
 
 

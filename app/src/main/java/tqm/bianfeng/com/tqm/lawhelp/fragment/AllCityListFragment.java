@@ -264,9 +264,6 @@ public class AllCityListFragment extends BaseFragment {
             }
         });
 
-
-
-
     }
 
     private void moveToPosition(int n) {

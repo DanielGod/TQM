@@ -52,6 +52,16 @@ public class DropDownMenu extends LinearLayout {
     //tab未选中图标
     private int menuUnselectedIcon;
 
+    boolean isWork=false;
+
+    public boolean isWork() {
+        return isWork;
+    }
+
+    public void setWork(boolean work) {
+        isWork = work;
+    }
+
     public interface OnClickLinsener{
         void onClickIndexOne(int index);
     }
@@ -155,6 +165,7 @@ public class DropDownMenu extends LinearLayout {
             popupViews.get(i).setLayoutParams(lp);
             popupMenuViews.addView(popupViews.get(i), i);
         }
+        isWork=true;
     }
 
     private void addTab(@NonNull List<String> tabTexts, int i) {
