@@ -86,6 +86,12 @@ public class HomeFragment extends BaseFragment {
     LinearLayout homeInfoLin;
     @BindView(R.id.home_bank_make_money_title_lin)
     LinearLayout homeBankMakeMoneyTitleLin;
+
+    boolean isInfo=false;
+    boolean isFinaning=false;
+    boolean isLoan=false;
+    boolean isActivity=false;
+
     private CompositeSubscription mCompositeSubscription;
 
     public static HomeFragment newInstance() {
@@ -147,30 +153,35 @@ public class HomeFragment extends BaseFragment {
                     @Override
                     public void onNext(List<BankLoanItem> bankloanItems) {
                         Log.e("Daniel", "---BankLoanItem---");
+                        isLoan=true;
                         setBankLoanListAdapter(bankloanItems);
                         getBankActivitys();
                     }
                 });
         mCompositeSubscription.add(getBankFinancItem_subscription);
     }
-
-    private void setBankLoanListAdapter(final List<BankLoanItem> bankloanItems) {
-        bankLoanList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
-        bankFinaningList.setHasFixedSize(true);
-        bankFinaningList.setNestedScrollingEnabled(false);
-        final HomeBankLoanListAdapter bankLoanAdapter = new HomeBankLoanListAdapter(getActivity(), bankloanItems);
-        bankLoanList.setAdapter(bankLoanAdapter);
-        bankLoanAdapter.setOnItemClickListener(new HomeBankLoanListAdapter.HomeBankLoanClickListener() {
-            @Override
-            public void OnClickListener(int position) {
-                //跳转银行贷款详情
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("detailType", "03");
-                intent.putExtra("detailId", bankLoanAdapter.getItem(position).getLoanId());
-                intent.putExtra("detailTitle", bankLoanAdapter.getDataItem(position).getLoanName());
-                mListener.detailActivity(intent);
-            }
-        });
+    HomeBankLoanListAdapter bankLoanAdapter;
+    private void setBankLoanListAdapter( List<BankLoanItem> bankloanItems) {
+        if(bankLoanAdapter==null) {
+            bankLoanList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
+            bankFinaningList.setHasFixedSize(true);
+            bankFinaningList.setNestedScrollingEnabled(false);
+            bankLoanAdapter = new HomeBankLoanListAdapter(getActivity(), bankloanItems);
+            bankLoanList.setAdapter(bankLoanAdapter);
+            bankLoanAdapter.setOnItemClickListener(new HomeBankLoanListAdapter.HomeBankLoanClickListener() {
+                @Override
+                public void OnClickListener(int position) {
+                    //跳转银行贷款详情
+                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    intent.putExtra("detailType", "03");
+                    intent.putExtra("detailId", bankLoanAdapter.getItem(position).getLoanId());
+                    intent.putExtra("detailTitle", bankLoanAdapter.getDataItem(position).getLoanName());
+                    mListener.detailActivity(intent);
+                }
+            });
+        }else{
+            bankLoanAdapter.update(bankloanItems);
+        }
     }
 
     /**
@@ -197,6 +208,7 @@ public class HomeFragment extends BaseFragment {
                     @DebugLog
                     @Override
                     public void onNext(List<BankActivityItem> bankActivityItems) {
+                        isActivity=true;
                         Log.e("Daniel", "---bankActivityItems.size()---" + bankActivityItems.size());
                         setBankActivitysListAdapter(bankActivityItems);
 
@@ -205,25 +217,29 @@ public class HomeFragment extends BaseFragment {
         mCompositeSubscription.add(getBankFinancItem_subscription);
 
     }
-
+    HomeBankActivitysListAdapter homeBankActivitysListAdapter;
     private void setBankActivitysListAdapter(List<BankActivityItem> bankActivityItems) {
 
-        bankActivitysList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
-        bankFinaningList.setHasFixedSize(true);
-        bankFinaningList.setNestedScrollingEnabled(false);
-        final HomeBankActivitysListAdapter homeBankActivitysListAdapter = new HomeBankActivitysListAdapter(getActivity(), bankActivityItems);
-        bankActivitysList.setAdapter(homeBankActivitysListAdapter);
-        homeBankActivitysListAdapter.setOnItemClickListener(new HomeBankActivitysListAdapter.HomeBankActivitysItemClickListener() {
-            @Override
-            public void OnClickListener(int position) {
-                //跳转银行活动详情
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("detailType", "01");
-                intent.putExtra("detailId", homeBankActivitysListAdapter.getDataItem(position).getActivityId());
-                intent.putExtra("detailTitle", homeBankActivitysListAdapter.getDataItem(position).getActivityTitle());
-                mListener.detailActivity(intent);
-            }
-        });
+        if(homeBankActivitysListAdapter==null) {
+            bankActivitysList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
+            bankFinaningList.setHasFixedSize(true);
+            bankFinaningList.setNestedScrollingEnabled(false);
+            homeBankActivitysListAdapter = new HomeBankActivitysListAdapter(getActivity(), bankActivityItems);
+            bankActivitysList.setAdapter(homeBankActivitysListAdapter);
+            homeBankActivitysListAdapter.setOnItemClickListener(new HomeBankActivitysListAdapter.HomeBankActivitysItemClickListener() {
+                @Override
+                public void OnClickListener(int position) {
+                    //跳转银行活动详情
+                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    intent.putExtra("detailType", "01");
+                    intent.putExtra("detailId", homeBankActivitysListAdapter.getDataItem(position).getActivityId());
+                    intent.putExtra("detailTitle", homeBankActivitysListAdapter.getDataItem(position).getActivityTitle());
+                    mListener.detailActivity(intent);
+                }
+            });
+        }else{
+            homeBankActivitysListAdapter.update(bankActivityItems);
+        }
 
     }
 
@@ -252,6 +268,7 @@ public class HomeFragment extends BaseFragment {
                     @DebugLog
                     @Override
                     public void onNext(List<BankFinancItem> bankFinancItems) {
+                        isFinaning=true;
                         Log.e("Daniel", "---BankFinancItem---");
                         setBankFinancListAdapter(bankFinancItems);
                         getBankLoanServiceItem();
@@ -259,24 +276,28 @@ public class HomeFragment extends BaseFragment {
                 });
         mCompositeSubscription.add(getBankFinancItem_subscription);
     }
-
+    HomeBankFinancingListAdapter bankFinancingAdapter;
     private void setBankFinancListAdapter(List<BankFinancItem> bankFinancItems) {
-        bankFinaningList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
-        bankFinaningList.setHasFixedSize(true);
-        bankFinaningList.setNestedScrollingEnabled(false);
-        final HomeBankFinancingListAdapter bankFinancingAdapter = new HomeBankFinancingListAdapter(getActivity(), bankFinancItems);
-        bankFinaningList.setAdapter(bankFinancingAdapter);
-        bankFinancingAdapter.setOnItemClickListener(new HomeBankFinancingListAdapter.HomeBankFinancingItemClickListener() {
-            @Override
-            public void OnClickListener(int position) {
-                //跳转银行理财详情
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("detailType", "02");
-                intent.putExtra("detailId", bankFinancingAdapter.getDataItem(position).getFinancId());
-                intent.putExtra("detailTitle", bankFinancingAdapter.getDataItem(position).getProductName());
-                mListener.detailActivity(intent);
-            }
-        });
+        if(bankFinancingAdapter==null) {
+            bankFinaningList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
+            bankFinaningList.setHasFixedSize(true);
+            bankFinaningList.setNestedScrollingEnabled(false);
+            bankFinancingAdapter = new HomeBankFinancingListAdapter(getActivity(), bankFinancItems);
+            bankFinaningList.setAdapter(bankFinancingAdapter);
+            bankFinancingAdapter.setOnItemClickListener(new HomeBankFinancingListAdapter.HomeBankFinancingItemClickListener() {
+                @Override
+                public void OnClickListener(int position) {
+                    //跳转银行理财详情
+                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    intent.putExtra("detailType", "02");
+                    intent.putExtra("detailId", bankFinancingAdapter.getDataItem(position).getFinancId());
+                    intent.putExtra("detailTitle", bankFinancingAdapter.getDataItem(position).getProductName());
+                    mListener.detailActivity(intent);
+                }
+            });
+        }else{
+            bankFinancingAdapter.update(bankFinancItems);
+        }
 
     }
 
@@ -305,6 +326,7 @@ public class HomeFragment extends BaseFragment {
                     @Override
                     public void onNext(List<BankInformItem> bankInformItems) {
                         Log.e("gqf", "bankInformItems" + bankInformItems.toString());
+                        isInfo=true;
                         initBankLoanItemList(bankInformItems);
                         getBankFinaningItem();
                     }
@@ -453,6 +475,22 @@ public class HomeFragment extends BaseFragment {
             } else {
                 homeInfoLin.setVisibility(View.INVISIBLE);
                 Log.i("gqf", "showViewWhenNetWork" + isNetWork);
+            }
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            if(!isInfo){
+                getBankLoanItem();
+            }else if(!isFinaning){
+                getBankFinaningItem();
+            }else if(!isLoan){
+                getBankLoanServiceItem();
+            }else if(!isActivity){
+                getBankActivitys();
             }
         }
     }

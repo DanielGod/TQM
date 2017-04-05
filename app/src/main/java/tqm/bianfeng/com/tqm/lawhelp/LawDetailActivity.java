@@ -301,7 +301,7 @@ public class LawDetailActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.action_a:
-                actionAFocuse();
+                //actionAFocuse();
                 break;
             case R.id.action_b:
                 webView.setScrollY(0);

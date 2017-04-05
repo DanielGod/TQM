@@ -186,6 +186,7 @@ public class LawHelpFragment extends BaseFragment {
 
     RecyclerView contentView;
 
+    //获取数据
     public void initListData(final boolean isRefresh, String queryParams, int index) {
         Log.e("gqf", index + "queryParams" + queryParams);
         //开始加载动画
@@ -306,6 +307,7 @@ public class LawHelpFragment extends BaseFragment {
 
     }
 
+    //获取顶部选择器条件
     public void initSpecialFields() {
         Subscription getSpecialFields = NetWork.getLawService().getSpecialFields()
                 .subscribeOn(Schedulers.io())
