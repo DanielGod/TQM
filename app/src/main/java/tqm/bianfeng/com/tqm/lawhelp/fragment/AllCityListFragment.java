@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zhy.adapter.recyclerview.wrapper.HeaderAndFooterWrapper;
 
@@ -51,11 +50,12 @@ public class AllCityListFragment extends BaseFragment {
     LinearLayoutManager mLinearLayoutManager;
     int mIndex;
     boolean move = false;
-    View headerViewl;
+    View headerViewl;//头部
 
-    LinearLayout location_lin;
-    RecyclerView hot_city_list;
-    Button location_btn;
+    LinearLayout location_lin;//定位城市
+    RecyclerView hot_city_list;//城市列表
+    Button location_btn;//当前定位
+    Button cancel_location_btn;//取消定位
     String [] hotCity={"北京","成都","重庆","广州","杭州","南京","上海","深圳","天津","武汉","洛阳"};
     String [] hotP={"北京","四川","重庆","广东","浙江","江苏","上海","广东","天津","湖北","河南"};
 
@@ -94,6 +94,16 @@ public class AllCityListFragment extends BaseFragment {
         mListener = (mListener) activity;
 
     }
+    //更新lawAdd本地数据
+    public void updateLawAdd(String city,String province){
+        LawAdd lawAdd=realm.where(LawAdd.class).findFirst();
+        realm.beginTransaction();
+        lawAdd.setCity(city);
+        lawAdd.setProvince(province);
+        realm.copyToRealmOrUpdate(lawAdd);
+        realm.commitTransaction();
+        mListener.CloseActivity();
+    }
 
     public void initList(List<cityInfo> data) {
         //载入列表
@@ -104,7 +114,9 @@ public class AllCityListFragment extends BaseFragment {
 
         //增加头部或者足部的RecyclerView
         HeaderAndFooterWrapper mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(allCityListAdapter);
+        //初始化头部功能
         initHeader();
+        //添加头部
         mHeaderAndFooterWrapper.addHeaderView(headerViewl);
         allCityList.setAdapter(mHeaderAndFooterWrapper);
 
@@ -112,14 +124,7 @@ public class AllCityListFragment extends BaseFragment {
         allCityListAdapter.setMyItemClickListener(new allCityListAdapter.MyItemClickListener() {
             @Override
             public void OnClickListener(int position) {
-                Toast.makeText(getActivity(), datas.get(position).getCity(), Toast.LENGTH_SHORT).show();
-                LawAdd lawAdd=realm.where(LawAdd.class).findFirst();
-                realm.beginTransaction();
-                lawAdd.setCity(datas.get(position).getCity());
-                lawAdd.setProvince(datas.get(position).getProvince());
-                realm.copyToRealmOrUpdate(lawAdd);
-                realm.commitTransaction();
-                mListener.CloseActivity();
+                updateLawAdd(datas.get(position).getCity(),datas.get(position).getProvince());
             }
         });
 
@@ -163,6 +168,7 @@ public class AllCityListFragment extends BaseFragment {
             }
 
         });
+        //显示当前所在拼音区域
         allCityList.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -198,7 +204,7 @@ public class AllCityListFragment extends BaseFragment {
         location_lin = (LinearLayout) headerViewl.findViewById(R.id.location_lin);
         hot_city_list = (RecyclerView) headerViewl.findViewById(R.id.hot_city_list);
         location_btn = (Button) headerViewl.findViewById(R.id.location_btn);
-
+        cancel_location_btn=(Button)headerViewl.findViewById(R.id.cancel_location_btn);
         if(realm.where(LawAdd.class).findFirst()!=null) {
             lawAdd=realm.where(LawAdd.class).findFirst();
             if (!lawAdd.getCity().equals("")) {
@@ -218,6 +224,7 @@ public class AllCityListFragment extends BaseFragment {
         hot_city_list.setLayoutManager(new GridLayoutManager( getActivity(),3) {
             @Override
             public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state, int widthSpec, int heightSpec) {
+                //重写，保证下滑时所需首项在顶部而不在底部
                 super.onMeasure(recycler, state, widthSpec, heightSpec);
                 int measuredWidth = hot_city_list.getMeasuredWidth();
                 int measuredHeight = hot_city_list.getMeasuredHeight();
@@ -253,17 +260,17 @@ public class AllCityListFragment extends BaseFragment {
         hotCityGridAdapter.setMyItemClickListener(new HotCityGridAdapter.MyItemClickListener() {
             @Override
             public void OnClickListener(int position) {
-                Toast.makeText(getActivity(), hotCityDatas.get(position), Toast.LENGTH_SHORT).show();
-                LawAdd lawAdd=realm.where(LawAdd.class).findFirst();
-                realm.beginTransaction();
-                lawAdd.setCity(hotCityDatas.get(position));
-                lawAdd.setProvince(hotP[position]);
-                realm.copyToRealmOrUpdate(lawAdd);
-                realm.commitTransaction();
-                mListener.CloseActivity();
+                updateLawAdd(hotCityDatas.get(position),hotP[position]);
             }
         });
 
+        //清除定位
+        cancel_location_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateLawAdd("","");
+            }
+        });
     }
 
     private void moveToPosition(int n) {

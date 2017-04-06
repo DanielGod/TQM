@@ -64,6 +64,7 @@ public class DropDownMenu extends LinearLayout {
 
     public interface OnClickLinsener{
         void onClickIndexOne(int index);
+        void onClose();
     }
     OnClickLinsener onClickLinsener;
 
@@ -146,7 +147,11 @@ public class DropDownMenu extends LinearLayout {
         containerView.addView(contentView, 0);
 
         maskView = new View(getContext());
-        maskView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+
+        FrameLayout.LayoutParams flp=new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+
+        maskView.setLayoutParams(flp);
+
         maskView.setBackgroundColor(maskColor);
         maskView.setOnClickListener(new OnClickListener() {
             @Override
@@ -154,6 +159,7 @@ public class DropDownMenu extends LinearLayout {
                 closeMenu();
             }
         });
+
         containerView.addView(maskView, 1);
         maskView.setVisibility(GONE);
 
@@ -185,13 +191,16 @@ public class DropDownMenu extends LinearLayout {
             @Override
             public void onClick(View v) {
                 if(tab.getTag().equals("index1")){
+                    switchMenu(tab);
                     onClickLinsener.onClickIndexOne(1);
                 }
-                if(tab.getTag().equals("index0")){
+                else if(tab.getTag().equals("index0")){
                     onClickLinsener.onClickIndexOne(0);
                 }else {
                     switchMenu(tab);
+                    onClickLinsener.onClickIndexOne(2);
                 }
+
             }
         });
         tabMenuView.addView(tab);
@@ -235,7 +244,7 @@ public class DropDownMenu extends LinearLayout {
             maskView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_mask_out));
             current_tab_position = -1;
         }
-
+        onClickLinsener.onClose();
     }
 
     /**

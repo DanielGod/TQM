@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -64,12 +63,14 @@ public class SearchCityListFragment extends BaseFragment {
         return view;
     }
 
+    //获取全部城市数据
     public void initData(){
         datas = threeAddTools.readAllCity(getActivity());
         //整理数据
         datas = internet.sortingData(datas);
     }
 
+    //根据输入查询
     public void SearchData(String search) {
         searchDatas=internet.searchCity(datas,search);
         if(searchDatas.size()==0){
@@ -85,7 +86,6 @@ public class SearchCityListFragment extends BaseFragment {
             allCityListAdapter.setMyItemClickListener(new allCityListAdapter.MyItemClickListener() {
                 @Override
                 public void OnClickListener(int position) {
-                    Toast.makeText(getActivity(),searchDatas.get(position).getCity(),Toast.LENGTH_SHORT).show();
                     LawAdd lawAdd=realm.where(LawAdd.class).findFirst();
                     realm.beginTransaction();
                     lawAdd.setCity(searchDatas.get(position).getCity());

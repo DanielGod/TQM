@@ -75,15 +75,18 @@ public class AllCityActivity extends BaseActivity implements AllCityListFragment
     }
     public void initFragemnt(int statu){
         if(statu==0){
+            //初始化
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.ac_bottom_frag_show, searchCityListFragment).commit();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.ac_bottom_frag_show, allCityListFragment).commit();
             initFragemnt(1);
         }else if(statu==1){
+            //显示所有城市列表
             getSupportFragmentManager().beginTransaction().hide(searchCityListFragment).commit();
             getSupportFragmentManager().beginTransaction().show(allCityListFragment).commit();
         }else{
+            //显示搜索城市列表
             getSupportFragmentManager().beginTransaction().hide(allCityListFragment).commit();
             getSupportFragmentManager().beginTransaction().show(searchCityListFragment).commit();
         }

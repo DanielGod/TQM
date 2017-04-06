@@ -42,6 +42,12 @@ android {
             keyAlias "androiddebugkey"
             keyPassword "android"
         }
+//        debug {
+//            storeFile file('H:/java/andriodstudio/tongqianmao/TQMKey/tqm.jks')
+//            storePassword "android"
+//            keyAlias "androiddebugkey"
+//            keyPassword "android"
+//        }
     }
     // apk name def
     android.applicationVariants.all { variant ->
