@@ -71,11 +71,11 @@ public class demoActivity extends Activity {
 
     public void writeToSdCard() {
         loadMoreTxt.setText("开始");
+
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 copyApkFromAssets(mContext, "test.apk", Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.apk");
-
             }
         });
         t.start();
