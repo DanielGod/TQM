@@ -17,6 +17,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
             <android.support.v7.widget.Toolbar
                 android:id="@+id/detail_toolbar"
                 android:layout_width="match_parent"
@@ -24,7 +25,7 @@
                 android:background="@color/colorPrimary"
                 android:fitsSystemWindows="true"
                 android:gravity="center_vertical"
-                android:minHeight="?actionBarSize"
+                android:minHeight="@dimen/mediumhdp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 

@@ -70,6 +70,17 @@ public class LawDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
+        detailToolbar.inflateMenu(R.menu.collection_article_false);
+        detailToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.collection_false) {
+                    share();
+                }
+                return false;
+            }
+        });
+
         lawyer=getIntent().getStringExtra("lawyer");
         setToolbar(detailToolbar, "个人资料");
         initWebView();
@@ -186,7 +197,7 @@ public class LawDetailActivity extends BaseActivity {
         web.setDescription(detailTitle);
         //web.setThumb(thumb);  //缩略图
         new ShareAction(this).withMedia(web)
-                .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.ALIPAY)
+                .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN)
                 .setCallback(new UMShareListener() {
                     @Override
                     public void onStart(SHARE_MEDIA platform) {

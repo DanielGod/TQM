@@ -155,6 +155,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/whitesmoke"/>
+        android:background="@color/gray_light"/>
 
 </LinearLayout>

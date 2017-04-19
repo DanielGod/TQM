@@ -7,17 +7,19 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_LOGS"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
+
+    <uses-permission android:name="android.permission.CAMERA"/>
     <!--<uses-sdk-->
         <!--tools:overrideLibrary="com.umeng.socialize.evernote,com.umeng.socialize.pinterest"-->
         <!--/>-->
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+                     android:maxSdkVersion="18"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:name=".application.BaseApplication"
         android:allowBackup="true"
@@ -30,6 +32,16 @@
             android:value="58d1e1b875ca353afd00167d" >
         </meta-data>
 
+<activity android:name=".demoActivity">
+
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+
+        <category android:name="android.intent.category.LAUNCHER"/>
+
+    </intent-filter>
+</activity>
+
         <activity
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
@@ -39,12 +51,10 @@
         <activity
             android:name=".main.WelcomeActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
+        
         <!-- 银行理财 -->
         <activity
             android:name=".bank.bankfinancing.BankFinancingActivity"
@@ -73,11 +83,55 @@
                   android:windowSoftInputMode="adjustPan">
 
             </activity>
+        <!--入驻机构-->
+        <activity android:name=".User.CompanyApplyForActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <!--机构信息详情-->
+        <activity android:name=".Institutions.CompanyInfoActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <!--律师事务所详情-->
+        <activity android:name=".Institutions.LawInfoActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <!--简介-->
+        <activity android:name=".Institutions.MoreProfileActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan">
+
+        </activity>
 
         <!--律师资料页面-->
         <activity android:name=".lawhelp.LawDetailActivity"
                   android:launchMode="singleTask"
                   android:screenOrientation="portrait"/>
+
+        <!--裁剪-->
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
+        <!--自定义URI 需要 provider -->
+        <provider tools:replace="android:authorities"
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="tqm.bianfeng.com.tqm"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+            </meta-data>
+        </provider>
+
+
         <activity
             android:name=".User.MyBankActivityActivity"
             android:launchMode="singleTask"
@@ -126,7 +180,7 @@
         <!--分享activity-->
 
         <activity
-            android:name=".Share.WBShareActivity"
+            android:name=".WBShareActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -135,13 +189,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Share.wxapi.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".Share.apshare.ShareEntryActivity"
+            android:name=".apshare.ShareEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"

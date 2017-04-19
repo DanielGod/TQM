@@ -14,6 +14,7 @@ import rx.Observable;
 import tqm.bianfeng.com.tqm.pojo.BankInformItem;
 import tqm.bianfeng.com.tqm.pojo.MyAttention;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
+import tqm.bianfeng.com.tqm.pojo.ResultCodeWithCompanyFile;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
@@ -124,4 +125,26 @@ public interface UserService {
      */
     @GET("getVersion")
     Observable<UpdateMsg> getVersion();
+
+    /**
+     * 入驻申请执照上传
+     */
+    @Multipart
+    @POST("uploadCompanyFile")
+    Observable<ResultCodeWithCompanyFile> uploadCompanyFile(
+            @Part MultipartBody.Part file
+    );
+
+    /**
+     * 入驻申请保存
+     * "proposer":String 申请人
+     "companyName":String 公司名称
+     "businessLicense":String 营业执照
+     "contact":String 联系方式
+     */
+    @FormUrlEncoded
+    @POST("saveEnter")
+    Observable<ResultCode> saveEnter(@Field("proposer") String proposer,@Field("companyName") String companyName,
+                                   @Field("businessLicense") String businessLicense,@Field("contact") String contact);
+
 }

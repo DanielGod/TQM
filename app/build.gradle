@@ -8,14 +8,14 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "tqm.bianfeng.com.tqm"
-        minSdkVersion 19
+        minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             // 设置支持的SO库架构
-            abiFilters 'armeabi', 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
+            //abiFilters 'armeabi', 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64','mips','mips64'
         }
         resConfigs "zh"
     }
@@ -104,7 +104,7 @@ dependencies {
     compile 'cn.qqtheme.framework:FilePicker:1.4.2'
     compile 'cn.qqtheme.framework:ColorPicker:1.4.2'
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.2.0'
-    compile 'com.jph.takephoto:takephoto_library:4.0.3'
+    //compile 'com.jph.takephoto:takephoto_library:4.0.3'
     compile 'com.android.support:design:25.1.0'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.antfortune.freeline:runtime-no-op:0.6.2'
@@ -118,15 +118,14 @@ dependencies {
     compile 'com.jpardogo.materialtabstrip:library:1.1.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'in.srain.cube:ultra-ptr:1.0.11'
-//    compile 'in.srain.cube:cube-sdk:1.0.44.38'
+    //    compile 'in.srain.cube:cube-sdk:1.0.44.38'
     compile files('libs/libapshare.jar')
     compile files('libs/SocialSDK_alipay.jar')
     compile files('libs/SocialSDK_Ding.jar')
-
     compile('in.srain.cube:ultra-ptr:1.0.9.1-SNAPSHOT@aar') {
         exclude group: 'in.srain.cube', module: 'clog'
     }
-    compile ('in.srain.cube:cube-sdk:1.0.44.38'){
+    compile('in.srain.cube:cube-sdk:1.0.44.38') {
         exclude module: 'support-v4'
     }
     compile files('libs/libddshare.jar')
@@ -146,4 +145,10 @@ dependencies {
     compile 'com.android.support:support-v4:25.1.0'
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'com.zhy:base-rvadapter:3.0.3'
+    compile 'cn.hugeterry.coordinatortablayout:coordinatortablayout:1.0.6'
+    compile 'me.imid.swipebacklayout.lib:library:1.0.0'
+    compile 'com.airbnb.android:lottie:1.0.1'
+    compile 'com.soundcloud.android:android-crop:1.0.1@aar'
+    //compile 'com.soundcloud.android.crop:lib_crop:1.0.1'
+    compile files('libs/RootTools-3.4.jar')
 }

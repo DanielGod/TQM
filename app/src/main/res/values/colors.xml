@@ -7,6 +7,7 @@
 
     <color name="whitesmoke">#f4f4f4</color> <!-- 烟白色 -->
     <color name="transparent">#50000000</color> <!-- 半透明 -->
+    <color name="max_transparent">#00000000</color> <!-- 全透明 -->
     <color name="black">#444444</color>
     <color name="gary_dark">#979797</color> <!-- 深灰色 -->
 
@@ -20,8 +21,8 @@
     <!-- 遮罩颜色 -->
 
     <!-- 预约背景黄 -->
-    <color name="orange_light">#feb000</color> <!-- 亮橘黄 -->
-    <color name="orange_dark">#eda500</color> <!-- 暗橘黄 -->
+    <color name="orange_light">#ffb204</color> <!-- 亮橘黄 -->
+    <color name="orange_dark">#eaa300</color> <!-- 暗橘黄 -->
 
     <color name="bottom_img">#838282</color> <!--底部图标色 -->
 
@@ -47,5 +48,5 @@
     <color name="pink_pressed">#ec407a</color>
     <color name="blue_semi_transparent">#805677fc</color>
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
-
+    <color name="pink_less">#ffd8da</color>
 </resources>

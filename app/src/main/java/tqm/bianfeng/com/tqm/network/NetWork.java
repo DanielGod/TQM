@@ -9,6 +9,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import tqm.bianfeng.com.tqm.network.api.BankService;
+import tqm.bianfeng.com.tqm.network.api.InstitutionService;
 import tqm.bianfeng.com.tqm.network.api.LawService;
 import tqm.bianfeng.com.tqm.network.api.UpdateService;
 import tqm.bianfeng.com.tqm.network.api.UserService;
@@ -26,6 +27,14 @@ public class NetWork {
     private static BankService bankService;
     private static UpdateService updateService;
     private static LawService lawService;
+    private static InstitutionService institutionService;
+    public static InstitutionService getInstitutionService() {
+        if (institutionService == null) {
+            Retrofit retrofit = getRetrofit();
+            institutionService = retrofit.create(InstitutionService.class);
+        }
+        return institutionService;
+    }
     public static LawService getLawService() {
         if (lawService == null) {
             Retrofit retrofit = getRetrofit();

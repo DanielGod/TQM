@@ -1,8 +1,8 @@
 package tqm.bianfeng.com.tqm.main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,9 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import hugo.weaving.DebugLog;
-import io.realm.Realm;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
@@ -30,7 +28,7 @@ import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.Util.NetUtils;
 import tqm.bianfeng.com.tqm.network.NetWork;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends Activity {
 
     @BindView(R.id.startPage_img)
     ImageView startPageImg;
@@ -41,8 +39,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private CompositeSubscription mCompositeSubscription;
     private static final int TIMETOCOUNT = 3;
-    private static Unbinder mUnbinder;
-    Realm realm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +52,6 @@ public class WelcomeActivity extends AppCompatActivity {
             Picasso.with(WelcomeActivity.this).load(R.drawable.startpage).into(startPageImg);
             countToEnter();
         }else{
-
             Subscription subscription = NetWork.getUserService().getImages("01")
                     .subscribeOn(Schedulers.io())
                     .timeout(100,TimeUnit.SECONDS)

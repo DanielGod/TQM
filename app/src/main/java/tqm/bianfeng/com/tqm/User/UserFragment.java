@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,9 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     User mUser;
     @BindView(R.id.user_top_rel)
     RelativeLayout userTopRel;
+    @BindView(R.id.user_apply_for_lin)
+    LinearLayout userApplyForLin;
+    private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE2 = 7;
 
     public static UserFragment newInstance(String param1) {
         UserFragment fragment = new UserFragment();
@@ -87,23 +91,28 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         return fragment;
     }
 
-    @OnClick({user_circle_img, R.id.user_login_registered_btn, R.id.bank_activity_lin, R.id.bank_make_money_lin, R.id.bank_loan_lin, R.id.browsing_history_lin, R.id.user_feedback_lin})
+    @OnClick({R.id.user_apply_for_lin,user_circle_img, R.id.user_login_registered_btn, R.id.bank_activity_lin, R.id.bank_make_money_lin, R.id.bank_loan_lin, R.id.browsing_history_lin, R.id.user_feedback_lin})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bank_activity_lin:
-                if(isLogin()){
+                if (isLogin()) {
                     mListener.changeActivity(MyBankActivityActivity.class);
                 }
                 break;
             case R.id.bank_make_money_lin:
-                if(isLogin()){
+                if (isLogin()) {
                     mListener.changeActivity(MyBankMakeMoneyActivity.class);
                 }
                 break;
             case R.id.bank_loan_lin:
-                if(isLogin()){
+                if (isLogin()) {
                     mListener.changeActivity(MyBankLoanActivity.class);
                 }
+                break;
+            case R.id.user_apply_for_lin:
+
+                    mListener.changeActivity(CompanyApplyForActivity.class);
+
                 break;
             case R.id.browsing_history_lin:
                 break;
@@ -114,10 +123,11 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
                 showDialog();
                 break;
             case R.id.user_circle_img:
-                //弹出popuwindow，修改头像
-                if(isLogin()){
+                Log.i("gqf","user_circle_img");
+                if (isLogin()) {
                     mListener.changeUserHeadImg();
                 }
+
                 break;
         }
     }
@@ -127,7 +137,8 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
                 Class activityClass);
 
         public void changeUserHeadImg();
-        public void shouNetWorkActivity( );
+
+        public void shouNetWorkActivity();
     }
 
     private mListener mListener;
@@ -137,8 +148,9 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         mListener = (mListener) activity;
 
     }
+
     //登录判断
-    public boolean isLogin(){
+    public boolean isLogin() {
         if (realm.where(User.class).findFirst() == null) {
             Toast.makeText(getActivity(), "请您先登录后使用该功能", Toast.LENGTH_SHORT).show();
             return false;
@@ -194,7 +206,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     public void resetUserHeadImg(boolean isChange) {
         if (isChange) {
             mUser = realm.where(User.class).findFirst();
-            if(mUser.getUserAvatar()!=null) {
+            if (mUser.getUserAvatar() != null) {
                 if (!mUser.getUserAvatar().equals("")) {
                     Picasso.with(getContext()).load(mUser.getUserAvatar())
                             .placeholder(R.drawable.ic_user_head_img)
@@ -234,9 +246,9 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             }
 
             @Override
-            public void getCode(String phone,boolean isGet) {
+            public void getCode(String phone, boolean isGet) {
                 //Presenter层获取验证码
-                iLoginRegisterPresenter.setOldCode(phone,isGet);
+                iLoginRegisterPresenter.setOldCode(phone, isGet);
             }
         });
     }
@@ -250,17 +262,21 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
 
     //获取主界面传递头像图片
     public void setUserHeadImg(File bitmap) {
+        Bitmap bm = BitmapFactory.decodeFile(bitmap.getAbsolutePath());
+        if(bm==null){
+            Log.i("gqf", "bm==null");
+        }
+        userCircleImg.setImageBitmap(bm);
         //上传并显示
         iUserWorkPresenter.uploadUserHeadImg(bitmap, realm.where(User.class).findFirst().getUserId());
-        Bitmap bm = BitmapFactory.decodeFile(bitmap.getAbsolutePath());
-        userCircleImg.setImageBitmap(bm);
+
     }
 
     //注册登录后返回
-    public void loginOrRegisteredResult(int type,boolean isSuccess, String msg) {
-        if(type==0){
-            toastType.showToast(getActivity(),msg);
-        }else{
+    public void loginOrRegisteredResult(int type, boolean isSuccess, String msg) {
+        if (type == 0) {
+            toastType.showToast(getActivity(), msg);
+        } else {
             toastType.showToastWithImg(getActivity(), isSuccess, msg);
         }
         if (isSuccess) {
@@ -271,8 +287,9 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             }
         }
     }
+
     //提示是否打开网络设置
-    public void shouNetWorkActivity(){
+    public void shouNetWorkActivity() {
         mListener.shouNetWorkActivity();
     }
 }

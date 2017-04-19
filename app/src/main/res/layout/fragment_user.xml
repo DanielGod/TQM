@@ -6,6 +6,17 @@
     android:background="@android:color/white">
     <!--我的界面-->
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+
     <RelativeLayout
         android:id="@+id/user_top_rel"
         android:layout_width="match_parent"
@@ -55,7 +66,7 @@
         <Button
             android:id="@+id/user_login_registered_btn"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/tinyhdp"
+            android:layout_height="@dimen/tinyxhdp"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/tinyhdp"
             android:layout_marginRight="@dimen/tinyhdp"
@@ -74,7 +85,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/smallhdp"
+        android:layout_height="@dimen/mediumhdp"
         android:orientation="horizontal">
 
         <ImageView
@@ -250,12 +261,54 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
+        android:layout_height="@dimen/mediummdp"
+        android:background="@color/whitesmoke"/>
+
+    <LinearLayout
+        android:id="@+id/user_apply_for_lin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mediumhdp"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_apply_for"
+            android:scaleType="centerInside"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="入驻申请"
+            android:textColor="@color/black"
+            android:textSize="@dimen/mediumsp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_right_arrow"
+            android:scaleType="centerInside"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/whitesmoke"/>
     <LinearLayout
         android:id="@+id/user_feedback_lin"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/smallhdp"
+        android:layout_height="@dimen/mediumhdp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
         android:orientation="horizontal">
@@ -295,7 +348,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/smallhdp"
+        android:layout_height="@dimen/mediumhdp"
         android:orientation="horizontal">
 
         <ImageView
@@ -323,7 +376,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/smallhdp"
+        android:layout_height="@dimen/mediumhdp"
         android:orientation="horizontal">
 
         <ImageView
@@ -348,4 +401,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/whitesmoke"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

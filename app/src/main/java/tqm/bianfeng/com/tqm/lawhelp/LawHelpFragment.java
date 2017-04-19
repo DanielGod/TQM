@@ -2,7 +2,6 @@ package tqm.bianfeng.com.tqm.lawhelp;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,11 +13,11 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.zhy.adapter.recyclerview.wrapper.LoadMoreWrapper;
 
 import java.util.ArrayList;
@@ -45,11 +44,11 @@ public class LawHelpFragment extends BaseFragment {
 
 
     @BindView(R.id.dropDownMenu)
-    tqm.bianfeng.com.tqm.CustomView.DropDownMenu dropDownMenu;
-    @BindView(R.id.YBJ_loding)
-    ImageView YBJLoding;
+    DropDownMenu dropDownMenu;
     @BindView(R.id.YBJ_loding_txt)
     TextView YBJLodingTxt;
+    @BindView(R.id.animation_view)
+    LottieAnimationView animationView;
 
     private List<View> popupViews = new ArrayList<>();
 
@@ -68,6 +67,8 @@ public class LawHelpFragment extends BaseFragment {
     private View loadMoreView;
     private ThreeAddTools threeAddTools;
     private TextView loadMoreTxt;//加载更多文字
+
+    private boolean isOnLoading = false;
 
     public static LawHelpFragment newInstance() {
         LawHelpFragment fragment = new LawHelpFragment();
@@ -148,7 +149,8 @@ public class LawHelpFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(dropDownMenu.isWork()) {
+        if (dropDownMenu.isWork()) {
+            //判断条件信息是否改变，改变则重新加载列表
             lawAdd = realm.where(LawAdd.class).findFirst();
             if (!lawAdd.getCity().equals("")) {
                 if (!city.equals(lawAdd.getCity()) || (city.equals("") && !lawAdd.getCity().equals(""))) {
@@ -157,11 +159,27 @@ public class LawHelpFragment extends BaseFragment {
                     initDistricts(lawAdd.getCity());
                     initListData(true, lawAdd.getQueryParams(), 1);
                 }
-            }else if(lawAdd.getCity().equals("")){
+            } else if (lawAdd.getCity().equals("")) {
                 city = lawAdd.getCity();
                 dropDownMenu.setTabTxtByIndex("城市", 0);
                 initDistricts(lawAdd.getCity());
                 initListData(true, lawAdd.getQueryParams(), 1);
+            }
+        }
+
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            //判断是否因卡顿导致加载失败
+            if (!isOnLoading) {
+                if (specialFields == null) {
+                    initSpecialFields();
+                } else if (datas == null) {
+                    initListData(true, lawAdd.getQueryParams(), 1);
+                }
             }
         }
     }
@@ -169,36 +187,34 @@ public class LawHelpFragment extends BaseFragment {
     public void lodingIsFailOrSucess(int i) {
         if (i == 1) {
             //加载中
-            YBJLoding.setVisibility(View.VISIBLE);
+            animationView.setVisibility(View.VISIBLE);
             YBJLodingTxt.setVisibility(View.VISIBLE);
             YBJLodingTxt.setText("加载中...");
-            YBJLoding.setBackgroundResource(R.drawable.loding_anim_lists);
-            AnimationDrawable anim = (AnimationDrawable) YBJLoding.getBackground();
-            anim.start();
+            //开始动画
+            boolean inPlaying = animationView.isAnimating();
+            if (!inPlaying) {
+                animationView.setProgress(0f);
+                animationView.playAnimation();
+            }
         } else if (i == 2) {
             //加载成功
-            YBJLoding.setBackground(null);
-            YBJLoding.setVisibility(View.GONE);
+            //借书动画
+            animationView.cancelAnimation();
+            animationView.setVisibility(View.GONE);
             YBJLodingTxt.setVisibility(View.GONE);
-        }else if(i==3){
+        } else if (i == 3) {
             //没有数据
-            YBJLoding.setVisibility(View.VISIBLE);
+            animationView.setVisibility(View.GONE);
             YBJLodingTxt.setVisibility(View.VISIBLE);
-            YBJLoding.setBackground(null);
-            YBJLodingTxt.setText("当前条件没有查询到数据");
-            YBJLoding.setImageResource(R.drawable.ic_no_city);
-            Animation myAnimation= AnimationUtils.loadAnimation(getActivity(),R.anim.dd_mask_in);
-            YBJLoding.setAnimation(myAnimation);
+            YBJLodingTxt.setText("没有查询到数据");
+            //YBJLoding.setImageResource(R.drawable.ic_no_city);
+            YBJLodingTxt.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_no_city), null, null);
+            Animation myAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.dd_mask_in);
+            animationView.setAnimation(myAnimation);
             YBJLodingTxt.setAnimation(myAnimation);
             myAnimation.start();
-        }
-        else {
-            //加载失败
-            YBJLoding.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setVisibility(View.VISIBLE);
-            YBJLoding.setBackground(null);
-            YBJLodingTxt.setText("加载失败，请检查网络连接");
-            YBJLoding.setImageResource(R.drawable.ic_loding_fail);
+        } else {
+
         }
     }
 
@@ -207,6 +223,7 @@ public class LawHelpFragment extends BaseFragment {
     //获取数据
     public void initListData(final boolean isRefresh, String queryParams, int index) {
         Log.e("gqf", index + "queryParams" + queryParams);
+        isOnLoading = true;
         //开始加载动画
         loadMoreViewAnim(1);
         Subscription getBankFinancItem_subscription = NetWork.getLawService().getLawyerItem(queryParams, index, 10)
@@ -220,7 +237,9 @@ public class LawHelpFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if (datas.size() == 0) {
+                            lodingIsFailOrSucess(3);
+                        }
                     }
 
                     @Override
@@ -250,6 +269,7 @@ public class LawHelpFragment extends BaseFragment {
                             //加载完成
                             loadMoreViewAnim(2);
                         }
+                        isOnLoading = false;
                     }
                 });
         compositeSubscription.add(getBankFinancItem_subscription);
@@ -259,9 +279,9 @@ public class LawHelpFragment extends BaseFragment {
 
     public void initList(List<LawyerItem> lawyerItems) {
         //数据有无提示判断
-        if(lawyerItems.size()==0){
+        if (lawyerItems.size() == 0) {
             lodingIsFailOrSucess(3);
-        }else{
+        } else {
             lodingIsFailOrSucess(2);
         }
         Log.e("gqf", "lawyerItems" + lawyerItems.toString());
@@ -279,7 +299,7 @@ public class LawHelpFragment extends BaseFragment {
 
                 @Override
                 public void CallClick(int position) {
-                    Intent intentPhone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "15670702651"));
+                    Intent intentPhone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" +datas.get(position).getContact()));
                     intentPhone.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mListener.detailActivity(intentPhone);
                 }
@@ -338,6 +358,7 @@ public class LawHelpFragment extends BaseFragment {
 
     //获取顶部选择器条件
     public void initSpecialFields() {
+        isOnLoading = true;
         Subscription getSpecialFields = NetWork.getLawService().getSpecialFields()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -349,7 +370,9 @@ public class LawHelpFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if (datas.size() == 0) {
+                            lodingIsFailOrSucess(3);
+                        }
                     }
 
                     @Override
@@ -357,6 +380,7 @@ public class LawHelpFragment extends BaseFragment {
                         specialFields = strings;
                         specialFields.add(0, "不限");
                         Log.e("gqf", "specialFields" + specialFields.toString());
+                        isOnLoading = false;
                         iniDropMenu();
                     }
                 });
@@ -367,7 +391,7 @@ public class LawHelpFragment extends BaseFragment {
     //根据所选城市加载县区
     public void initDistricts(String city) {
         districts = threeAddTools.getDistrictsByCity(getActivity(), city);
-        if(districts.size()>0){
+        if (districts.size() > 0) {
             districts.set(0, "全部");
         }
         Log.i("gqf", city + "districts" + districts.toString());
@@ -375,11 +399,11 @@ public class LawHelpFragment extends BaseFragment {
     }
 
     //更新本地存储
-    public void setLawAddDistrictOrSpecialField(String data,int type){
+    public void setLawAddDistrictOrSpecialField(String data, int type) {
         realm.beginTransaction();
-        if(type==0){
+        if (type == 0) {
             lawAdd.setDistrict(data);
-        }else{
+        } else {
             lawAdd.setSpecialField(data);
         }
         realm.copyToRealmOrUpdate(lawAdd);
@@ -389,19 +413,19 @@ public class LawHelpFragment extends BaseFragment {
     //初始化选择器
     public void iniDropMenu() {
 
-         ListView districtView0 = new ListView(getActivity());
+        ListView districtView0 = new ListView(getActivity());
         districtView0.setDividerHeight(0);
         districtAdapter = new ListDropDownAdapter(getActivity(), new ArrayList<String>());
         districtView0.setAdapter(districtAdapter);
 
         //县区下拉列表
-         ListView districtView = new ListView(getActivity());
+        ListView districtView = new ListView(getActivity());
         districtView.setDividerHeight(0);
         districtAdapter = new ListDropDownAdapter(getActivity(), districts);
         districtView.setAdapter(districtAdapter);
 
         //律师条件下拉列表
-         ListView lawView = new ListView(getActivity());
+        ListView lawView = new ListView(getActivity());
         lawView.setDividerHeight(0);
         lawAdapter = new ListDropDownAdapter(getActivity(), specialFields);
         lawView.setAdapter(lawAdapter);
@@ -413,7 +437,7 @@ public class LawHelpFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 districtAdapter.setCheckItem(i);
-                setLawAddDistrictOrSpecialField(i == 0 ? "" : districts.get(i),0);
+                setLawAddDistrictOrSpecialField(i == 0 ? "" : districts.get(i), 0);
                 dropDownMenu.setTabText(i == 0 ? headers[1] : districts.get(i));
                 dropDownMenu.closeMenu();
                 //更新数据
@@ -424,7 +448,7 @@ public class LawHelpFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 lawAdapter.setCheckItem(i);
-                setLawAddDistrictOrSpecialField(i == 0 ? "" : specialFields.get(i),1);
+                setLawAddDistrictOrSpecialField(i == 0 ? "" : specialFields.get(i), 1);
                 dropDownMenu.setTabText(i == 0 ? headers[2] : specialFields.get(i));
                 dropDownMenu.closeMenu();
                 //更新数据
@@ -458,10 +482,10 @@ public class LawHelpFragment extends BaseFragment {
                 }
 
                 //根据选择器是否下拉显示无数据提示
-                if(dropDownMenu.isShowing()) {
+                if (dropDownMenu.isShowing()) {
                     lodingIsFailOrSucess(2);
-                }else{
-                    if(datas.size()==0){
+                } else {
+                    if (datas.size() == 0) {
                         lodingIsFailOrSucess(3);
                     }
                 }
@@ -470,7 +494,7 @@ public class LawHelpFragment extends BaseFragment {
             @Override
             public void onClose() {
                 //关闭时显示无数据提示
-                if(datas.size()==0){
+                if (datas.size() == 0) {
                     lodingIsFailOrSucess(3);
                 }
             }

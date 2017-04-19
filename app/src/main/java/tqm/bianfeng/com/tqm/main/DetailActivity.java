@@ -1,7 +1,12 @@
 package tqm.bianfeng.com.tqm.main;
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +25,7 @@ import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 
 import butterknife.BindView;
@@ -63,12 +69,31 @@ public class DetailActivity extends BaseActivity {
     @BindView(R.id.action_c)
     FloatingActionButton actionC;
 
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        UMShareAPI.get(this).onSaveInstanceState(outState);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
+
+        detailToolbar.inflateMenu(R.menu.collection_article_false);
+        detailToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.collection_false) {
+                    if(Build.VERSION.SDK_INT>=23){
+                        String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS,Manifest.permission.WRITE_APN_SETTINGS};
+                        ActivityCompat.requestPermissions(DetailActivity.this,mPermissionList,123);
+                    }
+                    share();
+                }
+                return false;
+            }
+        });
 
         detailType = getIntent().getStringExtra("detailType");
         detailId = getIntent().getIntExtra("detailId", -1);
@@ -89,9 +114,11 @@ public class DetailActivity extends BaseActivity {
                 break;
         }
         setToolbar(detailToolbar, toolbarTitle);
+
         initWebView();
         initactionASrc();
         initCollection();
+        invalidateOptionsMenu();
     }
 
     String url;
@@ -155,7 +182,6 @@ public class DetailActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.collection_article_false, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -200,9 +226,17 @@ public class DetailActivity extends BaseActivity {
         UMWeb web = new UMWeb(url);
         web.setTitle(detailTitle);//标题
         web.setDescription(detailTitle);
-        //web.setThumb(thumb);  //缩略图
+        Bitmap bmp= BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+        if(bmp==null){
+            Log.i("gqf","bmp==null");
+        }
+        web.setThumb(new UMImage(this,bmp
+                ));  //缩略图
+
+
+
         new ShareAction(this).withMedia(web)
-                .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.ALIPAY)
+                .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN)
                 .setCallback(new UMShareListener() {
                     @Override
                     public void onStart(SHARE_MEDIA platform) {
@@ -328,4 +362,9 @@ public class DetailActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UMShareAPI.get(this).release();
+    }
 }

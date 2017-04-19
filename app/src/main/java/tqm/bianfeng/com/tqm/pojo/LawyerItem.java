@@ -12,18 +12,25 @@ public class LawyerItem {
      * avatar : /upload/avatar/20170330143718491.jpg
      * isAuthorize : 01
      */
+    /**
+     *  "lawyerId": 13,
+     "lawyerName": "测试律师004",
+     "contact": "15236101580",
+     "avatar": "/upload/avatar/20170411094200552.jpg",
+     "isAuthorize": "01"
+     */
 
-    private int lawyerId;
+    private Integer lawyerId;
     private String lawyerName;
     private String contact;
     private String avatar;
     private String isAuthorize;
 
-    public int getLawyerId() {
+    public Integer getLawyerId() {
         return lawyerId;
     }
 
-    public void setLawyerId(int lawyerId) {
+    public void setLawyerId(Integer lawyerId) {
         this.lawyerId = lawyerId;
     }
 

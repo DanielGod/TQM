@@ -252,4 +252,9 @@
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 
+
+#-keep com.airbnb.lottie.*
+#-keep cn.hugeterry.*
+#-keep me.imid.swipebacklayout.*
+
 ####混淆保护自己项目的部分代码以及引用的第三方jar包library-end####
