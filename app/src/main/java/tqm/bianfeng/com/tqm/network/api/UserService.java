@@ -14,11 +14,13 @@ import rx.Observable;
 import tqm.bianfeng.com.tqm.pojo.BankInformItem;
 import tqm.bianfeng.com.tqm.pojo.MyAttention;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
+import tqm.bianfeng.com.tqm.pojo.ResultCodeWithCompanyFile;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
+import tqm.bianfeng.com.tqm.update.UpdateMsg;
 
 /**
  * Created by johe on 2017/1/5.
@@ -117,4 +119,32 @@ public interface UserService {
     @POST("isAttention")
     Observable<String> isAttention(@Field("objectId") Integer objectId,@Field("attentionType") String attentionType,
                                      @Field("userId") Integer userId);
+
+    /**
+     * 版本更新
+     */
+    @GET("getVersion")
+    Observable<UpdateMsg> getVersion();
+
+    /**
+     * 入驻申请执照上传
+     */
+    @Multipart
+    @POST("uploadCompanyFile")
+    Observable<ResultCodeWithCompanyFile> uploadCompanyFile(
+            @Part MultipartBody.Part file
+    );
+
+    /**
+     * 入驻申请保存
+     * "proposer":String 申请人
+     "companyName":String 公司名称
+     "businessLicense":String 营业执照
+     "contact":String 联系方式
+     */
+    @FormUrlEncoded
+    @POST("saveEnter")
+    Observable<ResultCode> saveEnter(@Field("proposer") String proposer,@Field("companyName") String companyName,
+                                   @Field("businessLicense") String businessLicense,@Field("contact") String contact);
+
 }

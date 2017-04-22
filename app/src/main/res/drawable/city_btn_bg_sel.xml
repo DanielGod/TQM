@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- <item android:state_checked="true"
+                android:drawable="@drawable/dialog_optional_non" />
+<item android:state_checked="false"//t
+                android:drawable="@drawable/dialog_optional_selected" /> -->
+<!-- 没有焦点时的背景图片 -->
+   <!--  <item android:state_window_focused="false"
+                android:drawable="@drawable/pic1" /> -->
+
+<!-- 非触摸模式下获得焦点并单击时的背景图片 -->
+ <!--  <item 
+      android:state_focused="true"
+                android:state_pressed="true"
+                android:drawable= "@drawable/takeout_bg_btn_more_normal" /> -->
+
+
+     <item 
+         android:state_pressed="true"
+        
+         android:drawable="@drawable/takeout_bg_btn_get_ver_code_disabled"
+         ></item>
+<!-- 默认时的背景图片-->
+    <item android:drawable="@drawable/takeout_bg_btn_comment_tag" /><!-- dialog_optional_non -->
+     
+<!--获得焦点时的图片背景-->
+  <!--   <item android:state_focused="true"
+                android:drawable="@drawable/pic5" /> -->
+</selector>

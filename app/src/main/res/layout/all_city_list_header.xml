@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/location_lin"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mediumhdp"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/tinyhdp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="当前定位城市"
+                android:textColor="@color/black"
+                android:textSize="@dimen/mediumxsp"
+                android:paddingLeft="@dimen/mediummxdp"
+                />
+
+            <Button
+                android:id="@+id/cancel_location_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/tinymdp"
+                android:text="清除定位"
+                android:gravity="center"
+                android:padding="0dp"
+                android:textSize="@dimen/mediumsp"
+                android:textColor="@color/black"
+                android:background="@drawable/city_btn_bg_sel"/>
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/location_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/smallhdp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:text="洛阳"
+            android:textSize="@dimen/mediumxsp"
+            android:textColor="@color/white"
+            android:background="@drawable/apply_for_selector"/>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/mediummxdp"
+            android:layout_marginRight="@dimen/mediummxdp"
+            android:layout_marginTop="@dimen/smallmdp"
+            android:background="@color/gray_light"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/tinyhdp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/mediumhdp"
+            android:gravity="center_vertical"
+            android:text="热门城市"
+            android:textColor="@color/black"
+            android:textSize="@dimen/mediumxsp"
+            android:paddingLeft="@dimen/mediummxdp"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/hot_city_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/mediummxdp"
+        android:layout_marginRight="@dimen/mediummxdp"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
+</LinearLayout>

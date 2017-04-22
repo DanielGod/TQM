@@ -186,6 +186,7 @@ public class BaseViewUtils {
 		try {
 			ostream = new FileOutputStream(dcimFile);
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+			ostream.flush();
 			ostream.close();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -4,7 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -12,32 +12,49 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.soundcloud.android.crop.Crop;
 
-import java.io.File;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import hugo.weaving.DebugLog;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.Dialog.BaseDialog;
+import tqm.bianfeng.com.tqm.Institutions.InstitutionsInFragment;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.UserFragment;
+import tqm.bianfeng.com.tqm.Util.DisplayUtil;
 import tqm.bianfeng.com.tqm.Util.NetUtils;
+import tqm.bianfeng.com.tqm.Util.PermissionsHelper;
 import tqm.bianfeng.com.tqm.Util.PhotoGet;
+import tqm.bianfeng.com.tqm.Util.SystemBarTintManager;
 import tqm.bianfeng.com.tqm.application.BaseApplication;
+import tqm.bianfeng.com.tqm.lawhelp.LawHelpFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.update.UpdateInformation;
 import tqm.bianfeng.com.tqm.update.UpdateMsg;
 import tqm.bianfeng.com.tqm.update.UpdateService;
 
-public class MainActivity extends AppCompatActivity implements UserFragment.mListener, HomeFragment.mListener {
+import static tqm.bianfeng.com.tqm.Util.PhotoGet.REQUEST_IMAGE_CAPTURE;
+
+public class MainActivity extends AppCompatActivity implements UserFragment.mListener, HomeFragment.mListener ,LawHelpFragment.mListener{
     private static final String HOME_TAG = "home_flag";
     private static final String LAWHELP_TAG = "lawhelp_flag";
     private static final String INSTITUTIONSIN_TAG = "institutionsin_flag";
@@ -68,12 +85,18 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         compositeSubscription = new CompositeSubscription();
+        try {
+            initSystemBar();
+        }catch (Exception e){
+
+        }
         //设置底部栏
         initBottomBar();
         //版本更新
         updateApp();
         //网络判断
         initNetWork(true);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -216,6 +239,8 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     }
 
     public void changeUserHeadImg() {
+        PermissionsHelper.verifyStoragePermissions(MainActivity.this);
+        Log.i("gqf","changeUserHeadImg");
         //修改用户头像
         if (photoGet == null) {
             photoGet = PhotoGet.getInstance();
@@ -229,28 +254,38 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case TAKEPHOTO:
-                String headIconPath = photoGet.getHeadIconPath();
-                if (headIconPath != null)
-                    photoGet.startPhotoZoom(Uri.fromFile(new File(headIconPath)), 150);
-                break;
-            case GALLERY:
-                if (data != null) {
-                    photoGet.startPhotoZoom(data.getData(), 150);
+        // 拍照返回
+        if (resultCode == RESULT_OK){
+            Log.i("gqf", "RESULT_OK");
+            if (requestCode == REQUEST_IMAGE_CAPTURE){
+                Log.i("gqf", "REQUEST_IMAGE_CAPTURE");
+                photoGet.beginCrop(photoGet.getmCurrentPhotoUri());
+
+            } else if (requestCode == Crop.REQUEST_PICK){
+                Log.i("gqf", "REQUEST_PICK");
+                photoGet. beginCrop(data.getData());
+            }
+            if (requestCode == Crop.REQUEST_CROP) {
+                Log.i("gqf", "handleCrop");
+                photoGet.handleCrop(resultCode, data);
+                if(photoGet.getHeadFile()==null){
+                    Log.i("gqf", "getHeadFile==null");
                 }
-                break;
-            case PHOTO_REQUEST_CUT:
-                if (data != null) {
-                    photoGet.saveImage(data);
-                    userFragemnt.setUserHeadImg(photoGet.getHeadFile());
-                }
-                break;
+                userFragemnt.setUserHeadImg(photoGet.getHeadFile());
+            }
         }
+//        else if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
+//            Log.i("gqf", "REQUEST_PICK");
+//            photoGet. beginCrop(data.getData());
+//        }
+
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     //带intent的页面跳转
+    @DebugLog
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void detailActivity(Intent intent) {
         startActivity(intent);
     }
@@ -321,7 +356,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         if (ISUPDATEAPP && alert == null) {
             Log.e("gqf", "updateMsgupdateApp2");
             //判断本地数据库是否有版本号
-            Subscription subscription = NetWork.getUpdateService().getVersion()
+            Subscription subscription = NetWork.getUserService().getVersion()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(observer);
@@ -331,33 +366,27 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
 
     //弹出网络设置dialog
     public void shouNetWorkActivity() {
-        if (alert == null) {
-            alert = new AlertDialog.Builder(this);
-        }
-        alert.setTitle("当前没有网络")
-                .setMessage("是否跳转系统网络设置界面?")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+        LinearLayout netWorkLin=(LinearLayout)findViewById(R.id.net_work_lin);
+        if(netWorkLin!=null){
+            if(!NetUtils.isConnected(this)){
+                netWorkLin.setVisibility(View.VISIBLE);
+                netWorkLin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         NetUtils.openSetting(MainActivity.this);
                     }
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-
-                    }
                 });
-        alert.create().show();
-
+            }else{
+                netWorkLin.setVisibility(View.GONE);
+            }
+        }
     }
 
     //检测网络
     public void initNetWork(boolean isShowDialog) {
         Log.i("gqf", "initNetWork" + NetUtils.isConnected(this));
         if (!NetUtils.isConnected(this)) {
-            if (isShowDialog) {
-                shouNetWorkActivity();
-            }
+
             if (homeFragment != null) {
                 homeFragment.showViewWhenNetWork(false);
             }
@@ -366,6 +395,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 homeFragment.showViewWhenNetWork(true);
             }
         }
+        shouNetWorkActivity();
     }
 
     @Override
@@ -379,5 +409,54 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     protected void onDestroy() {
         super.onDestroy();
         compositeSubscription.unsubscribe();
+        EventBus.getDefault().unregister(this);
+    }
+    //退出时的时间
+    private long mExitTime;
+    //对返回键进行监听
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+
+            Toast.makeText(MainActivity.this, "再按一次退出铜钱猫app", Toast.LENGTH_SHORT).show();
+            mExitTime = System.currentTimeMillis();
+        } else {
+
+            //            MyConfig.clearSharePre(this, "users");
+            ((BaseApplication)getApplication()).exit();
+        }
+    }
+    public void initSystemBar(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            // Translucent status bar
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        setSystemBarColor(R.color.colorPrimaryDark);
+    }
+    public void setSystemBarColor(int id){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            //此处可以重新指定状态栏颜色
+            tintManager.setStatusBarTintResource(id);
+        }
+        else{
+            LinearLayout.LayoutParams lp=(LinearLayout.LayoutParams)toolbar.getLayoutParams();
+            lp.height= DisplayUtil.dip2px(this,getResources().getDimension(R.dimen.bigxmdp));
+            toolbar.setLayoutParams(lp);
+        }
     }
 }

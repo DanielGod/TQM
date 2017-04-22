@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="?android:selectableItemBackground"
+              android:clickable="true"
+              android:visibility="gone"
+    android:id="@+id/net_work_lin"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/smallhdp"
+        android:orientation="horizontal"
+        android:background="@color/pink_less"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_net_wort_stop"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="@dimen/smallmdp"
+            android:layout_marginBottom="@dimen/smallmdp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="网络不给力，请检查网络设置。"
+            android:textSize="@dimen/mediumsp"
+            android:textColor="@color/black"
+            android:paddingLeft="@dimen/activity_horizontal_margin"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/mediummdp"
+            android:layout_marginTop="@dimen/mediummdp"
+            android:src="@drawable/ic_right_row"
+            android:adjustViewBounds="true"/>
+    </LinearLayout>
+</LinearLayout>

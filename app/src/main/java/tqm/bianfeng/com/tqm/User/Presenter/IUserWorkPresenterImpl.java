@@ -59,12 +59,13 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
     //头像上传
     public void uploadUserHeadImg(File img,int userId){
         RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/*"), img);
-
+        Log.i("gqf", "bm==null1");
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.addFormDataPart("file", img.getName(), photoRequestBody);
         builder.setType(MultipartBody.FORM);
-
+        Log.i("gqf", "bm==null2");
         MultipartBody mb=builder.build();
+
         //网络上传
         Subscription subscription = NetWork.getUserService().uploadAvatars(mb.part(0),userId)
                 .subscribeOn(Schedulers.io())
@@ -79,20 +80,24 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                     public void onError(Throwable e) {
                         iLoginAndRegistered.loginOrRegisteredResult(0,false,"无法上传，请检查网络");
                         iLoginAndRegistered.shouNetWorkActivity();
+                        Log.i("gqf","ResultCodeWithUserHeadImg"+e.toString());
                     }
 
                     @Override
                     public void onNext(ResultCodeWithUserHeadImg resultCodeWithUserHeadImg) {
                         if(resultCodeWithUserHeadImg.getCode()== ResultCode.SECCESS){
+
                             User user=realm.where(User.class).findFirst();
                             realm.beginTransaction();
                             user.setUserAvatar(resultCodeWithUserHeadImg.getUserAvatar());
                             realm.copyToRealmOrUpdate(user);
                             realm.commitTransaction();
+                            Log.i("gqf","ResultCodeWithUserHeadImg"+user.getUserAvatar());
                             iLoginAndRegistered.resetUserHeadImg(true);
                         }else{
                             iLoginAndRegistered.resetUserHeadImg(false);
                             iLoginAndRegistered.loginOrRegisteredResult(1,true,"头像上传失败");
+                            Log.i("gqf","ResultCodeWithUserHeadImg"+resultCodeWithUserHeadImg.toString());
                         }
 
                     }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/hugehxxxxxdp"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/inin_lin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:padding="@dimen/smallmdp">
+
+        <ImageView
+            android:id="@+id/inin_img"
+            android:layout_width="@dimen/hugehxxxxxdp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/smallmdp"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/smallmdp"
+            android:paddingRight="@dimen/smallmdp">
+
+            <TextView
+                android:id="@+id/ininName_txt"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="张律师"
+                android:textColor="@color/black"
+                android:textSize="@dimen/mediumxsp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/contact_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:gravity="center_vertical"
+                    android:text="联系电话：15670702651"
+                    android:textColor="@color/gary_dark"
+                    android:textSize="@dimen/mediumsp"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/profile_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:gravity="center_vertical"
+                    android:text="简介："
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textColor="@color/gary_dark"
+                    android:textSize="@dimen/smallsp"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_light"/>
+
+</LinearLayout>
