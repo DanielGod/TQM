@@ -405,10 +405,10 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 netWorkLin.setVisibility(View.GONE);
             }
         }
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) netWorkLin.getLayoutParams();
-        params.addRule(RelativeLayout.BELOW, R.id.toolbar);
-        containerLin.setLayoutParams(params);
-        toolbar.setAlpha(1);
+//        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) netWorkLin.getLayoutParams();
+//        params.addRule(RelativeLayout.BELOW, R.id.toolbar);
+//        containerLin.setLayoutParams(params);
+//        toolbar.setAlpha(1);
     }
 
     //检测网络
