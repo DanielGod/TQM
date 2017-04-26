@@ -481,7 +481,7 @@ public class HomeFragment extends BaseFragment {
 //            }
 //        }
         DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
-                        textSliderView.image(R.drawable.user_bg)
+                        textSliderView.image(R.drawable.home_top_slider1)
                                 .setScaleType(BaseSliderView.ScaleType.Fit);
                         homeSlider.addSlider(textSliderView);
     }
@@ -557,7 +557,6 @@ public class HomeFragment extends BaseFragment {
             if(sliderHeight!=1) {
                 mListener.setToolBarColorBg(getAlph(scrollHeight, sliderHeight));
             }
-
         }
     }
 
