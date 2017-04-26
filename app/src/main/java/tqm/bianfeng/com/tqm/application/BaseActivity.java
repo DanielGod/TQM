@@ -10,6 +10,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 import io.realm.Realm;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 import rx.subscriptions.CompositeSubscription;
@@ -17,7 +19,6 @@ import tqm.bianfeng.com.tqm.CustomView.ToastType;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.Util.DisplayUtil;
 import tqm.bianfeng.com.tqm.Util.NetUtils;
-import tqm.bianfeng.com.tqm.Util.SystemBarTintManager;
 
 /**
  * Created by johe on 2017/3/14.

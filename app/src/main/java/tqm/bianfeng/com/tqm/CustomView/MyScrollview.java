@@ -29,7 +29,22 @@ public class MyScrollview extends ScrollView {
         super(context, attrs, defStyleAttr);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
+    @Override
+    protected void onScrollChanged(int x, int y, int oldx, int oldy) {
+        super.onScrollChanged(x, y, oldx, oldy);
+        if (onScollChangedListener != null) {
+            onScollChangedListener.onScrollChanged(this, x, y, oldx, oldy);
+        }
+    }
+    private OnScollChangedListener onScollChangedListener = null;
+    public void setOnScollChangedListener(OnScollChangedListener onScollChangedListener) {
+        this.onScollChangedListener = onScollChangedListener;
+    }
+    public interface OnScollChangedListener {
 
+        void onScrollChanged(MyScrollview scrollView, int x, int y, int oldx, int oldy);
+
+    }
     @Override
     public boolean onInterceptTouchEvent(MotionEvent e) {
         int action = e.getAction();
