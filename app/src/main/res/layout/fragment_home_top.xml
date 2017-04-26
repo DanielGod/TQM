@@ -168,8 +168,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/hugehdp"
-                    android:layout_marginLeft="@dimen/smallmdp"
-                    android:layout_marginRight="@dimen/smallmdp"
                     android:layout_marginTop="@dimen/smallmdp"
                     android:background="@android:color/white"
                     android:orientation="horizontal">
@@ -181,18 +179,18 @@
                         android:adjustViewBounds="true"
                         android:src="@drawable/ic_hot_msg"
                         android:gravity="center_vertical"
-
-                        android:layout_margin="@dimen/smallmdp"/>
+                        android:layout_margin="@dimen/activity_horizontal_margin"/>
 
                     <tqm.bianfeng.com.tqm.CustomView.MarqueeView
                         android:id="@+id/marqueeView"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/smallmdp"
+                        android:layout_marginTop="@dimen/tinymdp"
+                        android:layout_marginBottom="@dimen/tinymdp"
                         android:layout_weight="2.3"
-                        app:mvAnimDuration="1000"
-                        app:mvInterval="3000"
+                        app:mvAnimDuration="2000"
+                        app:mvInterval="9000"
                         app:mvTextColor="@color/black"
                         app:mvTextSize="@dimen/mediumsp"
                         />
@@ -206,6 +204,7 @@
                         android:paddingRight="@dimen/tinymdp"
                         android:text="查看更多"
                         android:textColor="@color/colorPrimary"
+                        android:layout_marginRight="@dimen/smallmdp"
                         android:textSize="@dimen/mediumsp"/>
 
 
