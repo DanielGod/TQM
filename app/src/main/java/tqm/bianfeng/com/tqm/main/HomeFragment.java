@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -77,6 +78,7 @@ public class HomeFragment extends BaseFragment {
     RecyclerView bankActivitysList;
 
 
+
     @BindView(R.id.bank_finaning_list)
     RecyclerView bankFinaningList;
     @BindView(R.id.bank_loan_list)
@@ -95,14 +97,30 @@ public class HomeFragment extends BaseFragment {
     boolean isFinaning = false;
     boolean isLoan = false;
     boolean isActivity = false;
-    @BindView(R.id.select_more_bankFinancing_txt)
-    TextView selectMoreBankFinancingTxt;
+    @BindView(R.id.hotActivity_left_tv)
+    TextView hotActivityLeftTv;
+    @BindView(R.id.hotActivity_left_linear)
+    LinearLayout hotActivityLeftLinear;
+    @BindView(R.id.hotActivity_rightUp_tv)
+    TextView hotActivityRightUpTv;
+    @BindView(R.id.hotActivity_rightUp_linear)
+    LinearLayout hotActivityRightUpLinear;
+    @BindView(R.id.hotActivity_rightDown_tv)
+    TextView hotActivityRightDownTv;
+    @BindView(R.id.hotActivity_rightDown_linear)
+    LinearLayout hotActivityRightDownLinear;
     @BindView(R.id.select_more_bankLoan_txt)
     TextView selectMoreBankLoanTxt;
+    @BindView(R.id.select_more_bankFinancing_txt)
+    TextView selectMoreBankFinancingTxt;
+    @BindView(R.id.select_more_bankActivitys_txt)
+    TextView selectMoreBankActivitysTxt;
+
     @BindView(R.id.my_scrollview)
     MyScrollview myScrollview;
     int scrollHeight=0;
     int sliderHeight=1;
+    //ddddddddd
 
     private CompositeSubscription mCompositeSubscription;
 
@@ -182,7 +200,7 @@ public class HomeFragment extends BaseFragment {
 
 
     /**
-     * 银行贷款
+     * 极速贷款
      */
     private void getBankLoanServiceItem() {
         homeBankLoanTitleLin.setVisibility(View.VISIBLE);
@@ -218,7 +236,8 @@ public class HomeFragment extends BaseFragment {
 
     private void setBankLoanListAdapter(List<BankLoanItem> bankloanItems) {
         if (bankLoanAdapter == null) {
-            bankLoanList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
+            //            bankLoanList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
+            bankLoanList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
             bankFinaningList.setHasFixedSize(true);
             bankFinaningList.setNestedScrollingEnabled(false);
             bankLoanAdapter = new HomeBankLoanListAdapter(getActivity(), bankloanItems);
@@ -240,7 +259,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * 银行活动
+     * 热门活动
      */
     private void getBankActivitys() {
         homeBankActivityTitleLin.setVisibility(View.VISIBLE);
@@ -275,34 +294,71 @@ public class HomeFragment extends BaseFragment {
 
     HomeBankActivitysListAdapter homeBankActivitysListAdapter;
 
-    private void setBankActivitysListAdapter(List<BankActivityItem> bankActivityItems) {
+    private void setBankActivitysListAdapter(final List<BankActivityItem> bankActivityItems) {
 
-        if (homeBankActivitysListAdapter == null) {
-            bankActivitysList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
-            bankFinaningList.setHasFixedSize(true);
-            bankFinaningList.setNestedScrollingEnabled(false);
-            homeBankActivitysListAdapter = new HomeBankActivitysListAdapter(getActivity(), bankActivityItems);
-            bankActivitysList.setAdapter(homeBankActivitysListAdapter);
-            homeBankActivitysListAdapter.setOnItemClickListener(new HomeBankActivitysListAdapter.HomeBankActivitysItemClickListener() {
-                @Override
-                public void OnClickListener(int position) {
-                    //跳转银行活动详情
-                    Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra("detailType", "01");
-                    intent.putExtra("detailId", homeBankActivitysListAdapter.getDataItem(position).getActivityId());
-                    intent.putExtra("detailTitle", homeBankActivitysListAdapter.getDataItem(position).getActivityTitle());
-                    mListener.detailActivity(intent);
-                }
-            });
-        } else {
-            homeBankActivitysListAdapter.update(bankActivityItems);
-        }
+        hotActivityLeftTv.setText(bankActivityItems.get(0).getActivityTitle());
+        hotActivityRightUpTv.setText(bankActivityItems.get(1).getActivityTitle());
+        hotActivityRightDownTv.setText(bankActivityItems.get(2).getActivityTitle());
+        hotActivityLeftLinear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转银行活动详情
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("detailType", "01");
+                intent.putExtra("detailId", bankActivityItems.get(0).getActivityId());
+                intent.putExtra("detailTitle", bankActivityItems.get(0).getActivityTitle());
+                mListener.detailActivity(intent);
+            }
+        });
+        hotActivityRightDownLinear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转银行活动详情
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("detailType", "01");
+                intent.putExtra("detailId", bankActivityItems.get(2).getActivityId());
+                intent.putExtra("detailTitle", bankActivityItems.get(2).getActivityTitle());
+                mListener.detailActivity(intent);
+            }
+        });
+        hotActivityRightUpLinear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转银行活动详情
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("detailType", "01");
+                intent.putExtra("detailId", bankActivityItems.get(1).getActivityId());
+                intent.putExtra("detailTitle", bankActivityItems.get(1).getActivityTitle());
+                mListener.detailActivity(intent);
+            }
+        });
+
+        //        if (homeBankActivitysListAdapter == null) {
+        //            bankActivitysList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
+        //            bankFinaningList.setHasFixedSize(true);
+        //            bankFinaningList.setNestedScrollingEnabled(false);
+        //            homeBankActivitysListAdapter = new HomeBankActivitysListAdapter(getActivity(), bankActivityItems);
+        //            bankActivitysList.setAdapter(homeBankActivitysListAdapter);
+        //            homeBankActivitysListAdapter.setOnItemClickListener(new HomeBankActivitysListAdapter.HomeBankActivitysItemClickListener() {
+        //                @Override
+        //                public void OnClickListener(int position) {
+        //                    //跳转银行活动详情
+        //                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+        //                    intent.putExtra("detailType", "01");
+        //                    intent.putExtra("detailId", homeBankActivitysListAdapter.getDataItem(position).getActivityId());
+        //                    intent.putExtra("detailTitle", homeBankActivitysListAdapter.getDataItem(position).getActivityTitle());
+        //                    mListener.detailActivity(intent);
+        //                }
+        //            });
+        //        } else {
+        //            homeBankActivitysListAdapter.update(bankActivityItems);
+        //        }
 
     }
 
 
     /**
-     * 银行理财
+     * 理财推荐
      */
     private void getBankFinaningItem() {
         homeBankMakeMoneyTitleLin.setVisibility(View.VISIBLE);
@@ -346,7 +402,7 @@ public class HomeFragment extends BaseFragment {
             bankFinancingAdapter.setOnItemClickListener(new HomeBankFinancingListAdapter.HomeBankFinancingItemClickListener() {
                 @Override
                 public void OnClickListener(int position) {
-                    //跳转银行理财详情
+                    //跳转理财详情
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
                     intent.putExtra("detailType", "02");
                     intent.putExtra("detailId", bankFinancingAdapter.getDataItem(position).getFinancId());
@@ -520,6 +576,7 @@ public class HomeFragment extends BaseFragment {
             case R.id.select_more_hot_information_txt:
                 startActivity(new Intent(getActivity(), NewBankInformationActivity.class).putExtra("02", "02"));//02-热点资讯
                 break;
+
         }
     }
 

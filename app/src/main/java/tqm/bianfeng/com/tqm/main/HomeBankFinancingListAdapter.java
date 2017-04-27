@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,7 +46,7 @@ public class HomeBankFinancingListAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     public int getLayout() {
-        return R.layout.firstpage_listitem;
+        return R.layout.bankrecommendation_home_listitem;
     }
 
 
@@ -71,14 +72,10 @@ public class HomeBankFinancingListAdapter extends RecyclerView.Adapter<RecyclerV
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder mHolder = (ViewHolder) holder;
         BankFinancItem data = datas.get(position);
-        mHolder.loanMoneyLinear.setVisibility(View.GONE);
-        mHolder.activityViewsLinear.setVisibility(View.GONE);
-        mHolder.institutionNameLinear.setVisibility(View.GONE);
         mHolder.titleTv.setText(data.getProductName());
         mHolder.annualReturnTv.setText(data.getAnnualReturn() + "%");
         mHolder.riskGradeNameTv.setText(data.getRiskGradeName());
-        mHolder.investmentTermTv.setText(data.getInvestmentTerm());
-        mHolder.investmentTermTv.setTextColor(mContext.getResources().getColor(R.color.blue_text));
+        mHolder.investmentTermTv.setText("定期"+data.getInvestmentTerm());
         mHolder.rateNameTv.setText("预期年化");
 
 
@@ -95,7 +92,8 @@ public class HomeBankFinancingListAdapter extends RecyclerView.Adapter<RecyclerV
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private HomeBankFinancingItemClickListener mItemClickListener;
-
+        @BindView(R.id.logo_img)
+        ImageView logoImg;
         @BindView(R.id.annualReturn_tv)
         TextView annualReturnTv;
         @BindView(R.id.rateName_tv)
@@ -104,20 +102,18 @@ public class HomeBankFinancingListAdapter extends RecyclerView.Adapter<RecyclerV
         TextView titleTv;
         @BindView(R.id.riskGradeName_tv)
         TextView riskGradeNameTv;
-        @BindView(R.id.investmentTerm_tv)
-        TextView investmentTermTv;
-        @BindView(R.id.linearlayout)
-        LinearLayout linearlayout;
-        @BindView(R.id.loanMoney_tv)
-        TextView loanMoneyTv;
         @BindView(R.id.riskGradeName_linear)
         LinearLayout riskGradeNameLinear;
-        @BindView(R.id.loanMoney_linear)
-        LinearLayout loanMoneyLinear;
-        @BindView(R.id.activityViews_linear)
-        LinearLayout activityViewsLinear;
-        @BindView(R.id.institutionName_linear)
-        LinearLayout institutionNameLinear;
+        @BindView(R.id.loanType_tv)
+        TextView loanTypeTv;
+        @BindView(R.id.loanType_linear)
+        LinearLayout loanTypeLinear;
+        @BindView(R.id.investmentTerm_tv)
+        TextView investmentTermTv;
+        @BindView(R.id.investmentTerm_linear)
+        LinearLayout investmentTermLinear;
+        @BindView(R.id.linearlayout)
+        LinearLayout linearlayout;
 
         ViewHolder(View view, HomeBankFinancingItemClickListener mItemClickListener) {
             super(view);

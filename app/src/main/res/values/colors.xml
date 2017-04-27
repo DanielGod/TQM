@@ -49,4 +49,12 @@
     <color name="blue_semi_transparent">#805677fc</color>
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
     <color name="pink_less">#ffd8da</color>
+
+    <color name="home_orange">#FF772D</color>
+    <color name="home_hotActivity_orange">#FF6D37</color><!--热门活动-橙色-->
+    <color name="home_hotActivity_blue">#1F92E6</color><!--热门活动-蓝色-->
+    <color name="home_hotActivity_red">#DC1616</color><!--热门活动-红色-->
+    <color name="home_hotActivity_gray3">#333333</color>
+    <color name="home_hotActivity_gray6">#666666</color>
+    <color name="home_hotActivity_gray9">#999999</color>
 </resources>
