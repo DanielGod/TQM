@@ -9,7 +9,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.Log;
 
-import com.antfortune.freeline.FreelineCore;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.umeng.socialize.Config;
@@ -95,7 +94,6 @@ public class BaseApplication extends Application {
         super.onCreate();
         SDKInitializer.initialize(this);
         SDKInitializer.setCoordType(CoordType.BD09LL);
-        FreelineCore.init(this);
         //        LeakCanary.install(this);
         mList = new ArrayList<>();
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).schemaVersion(2).deleteRealmIfMigrationNeeded().build();

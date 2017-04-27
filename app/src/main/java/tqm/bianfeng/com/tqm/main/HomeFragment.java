@@ -354,7 +354,7 @@ public class HomeFragment extends BaseFragment {
 
 
     /**
-     * 银行理财
+     * 理财推荐
      */
     private void getBankFinaningItem() {
         homeBankMakeMoneyTitleLin.setVisibility(View.VISIBLE);
@@ -398,7 +398,7 @@ public class HomeFragment extends BaseFragment {
             bankFinancingAdapter.setOnItemClickListener(new HomeBankFinancingListAdapter.HomeBankFinancingItemClickListener() {
                 @Override
                 public void OnClickListener(int position) {
-                    //跳转银行理财详情
+                    //跳转理财详情
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
                     intent.putExtra("detailType", "02");
                     intent.putExtra("detailId", bankFinancingAdapter.getDataItem(position).getFinancId());
