@@ -78,6 +78,7 @@ public class HomeFragment extends BaseFragment {
     RecyclerView bankActivitysList;
 
 
+
     @BindView(R.id.bank_finaning_list)
     RecyclerView bankFinaningList;
     @BindView(R.id.bank_loan_list)
@@ -119,6 +120,7 @@ public class HomeFragment extends BaseFragment {
     MyScrollview myScrollview;
     int scrollHeight=0;
     int sliderHeight=1;
+    //ddddddddd
 
     private CompositeSubscription mCompositeSubscription;
 
