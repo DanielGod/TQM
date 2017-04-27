@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     @BindView(R.id.home_location_txt)
     TextView homeLocationTxt;
     @BindView(R.id.home_lin)
-    LinearLayout homeLin;
+    RelativeLayout homeLin;
 
     Realm realm;
     @Override

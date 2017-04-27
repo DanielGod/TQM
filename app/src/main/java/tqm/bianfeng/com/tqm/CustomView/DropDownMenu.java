@@ -63,7 +63,7 @@ public class DropDownMenu extends LinearLayout {
     }
 
     public interface OnClickLinsener{
-        void onClickIndexOne(int index);
+        boolean onClickIndexOne(int index);
         void onClose();
     }
     OnClickLinsener onClickLinsener;
@@ -191,8 +191,9 @@ public class DropDownMenu extends LinearLayout {
             @Override
             public void onClick(View v) {
                 if(tab.getTag().equals("index1")){
-                    switchMenu(tab);
-                    onClickLinsener.onClickIndexOne(1);
+                    if(onClickLinsener.onClickIndexOne(1)){
+                        switchMenu(tab);
+                    }
                 }
                 else if(tab.getTag().equals("index0")){
                     onClickLinsener.onClickIndexOne(0);
@@ -234,6 +235,7 @@ public class DropDownMenu extends LinearLayout {
      * 关闭菜单
      */
     public void closeMenu() {
+
         if (current_tab_position != -1) {
             ((TextView) tabMenuView.getChildAt(current_tab_position)).setTextColor(textUnselectedColor);
             ((TextView) tabMenuView.getChildAt(current_tab_position)).setCompoundDrawablesWithIntrinsicBounds(null, null,

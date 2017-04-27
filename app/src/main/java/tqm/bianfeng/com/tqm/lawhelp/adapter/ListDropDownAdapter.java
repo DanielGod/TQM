@@ -27,7 +27,7 @@ public class ListDropDownAdapter extends BaseAdapter {
 
     public void update(List<String>  d){
         list=d;
-        this.notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     public ListDropDownAdapter(Context context, List<String> list) {

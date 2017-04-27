@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -122,6 +123,7 @@ public class LawHelpFragment extends BaseFragment {
             //更新顶部选择器文字
             if (!lawAdd.getCity().equals("")) {
                 headers[0] = lawAdd.getCity();
+                headers[1]="县区";
                 city = lawAdd.getCity();
             }
             if (!lawAdd.getDistrict().equals("")) {
@@ -153,14 +155,16 @@ public class LawHelpFragment extends BaseFragment {
             //判断条件信息是否改变，改变则重新加载列表
             lawAdd = realm.where(LawAdd.class).findFirst();
             if (!lawAdd.getCity().equals("")) {
-                if (!city.equals(lawAdd.getCity()) || (city.equals("") && !lawAdd.getCity().equals(""))) {
+                if (city.equals(lawAdd.getCity())||!city.equals(lawAdd.getCity()) || (city.equals("") && !lawAdd.getCity().equals(""))) {
                     city = lawAdd.getCity();
+                    dropDownMenu.setTabTxtByIndex("县区", 2);
                     dropDownMenu.setTabTxtByIndex(city, 0);
                     initDistricts(lawAdd.getCity());
                     initListData(true, lawAdd.getQueryParams(), 1);
                 }
             } else if (lawAdd.getCity().equals("")) {
                 city = lawAdd.getCity();
+                dropDownMenu.setTabTxtByIndex("县区", 2);
                 dropDownMenu.setTabTxtByIndex("城市", 0);
                 initDistricts(lawAdd.getCity());
                 initListData(true, lawAdd.getQueryParams(), 1);
@@ -202,8 +206,10 @@ public class LawHelpFragment extends BaseFragment {
             animationView.cancelAnimation();
             animationView.setVisibility(View.GONE);
             YBJLodingTxt.setVisibility(View.GONE);
+            Log.i("gqf","onClose2");
         } else if (i == 3) {
             //没有数据
+            animationView.cancelAnimation();
             animationView.setVisibility(View.GONE);
             YBJLodingTxt.setVisibility(View.VISIBLE);
             YBJLodingTxt.setText("没有查询到数据");
@@ -213,8 +219,10 @@ public class LawHelpFragment extends BaseFragment {
             animationView.setAnimation(myAnimation);
             YBJLodingTxt.setAnimation(myAnimation);
             myAnimation.start();
+            Log.i("gqf","onClose3");
         } else {
-
+            animationView.cancelAnimation();
+            animationView.setVisibility(View.GONE);
         }
     }
 
@@ -395,7 +403,9 @@ public class LawHelpFragment extends BaseFragment {
             districts.set(0, "全部");
         }
         Log.i("gqf", city + "districts" + districts.toString());
-        districtAdapter.update(districts);
+        //districtAdapter.update(districts);
+        districtAdapter = new ListDropDownAdapter(getActivity(), districts);
+        districtView.setAdapter(districtAdapter);
     }
 
     //更新本地存储
@@ -409,7 +419,7 @@ public class LawHelpFragment extends BaseFragment {
         realm.copyToRealmOrUpdate(lawAdd);
         realm.commitTransaction();
     }
-
+    ListView districtView;
     //初始化选择器
     public void iniDropMenu() {
 
@@ -419,7 +429,7 @@ public class LawHelpFragment extends BaseFragment {
         districtView0.setAdapter(districtAdapter);
 
         //县区下拉列表
-        ListView districtView = new ListView(getActivity());
+        districtView = new ListView(getActivity());
         districtView.setDividerHeight(0);
         districtAdapter = new ListDropDownAdapter(getActivity(), districts);
         districtView.setAdapter(districtAdapter);
@@ -439,9 +449,10 @@ public class LawHelpFragment extends BaseFragment {
                 districtAdapter.setCheckItem(i);
                 setLawAddDistrictOrSpecialField(i == 0 ? "" : districts.get(i), 0);
                 dropDownMenu.setTabText(i == 0 ? headers[1] : districts.get(i));
-                dropDownMenu.closeMenu();
+
                 //更新数据
                 initListData(true, lawAdd.getQueryParams(), 1);
+                dropDownMenu.closeMenu();
             }
         });
         lawView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -450,11 +461,16 @@ public class LawHelpFragment extends BaseFragment {
                 lawAdapter.setCheckItem(i);
                 setLawAddDistrictOrSpecialField(i == 0 ? "" : specialFields.get(i), 1);
                 dropDownMenu.setTabText(i == 0 ? headers[2] : specialFields.get(i));
-                dropDownMenu.closeMenu();
+
                 //更新数据
                 initListData(true, lawAdd.getQueryParams(), 1);
+                dropDownMenu.closeMenu();
             }
         });
+
+        RelativeLayout contentRel=new RelativeLayout(getActivity());
+        contentRel.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
 
         //设置内容
         contentView = new RecyclerView(getActivity());
@@ -467,39 +483,44 @@ public class LawHelpFragment extends BaseFragment {
         //初始化数据
         Log.e("gqf", lawAdd.getQueryParams());
         initListData(true, lawAdd.getQueryParams(), nowIndex + 1);
-        dropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, contentView);
+
+        contentRel.addView(contentView);
+
+        dropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, contentRel);
         dropDownMenu.setOnClickLinsener(new DropDownMenu.OnClickLinsener() {
             @Override
-            public void onClickIndexOne(int index) {
-                //跳转地址选择页
-                if (index == 0) {
-                    mListener.changeActivity(AllCityActivity.class);
-                } else {
-                    if (lawAdd.getCity().equals("")) {
-                        Toast.makeText(getActivity(), "没有对应县区数据，请先选择城市", Toast.LENGTH_SHORT).show();
-                        dropDownMenu.closeMenu();
-                    }
+            public boolean onClickIndexOne(int index) {
+                //根据选择器是否下拉显示无数据提示
+
+                if(dropDownMenu.isShowing()||(!dropDownMenu.isShowing()&&index==1)){
+                    lodingIsFailOrSucess(2);
                 }
 
-                //根据选择器是否下拉显示无数据提示
-                if (dropDownMenu.isShowing()) {
-                    lodingIsFailOrSucess(2);
-                } else {
-                    if (datas.size() == 0) {
-                        lodingIsFailOrSucess(3);
+                //跳转地址选择页
+                boolean returnB=true;
+                if (index == 0) {
+                    mListener.changeActivity(AllCityActivity.class);
+                } else if(index==1){
+                    if (lawAdd.getCity().equals("")) {
+                        Toast.makeText(getActivity(), "没有对应县区数据，请先选择城市", Toast.LENGTH_SHORT).show();
+                        returnB=false;
+                        dropDownMenu.closeMenu();
+                    }else{
+
                     }
                 }
+                return returnB;
             }
 
             @Override
             public void onClose() {
                 //关闭时显示无数据提示
-                if (datas.size() == 0) {
+                Log.i("gqf","onClose");
+                if (contentView.getChildCount()== 0||datas.size()==0) {
                     lodingIsFailOrSucess(3);
                 }
             }
         });
-
         initDistricts(lawAdd.getCity());
     }
 
