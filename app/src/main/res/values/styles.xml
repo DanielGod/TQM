@@ -170,6 +170,19 @@
         <item name="android:textColor">@color/home_hotActivity_gray3</item>
         <item name="android:textSize">@dimen/mediumsp</item>
     </style>
+    android:background="@color/home_orange"
+    android:layout_marginLeft="@dimen/tinymdp"
+    android:layout_marginRight="@dimen/mediummdp"
+    <!--极速贷款-理财推荐-热门活动-左橘色线条-->
+    <style name="sty_home_title_line_tv">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+       <item name="android:background">@color/home_orange</item>
+        <item name="android:layout_marginRight">@dimen/tinymdp</item>
+        <item name="android:layout_marginLeft">@dimen/tinymdp</item>
+        <item name="android:layout_marginTop">@dimen/mediummxdp</item>
+        <item name="android:layout_marginBottom">@dimen/mediummxdp</item>
+    </style>
 
     <style name="toolbar_style" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:maxHeight">@dimen/mediumhdp</item>

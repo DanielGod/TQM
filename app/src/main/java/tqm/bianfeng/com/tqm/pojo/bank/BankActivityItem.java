@@ -10,6 +10,7 @@ public class BankActivityItem {
     private String institutionName;
     private Integer activityViews;
     private String institutionIcon;
+    private String imageUrl;
 
     @Override
     public String toString() {
@@ -19,7 +20,16 @@ public class BankActivityItem {
                 ", institutionName='" + institutionName + '\'' +
                 ", activityViews=" + activityViews +
                 ", institutionIcon='" + institutionIcon + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
                 '}';
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Integer getActivityId() {

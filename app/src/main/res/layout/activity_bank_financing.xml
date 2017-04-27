@@ -29,15 +29,43 @@
                     app:theme="@style/ToolbarTheme"
                     app:popupTheme="@style/ToolbarPopupTheme"
                     >
-                    <TextView
-                        android:id="@+id/toolbar_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="?attr/actionBarSize"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        />
+                    <RelativeLayout android:id="@+id/top"
+                                    android:layout_width="fill_parent"
+                                    android:gravity="center"
+                                    android:layout_marginRight="@dimen/tinyhdp"
+                                    android:layout_height="?actionBarSize">
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            >
+
+
+
+                            <EditText android:id="@+id/etSearch"
+                                      android:layout_width="fill_parent"
+                                      android:layout_height="wrap_content"
+                                      android:singleLine="true"
+                                      android:background="@drawable/search_frame"
+                                      android:layout_marginRight="@dimen/smallmdp"
+                                      android:paddingLeft="32dp"
+                                      android:textSize="@dimen/smallsp"
+                                      android:focusableInTouchMode="false"
+                                      android:textColor="@color/black"
+                                      android:textColorHint="@color/home_hotActivity_gray9"
+                                      android:hint="输入名称查询"/>
+
+                            <ImageView android:id="@+id/ivDeleteText"
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_alignParentRight="true"
+                                       android:src="@drawable/delete"
+                                       android:layout_centerInParent="true"
+                                       android:paddingRight="@dimen/bigmdp"
+                                       android:visibility="gone"/>
+
+                        </RelativeLayout>
+                    </RelativeLayout>
                 </android.support.v7.widget.Toolbar>
             </android.support.design.widget.AppBarLayout>
 
