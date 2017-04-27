@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -60,6 +61,8 @@ public class BankActivitonsActivity extends AppCompatActivity {
     ImageView YBJLoding;
     @BindView(R.id.YBJ_loding_txt)
     TextView YBJLodingTxt;
+    @BindView(R.id.ivDeleteText)
+    ImageView ivDeleteText;
 
     private CompositeSubscription mCompositeSubscription;
     private Unbinder unbinder;
@@ -81,6 +84,14 @@ public class BankActivitonsActivity extends AppCompatActivity {
         lodingIsFailOrSucess(1);
         initDate(pagNum, Constan.NOTPULLUP);
         initRefreshlv();
+
+        etSearch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                etSearch.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
 
     }
 
@@ -254,7 +265,7 @@ public class BankActivitonsActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                ivDeleteText.setVisibility(View.VISIBLE);
             }
 
             @DebugLog
@@ -299,13 +310,18 @@ public class BankActivitonsActivity extends AppCompatActivity {
         mCompositeSubscription.unsubscribe();
     }
 
-    @OnClick({R.id.etSearch, R.id.ll_filter})
+    @OnClick({R.id.etSearch, R.id.ll_filter, R.id.ivDeleteText})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.etSearch:
-                etSearch.setFocusableInTouchMode(true);
+//                etSearch.setFocusableInTouchMode(true);
                 break;
             case R.id.ll_filter:
+                break;
+            case R.id.ivDeleteText:
+                etSearch.setText("");
+                ivDeleteText.setVisibility(View.GONE);
+                etSearch.setFocusableInTouchMode(false);
                 break;
         }
     }

@@ -6,59 +6,15 @@
     android:fitsSystemWindows="true"
     android:background="@color/whitesmoke"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <RelativeLayout android:id="@+id/top"
-                    android:layout_width="fill_parent"
-                    android:gravity="center"
-                    android:layout_height="?actionBarSize">
-
-
-
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:paddingLeft="@dimen/mediummdp"
-                        android:paddingRight="@dimen/smallmdp"
-                        >
-
-
-
-            <EditText android:id="@+id/etSearch"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:singleLine="true"
-                      android:background="@drawable/search_frame"
-                      android:layout_marginRight="@dimen/smallmdp"
-                      android:paddingLeft="32dp"
-                      android:textSize="@dimen/smallsp"
-                      android:focusableInTouchMode="false"
-                      android:textColor="@color/black"
-                      android:hint="输入名称查询"/>
-
-            <ImageView android:id="@+id/ivDeleteText"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_alignParentRight="true"
-                       android:src="@drawable/delete"
-                       android:layout_centerInParent="true"
-                       android:paddingRight="@dimen/bigmdp"
-                       android:visibility="gone"/>
-
-        </RelativeLayout>
-    </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignBottom="@+id/top"
         android:background="@color/font_black_5"
         />
     <LinearLayout
         android:id="@+id/ll_head_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_below="@+id/top"
         android:background="@color/whitesmoke"
         android:gravity="center_vertical"
         android:orientation="horizontal">

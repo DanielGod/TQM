@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -88,6 +89,13 @@ public class BankFinancingActivity extends AppCompatActivity {
         initDrawLayout();
         initDate(null, pagNum, Constan.NOTPULLUP);
         initRefreshlv();
+        etSearch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                etSearch.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
 
     }
 
@@ -302,7 +310,7 @@ public class BankFinancingActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.etSearch:
-                etSearch.setFocusableInTouchMode(true);
+//                etSearch.setFocusableInTouchMode(true);
                 break;
             case R.id.ll_filter:
                 drawerLayout.openDrawer(drawerContent);

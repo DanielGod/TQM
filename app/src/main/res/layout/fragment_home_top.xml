@@ -221,13 +221,7 @@
                     <LinearLayout
                        style="@style/home_bar_linear">
                         <TextView
-                            android:layout_width="1dp"
-                            android:paddingTop="@dimen/mediummdp"
-                            android:paddingBottom="@dimen/mediummdp"
-                            android:layout_height="match_parent"
-                            android:background="@color/home_orange"
-                            android:layout_marginLeft="@dimen/tinymdp"
-                            android:layout_marginRight="@dimen/mediummdp"
+                          style="@style/sty_home_title_line_tv"
                             />
 
 
@@ -286,11 +280,7 @@
                     <LinearLayout
                         style="@style/home_bar_linear">
                         <TextView
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/home_orange"
-                            android:layout_marginLeft="@dimen/tinymdp"
-                            android:layout_marginRight="@dimen/mediummdp"
+                            style="@style/sty_home_title_line_tv"
                             />
 
                         <ImageView
@@ -345,11 +335,7 @@
                     <LinearLayout
                         style="@style/home_bar_linear">
                         <TextView
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/home_orange"
-                            android:layout_marginLeft="@dimen/tinymdp"
-                            android:layout_marginRight="@dimen/mediummdp"
+                            style="@style/sty_home_title_line_tv"
                             />
 
 

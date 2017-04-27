@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -60,6 +61,8 @@ public class BankLoanActivity extends AppCompatActivity {
     PullToRefreshListView mainPullRefreshLv;
     @BindView(R.id.etSearch)
     EditText etSearch;
+    @BindView(R.id.ivDeleteText)
+    ImageView ivDeleteText;
     @BindView(R.id.YBJ_loding)
     ImageView YBJLoding;
     @BindView(R.id.YBJ_loding_txt)
@@ -86,6 +89,13 @@ public class BankLoanActivity extends AppCompatActivity {
         initDrawLayout();
         initDate(null, pagNum, Constan.NOTPULLUP);
         initRefreshlv();
+        etSearch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                etSearch.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
 
 
     }
@@ -184,7 +194,7 @@ public class BankLoanActivity extends AppCompatActivity {
      * @param s
      */
     private void setToolBar(String s) {
-        toolbar.setTitle(s);
+//        toolbar.setTitle(s);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -269,7 +279,7 @@ public class BankLoanActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                ivDeleteText.setVisibility(View.VISIBLE);
             }
 
             @DebugLog
@@ -296,14 +306,19 @@ public class BankLoanActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.etSearch, R.id.ll_filter})
+    @OnClick({R.id.etSearch, R.id.ll_filter, R.id.ivDeleteText})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.etSearch:
-                etSearch.setFocusableInTouchMode(true);
+//                etSearch.setFocusableInTouchMode(true);
                 break;
             case R.id.ll_filter:
                 drawerLayout.openDrawer(drawerContent);
+                break;
+            case R.id.ivDeleteText:
+                etSearch.setText("");
+                ivDeleteText.setVisibility(View.GONE);
+                etSearch.setFocusableInTouchMode(false);
                 break;
         }
     }

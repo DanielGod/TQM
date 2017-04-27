@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:paddingTop="16dp"
-              android:paddingBottom="10dp"
-              android:paddingLeft="5dp"
-              android:paddingRight="5dp"
               android:layout_width="match_parent"
-              android:layout_height="120dp"
+              android:layout_height="@dimen/hugehxxxxxdp"
               android:layout_marginTop="10dp"
               android:layout_marginBottom="10dp"
-              android:layout_marginLeft="5dp"
-              android:background="@drawable/loan_home_listitem_bg"
+              android:background="?android:selectableItemBackground"
+
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/loan_home_listitem_bg"
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,5 +69,5 @@
             android:gravity="center"
             />
     </LinearLayout>
-
+    </LinearLayout>
 </LinearLayout>
