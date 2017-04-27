@@ -32,7 +32,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import hugo.weaving.DebugLog;
+import io.realm.Realm;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -47,8 +49,10 @@ import tqm.bianfeng.com.tqm.Util.NetUtils;
 import tqm.bianfeng.com.tqm.Util.PermissionsHelper;
 import tqm.bianfeng.com.tqm.Util.PhotoGet;
 import tqm.bianfeng.com.tqm.application.BaseApplication;
+import tqm.bianfeng.com.tqm.lawhelp.AllCityActivity;
 import tqm.bianfeng.com.tqm.lawhelp.LawHelpFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
+import tqm.bianfeng.com.tqm.pojo.LawAdd;
 import tqm.bianfeng.com.tqm.update.UpdateInformation;
 import tqm.bianfeng.com.tqm.update.UpdateMsg;
 import tqm.bianfeng.com.tqm.update.UpdateService;
@@ -83,12 +87,18 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     RelativeLayout containerLin;
     @BindView(R.id.net_work_lin)
     LinearLayout netWorkLin;
+    @BindView(R.id.home_location_txt)
+    TextView homeLocationTxt;
+    @BindView(R.id.home_lin)
+    LinearLayout homeLin;
 
+    Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        realm=Realm.getDefaultInstance();
         compositeSubscription = new CompositeSubscription();
         try {
             initSystemBar();
@@ -251,8 +261,12 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         if (index == 1) {
             params.addRule(RelativeLayout.BELOW, R.id.toolbar);
             setToolBarColorBg(1);
+            toolbarTitle.setVisibility(View.VISIBLE);
+            homeLin.setVisibility(View.GONE);
         } else {
             params.removeRule(RelativeLayout.BELOW);
+            toolbarTitle.setVisibility(View.GONE);
+            homeLin.setVisibility(View.VISIBLE);
         }
         containerLin.setLayoutParams(params);
 
@@ -405,10 +419,10 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 netWorkLin.setVisibility(View.GONE);
             }
         }
-//        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) netWorkLin.getLayoutParams();
-//        params.addRule(RelativeLayout.BELOW, R.id.toolbar);
-//        containerLin.setLayoutParams(params);
-//        toolbar.setAlpha(1);
+        //        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) netWorkLin.getLayoutParams();
+        //        params.addRule(RelativeLayout.BELOW, R.id.toolbar);
+        //        containerLin.setLayoutParams(params);
+        //        toolbar.setAlpha(1);
     }
 
     //检测网络
@@ -432,6 +446,21 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         super.onRestart();
         initNetWork(false);
         updateApp();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(realm.where(LawAdd.class).findFirst()!=null){
+            if(!realm.where(LawAdd.class).findFirst().getCity().equals("")){
+                homeLocationTxt.setText(realm.where(LawAdd.class).findFirst().getCity());
+            }else{
+                homeLocationTxt.setText("定位");
+            }
+        }else{
+            homeLocationTxt.setText("定位");
+        }
     }
 
     @Override
@@ -486,7 +515,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
             //此处可以重新指定状态栏颜色
             //tintManager.setStatusBarTintResource(id);
             StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
-            StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this,100, null);
+            StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 100, null);
         } else {
             RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) toolbar.getLayoutParams();
             lp.height = DisplayUtil.dip2px(this, getResources().getDimension(R.dimen.bigxmdp));
@@ -496,9 +525,16 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
 
     public void setToolBarColorBg(float a) {
         if (toolbar != null) {
-            if(NetUtils.isConnected(this)) {
+            if (NetUtils.isConnected(this)) {
                 toolbar.setAlpha(a);
             }
         }
+    }
+
+    @OnClick(R.id.home_location_txt)
+    public void onClick() {
+        //定位
+        startActivity(new Intent(MainActivity.this, AllCityActivity.class));
+
     }
 }

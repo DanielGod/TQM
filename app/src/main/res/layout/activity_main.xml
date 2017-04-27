@@ -53,6 +53,34 @@
             android:textColor="@color/white"
             android:textSize="@dimen/bigsp"
             />
+        <LinearLayout
+            android:id="@+id/home_lin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/home_location_txt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/smallmdp"
+                android:paddingRight="@dimen/smallmdp"
+                android:text="定位"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mediumxsp"
+                android:drawableLeft="@drawable/ic_location"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
 </RelativeLayout>
