@@ -10,4 +10,11 @@
     <string name="pull_to_refresh_from_bottom_release_label">@string/pull_to_refresh_release_label</string>
     <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string>
 
+    <!--刷新-加载-->
+    <string name="pullRefresh">下拉刷新</string>
+    <string name="loading">加载中...</string>
+    <string name="releaseRefresh">释放刷新</string>
+    <string name="PullLoading">上拉加载</string>
+    <string name="releaseLoading">释放加载</string>
+
 </resources>

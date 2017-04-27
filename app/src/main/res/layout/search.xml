@@ -133,8 +133,8 @@
             android:layout_marginRight="@dimen/smallmdp"
             android:layout_marginTop="@dimen/smallmdp"
             android:id="@+id/main_pull_refresh_lv"
-            app:ptrAnimationStyle="flip"
+            app:ptrAnimationStyle="rotate"
             android:layout_below="@+id/ll_head_layout"
             app:ptrHeaderBackground="@android:color/transparent"
-            app:ptrHeaderTextColor="#919191"/>
+            app:ptrHeaderTextColor="@color/home_hotActivity_gray9"/>
 </RelativeLayout>

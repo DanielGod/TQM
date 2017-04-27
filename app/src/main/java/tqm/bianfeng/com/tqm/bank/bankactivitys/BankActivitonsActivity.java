@@ -125,17 +125,16 @@ public class BankActivitonsActivity extends AppCompatActivity {
      */
     private void initRefreshlv() {
         //设置刷新时显示的文本
-        ILoadingLayout startLayout = mainPullRefreshLv.getLoadingLayoutProxy(true, false);
-        startLayout.setPullLabel("正在下拉刷新...");
-        startLayout.setRefreshingLabel("正在刷新...");
-        startLayout.setReleaseLabel("放开以刷新");
-
-
+        mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);//设置模式在设置字体之前
         ILoadingLayout endLayout = mainPullRefreshLv.getLoadingLayoutProxy(false, true);
-        endLayout.setPullLabel("正在上拉刷新...");
-        endLayout.setRefreshingLabel("加载中...");
-        endLayout.setReleaseLabel("放开以刷新");
+        endLayout.setPullLabel(getResources().getString(R.string.PullLoading));
+        endLayout.setRefreshingLabel(getResources().getString(R.string.loading));
+        endLayout.setReleaseLabel(getResources().getString(R.string.releaseLoading));
 
+        ILoadingLayout startLayout = mainPullRefreshLv.getLoadingLayoutProxy(true, false);
+        startLayout.setPullLabel(getResources().getString(R.string.pullRefresh));
+        startLayout.setRefreshingLabel(getResources().getString(R.string.loading));
+        startLayout.setReleaseLabel(getResources().getString(R.string.releaseRefresh));
         mainPullRefreshLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @DebugLog
             @Override
@@ -187,7 +186,7 @@ public class BankActivitonsActivity extends AppCompatActivity {
                         if (mPagItemSize == 0) {
                             mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
                         } else if (mPagItemSize > 0 && mPagItemSize < Constan.PAGESIZE) {
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                                mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                         } else {
                             mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
                         }
