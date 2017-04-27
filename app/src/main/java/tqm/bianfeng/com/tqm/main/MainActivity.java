@@ -120,6 +120,16 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     protected void onResume() {
         super.onResume();
         setToolBarColorBg(tooleBarNowAlpha);
+        //定位按钮信息更新
+        if(realm.where(LawAdd.class).findFirst()!=null){
+            if(!realm.where(LawAdd.class).findFirst().getCity().equals("")){
+                homeLocationTxt.setText(realm.where(LawAdd.class).findFirst().getCity());
+            }else{
+                homeLocationTxt.setText("定位");
+            }
+        }else{
+            homeLocationTxt.setText("定位");
+        }
     }
 
     /**
@@ -453,16 +463,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     @Override
     protected void onStart() {
         super.onStart();
-        //定位按钮信息更新
-        if(realm.where(LawAdd.class).findFirst()!=null){
-            if(!realm.where(LawAdd.class).findFirst().getCity().equals("")){
-                homeLocationTxt.setText(realm.where(LawAdd.class).findFirst().getCity());
-            }else{
-                homeLocationTxt.setText("定位");
-            }
-        }else{
-            homeLocationTxt.setText("定位");
-        }
+
     }
 
     @Override
