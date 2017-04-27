@@ -2,7 +2,7 @@ package tqm.bianfeng.com.tqm.User;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -84,7 +84,7 @@ public class MyBankLoanActivity extends BaseActivity {
         if (bankLoanAdapter == null) {
             bankLoanAdapter = new HomeBankLoanListAdapter(this,bankLoanItems);
             bankLoanAdapter.setBgNull();
-            myBankLoanList.setLayoutManager(new LinearLayoutManager(this));
+            myBankLoanList.setLayoutManager(new GridLayoutManager(this, 3));
             LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(this, R.anim.slide_in_left));
             lac.setOrder(LayoutAnimationController.ORDER_NORMAL);
             lac.setDelay(1);

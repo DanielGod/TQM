@@ -80,8 +80,6 @@ public class HomeBankLoanListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         if(isBgNull){
             mHolder.loanItemBg.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-            mHolder.tv4.setBackgroundColor(mContext.getResources().getColor(R.color.max_transparent));
-            mHolder.tv4.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
         }
 
     }

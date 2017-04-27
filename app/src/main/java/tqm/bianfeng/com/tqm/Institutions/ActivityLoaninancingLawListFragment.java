@@ -3,6 +3,7 @@ package tqm.bianfeng.com.tqm.Institutions;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -156,7 +157,7 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        activityLoanFinancingLawList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        activityLoanFinancingLawList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         activityLoanFinancingLawList.setAdapter(bankLoanAdapter);
     }
 

@@ -17,6 +17,7 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
 
+        android:id="@+id/loan_item_bg"
         android:layout_marginLeft="5dp"
         android:background="@drawable/loan_home_listitem_bg"
         >
