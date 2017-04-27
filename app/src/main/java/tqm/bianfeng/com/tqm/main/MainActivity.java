@@ -486,7 +486,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
             //此处可以重新指定状态栏颜色
             //tintManager.setStatusBarTintResource(id);
             StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
-            StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, null);
+            StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this,100, null);
         } else {
             RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) toolbar.getLayoutParams();
             lp.height = DisplayUtil.dip2px(this, getResources().getDimension(R.dimen.bigxmdp));
