@@ -33,7 +33,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="6"
                 android:ellipsize="end"
-                android:lines="1"
+                android:maxLines="2"
                 android:padding="@dimen/smallmdp"
                 android:text="上海艾付网络在华尔街上市"
                 android:textColor="@color/black"

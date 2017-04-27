@@ -90,6 +90,7 @@ public class HomeBankInfoListAdapter extends RecyclerView.Adapter<RecyclerView.V
         Picasso.with(mContext).load(NetWork.LOAD + datas.get(p).getImageUrl())
                 .placeholder(R.drawable.banklogo)
                 .into(mHolder.bankInfoImg);
+
         mHolder.readNum.setText(""+datas.get(p).getInformViews());
     }
 

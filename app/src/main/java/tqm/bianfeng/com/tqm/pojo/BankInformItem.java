@@ -77,4 +77,17 @@ public class BankInformItem {
     public void setInformViews(int informViews) {
         this.informViews = informViews;
     }
+
+    @Override
+    public String toString() {
+        return "BankInformItem{" +
+                "informId=" + informId +
+                ", informTitle='" + informTitle + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", institutionName='" + institutionName + '\'' +
+                ", informType=" + informType +
+                ", informViews=" + informViews +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
+    }
 }
