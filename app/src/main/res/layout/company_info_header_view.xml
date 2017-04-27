@@ -41,7 +41,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="金星金融理财贷款"
-                android:textColor="@color/black"
+                android:textColor="@color/font_black_1"
                 android:textSize="@dimen/mediumxsp"
                 />
 
@@ -92,7 +92,7 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/tinymdp"
                         android:text="呼叫"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/blue_text"
                         android:textSize="@dimen/mediumsp"/>
                 </LinearLayout>
 
@@ -167,7 +167,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/mediummdp"
                 android:text="电话：1312312312423"
-                android:textColor="@color/black"
+                android:textColor="@color/font_black_1"
                 android:textSize="@dimen/mediumsp"/>
         </LinearLayout>
 
@@ -197,7 +197,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/mediummdp"
                 android:text="地址：上海市浦东区艾付广场1楼88层"
-                android:textColor="@color/black"
+                android:textColor="@color/font_black_1"
                 android:textSize="@dimen/mediumsp"/>
         </LinearLayout>
         <View
@@ -229,7 +229,7 @@
                 android:gravity="center_vertical"
                 android:text="公司介绍"
                 android:paddingLeft="@dimen/mediummdp"
-                android:textColor="@color/black"
+                android:textColor="@color/font_black_1"
                 android:textSize="@dimen/mediumsp"/>
 
             <ImageView

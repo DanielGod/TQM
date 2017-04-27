@@ -43,16 +43,8 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:paddingTop="@dimen/activity_horizontal_margin"
-            android:textColor="@color/white"
-            android:textSize="@dimen/bigsp"
-            />
+
+
         <LinearLayout
             android:id="@+id/home_lin"
             android:layout_width="match_parent"
@@ -77,12 +69,24 @@
                 android:clickable="true"
 
                 />
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:fitsSystemWindows="true"
+                android:textSize="@dimen/bigsp"
+                />
             <View
                 android:layout_width="0dp"
-                android:layout_weight="4"
+                android:layout_weight="1"
                 android:layout_height="match_parent"/>
 
         </LinearLayout>
+
     </android.support.v7.widget.Toolbar>
 
 </RelativeLayout>

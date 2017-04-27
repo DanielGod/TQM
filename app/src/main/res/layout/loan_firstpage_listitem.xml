@@ -10,13 +10,17 @@
               android:layout_marginTop="10dp"
               android:layout_marginBottom="10dp"
               android:layout_marginLeft="5dp"
+              android:id="@+id/loan_item_bg"
               android:background="@drawable/loan_home_listitem_bg"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
         >
         <TextView
             android:id="@+id/tv1"
@@ -62,4 +66,8 @@
             />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light"/>
 </LinearLayout>

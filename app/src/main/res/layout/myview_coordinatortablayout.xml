@@ -47,7 +47,7 @@
                 android:background="@color/gray_light"
                 android:gravity="top"
                 android:minHeight="?attr/actionBarSize"
-                app:titleTextColor="@color/font_black_2"
+                app:titleTextColor="@color/black"
                 app:layout_collapseMode="pin"
                 app:titleMarginTop="15dp" >
 

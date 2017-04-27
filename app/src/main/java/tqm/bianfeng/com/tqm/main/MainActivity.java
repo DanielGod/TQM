@@ -272,12 +272,12 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         if (index == 1) {
             params.addRule(RelativeLayout.BELOW, R.id.toolbar);
             setToolBarColorBg(255);
-            toolbarTitle.setVisibility(View.VISIBLE);
-            homeLin.setVisibility(View.GONE);
+            //toolbarTitle.setVisibility(View.VISIBLE);
+            homeLocationTxt.setVisibility(View.INVISIBLE);
         } else {
             params.removeRule(RelativeLayout.BELOW);
-            toolbarTitle.setVisibility(View.GONE);
-            homeLin.setVisibility(View.VISIBLE);
+            //toolbarTitle.setVisibility(View.GONE);
+            homeLocationTxt.setVisibility(View.VISIBLE);
         }
         containerLin.setLayoutParams(params);
 

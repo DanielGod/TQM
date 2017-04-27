@@ -91,7 +91,7 @@ public class HomeBankInfoListAdapter extends RecyclerView.Adapter<RecyclerView.V
                 .placeholder(R.drawable.banklogo)
                 .into(mHolder.bankInfoImg);
 
-        mHolder.readNum.setText(""+datas.get(p).getInformViews());
+        mHolder.readNum.setText("" + datas.get(p).getInformViews());
     }
 
     @Override
@@ -114,6 +114,7 @@ public class HomeBankInfoListAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView readNum;
         @BindView(R.id.bank_info_item_lin)
         LinearLayout bankInfoItemLin;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

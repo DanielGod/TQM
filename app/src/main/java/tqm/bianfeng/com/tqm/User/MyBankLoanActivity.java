@@ -83,6 +83,7 @@ public class MyBankLoanActivity extends BaseActivity {
     public void initList(List<BankLoanItem> bankLoanItems) {
         if (bankLoanAdapter == null) {
             bankLoanAdapter = new HomeBankLoanListAdapter(this,bankLoanItems);
+            bankLoanAdapter.setBgNull();
             myBankLoanList.setLayoutManager(new LinearLayoutManager(this));
             LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(this, R.anim.slide_in_left));
             lac.setOrder(LayoutAnimationController.ORDER_NORMAL);

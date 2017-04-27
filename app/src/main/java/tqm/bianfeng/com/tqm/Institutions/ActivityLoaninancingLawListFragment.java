@@ -145,6 +145,7 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
 
     public void initLoanList(List<BankLoanItem> datas) {
         bankLoanAdapter = new HomeBankLoanListAdapter(getActivity(), datas);
+        bankLoanAdapter.setBgNull();
         bankLoanAdapter.setOnItemClickListener(new HomeBankLoanListAdapter.HomeBankLoanClickListener() {
             @Override
             public void OnClickListener(int position) {

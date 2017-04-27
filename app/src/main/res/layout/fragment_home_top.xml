@@ -30,7 +30,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hugehxxxdp"
+                android:layout_height="@dimen/hugehxxxxdp"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/tinymdp"
@@ -61,7 +61,7 @@
                         android:gravity="center"
                         android:text="银行活动"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/smallsp"/>
+                        android:textSize="@dimen/mediumsp"/>
                 </LinearLayout>
 
 
@@ -91,7 +91,7 @@
                         android:gravity="center"
                         android:text="银行理财"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/smallsp"/>
+                        android:textSize="@dimen/mediumsp"/>
 
                 </LinearLayout>
 
@@ -121,7 +121,7 @@
                         android:gravity="center"
                         android:text="银行贷款"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/smallsp"/>
+                        android:textSize="@dimen/mediumsp"/>
 
                 </LinearLayout>
 
@@ -151,7 +151,7 @@
                         android:gravity="center"
                         android:text="网点查询"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/smallsp"/>
+                        android:textSize="@dimen/mediumsp"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -204,6 +204,8 @@
                         android:paddingRight="@dimen/tinymdp"
                         android:text="查看更多"
                         android:textColor="@color/colorPrimary"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true"
                         android:layout_marginRight="@dimen/smallmdp"
                         android:textSize="@dimen/mediumsp"/>
 
@@ -414,13 +416,11 @@
                         android:background="@android:color/white"
                         android:orientation="horizontal">
 
-                        <ImageView
+                        <View
                             android:layout_width="3dp"
                             android:layout_height="match_parent"
                             android:layout_margin="@dimen/mediummdp"
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerInside"
-                            android:background="@color/red"
+                            android:background="@android:color/holo_orange_dark"
                             />
 
                         <TextView
@@ -441,6 +441,8 @@
                             android:paddingRight="@dimen/smallmdp"
                             android:text="查看更多"
                             android:textColor="@color/colorPrimary"
+                            android:background="?android:selectableItemBackground"
+                            android:clickable="true"
                             android:textSize="@dimen/mediumsp"/>
 
 

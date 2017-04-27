@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
@@ -72,12 +73,21 @@ public class HomeBankLoanListAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder mHolder = (ViewHolder) holder;
         BankLoanItem data = datas.get(position);
-        mHolder.tv1.setText(data.getRate()+"%");
+        mHolder.tv1.setText(data.getRate() + "%");
         mHolder.tv2.setText(data.getLoanName());
-        mHolder.tv3.setText(data.getLoanPeriod()+"期");
-        mHolder.tv4.setText("最高可贷："+data.getLoanMoney().setScale(0, BigDecimal.ROUND_DOWN)+"万");
+        mHolder.tv3.setText(data.getLoanPeriod() + "期");
+        mHolder.tv4.setText("最高可贷：" + data.getLoanMoney().setScale(0, BigDecimal.ROUND_DOWN) + "万");
 
+        if(isBgNull){
+            mHolder.loanItemBg.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+            mHolder.tv4.setBackgroundColor(mContext.getResources().getColor(R.color.max_transparent));
+            mHolder.tv4.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+        }
 
+    }
+    boolean isBgNull=false;
+    public void setBgNull(){
+        isBgNull=true;
     }
 
     @Override
@@ -95,6 +105,8 @@ public class HomeBankLoanListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private HomeBankLoanClickListener mItemClickListener;
+        @BindView(R.id.loan_item_bg)
+        LinearLayout loanItemBg;
 
         @BindView(R.id.tv1)
         TextView tv1;
