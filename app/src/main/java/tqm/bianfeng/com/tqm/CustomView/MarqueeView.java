@@ -5,6 +5,7 @@ package tqm.bianfeng.com.tqm.CustomView;
  */
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.TextUtils;
@@ -22,6 +23,8 @@ import com.sunfusheng.marqueeview.DisplayUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import tqm.bianfeng.com.tqm.R;
 
 /**
  * Created by sunfusheng on 16/5/31.
@@ -130,44 +133,41 @@ public class MarqueeView extends ViewFlipper {
         if (notices == null || notices.size() == 0) return false;
         removeAllViews();
 
+        int index=0;
         for (int i = 0; i < notices.size(); i++) {
-            final LinearLayout textView = createTextView(notices.get(i), i);
-            final int finalI = i;
-            textView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.onItemClick(finalI, null);
+            if((i+1)%2==0) {
+                final LinearLayout textView = createTextView(notices.get(i-1),notices.get(i), index);
+                final int finalI = index;
+                index++;
+                textView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (onItemClickListener != null) {
+                            onItemClickListener.onItemClick(finalI, null);
+                        }
                     }
-                }
-            });
-            textView.setGravity(Gravity.CENTER);
-            addView(textView);
+                });
+                textView.setGravity(Gravity.CENTER);
+                addView(textView);
+            }
         }
 
-        if (notices.size() > 1) {
+        if (index >= 1) {
             startFlipping();
         }
         return true;
     }
 
     // 创建ViewFlipper下的TextView
-    private LinearLayout createTextView(String text, int position) {
-        LinearLayout lin=new LinearLayout(mContext);
-        lin.setOrientation(LinearLayout.HORIZONTAL);
-        LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(0,LayoutParams.WRAP_CONTENT);
-        lp.weight=1;
-        TextView tv = new TextView(mContext);
-        tv.setGravity(gravity);
-        tv.setText(text);
-        tv.setTextColor(textColor);
-        tv.setTextSize(textSize);
-        tv.setSingleLine(singleLine);
-        tv.setTag(position);
-        tv.setLayoutParams(lp);
-        tv.setLines(1);
-        tv.setEllipsize(TextUtils.TruncateAt.END);
-        lin.addView(tv);
+    private LinearLayout createTextView(String text1,String text2, int position) {
+        LinearLayout lin=(LinearLayout) ((Activity)mContext).getLayoutInflater().from(mContext).inflate(R.layout.marquee_view, null, true);
+
+        TextView txt1=(TextView) lin.findViewById(R.id.marquee_txt1);
+        TextView txt2=(TextView) lin.findViewById(R.id.marquee_txt2);
+
+        txt1.setText(text1);
+        txt2.setText(text2);
+
         return lin;
     }
 

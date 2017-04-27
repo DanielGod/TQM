@@ -9,21 +9,27 @@
     <dimen name="mediumxsp">45.0sp</dimen>
     <dimen name="bigsp">50.0sp</dimen>
     <dimen name="hugesp">62.5sp</dimen>
+    <dimen name="super_big">125.0sp</dimen>
     <!--mdp-->
 
     <dimen name="tinymdp">12.5dp</dimen>
     <dimen name="smallmdp">20.0dp</dimen>
     <dimen name="mediummdp">25.0dp</dimen>
+    <dimen name="mediummxdp">32.5dp</dimen>
     <dimen name="bigmdp">50.0dp</dimen>
-
+    <dimen name="bigxmdp">62.5dp</dimen>
     <!--hdp-->
     <dimen name="tinyhdp">75.0dp</dimen>
+    <dimen name="tinyxhdp">87.5dp</dimen>
     <dimen name="smallhdp">100.0dp</dimen>
+    <dimen name="smallxhdp">112.5dp</dimen>
     <dimen name="mediumhdp">125.0dp</dimen>
     <dimen name="hugehdp">175.0dp</dimen>
     <dimen name="hugehxxdp">200.0dp</dimen>
     <dimen name="hugehxxxdp">225.0dp</dimen>
     <dimen name="hugehxxxxdp">250.0dp</dimen>
+    <dimen name="hugehxxxxxdp">300.0dp</dimen>
+    <dimen name="hugehxxxxxxdp">350.0dp</dimen>
     <dimen name="hugehxxxxxxxdp">400.0dp</dimen>
     <dimen name="hugehxxxxxxxxxdp">500.0dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->

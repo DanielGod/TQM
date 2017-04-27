@@ -1,25 +1,23 @@
 package tqm.bianfeng.com.tqm;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
+import com.baidu.mapapi.search.poi.PoiCitySearchOption;
+import com.baidu.mapapi.search.poi.PoiDetailResult;
+import com.baidu.mapapi.search.poi.PoiIndoorResult;
+import com.baidu.mapapi.search.poi.PoiResult;
+import com.baidu.mapapi.search.poi.PoiSearch;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,137 +27,144 @@ import butterknife.OnClick;
  * Created by johe on 2017/4/18.
  */
 
-public class demoActivity extends Activity {
+public class demoActivity extends AppCompatActivity {
     Context mContext;
     @BindView(R.id.load_more_txt)
     TextView loadMoreTxt;
 
+    //PoiSearch.Query query;
+    //PoiSearch poiSearch;
+    public class SDKReceiver extends BroadcastReceiver {
 
+        public void onReceive(Context context, Intent intent) {
+            String s = intent.getAction();
+            Log.d("gqf", "action: " + s);
+            if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
+                Log.d("gqf", "key 验证出错! 错误码 :" + intent.getIntExtra
+                        (SDKInitializer.SDK_BROADTCAST_INTENT_EXTRA_INFO_KEY_ERROR_CODE, 0)
+                        +  " ; 请在 AndroidManifest.xml 文件中检查 key 设置");
+            } else if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_OK)) {
+
+                Log.d("gqf", "key 验证成功! 功能可以正常使用");
+            } else if (s.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
+                Log.d("gqf", "网络出错");
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.default_loading);
         ButterKnife.bind(this);
         mContext = this;
-        //Toast.makeText(this, ""+Environment.getExternalStorageDirectory().getAbsolutePath(), 0).show();
 
-        //        loadMoreTxt.setOnClickListener(new View.OnClickListener() {
-        //            @Override
-        //            public void onClick(View v) {
-        //                if (Build.VERSION.SDK_INT >= 23) {
-        //                    //判断是否有这个权限
-        //                    if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-        //                        //第一请求权限被取消显示的判断，一般可以不写
-        //                        if (ActivityCompat.shouldShowRequestPermissionRationale(demoActivity.this,
-        //                                Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-        //                            //Log.i("readTosdCard","我们需要这个权限给你提供存储服务");
-        //                            showAlert();
-        //                        } else {
-        //                            //2、申请权限: 参数二：权限的数组；参数三：请求码
-        //                            ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1234);
-        //                        }
-        //                    } else {
-        //                        writeToSdCard();
-        //                    }
-        //                } else {
-        //                    writeToSdCard();
-        //                }
-        //
-        //            }
-        //        });
-    }
+//        query = new PoiSearch.Query("银行", "", "洛阳市");
+//        //keyWord表示搜索字符串，
+//        //第二个参数表示POI搜索类型，二者选填其一，
+//        //POI搜索类型共分为以下20种：汽车服务|汽车销售|
+//        //汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|
+//        //住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|交通设施服务|
+//        //金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施
+//        //cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
+//        query.setPageSize(10);// 设置每页最多返回多少条poiitem
+//        query.setPageNum(1);//设置查询页码
+//        poiSearch = new PoiSearch(this, query);
+//        poiSearch.setOnPoiSearchListener(new PoiSearch.OnPoiSearchListener() {
+//            @Override
+//            public void onPoiSearched(PoiResult poiResult, int i) {
+//                Log.i("gqf",i+"onPoiSearched"+poiResult.getPois().toString());
+//            }
+//
+//            @Override
+//            public void onPoiItemSearched(PoiItem poiItem, int i) {
+//                Log.i("gqf",i+"onPoiItemSearched"+poiItem.toString());
+//            }
+//        });
+//        poiSearch.searchPOIAsyn();
 
-    public void writeToSdCard() {
-        loadMoreTxt.setText("开始");
+        Log.i("gqf","onGetPoiResult");
+        mPoiSearch = PoiSearch.newInstance();
+        Log.i("gqf","onGetPoiResult1");
+        poiListener = new OnGetPoiSearchResultListener(){
+            public void onGetPoiResult(PoiResult result){
+                //获取POI检索结果
+                Log.i("gqf","onGetPoiResult");
+                Log.i("gqf","onGetPoiResult"+result.getAllPoi().toString());
+                Log.i("gqf","onGetPoiResult"+result.getAllAddr().toString());
+                if (result == null
+                        || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {// 没有找到检索结果
+                    Toast.makeText(demoActivity.this, "未找到结果",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+            public void onGetPoiDetailResult(PoiDetailResult result){
+                //获取Place详情页检索结果
+                Log.i("gqf","onGetPoiDetailResult"+result.toString());
+            }
 
-        Thread t = new Thread(new Runnable() {
             @Override
-            public void run() {
-                copyApkFromAssets(mContext, "test.apk", Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.apk");
+            public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
+                Log.i("gqf","onGetPoiIndoorResult"+poiIndoorResult.getmArrayPoiInfo().toString());
             }
-        });
-        t.start();
+        };
+        Log.i("gqf","onGetPoiResult2");
+        mPoiSearch.setOnGetPoiSearchResultListener(poiListener);
+        Log.i("gqf","onGetPoiResult3");
+        mPoiSearch.searchInCity((new PoiCitySearchOption())
+                .city("北京")
+                .keyword("美食")
+                .pageNum(1).pageCapacity(10));
+        Log.i("gqf","onGetPoiResul4");
+
+        // 注册 SDK 广播监听者
+        IntentFilter iFilter = new IntentFilter();
+        iFilter.addAction(Intent.ACTION_TIME_TICK);
+        iFilter.addAction( "com.lenovo.speechcamera.start");
+        iFilter.addAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_OK);
+        iFilter.addAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR);
+        iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
+
+
+        mReceiver = new SDKReceiver();
+        this.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String s = intent.getAction();
+                Log.d("gqf", "action: " + s);
+                if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
+                    Log.d("gqf", "key 验证出错! 错误码 :" + intent.getIntExtra
+                            (SDKInitializer.SDK_BROADTCAST_INTENT_EXTRA_INFO_KEY_ERROR_CODE, 0)
+                            +  " ; 请在 AndroidManifest.xml 文件中检查 key 设置");
+                } else if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_OK)) {
+
+                    Log.d("gqf", "key 验证成功! 功能可以正常使用");
+                } else if (s.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
+                    Log.d("gqf", "网络出错");
+                }
+            }
+        }, iFilter);
 
     }
-
-    private void showAlert() {
-        Dialog alertDialog = new AlertDialog.Builder(this).
-                setTitle("权限说明").
-                setMessage("我们需要这个权限给你提供存储服务").
-                setIcon(R.drawable.ic_launcher).
-                setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                        //2、申请权限: 参数二：权限的数组；参数三：请求码
-                        ActivityCompat.requestPermissions(demoActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1234);
-                    }
-                }).
-                setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                    }
-                }).
-                create();
-        alertDialog.show();
+    OnGetPoiSearchResultListener poiListener;
+    PoiSearch mPoiSearch;
+    private SDKReceiver mReceiver;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPoiSearch.destroy();
+        unregisterReceiver(mReceiver);
     }
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 1) {
-                loadMoreTxt.setText("结束");
-                AlertDialog.Builder m = new AlertDialog.Builder(mContext)
-                        .setIcon(R.drawable.ic_launcher).setMessage("是否安装？")
-                        .setIcon(R.drawable.ic_launcher)
-                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.setDataAndType(Uri.parse("file://" + Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.apk"),
-                                        "application/vnd.android.package-archive");
-                                mContext.startActivity(intent);
-                            }
-                        });
-                m.show();
-            }
-        }
-    };
-
-    public boolean copyApkFromAssets(Context context, String fileName, String path) {
-        Log.i("gqf","while");
-        boolean copyIsFinish = false;
-        try {
-            InputStream is = context.getAssets().open(fileName);
-            File file = new File(path);
-            file.createNewFile();
-            FileOutputStream fos = new FileOutputStream(file);
-            byte[] temp = new byte[1024];
-            int i = 0;
-            while ((i = is.read(temp)) > 0) {
-                fos.write(temp, 0, i);
-                Log.i("gqf","while"+i);
-            }
-            fos.close();
-            is.close();
-            copyIsFinish = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.i("gqf","while"+e.toString());
-        }
-        Message m = new Message();
-        m.what = 1;
-        handler.sendMessage(m);
-        return copyIsFinish;
-    }
 
     @OnClick(R.id.load_more_txt)
     public void onClick() {
-        writeToSdCard();
+        Intent startIntent = new Intent();
+        startIntent.putExtra("pkg", getPackageName());
+        startIntent.setAction("com.lenovo.speechcamera.start");
+        startIntent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        sendBroadcast(startIntent);
+        Log.i("gqf","onGetPoiResul4");
     }
+
 }

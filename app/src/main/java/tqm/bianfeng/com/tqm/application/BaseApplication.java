@@ -10,6 +10,8 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import com.antfortune.freeline.FreelineCore;
+import com.baidu.mapapi.CoordType;
+import com.baidu.mapapi.SDKInitializer;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -91,6 +93,8 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        SDKInitializer.initialize(this);
+        SDKInitializer.setCoordType(CoordType.BD09LL);
         FreelineCore.init(this);
         //        LeakCanary.install(this);
         mList = new ArrayList<>();
@@ -98,6 +102,7 @@ public class BaseApplication extends Application {
         Realm.setDefaultConfiguration(realmConfig);
         Config.DEBUG = true;
         UMShareAPI.get(this);
+
     }
     /**
      * 使用默认字体
@@ -198,4 +203,5 @@ public class BaseApplication extends Application {
         }
 
     }
+
 }

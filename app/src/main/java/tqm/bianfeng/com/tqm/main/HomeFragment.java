@@ -3,17 +3,20 @@ package tqm.bianfeng.com.tqm.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.CustomView.AutoHeightLayoutManager;
 import tqm.bianfeng.com.tqm.CustomView.MarqueeView;
+import tqm.bianfeng.com.tqm.CustomView.MyScrollview;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.bank.bankactivitys.BankActivitonsActivity;
@@ -87,10 +91,18 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.home_bank_make_money_title_lin)
     LinearLayout homeBankMakeMoneyTitleLin;
 
-    boolean isInfo=false;
-    boolean isFinaning=false;
-    boolean isLoan=false;
-    boolean isActivity=false;
+    boolean isInfo = false;
+    boolean isFinaning = false;
+    boolean isLoan = false;
+    boolean isActivity = false;
+    @BindView(R.id.select_more_bankFinancing_txt)
+    TextView selectMoreBankFinancingTxt;
+    @BindView(R.id.select_more_bankLoan_txt)
+    TextView selectMoreBankLoanTxt;
+    @BindView(R.id.my_scrollview)
+    MyScrollview myScrollview;
+    int scrollHeight=0;
+    int sliderHeight=1;
 
     private CompositeSubscription mCompositeSubscription;
 
@@ -103,6 +115,8 @@ public class HomeFragment extends BaseFragment {
 
     public interface mListener {
         public void detailActivity(Intent intent);
+
+        public void setToolBarColorBg(float a);
     }
 
     private mListener mListener;
@@ -124,7 +138,42 @@ public class HomeFragment extends BaseFragment {
         if (isNetWork) {
             showViewWhenNetWork(isNetWork);
         }
+
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initScroll();
+        ViewTreeObserver vto = homeSlider.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                homeSlider.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                sliderHeight=homeSlider.getHeight();
+
+            }
+        });
+        mListener.setToolBarColorBg(getAlph(scrollHeight,sliderHeight));
+    }
+
+    public void initScroll(){
+        myScrollview.setOnScollChangedListener(new MyScrollview.OnScollChangedListener() {
+            @Override
+            public void onScrollChanged(MyScrollview scrollView, int x, int y, int oldx, int oldy) {
+                Log.i("gqf","x"+x+"y"+y+"oldx"+oldx+"oldy"+oldy);
+                scrollHeight=y;
+                if(sliderHeight!=1) {
+                    if(isNetWork) {
+                        mListener.setToolBarColorBg(getAlph(scrollHeight, sliderHeight));
+                    }
+                }
+            }
+        });
+    }
+    public float getAlph(int h1,int h2){
+        return (float)h1/h2;
     }
 
 
@@ -153,16 +202,18 @@ public class HomeFragment extends BaseFragment {
                     @Override
                     public void onNext(List<BankLoanItem> bankloanItems) {
                         Log.e("Daniel", "---BankLoanItem---");
-                        isLoan=true;
+                        isLoan = true;
                         setBankLoanListAdapter(bankloanItems);
                         getBankActivitys();
                     }
                 });
         mCompositeSubscription.add(getBankFinancItem_subscription);
     }
+
     HomeBankLoanListAdapter bankLoanAdapter;
-    private void setBankLoanListAdapter( List<BankLoanItem> bankloanItems) {
-        if(bankLoanAdapter==null) {
+
+    private void setBankLoanListAdapter(List<BankLoanItem> bankloanItems) {
+        if (bankLoanAdapter == null) {
             bankLoanList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
             bankFinaningList.setHasFixedSize(true);
             bankFinaningList.setNestedScrollingEnabled(false);
@@ -179,7 +230,7 @@ public class HomeFragment extends BaseFragment {
                     mListener.detailActivity(intent);
                 }
             });
-        }else{
+        } else {
             bankLoanAdapter.update(bankloanItems);
         }
     }
@@ -208,7 +259,7 @@ public class HomeFragment extends BaseFragment {
                     @DebugLog
                     @Override
                     public void onNext(List<BankActivityItem> bankActivityItems) {
-                        isActivity=true;
+                        isActivity = true;
                         Log.e("Daniel", "---bankActivityItems.size()---" + bankActivityItems.size());
                         setBankActivitysListAdapter(bankActivityItems);
 
@@ -217,10 +268,12 @@ public class HomeFragment extends BaseFragment {
         mCompositeSubscription.add(getBankFinancItem_subscription);
 
     }
+
     HomeBankActivitysListAdapter homeBankActivitysListAdapter;
+
     private void setBankActivitysListAdapter(List<BankActivityItem> bankActivityItems) {
 
-        if(homeBankActivitysListAdapter==null) {
+        if (homeBankActivitysListAdapter == null) {
             bankActivitysList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
             bankFinaningList.setHasFixedSize(true);
             bankFinaningList.setNestedScrollingEnabled(false);
@@ -237,7 +290,7 @@ public class HomeFragment extends BaseFragment {
                     mListener.detailActivity(intent);
                 }
             });
-        }else{
+        } else {
             homeBankActivitysListAdapter.update(bankActivityItems);
         }
 
@@ -268,7 +321,7 @@ public class HomeFragment extends BaseFragment {
                     @DebugLog
                     @Override
                     public void onNext(List<BankFinancItem> bankFinancItems) {
-                        isFinaning=true;
+                        isFinaning = true;
                         Log.e("Daniel", "---BankFinancItem---");
                         setBankFinancListAdapter(bankFinancItems);
                         getBankLoanServiceItem();
@@ -276,9 +329,11 @@ public class HomeFragment extends BaseFragment {
                 });
         mCompositeSubscription.add(getBankFinancItem_subscription);
     }
+
     HomeBankFinancingListAdapter bankFinancingAdapter;
+
     private void setBankFinancListAdapter(List<BankFinancItem> bankFinancItems) {
-        if(bankFinancingAdapter==null) {
+        if (bankFinancingAdapter == null) {
             bankFinaningList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
             bankFinaningList.setHasFixedSize(true);
             bankFinaningList.setNestedScrollingEnabled(false);
@@ -295,7 +350,7 @@ public class HomeFragment extends BaseFragment {
                     mListener.detailActivity(intent);
                 }
             });
-        }else{
+        } else {
             bankFinancingAdapter.update(bankFinancItems);
         }
 
@@ -326,7 +381,7 @@ public class HomeFragment extends BaseFragment {
                     @Override
                     public void onNext(List<BankInformItem> bankInformItems) {
                         Log.e("gqf", "bankInformItems" + bankInformItems.toString());
-                        isInfo=true;
+                        isInfo = true;
                         initBankLoanItemList(bankInformItems);
                         getBankFinaningItem();
                     }
@@ -417,20 +472,24 @@ public class HomeFragment extends BaseFragment {
 
     public void initImages(List<String> strings) {
         //加载首页轮播图
-        if (strings.size() > 0) {
-            for (String url : strings) {
-                DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
-                textSliderView.image(NetWork.LOAD + url)
-                        .setScaleType(BaseSliderView.ScaleType.Fit);
-                homeSlider.addSlider(textSliderView);
-            }
-        }
+//        if (strings.size() > 0) {
+//            for (String url : strings) {
+//                DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
+//                textSliderView.image(NetWork.LOAD + url)
+//                        .setScaleType(BaseSliderView.ScaleType.Fit);
+//                homeSlider.addSlider(textSliderView);
+//            }
+//        }
+        DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
+                        textSliderView.image(R.drawable.home_top_slider1)
+                                .setScaleType(BaseSliderView.ScaleType.Fit);
+                        homeSlider.addSlider(textSliderView);
     }
 
 
     @OnClick({R.id.select_more_bankFinancing_txt, R.id.select_more_bankLoan_txt, R.id.select_more_bankActivitys_txt,
             R.id.home_bank_activity_lin, R.id.home_bank_loan_lin, R.id.home_bank_make_money_lin,
-            R.id.select_more_bank_make_money_txt,R.id.select_more_hot_information_txt})
+            R.id.select_more_bank_make_money_txt, R.id.select_more_hot_information_txt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.select_more_bankFinancing_txt:
@@ -452,10 +511,10 @@ public class HomeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), BankFinancingActivity.class));
                 break;
             case R.id.select_more_bank_make_money_txt:
-                startActivity(new Intent(getActivity(), NewBankInformationActivity.class).putExtra("01","01"));//01-银行资讯
+                startActivity(new Intent(getActivity(), NewBankInformationActivity.class).putExtra("01", "01"));//01-银行资讯
                 break;
             case R.id.select_more_hot_information_txt:
-                startActivity(new Intent(getActivity(), NewBankInformationActivity.class).putExtra("02","02"));//02-热点资讯
+                startActivity(new Intent(getActivity(), NewBankInformationActivity.class).putExtra("02", "02"));//02-热点资讯
                 break;
         }
     }
@@ -477,22 +536,34 @@ public class HomeFragment extends BaseFragment {
                 Log.i("gqf", "showViewWhenNetWork" + isNetWork);
             }
         }
+
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(!hidden){
-            if(!isInfo){
+        if (!hidden) {
+            if (!isInfo) {
                 getBankLoanItem();
-            }else if(!isFinaning){
+            } else if (!isFinaning) {
                 getBankFinaningItem();
-            }else if(!isLoan){
+            } else if (!isLoan) {
                 getBankLoanServiceItem();
-            }else if(!isActivity){
+            } else if (!isActivity) {
                 getBankActivitys();
             }
+
+            //根据滑动高度设置toolbar
+            if(sliderHeight!=1) {
+                mListener.setToolBarColorBg(getAlph(scrollHeight, sliderHeight));
+            }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        StatusBarUtil.setTranslucentForImageView(getActivity(), 0, homeSlider);
     }
 
     @Override

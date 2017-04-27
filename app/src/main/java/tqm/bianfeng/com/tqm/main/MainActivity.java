@@ -17,11 +17,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.jaeger.library.StatusBarUtil;
 import com.soundcloud.android.crop.Crop;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,7 +46,6 @@ import tqm.bianfeng.com.tqm.Util.DisplayUtil;
 import tqm.bianfeng.com.tqm.Util.NetUtils;
 import tqm.bianfeng.com.tqm.Util.PermissionsHelper;
 import tqm.bianfeng.com.tqm.Util.PhotoGet;
-import tqm.bianfeng.com.tqm.Util.SystemBarTintManager;
 import tqm.bianfeng.com.tqm.application.BaseApplication;
 import tqm.bianfeng.com.tqm.lawhelp.LawHelpFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
@@ -54,7 +55,7 @@ import tqm.bianfeng.com.tqm.update.UpdateService;
 
 import static tqm.bianfeng.com.tqm.Util.PhotoGet.REQUEST_IMAGE_CAPTURE;
 
-public class MainActivity extends AppCompatActivity implements UserFragment.mListener, HomeFragment.mListener ,LawHelpFragment.mListener{
+public class MainActivity extends AppCompatActivity implements UserFragment.mListener, HomeFragment.mListener, LawHelpFragment.mListener {
     private static final String HOME_TAG = "home_flag";
     private static final String LAWHELP_TAG = "lawhelp_flag";
     private static final String INSTITUTIONSIN_TAG = "institutionsin_flag";
@@ -78,6 +79,10 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     Toolbar toolbar;
     BaseDialog baseDialog;
     AlertDialog.Builder alert;
+    @BindView(R.id.container_lin)
+    RelativeLayout containerLin;
+    @BindView(R.id.net_work_lin)
+    LinearLayout netWorkLin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +92,10 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         compositeSubscription = new CompositeSubscription();
         try {
             initSystemBar();
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
+
         //设置底部栏
         initBottomBar();
         //版本更新
@@ -97,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         //网络判断
         initNetWork(true);
         EventBus.getDefault().register(this);
+        setBelow(0);
     }
 
     @Override
@@ -176,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 } else {
                     getSupportFragmentManager().beginTransaction().show(homeFragment).commitNow();
                 }
+                setBelow(0);
                 break;
             case CONTENT_LAWHELP:
                 String lawHelp_str = getResources().getString(R.string.lawHelp);
@@ -189,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 } else {
                     getSupportFragmentManager().beginTransaction().show(lawHelpFragment).commitNow();
                 }
+                setBelow(1);
                 break;
             case CONTENT_INSTITUTIONSIN:
                 String institutionsIn_str = getResources().getString(R.string.institutionsIn);
@@ -202,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 } else {
                     getSupportFragmentManager().beginTransaction().show(institutionsInFragment).commitNow();
                 }
+                setBelow(1);
                 break;
             case CONTENT_CATHOME:
                 String catHome_str = getResources().getString(R.string.catHome);
@@ -215,24 +225,39 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 } else {
                     getSupportFragmentManager().beginTransaction().show(userFragemnt).commitNow();
                 }
+                setBelow(1);
                 break;
         }
 
     }
-    private void hideFragment(String tag){
-        if(homeFragment!=null&&tag!=HOME_TAG){
+
+    private void hideFragment(String tag) {
+        if (homeFragment != null && tag != HOME_TAG) {
             getSupportFragmentManager().beginTransaction().hide(homeFragment).commitNow();
         }
-        if(lawHelpFragment!=null&&tag!=LAWHELP_TAG){
+        if (lawHelpFragment != null && tag != LAWHELP_TAG) {
             getSupportFragmentManager().beginTransaction().hide(lawHelpFragment).commitNow();
         }
-        if(institutionsInFragment!=null&&tag!=INSTITUTIONSIN_TAG){
+        if (institutionsInFragment != null && tag != INSTITUTIONSIN_TAG) {
             getSupportFragmentManager().beginTransaction().hide(institutionsInFragment).commitNow();
         }
-        if(userFragemnt!=null&&tag!=CATHOME_TAG){
+        if (userFragemnt != null && tag != CATHOME_TAG) {
             getSupportFragmentManager().beginTransaction().hide(userFragemnt).commitNow();
         }
     }
+
+    public void setBelow(int index) {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) containerLin.getLayoutParams();
+        if (index == 1) {
+            params.addRule(RelativeLayout.BELOW, R.id.toolbar);
+            setToolBarColorBg(1);
+        } else {
+            params.removeRule(RelativeLayout.BELOW);
+        }
+        containerLin.setLayoutParams(params);
+
+    }
+
     public void changeActivity(
             Class activityClass) {
         startActivity(new Intent(MainActivity.this, activityClass));
@@ -240,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
 
     public void changeUserHeadImg() {
         PermissionsHelper.verifyStoragePermissions(MainActivity.this);
-        Log.i("gqf","changeUserHeadImg");
+        Log.i("gqf", "changeUserHeadImg");
         //修改用户头像
         if (photoGet == null) {
             photoGet = PhotoGet.getInstance();
@@ -255,29 +280,29 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // 拍照返回
-        if (resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             Log.i("gqf", "RESULT_OK");
-            if (requestCode == REQUEST_IMAGE_CAPTURE){
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 Log.i("gqf", "REQUEST_IMAGE_CAPTURE");
                 photoGet.beginCrop(photoGet.getmCurrentPhotoUri());
 
-            } else if (requestCode == Crop.REQUEST_PICK){
+            } else if (requestCode == Crop.REQUEST_PICK) {
                 Log.i("gqf", "REQUEST_PICK");
-                photoGet. beginCrop(data.getData());
+                photoGet.beginCrop(data.getData());
             }
             if (requestCode == Crop.REQUEST_CROP) {
                 Log.i("gqf", "handleCrop");
                 photoGet.handleCrop(resultCode, data);
-                if(photoGet.getHeadFile()==null){
+                if (photoGet.getHeadFile() == null) {
                     Log.i("gqf", "getHeadFile==null");
                 }
                 userFragemnt.setUserHeadImg(photoGet.getHeadFile());
             }
         }
-//        else if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
-//            Log.i("gqf", "REQUEST_PICK");
-//            photoGet. beginCrop(data.getData());
-//        }
+        //        else if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
+        //            Log.i("gqf", "REQUEST_PICK");
+        //            photoGet. beginCrop(data.getData());
+        //        }
 
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -366,9 +391,9 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
 
     //弹出网络设置dialog
     public void shouNetWorkActivity() {
-        LinearLayout netWorkLin=(LinearLayout)findViewById(R.id.net_work_lin);
-        if(netWorkLin!=null){
-            if(!NetUtils.isConnected(this)){
+        LinearLayout netWorkLin = (LinearLayout) findViewById(R.id.net_work_lin);
+        if (netWorkLin != null) {
+            if (!NetUtils.isConnected(this)) {
                 netWorkLin.setVisibility(View.VISIBLE);
                 netWorkLin.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -376,10 +401,14 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                         NetUtils.openSetting(MainActivity.this);
                     }
                 });
-            }else{
+            } else {
                 netWorkLin.setVisibility(View.GONE);
             }
         }
+//        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) netWorkLin.getLayoutParams();
+//        params.addRule(RelativeLayout.BELOW, R.id.toolbar);
+//        containerLin.setLayoutParams(params);
+//        toolbar.setAlpha(1);
     }
 
     //检测网络
@@ -411,8 +440,10 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         compositeSubscription.unsubscribe();
         EventBus.getDefault().unregister(this);
     }
+
     //退出时的时间
     private long mExitTime;
+
     //对返回键进行监听
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -433,10 +464,11 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         } else {
 
             //            MyConfig.clearSharePre(this, "users");
-            ((BaseApplication)getApplication()).exit();
+            ((BaseApplication) getApplication()).exit();
         }
     }
-    public void initSystemBar(){
+
+    public void initSystemBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
             // Translucent status bar
@@ -446,17 +478,27 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         }
         setSystemBarColor(R.color.colorPrimaryDark);
     }
-    public void setSystemBarColor(int id){
+
+    public void setSystemBarColor(int id) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
+            //SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            //tintManager.setStatusBarTintEnabled(false);
             //此处可以重新指定状态栏颜色
-            tintManager.setStatusBarTintResource(id);
-        }
-        else{
-            LinearLayout.LayoutParams lp=(LinearLayout.LayoutParams)toolbar.getLayoutParams();
-            lp.height= DisplayUtil.dip2px(this,getResources().getDimension(R.dimen.bigxmdp));
+            //tintManager.setStatusBarTintResource(id);
+            StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
+            StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, null);
+        } else {
+            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) toolbar.getLayoutParams();
+            lp.height = DisplayUtil.dip2px(this, getResources().getDimension(R.dimen.bigxmdp));
             toolbar.setLayoutParams(lp);
+        }
+    }
+
+    public void setToolBarColorBg(float a) {
+        if (toolbar != null) {
+            if(NetUtils.isConnected(this)) {
+                toolbar.setAlpha(a);
+            }
         }
     }
 }
