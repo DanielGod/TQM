@@ -7,6 +7,7 @@
     <string name="catHome">猫舍</string>
     <!--银行理财-->
     <string name="bankFinancing">银行理财</string>
+    <string name="bFinancalRecommendations">理财推荐</string>
     <string name="all">全部</string>
     <string name="mostFocus">关注最多</string>
     <string name="screening">筛选</string>
@@ -14,7 +15,7 @@
     <string name="bankActivity">银行活动</string>
     <!--银行贷款-->
     <string name="bankloan">银行贷款</string>
-
+    <string name="lookMore">查看更多</string>
     <!--银行资讯-->
     <string name="bankInfromations">银行资讯</string>
     <string name="hotInfromations">热点资讯</string>
