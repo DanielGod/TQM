@@ -58,6 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+            android:fitsSystemWindows="true"
             android:gravity="center">
 
             <TextView
@@ -68,12 +69,13 @@
                 android:paddingLeft="@dimen/smallmdp"
                 android:paddingRight="@dimen/smallmdp"
                 android:text="定位"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/mediumxsp"
                 android:drawableLeft="@drawable/ic_location"
                 android:background="?android:selectableItemBackground"
                 android:clickable="true"
+
                 />
             <View
                 android:layout_width="0dp"

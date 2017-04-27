@@ -20,6 +20,15 @@ public class BankInformItem {
     private String institutionName;
     private int informType;
     private int informViews;
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public int getInformId() {
         return informId;

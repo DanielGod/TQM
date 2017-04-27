@@ -116,7 +116,7 @@ public class HomeFragment extends BaseFragment {
     public interface mListener {
         public void detailActivity(Intent intent);
 
-        public void setToolBarColorBg(float a);
+        public void setToolBarColorBg(int a);
     }
 
     private mListener mListener;
@@ -172,8 +172,12 @@ public class HomeFragment extends BaseFragment {
             }
         });
     }
-    public float getAlph(int h1,int h2){
-        return (float)h1/h2;
+    public int getAlph(int h1,int h2){
+        if(h1>h2){
+            return 255;
+        }else {
+            return (int) ((float) h1 / h2 * 255);
+        }
     }
 
 

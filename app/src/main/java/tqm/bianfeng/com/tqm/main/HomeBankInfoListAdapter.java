@@ -5,8 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -14,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.BankInformItem;
 
 /**
@@ -76,13 +80,17 @@ public class HomeBankInfoListAdapter extends RecyclerView.Adapter<RecyclerView.V
         mHolder.bankInfoItemLin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mItemClickListener!=null){
+                if (mItemClickListener != null) {
                     mItemClickListener.OnClickListener(p);
                 }
             }
         });
         mHolder.bankInfoTimeTxt.setText(datas.get(p).getReleaseDate());
         mHolder.bankInfoTitleTxt.setText(datas.get(p).getInformTitle());
+        Picasso.with(mContext).load(NetWork.LOAD + datas.get(p).getImageUrl())
+                .placeholder(R.drawable.banklogo)
+                .into(mHolder.bankInfoImg);
+        mHolder.readNum.setText(""+datas.get(p).getInformViews());
     }
 
     @Override
@@ -95,10 +103,14 @@ public class HomeBankInfoListAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.bank_info_img)
+        ImageView bankInfoImg;
         @BindView(R.id.bank_info_title_txt)
         TextView bankInfoTitleTxt;
         @BindView(R.id.bank_info_time_txt)
         TextView bankInfoTimeTxt;
+        @BindView(R.id.read_num)
+        TextView readNum;
         @BindView(R.id.bank_info_item_lin)
         LinearLayout bankInfoItemLin;
         ViewHolder(View view) {

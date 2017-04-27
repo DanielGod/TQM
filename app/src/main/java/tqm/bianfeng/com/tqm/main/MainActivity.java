@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     @Override
     protected void onResume() {
         super.onResume();
+        setToolBarColorBg(tooleBarNowAlpha);
     }
 
     /**
@@ -260,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) containerLin.getLayoutParams();
         if (index == 1) {
             params.addRule(RelativeLayout.BELOW, R.id.toolbar);
-            setToolBarColorBg(1);
+            setToolBarColorBg(255);
             toolbarTitle.setVisibility(View.VISIBLE);
             homeLin.setVisibility(View.GONE);
         } else {
@@ -452,6 +453,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     @Override
     protected void onStart() {
         super.onStart();
+        //定位按钮信息更新
         if(realm.where(LawAdd.class).findFirst()!=null){
             if(!realm.where(LawAdd.class).findFirst().getCity().equals("")){
                 homeLocationTxt.setText(realm.where(LawAdd.class).findFirst().getCity());
@@ -523,12 +525,20 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         }
     }
 
-    public void setToolBarColorBg(float a) {
+    int tooleBarNowAlpha=0;
+    public void setToolBarColorBg(int a) {
         if (toolbar != null) {
             if (NetUtils.isConnected(this)) {
-                toolbar.setAlpha(a);
+                toolbar.getBackground().setAlpha(a);
+                tooleBarNowAlpha=a;
             }
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        toolbar.getBackground().setAlpha(255);
     }
 
     @OnClick(R.id.home_location_txt)
