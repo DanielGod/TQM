@@ -79,7 +79,7 @@ public class HomeBankLoanListAdapter extends RecyclerView.Adapter<RecyclerView.V
         mHolder.tv4.setText("最高可贷：" + data.getLoanMoney().setScale(0, BigDecimal.ROUND_DOWN) + "万");
 
         if(isBgNull){
-            mHolder.loanItemBg.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+            mHolder.loanItemBg.setBackgroundResource(R.drawable.loan_item_shap);
         }
 
     }
