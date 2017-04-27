@@ -133,15 +133,16 @@ public class BankLoanActivity extends AppCompatActivity {
 
 
         //设置刷新时显示的文本
+        mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);//设置模式在设置字体之前
         ILoadingLayout startLayout = mainPullRefreshLv.getLoadingLayoutProxy(true, false);
-        startLayout.setPullLabel("正在下拉刷新...");
-        startLayout.setRefreshingLabel("正在玩命加载中...");
-        startLayout.setReleaseLabel("放开以刷新");
+        startLayout.setPullLabel(getResources().getString(R.string.pullRefresh));
+        startLayout.setRefreshingLabel(getResources().getString(R.string.loading));
+        startLayout.setReleaseLabel(getResources().getString(R.string.releaseRefresh));
 
         ILoadingLayout endLayout = mainPullRefreshLv.getLoadingLayoutProxy(false, true);
-        endLayout.setPullLabel("正在上拉刷新...");
-        endLayout.setRefreshingLabel("正在玩命加载中...");
-        endLayout.setReleaseLabel("放开以刷新");
+        endLayout.setPullLabel(getResources().getString(R.string.PullLoading));
+        endLayout.setRefreshingLabel(getResources().getString(R.string.loading));
+        endLayout.setReleaseLabel(getResources().getString(R.string.releaseLoading));
 
         mainPullRefreshLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             //下拉监听
