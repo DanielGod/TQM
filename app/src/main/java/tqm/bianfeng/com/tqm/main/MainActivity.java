@@ -93,12 +93,13 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     RelativeLayout homeLin;
 
     Realm realm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        realm=Realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
         compositeSubscription = new CompositeSubscription();
         try {
             initSystemBar();
@@ -121,13 +122,13 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         super.onResume();
         setToolBarColorBg(tooleBarNowAlpha);
         //定位按钮信息更新
-        if(realm.where(LawAdd.class).findFirst()!=null){
-            if(!realm.where(LawAdd.class).findFirst().getCity().equals("")){
+        if (realm.where(LawAdd.class).findFirst() != null) {
+            if (!realm.where(LawAdd.class).findFirst().getCity().equals("")) {
                 homeLocationTxt.setText(realm.where(LawAdd.class).findFirst().getCity());
-            }else{
+            } else {
                 homeLocationTxt.setText("定位");
             }
-        }else{
+        } else {
             homeLocationTxt.setText("定位");
         }
     }
@@ -508,7 +509,9 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+
         setSystemBarColor(R.color.colorPrimaryDark);
+
     }
 
     public void setSystemBarColor(int id) {
@@ -526,12 +529,15 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         }
     }
 
-    int tooleBarNowAlpha=0;
+    int tooleBarNowAlpha = 0;
+
+    //设置标题颜色
     public void setToolBarColorBg(int a) {
         if (toolbar != null) {
             if (NetUtils.isConnected(this)) {
                 toolbar.getBackground().setAlpha(a);
-                tooleBarNowAlpha=a;
+                toolbarTitle.setAlpha((float) a / 255);
+                tooleBarNowAlpha = a;
             }
         }
     }
@@ -539,7 +545,9 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     @Override
     protected void onPause() {
         super.onPause();
+        //启动其他页面时修改toolbar颜色
         toolbar.getBackground().setAlpha(255);
+        toolbarTitle.setAlpha(1);
     }
 
     @OnClick(R.id.home_location_txt)

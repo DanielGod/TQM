@@ -152,8 +152,8 @@
             >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/bigmdp"
+                android:layout_height="@dimen/bigmdp"
                 android:layout_marginBottom="@dimen/mediummdp"
                 android:layout_marginTop="@dimen/mediummdp"
                 android:adjustViewBounds="true"
@@ -168,7 +168,7 @@
                 android:paddingLeft="@dimen/mediummdp"
                 android:text="电话：1312312312423"
                 android:textColor="@color/font_black_1"
-                android:textSize="@dimen/mediumsp"/>
+                android:textSize="@dimen/smallsp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -182,8 +182,8 @@
             >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/bigmdp"
+                android:layout_height="@dimen/bigmdp"
                 android:layout_marginBottom="@dimen/mediummdp"
                 android:layout_marginTop="@dimen/mediummdp"
                 android:adjustViewBounds="true"
@@ -198,7 +198,7 @@
                 android:paddingLeft="@dimen/mediummdp"
                 android:text="地址：上海市浦东区艾付广场1楼88层"
                 android:textColor="@color/font_black_1"
-                android:textSize="@dimen/mediumsp"/>
+                android:textSize="@dimen/smallsp"/>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -230,7 +230,7 @@
                 android:text="公司介绍"
                 android:paddingLeft="@dimen/mediummdp"
                 android:textColor="@color/font_black_1"
-                android:textSize="@dimen/mediumsp"/>
+                android:textSize="@dimen/smallsp"/>
 
             <ImageView
                 android:layout_width="wrap_content"

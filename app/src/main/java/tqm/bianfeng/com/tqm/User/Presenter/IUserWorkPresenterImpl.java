@@ -51,7 +51,6 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                     @Override
                     public void onNext(MyAttention myAttention) {
                         Log.e("gqf","onNext"+myAttention.toString());
-                        iLoginAndRegistered.setTextNum(myAttention.get_$01(),myAttention.get_$02(),myAttention.get_$03(),0);
                     }
                 });
         compositeSubscription.add(subscription);

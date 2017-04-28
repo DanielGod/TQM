@@ -82,7 +82,7 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         mHolder.ininNameTxt.setText(datas.get(p).getInstitutionName());
         mHolder.contactTxt.setText("电话：" + datas.get(p).getContact());
         mHolder.profileTxt.setText("简介：" + datas.get(p).getProfile());
-        Picasso.with(mContext).load(NetWork.LOAD+datas.get(p).getInstitutionIcon()).placeholder(R.drawable.banklogo).into(mHolder.ininImg);
+        Picasso.with(mContext).load(NetWork.LOAD+datas.get(p).getInstitutionIcon()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(mHolder.ininImg);
     }
 
     @Override

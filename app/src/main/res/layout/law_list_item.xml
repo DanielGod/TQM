@@ -85,7 +85,7 @@
                     android:paddingLeft="@dimen/smallmdp"
                     android:text="已认证"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/mediumsp"/>
+                    android:textSize="@dimen/smallsp"/>
 
 
                 <LinearLayout
@@ -116,7 +116,7 @@
                         android:paddingLeft="@dimen/tinymdp"
                         android:text="呼叫"
                         android:textColor="@color/blue_text"
-                        android:textSize="@dimen/mediumsp"/>
+                        android:textSize="@dimen/smallsp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -133,19 +133,20 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/tinymdp"
+                        android:layout_marginTop="@dimen/smallmdp"
+                        android:layout_marginBottom="@dimen/smallmdp"
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_collection"/>
+                        android:src="@drawable/ic_focuse_star"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/tinymdp"
-                        android:text="收藏"
+                        android:text="关注"
                         android:textColor="@color/cube_holo_orange_light"
-                        android:textSize="@dimen/mediumsp"/>
+                        android:textSize="@dimen/smallsp"/>
                 </LinearLayout>
 
             </LinearLayout>

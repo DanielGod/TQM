@@ -74,6 +74,7 @@ public class DetailActivity extends BaseActivity {
         super.onSaveInstanceState(outState);
         UMShareAPI.get(this).onSaveInstanceState(outState);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,9 +86,9 @@ public class DetailActivity extends BaseActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.collection_false) {
-                    if(Build.VERSION.SDK_INT>=23){
-                        String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS,Manifest.permission.WRITE_APN_SETTINGS};
-                        ActivityCompat.requestPermissions(DetailActivity.this,mPermissionList,123);
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
+                        ActivityCompat.requestPermissions(DetailActivity.this, mPermissionList, 123);
                     }
                     share();
                 }
@@ -126,7 +127,7 @@ public class DetailActivity extends BaseActivity {
     public void initWebView() {
         WebSettings settings = webView.getSettings();
         settings.setAppCacheEnabled(true);//设置启动缓存
-        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//缓存模式
+        //settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//缓存模式
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//4.4以下版本自适应页面大小 不能左右滑动
         //        1.NARROW_COLUMNS：可能的话使所有列的宽度不超过屏幕宽度
         //        2.NORMAL：正常显示不做任何渲染
@@ -135,7 +136,7 @@ public class DetailActivity extends BaseActivity {
         settings.setLoadWithOverviewMode(true);//设置webview加载的页面的模式
         settings.setTextZoom(100);//字体大小
         settings.setJavaScriptEnabled(true);//支持js
-        settings.setSupportZoom(true);//仅支持双击缩放
+        settings.setSupportZoom(true);//仅支持双击缩放r
         webView.setInitialScale(57);//最小缩放等级
         webView.getSettings().setBlockNetworkImage(false);//阻止图片网络数据
         webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);//图片加载放在最后
@@ -226,13 +227,12 @@ public class DetailActivity extends BaseActivity {
         UMWeb web = new UMWeb(url);
         web.setTitle(detailTitle);//标题
         web.setDescription(detailTitle);
-        Bitmap bmp= BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-        if(bmp==null){
-            Log.i("gqf","bmp==null");
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+        if (bmp == null) {
+            Log.i("gqf", "bmp==null");
         }
-        web.setThumb(new UMImage(this,bmp
-                ));  //缩略图
-
+        web.setThumb(new UMImage(this, bmp
+        ));  //缩略图
 
 
         new ShareAction(this).withMedia(web)
@@ -305,22 +305,22 @@ public class DetailActivity extends BaseActivity {
 
     //关注按钮背景变换
     public void initactionASrc() {
-        if (!detailType.equals("04")) {
-            if (isCollection) {
-                //关注状态
-                actionA.setIcon(R.drawable.ic_focuse);
-                actionA.setTitle("已关注");
-            } else {
-                //未关注状态
-                actionA.setIcon(R.drawable.ic_unfocuse);
-                actionA.setTitle("未关注");
-            }
-            multipleActionsDown.setVisibility(View.VISIBLE);
-            actionC.setVisibility(View.GONE);
+        //if (!detailType.equals("04")) {
+        if (isCollection) {
+            //关注状态
+            actionA.setIcon(R.drawable.ic_focuse);
+            actionA.setTitle("已关注");
         } else {
-            actionC.setVisibility(View.VISIBLE);
-            multipleActionsDown.setVisibility(View.GONE);
+            //未关注状态
+            actionA.setIcon(R.drawable.ic_unfocuse);
+            actionA.setTitle("未关注");
         }
+        multipleActionsDown.setVisibility(View.VISIBLE);
+        actionC.setVisibility(View.GONE);
+        //        } else {
+        //            actionC.setVisibility(View.VISIBLE);
+        //            multipleActionsDown.setVisibility(View.GONE);
+        //        }
     }
 
     public void toastFocuseResult() {
@@ -347,7 +347,7 @@ public class DetailActivity extends BaseActivity {
         actionA.startAnimation(animation);
     }
 
-    @OnClick({R.id.action_a, R.id.action_b,R.id.action_c})
+    @OnClick({R.id.action_a, R.id.action_b, R.id.action_c})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.action_a:

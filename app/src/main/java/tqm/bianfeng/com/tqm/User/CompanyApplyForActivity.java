@@ -34,6 +34,7 @@ import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.CustomView.ToastType;
 import tqm.bianfeng.com.tqm.Dialog.BaseDialog;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.User.Fragment.ApplyDialogFragment;
 import tqm.bianfeng.com.tqm.Util.PermissionsHelper;
 import tqm.bianfeng.com.tqm.Util.PhotoGet;
 import tqm.bianfeng.com.tqm.application.BaseActivity;

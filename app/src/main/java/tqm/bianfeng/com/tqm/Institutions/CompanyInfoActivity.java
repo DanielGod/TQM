@@ -202,7 +202,7 @@ public class CompanyInfoActivity extends BaseActivity {
         addressTxt=(TextView) headerView.findViewById(R.id.address_txt);
         moreProfileLin=(LinearLayout) headerView.findViewById(R.id.more_profile_lin);
 
-        Picasso.with(this).load(NetWork.LOAD+data.getInstitutionIcon()).placeholder(R.drawable.banklogo).into(infoHeaderImg);
+        Picasso.with(this).load(NetWork.LOAD+data.getInstitutionIcon()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(infoHeaderImg);
         titleTxt.setText(data.getInstitutionName());
         profileTxt.setText("简介："+data.getProfile());
         callLin.setOnClickListener(new View.OnClickListener() {

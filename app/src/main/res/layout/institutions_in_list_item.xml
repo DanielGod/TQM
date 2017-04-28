@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:paddingLeft="@dimen/smallmdp"
-            android:paddingRight="@dimen/smallmdp">
+           >
 
             <TextView
                 android:id="@+id/ininName_txt"
@@ -61,22 +61,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:orientation="horizontal"
                 >
 
                 <TextView
                     android:id="@+id/profile_txt"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.3"
                     android:gravity="center_vertical"
-                    android:text="简介："
-                    android:maxLines="2"
+                    android:text="简介：级的加减法i是你过分了可播放抗拒不了咯额婢女可按付款的你发是女建安费如果不v大风车DSFCASF"
+                    android:maxLines="3"
                     android:ellipsize="end"
                     android:textColor="@color/font_black_2"
                     android:textSize="@dimen/smallsp"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/smallmdp"
                     />
 
             </LinearLayout>

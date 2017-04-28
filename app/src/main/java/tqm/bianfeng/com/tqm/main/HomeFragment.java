@@ -173,7 +173,11 @@ public class HomeFragment extends BaseFragment {
 
             }
         });
-        mListener.setToolBarColorBg(getAlph(scrollHeight,sliderHeight));
+        try {
+            mListener.setToolBarColorBg(getAlph(scrollHeight, sliderHeight));
+        }catch (Exception e){
+
+        }
     }
 
     public void initScroll(){
@@ -184,7 +188,10 @@ public class HomeFragment extends BaseFragment {
                 scrollHeight=y;
                 if(sliderHeight!=1) {
                     if(isNetWork) {
-                        mListener.setToolBarColorBg(getAlph(scrollHeight, sliderHeight));
+                        try {
+                            mListener.setToolBarColorBg(getAlph(scrollHeight, sliderHeight));
+                        }catch (Exception e){}
+
                     }
                 }
             }
@@ -616,7 +623,12 @@ public class HomeFragment extends BaseFragment {
 
             //根据滑动高度设置toolbar
             if(sliderHeight!=1) {
-                mListener.setToolBarColorBg(getAlph(scrollHeight, sliderHeight));
+                try {
+                    mListener.setToolBarColorBg(getAlph(scrollHeight, sliderHeight));
+                }catch (Exception e){
+
+                }
+
             }
         }
     }

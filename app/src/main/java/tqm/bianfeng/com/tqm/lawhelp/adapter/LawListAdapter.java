@@ -75,7 +75,7 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int p) {
         final ViewHolder mHolder = (ViewHolder) holder;
         mHolder.lawyerNameTxt.setText(datas.get(p).getLawyerName());
-        mHolder.contactTxt.setText("联系电话：" + datas.get(p).getContact());
+        mHolder.contactTxt.setText("联系电话"+datas.get(p).getContact());
 
 
 

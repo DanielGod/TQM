@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.User.Fragment.LoginRegisteredDialogFragment;
 import tqm.bianfeng.com.tqm.User.Presenter.ILoginRegisterPresenter;
 import tqm.bianfeng.com.tqm.User.Presenter.ILoginRegisterPresenterImpl;
 import tqm.bianfeng.com.tqm.User.Presenter.IUserWorkPresenter;
@@ -51,24 +52,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     EditText userPhongNumEdi;
     @BindView(R.id.user_login_registered_btn)
     Button userLoginRegisteredBtn;
-    @BindView(R.id.bank_activity_num_txt)
-    TextView bankActivityNumTxt;
-    @BindView(R.id.bank_activity_lin)
-    LinearLayout bankActivityLin;
-    @BindView(R.id.bank_make_money_num_txt)
-    TextView bankMakeMoneyNumTxt;
-    @BindView(R.id.bank_make_money_lin)
-    LinearLayout bankMakeMoneyLin;
-    @BindView(R.id.bank_loan_num_txt)
-    TextView bankLoanNumTxt;
-    @BindView(R.id.bank_loan_lin)
-    LinearLayout bankLoanLin;
-    @BindView(R.id.browsing_history_num_txt)
-    TextView browsingHistoryNumTxt;
-    @BindView(R.id.textView)
-    TextView textView;
-    @BindView(R.id.browsing_history_lin)
-    LinearLayout browsingHistoryLin;
+
     @BindView(R.id.textView3)
     TextView textView3;
     @BindView(R.id.user_feedback_lin)
@@ -82,6 +66,12 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     @BindView(R.id.user_apply_for_lin)
     LinearLayout userApplyForLin;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE2 = 7;
+    @BindView(R.id.bank_collection_lin)
+    LinearLayout bankCollectionLin;
+    @BindView(R.id.bank_focuse_lin)
+    LinearLayout bankFocuseLin;
+    @BindView(R.id.bank_browse_lin)
+    LinearLayout bankBrowseLin;
 
     public static UserFragment newInstance(String param1) {
         UserFragment fragment = new UserFragment();
@@ -91,31 +81,16 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         return fragment;
     }
 
-    @OnClick({R.id.user_apply_for_lin,user_circle_img, R.id.user_login_registered_btn, R.id.bank_activity_lin, R.id.bank_make_money_lin, R.id.bank_loan_lin, R.id.browsing_history_lin, R.id.user_feedback_lin})
+    @OnClick({R.id.bank_collection_lin, R.id.bank_focuse_lin, R.id.bank_browse_lin,R.id.user_apply_for_lin, user_circle_img, R.id.user_login_registered_btn, R.id.user_feedback_lin})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.bank_activity_lin:
-                if (isLogin()) {
-                    mListener.changeActivity(MyBankActivityActivity.class);
-                }
-                break;
-            case R.id.bank_make_money_lin:
-                if (isLogin()) {
-                    mListener.changeActivity(MyBankMakeMoneyActivity.class);
-                }
-                break;
-            case R.id.bank_loan_lin:
-                if (isLogin()) {
-                    mListener.changeActivity(MyBankLoanActivity.class);
-                }
-                break;
+
             case R.id.user_apply_for_lin:
 
-                    mListener.changeActivity(CompanyApplyForActivity.class);
+                mListener.changeActivity(CompanyApplyForActivity.class);
 
                 break;
-            case R.id.browsing_history_lin:
-                break;
+
             case R.id.user_feedback_lin:
                 mListener.changeActivity(UserFeedbackActivity.class);
                 break;
@@ -123,14 +98,31 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
                 showDialog();
                 break;
             case R.id.user_circle_img:
-                Log.i("gqf","user_circle_img");
+                Log.i("gqf", "user_circle_img");
                 if (isLogin()) {
                     mListener.changeUserHeadImg();
                 }
 
                 break;
+            case R.id.bank_collection_lin:
+                if(isLogin()){
+                    mListener.changeActivity(MyCollectionActivity.class);
+                }
+                break;
+            case R.id.bank_focuse_lin:
+                if(isLogin()){
+                    mListener.changeActivity(MyFocusActivity.class);
+                }
+                break;
+            case R.id.bank_browse_lin:
+                if(isLogin()){
+                    mListener.changeActivity(MyBrowseActivity.class);
+                }
+                break;
         }
     }
+
+
 
     public interface mListener {
         public void changeActivity(
@@ -162,10 +154,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     @Override
     public void onResume() {
         super.onResume();
-        //获取关注数量
-        if (realm.where(User.class).findFirst() != null) {
-            iUserWorkPresenter.getMyFocusMsgNum(mUser.getUserId());
-        }
+
     }
 
     @Override
@@ -195,8 +184,15 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             userRegisterPhoneNumTxt.setVisibility(View.VISIBLE);
             userRegisterPhoneNumTxt.setText(mUser.getUserPhone());
             userPhongNumEdi.setVisibility(View.GONE);
-            userLoginRegisteredBtn.setVisibility(View.INVISIBLE);
+            userLoginRegisteredBtn.setVisibility(View.GONE);
             userTopRel.setBackgroundResource(R.drawable.user_top_bg);
+            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) userCircleImg.getLayoutParams();
+            lp.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
+            lp.addRule(RelativeLayout.CENTER_VERTICAL);
+            userCircleImg.setLayoutParams(lp);
+            LinearLayout.LayoutParams linlp = (LinearLayout.LayoutParams) userTopRel.getLayoutParams();
+            linlp.height = (int) getResources().getDimension(R.dimen.hugehxxxxxxdp);
+            userTopRel.setLayoutParams(linlp);
             //显示头像
             resetUserHeadImg(true);
         }
@@ -253,17 +249,11 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         });
     }
 
-    //设置关注数量01-活动;02-理财;02-贷款
-    public void setTextNum(int num1, int num2, int num3, int num4) {
-        bankActivityNumTxt.setText(num1 + "");
-        bankMakeMoneyNumTxt.setText(num2 + "");
-        bankLoanNumTxt.setText(num3 + "");
-    }
 
     //获取主界面传递头像图片
     public void setUserHeadImg(File bitmap) {
         Bitmap bm = BitmapFactory.decodeFile(bitmap.getAbsolutePath());
-        if(bm==null){
+        if (bm == null) {
             Log.i("gqf", "bm==null");
         }
         userCircleImg.setImageBitmap(bm);

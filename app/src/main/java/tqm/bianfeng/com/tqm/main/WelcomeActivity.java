@@ -64,14 +64,14 @@ public class WelcomeActivity extends Activity {
 
                         @Override
                         public void onError(Throwable e) {
-                            Picasso.with(WelcomeActivity.this).load(R.drawable.startpage).into(startPageImg);
+                            Picasso.with(WelcomeActivity.this).load(R.drawable.qidongye).into(startPageImg);
                             countToEnter();
                         }
 
                         @Override
                         public void onNext(List<String> strings) {
                             Log.e("gqf","onNext"+strings.toString());
-                            Picasso.with(WelcomeActivity.this).load(NetWork.LOAD+strings.get(0)).into(startPageImg);
+                            Picasso.with(WelcomeActivity.this).load(NetWork.LOAD+strings.get(0)).error(R.drawable.qidongye).into(startPageImg);
                             countToEnter();
                         }
                     });

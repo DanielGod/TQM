@@ -60,6 +60,7 @@
                 android:background="@color/whitesmoke"
                 android:layout_height="@dimen/smallhdp"
                 app:tabSelectedTextColor="@color/colorPrimary"
+                app:tabIndicatorColor="@color/colorPrimary"
                 app:tabTextColor="@color/black"
                 android:layout_gravity="bottom" />
         </android.support.design.widget.CollapsingToolbarLayout>

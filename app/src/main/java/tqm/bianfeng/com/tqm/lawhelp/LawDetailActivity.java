@@ -93,7 +93,7 @@ public class LawDetailActivity extends BaseActivity {
     public void initWebView() {
         WebSettings settings = webView.getSettings();
         settings.setAppCacheEnabled(true);//设置启动缓存
-        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//缓存模式
+        //settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//缓存模式
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//4.4以下版本自适应页面大小 不能左右滑动
         //        1.NARROW_COLUMNS：可能的话使所有列的宽度不超过屏幕宽度
         //        2.NORMAL：正常显示不做任何渲染
@@ -173,7 +173,7 @@ public class LawDetailActivity extends BaseActivity {
         public void onError(Throwable e) {
             isInCollection = false;
             animation.cancel();
-            Toast.makeText(LawDetailActivity.this, "网络问题，收藏失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LawDetailActivity.this, "网络问题，关注失败", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -183,7 +183,7 @@ public class LawDetailActivity extends BaseActivity {
                 initactionASrc();
                 toastFocuseResult();
             } else {
-                Toast.makeText(LawDetailActivity.this, "收藏失败，请重试", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LawDetailActivity.this, "关注失败，请重试", Toast.LENGTH_SHORT).show();
             }
             isInCollection = false;
             animation.cancel();
@@ -236,15 +236,15 @@ public class LawDetailActivity extends BaseActivity {
 
     RotateAnimation animation;
 
-    //收藏网络接口调用
+    //关注网络接口调用
     public void actionAFocuse() {
-        //收藏当前文章
+        //关注当前文章
         if (realm.where(User.class).findFirst() == null) {
-            Toast.makeText(this, "请登录后再收藏", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请登录后再关注", Toast.LENGTH_SHORT).show();
         } else {
             if (!isInCollection) {
                 if (!isCollection) {
-                    //收藏
+                    //关注
                     Subscription subscription = NetWork.getUserService().attention(detailId, detailType, realm.where(User.class).findFirst().getUserId(), "01")
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -264,17 +264,17 @@ public class LawDetailActivity extends BaseActivity {
         }
     }
 
-    //收藏按钮背景变换
+    //关注按钮背景变换
     public void initactionASrc() {
         if (!detailType.equals("04")) {
             if (isCollection) {
-                //收藏状态
+                //关注状态
                 actionA.setIcon(R.drawable.ic_focuse);
-                actionA.setTitle("已收藏");
+                actionA.setTitle("已关注");
             } else {
-                //未收藏状态
+                //未关注状态
                 actionA.setIcon(R.drawable.ic_unfocuse);
-                actionA.setTitle("未收藏");
+                actionA.setTitle("未关注");
             }
             multipleActionsDown.setVisibility(View.VISIBLE);
             actionC.setVisibility(View.GONE);
@@ -286,11 +286,11 @@ public class LawDetailActivity extends BaseActivity {
 
     public void toastFocuseResult() {
         if (isCollection) {
-            //收藏成功
-            Toast.makeText(this, "收藏成功，请在猫舍查看", Toast.LENGTH_SHORT).show();
+            //关注成功
+            Toast.makeText(this, "关注成功，请在猫舍查看", Toast.LENGTH_SHORT).show();
         } else {
-            //取消收藏
-            Toast.makeText(this, "已取消收藏", Toast.LENGTH_SHORT).show();
+            //取消关注
+            Toast.makeText(this, "已取消关注", Toast.LENGTH_SHORT).show();
         }
     }
 

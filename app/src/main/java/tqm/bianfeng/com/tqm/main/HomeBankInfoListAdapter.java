@@ -88,10 +88,12 @@ public class HomeBankInfoListAdapter extends RecyclerView.Adapter<RecyclerView.V
         mHolder.bankInfoTimeTxt.setText(datas.get(p).getReleaseDate());
         mHolder.bankInfoTitleTxt.setText(datas.get(p).getInformTitle());
         Picasso.with(mContext).load(NetWork.LOAD + datas.get(p).getImageUrl())
-                .placeholder(R.drawable.banklogo)
+                .placeholder(R.drawable.ic_img_loading)
+                .error(R.drawable.ic_img_loading)
                 .into(mHolder.bankInfoImg);
 
         mHolder.readNum.setText("" + datas.get(p).getInformViews());
+        mHolder.companyNameTxt.setText(datas.get(p).getInstitutionName());
     }
 
     @Override
@@ -114,7 +116,8 @@ public class HomeBankInfoListAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView readNum;
         @BindView(R.id.bank_info_item_lin)
         LinearLayout bankInfoItemLin;
-
+        @BindView(R.id.company_name_txt)
+        TextView companyNameTxt;
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
