@@ -1,6 +1,8 @@
 package tqm.bianfeng.com.tqm.Institutions.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import tqm.bianfeng.com.tqm.pojo.InstitutionItem;
  */
 
 public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
 
 
     private Context mContext;
@@ -82,7 +85,17 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         mHolder.ininNameTxt.setText(datas.get(p).getInstitutionName());
         mHolder.contactTxt.setText("电话：" + datas.get(p).getContact());
         mHolder.profileTxt.setText("简介：" + datas.get(p).getProfile());
-        Picasso.with(mContext).load(NetWork.LOAD+datas.get(p).getInstitutionIcon()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(mHolder.ininImg);
+        Picasso.with(mContext).load(NetWork.LOAD + datas.get(p).getInstitutionIcon()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(mHolder.ininImg);
+
+
+        mHolder.callLin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentPhone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" +datas.get(p).getContact()));
+                intentPhone.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intentPhone);
+            }
+        });
     }
 
     @Override
@@ -104,6 +117,10 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         TextView contactTxt;
         @BindView(R.id.profile_txt)
         TextView profileTxt;
+        @BindView(R.id.call_lin)
+        LinearLayout callLin;
+        @BindView(R.id.collection_lin)
+        LinearLayout collectionLin;
         @BindView(R.id.inin_lin)
         LinearLayout ininLin;
 

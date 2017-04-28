@@ -43,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:orientation="horizontal"
                 >
 
@@ -61,7 +62,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:orientation="horizontal"
                 >
 
@@ -71,7 +72,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="简介：级的加减法i是你过分了可播放抗拒不了咯额婢女可按付款的你发是女建安费如果不v大风车DSFCASF"
-                    android:maxLines="3"
+                    android:lines="1"
                     android:ellipsize="end"
                     android:textColor="@color/font_black_2"
                     android:textSize="@dimen/smallsp"
@@ -79,7 +80,77 @@
                     />
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
+
+
+
+                <LinearLayout
+                    android:id="@+id/call_lin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/smallmdp"
+                        android:layout_marginBottom="@dimen/smallmdp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_call"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/tinymdp"
+                        android:text="呼叫"
+                        android:textColor="@color/blue_text"
+                        android:textSize="@dimen/smallsp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/collection_lin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/tinymdp"
+                        android:layout_marginBottom="@dimen/tinymdp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_collection"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/tinymdp"
+                        android:text="收藏"
+                        android:textColor="@color/cube_holo_orange_light"
+                        android:textSize="@dimen/smallsp"/>
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
