@@ -3,6 +3,7 @@ package tqm.bianfeng.com.tqm.bank.bankloan;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -84,24 +85,30 @@ public class BankLoanActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);//订阅
         //        mListener = (mListener) BankLoanActivity.this;
         setToolBar(getResources().getString(R.string.bankloan));
-        lodingIsFailOrSucess(1);
         mCompositeSubscription = new CompositeSubscription();
-        initDrawLayout();
-        initDate(null, pagNum, Constan.NOTPULLUP);
-        initRefreshlv();
+
+        initDrawLayout();//侧滑页面
         etSearch.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                //搜索框获取焦点
                 etSearch.setFocusableInTouchMode(true);
                 return false;
             }
         });
+    }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initRefreshlv();//刷新初始化加载
+        lodingIsFailOrSucess(1);//动画
+        initDate(null, pagNum, Constan.NOTPULLUP);
     }
 
     /**
      * 初始化资源加载动画
+     *
      * @param i
      */
     public void lodingIsFailOrSucess(int i) {
@@ -113,7 +120,6 @@ public class BankLoanActivity extends AppCompatActivity {
             YBJLoding.setBackgroundResource(R.drawable.loding_anim_lists);
             AnimationDrawable anim = (AnimationDrawable) YBJLoding.getBackground();
             anim.start();
-
         } else if (i == 2) {
             //加载成功
             YBJLoding.setBackground(null);
@@ -155,15 +161,30 @@ public class BankLoanActivity extends AppCompatActivity {
                     //清空预存集合
                     mAllBankLoanItems.clear();
                 }
-                initDate(null, pagNum, Constan.NOTPULLUP);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                SystemClock.sleep(1000);
+                                initDate(null, pagNum, Constan.NOTPULLUP);
+                            }
+                        }).start();
+
 
             }
+
             //上拉监听
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Log.i("Daniel", "---onPullUpToRefresh---");
                 pagNum = pagNum + 1;
-                initDate(null, pagNum, Constan.PULLUP);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SystemClock.sleep(1000);
+                        initDate(null, pagNum, Constan.PULLUP);
+                    }
+                }).start();
+
             }
         });
 
@@ -176,6 +197,7 @@ public class BankLoanActivity extends AppCompatActivity {
         initDate(event.getFilterValue(), pagNum, Constan.NOTPULLUP);
 
     }
+
     //接受跳转详情广播
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread2(ListItemPositioin event) {
@@ -192,10 +214,11 @@ public class BankLoanActivity extends AppCompatActivity {
 
     /**
      * 初始化titleBar
+     *
      * @param s
      */
     private void setToolBar(String s) {
-//        toolbar.setTitle(s);
+        //        toolbar.setTitle(s);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -311,7 +334,7 @@ public class BankLoanActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.etSearch:
-//                etSearch.setFocusableInTouchMode(true);
+                //                etSearch.setFocusableInTouchMode(true);
                 break;
             case R.id.ll_filter:
                 drawerLayout.openDrawer(drawerContent);

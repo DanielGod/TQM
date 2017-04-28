@@ -175,7 +175,7 @@
     android:layout_marginRight="@dimen/mediummdp"
     <!--极速贷款-理财推荐-热门活动-左橘色线条-->
     <style name="sty_home_title_line_tv">
-        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_width">2dp</item>
         <item name="android:layout_height">match_parent</item>
        <item name="android:background">@color/home_orange</item>
         <item name="android:layout_marginRight">@dimen/tinymdp</item>

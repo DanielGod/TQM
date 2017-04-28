@@ -11,6 +11,7 @@ public class BankInformItem {
     private String institutionName;
     private Integer informType;
     private Integer informViews;
+    private String  imageUrl;
 
     @Override
     public String toString() {
@@ -21,7 +22,16 @@ public class BankInformItem {
                 ", institutionName='" + institutionName + '\'' +
                 ", informType=" + informType +
                 ", informViews=" + informViews +
+                ", imageUrl='" + imageUrl + '\'' +
                 '}';
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Integer getInformId() {
