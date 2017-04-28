@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/mediummdp"
-            android:drawableLeft="@drawable/patrol_heading"
+            android:drawableLeft="@drawable/patrol_heading1"
             android:gravity="center"
             android:textColor="@color/black"
             android:drawablePadding="5dp"

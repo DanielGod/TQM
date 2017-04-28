@@ -337,7 +337,7 @@ public class BankLoanActivity extends AppCompatActivity {
                 //                etSearch.setFocusableInTouchMode(true);
                 break;
             case R.id.ll_filter:
-                drawerLayout.openDrawer(drawerContent);
+//                drawerLayout.openDrawer(drawerContent);//筛选页
                 break;
             case R.id.ivDeleteText:
                 etSearch.setText("");

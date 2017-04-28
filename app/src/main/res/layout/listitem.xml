@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:text="4.0%"
             android:textSize="@dimen/bigsp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/home_orange"
             android:gravity="center_horizontal|bottom"
             />
         <TextView
@@ -37,7 +37,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="年利率"
-            android:textColor="@color/black"
+            android:textColor="@color/home_hotActivity_gray6"
             android:gravity="center_horizontal"
             />
 
@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:textColor="@color/black"
+                android:textColor="@color/home_orange"
                 android:lines="1"
                 android:ellipsize="end"
                 android:textSize="@dimen/mediumsp"
@@ -95,12 +95,12 @@
                         android:text="起购金额："
                         android:textSize="@dimen/smallsp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/black"
+                        android:textColor="@color/home_hotActivity_gray3"
                         />
                 <TextView
                     android:id="@+id/purchaseMoney_tv"
                    style="@style/listitemLayout_tv"
-                    android:textColor="@color/blue_text"
+                    android:textColor="@color/home_hotActivity_gray9"
                     />
                     </LinearLayout>
                 <LinearLayout
@@ -145,12 +145,12 @@
                     android:text="最高贷款(万)："
                     android:textSize="@dimen/smallsp"
                     android:gravity="center_vertical"
-                    android:textColor="@color/black"
+                    android:textColor="@color/home_hotActivity_gray3"
                     />
                 <TextView
                     android:id="@+id/loanMoney_tv"
                     style="@style/listitemLayout_tv"
-                    android:textColor="@color/blue_text"
+                    android:textColor="@color/home_hotActivity_gray9"
                     />
             </LinearLayout>
                 <LinearLayout
@@ -166,11 +166,12 @@
                         android:text="贷款类型："
                         android:textSize="@dimen/smallsp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/black"
+                        android:textColor="@color/home_hotActivity_gray3"
                         />
                     <TextView
                         android:id="@+id/loanTypeName_tv"
                         style="@style/listitemLayout_tv"
+                        android:textColor="@color/home_hotActivity_gray9"
                         />
                 </LinearLayout>
             </LinearLayout>
@@ -187,11 +188,12 @@
                     android:text="期限："
                     android:textSize="@dimen/smallsp"
                     android:gravity="center_vertical"
-                    android:textColor="@color/black"
+                    android:textColor="@color/home_hotActivity_gray3"
                     />
                 <TextView
                     android:id="@+id/investmentTerm_tv"
                     style="@style/listitemLayout_tv"
+                    android:textColor="@color/home_hotActivity_gray9"
                     />
             </LinearLayout>
 
@@ -217,8 +219,10 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/institution"
+                    android:src="@drawable/institution1"
                     android:adjustViewBounds="true"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6"
                     android:paddingRight="5dp"
                     />
                 <TextView
@@ -235,12 +239,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:visibility="gone"
+                android:gravity="center_vertical"
                 >
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/eye"
+                    android:src="@drawable/eye3"
+                    android:paddingLeft="2dp"
                     android:scaleX="0.8"
                     android:scaleY="0.8"
                     android:scaleType="centerInside"

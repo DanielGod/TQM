@@ -88,7 +88,7 @@
                     <ImageView
                         android:layout_width="@dimen/bigmdp"
                         android:layout_height="match_parent"
-                        android:src="@drawable/eye"
+                        android:src="@drawable/eye3"
                         android:adjustViewBounds="true"
                         android:paddingRight="5dp"
                         />
@@ -102,8 +102,9 @@
                         android:lines="1"
                         android:text="0"
                         android:textSize="@dimen/smallsp"
+                        android:paddingLeft="@dimen/tinymdp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/blue_text"
+                        android:textColor="@color/home_hotActivity_gray9"
                         />
                 </LinearLayout>
 
