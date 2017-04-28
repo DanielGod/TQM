@@ -3,6 +3,7 @@ package tqm.bianfeng.com.tqm.bank.bankfinancing;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -84,11 +85,11 @@ public class BankFinancingActivity extends AppCompatActivity {
         unbinder = ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         setToolBar(getResources().getString(R.string.bankFinancing));
+        initRefreshlv();
         lodingIsFailOrSucess(1);
         mCompositeSubscription = new CompositeSubscription();
         initDrawLayout();
         initDate(null, pagNum, Constan.NOTPULLUP);
-        initRefreshlv();
         etSearch.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -146,7 +147,14 @@ public class BankFinancingActivity extends AppCompatActivity {
 
                     mAllBankLoanItems.clear();
                 }
-                initDate(null, pagNum, Constan.NOTPULLUP);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SystemClock.sleep(1000);
+                        initDate(null, pagNum, Constan.NOTPULLUP);
+                    }
+                }).start();
+
 
             }
 
@@ -155,7 +163,14 @@ public class BankFinancingActivity extends AppCompatActivity {
                 Log.i("Daniel", "---onPullUpToRefresh---");
                 pagNum = pagNum + 1;
                 Log.i("Daniel", "---onPullUpToRefresh---" + pagNum);
-                initDate(null, pagNum, Constan.PULLUP);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SystemClock.sleep(1000);
+                        initDate(null, pagNum, Constan.PULLUP);
+                    }
+                }).start();
+
             }
         });
 

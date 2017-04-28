@@ -3,6 +3,7 @@ package tqm.bianfeng.com.tqm.bank.bankactivitys;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -70,6 +71,7 @@ public class BankActivitonsActivity extends AppCompatActivity {
     private int mPagItemSize = 0;
     private List<BankActivityItem> mAllBankLoanItems;
     private BankActivitionsAdapter bankActivitionsAdapter;
+    private boolean mIsbottom = false;//判断数据加载完毕
 
 
     @Override
@@ -81,9 +83,9 @@ public class BankActivitonsActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         //        initDrawLayout();
         setToolBar(getResources().getString(R.string.bankActivity));
+        initRefreshlv();
         lodingIsFailOrSucess(1);
         initDate(pagNum, Constan.NOTPULLUP);
-        initRefreshlv();
 
         etSearch.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -135,6 +137,8 @@ public class BankActivitonsActivity extends AppCompatActivity {
         startLayout.setPullLabel(getResources().getString(R.string.pullRefresh));
         startLayout.setRefreshingLabel(getResources().getString(R.string.loading));
         startLayout.setReleaseLabel(getResources().getString(R.string.releaseRefresh));
+
+
         mainPullRefreshLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @DebugLog
             @Override
@@ -144,7 +148,14 @@ public class BankActivitonsActivity extends AppCompatActivity {
                 if (mAllBankLoanItems!=null){
                     mAllBankLoanItems.clear();
                 }
-                initDate(pagNum, Constan.NOTPULLUP);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SystemClock.sleep(1000);
+                        initDate(pagNum, Constan.NOTPULLUP);
+                    }
+                }).start();
+
 
             }
 
@@ -152,10 +163,16 @@ public class BankActivitonsActivity extends AppCompatActivity {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Log.i("Daniel", "---onPullUpToRefresh---");
-                pagNum = pagNum + 1;
-                initDate(pagNum, Constan.PULLUP);
 
-            }
+                    pagNum = pagNum + 1;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            SystemClock.sleep(1000);
+                            initDate(pagNum, Constan.PULLUP);
+                        }
+                    }).start();
+                }
         });
 
     }
@@ -187,6 +204,7 @@ public class BankActivitonsActivity extends AppCompatActivity {
                             mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
                         } else if (mPagItemSize > 0 && mPagItemSize < Constan.PAGESIZE) {
                                 mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                            mIsbottom=true;
                         } else {
                             mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
                         }

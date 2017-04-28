@@ -4,16 +4,40 @@
               android:layout_width="match_parent"
               android:layout_height="@dimen/hugehxxxdp"
               android:layout_margin="@dimen/smallmdp"
-              android:background="@color/white"
+              android:background="?android:selectableItemBackground"
+              android:clickable="true"
 
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
         android:background="@color/white"
-        android:padding="@dimen/smallmdp"
-        android:orientation="vertical"
+
         >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="@dimen/tinymdp"
+            >
+            <ImageView
+                android:id="@+id/bankinformation_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/hotactivity_2"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:padding="@dimen/smallmdp"
+            android:orientation="vertical"
+            android:layout_weight="2"
+            >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -32,76 +56,64 @@
                     android:textColor="@color/black"
                     />
             </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            >
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                >
 
-
-
-                <TextView
-                    android:id="@+id/institutionName_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:text="发行机构"
-                    android:textSize="@dimen/smallsp"
-                    android:gravity="center_vertical"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.5">
-
-                <TextView
-                    android:id="@+id/time_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="0"
-                    android:textSize="@dimen/smallsp"
-                    android:gravity="center_vertical"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="@dimen/bigmdp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/eye"
-                    android:adjustViewBounds="true"
-                    android:paddingRight="5dp"
-                    />
-
-                <TextView
-                    android:id="@+id/Views_tv"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="0"
-                    android:textSize="@dimen/smallsp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/blue_text"
-                    />
+                    android:layout_weight="2">
+
+
+
+                    <TextView
+                        android:id="@+id/institutionName_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:text="发行机构"
+                        android:textSize="@dimen/smallsp"
+                        android:gravity="center_vertical"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="@dimen/bigmdp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/eye"
+                        android:adjustViewBounds="true"
+                        android:paddingRight="5dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/Views_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="0"
+                        android:textSize="@dimen/smallsp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/blue_text"
+                        />
+                </LinearLayout>
+
             </LinearLayout>
 
+
+
+
         </LinearLayout>
-
-
-
-
     </LinearLayout>
+
+
 </LinearLayout>

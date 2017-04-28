@@ -5,13 +5,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.BankInformItem;
 
 /**
@@ -24,6 +28,7 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
 
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
+
 
 
     public TestRecyclerViewAdapter(Context mContext, List<BankInformItem> datas) {
@@ -48,12 +53,13 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
 
     @Override
     public int getItemCount() {
-        return datas!=null ? datas.size():0;
+        return datas != null ? datas.size() : 0;
     }
 
     public interface BankInformItemClickListener {
         public void OnClickListener(int position);
     }
+
     /**
      * 设置Item点击监听
      *
@@ -81,24 +87,24 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
         //                };
         //            }
         //        }
-        return new ViewHolder(view,mItemClickListener);
+        return new ViewHolder(view, mItemClickListener);
     }
 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        switch (getItemViewType(position)) {
-//            case TYPE_HEADER:
-//                break;
-//            case TYPE_CELL:
-//                break;
-//        }
+        //        switch (getItemViewType(position)) {
+        //            case TYPE_HEADER:
+        //                break;
+        //            case TYPE_CELL:
+        //                break;
+        //        }
         ViewHolder viewHolder = (ViewHolder) holder;
         BankInformItem data = datas.get(position);
         viewHolder.institutionNameTv.setText(data.getInstitutionName());
-        viewHolder.timeTv.setText(data.getReleaseDate());
-        viewHolder.TitleTv.setText(data.getInformTitle());
-        viewHolder.ViewsTv.setText(data.getInformViews()+"");
+        Picasso.with(mContext).load(NetWork.LOAD+data.getImageUrl()).placeholder(R.drawable.hotactivity_2).into( viewHolder.bankinformationImg);
+
+        viewHolder.ViewsTv.setText(data.getInformViews() + "");
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -107,8 +113,8 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
         TextView TitleTv;
         @BindView(R.id.institutionName_tv)
         TextView institutionNameTv;
-        @BindView(R.id.time_tv)
-        TextView timeTv;
+        @BindView(R.id.bankinformation_img)
+        ImageView bankinformationImg;
         @BindView(R.id.Views_tv)
         TextView ViewsTv;
 
@@ -125,7 +131,7 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
 
         @Override
         public void onClick(View v) {
-            if (mItemClickListener!=null){
+            if (mItemClickListener != null) {
                 mItemClickListener.OnClickListener(getPosition());
             }
         }

@@ -42,7 +42,7 @@ public class RecyclerViewFragment extends Fragment {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    private int position = 0;
+    private int position = 0;//1：银行咨询 2：热点资讯 3：财富资讯
     private int pagNum = 1;
     private int mPagItemSize = 0;
     private CompositeSubscription mCompositeSubscription;
@@ -75,7 +75,7 @@ public class RecyclerViewFragment extends Fragment {
         Log.e("Daniel", "---type---" + type);
         Log.e("Daniel", "---pagNum---" + pagNum);
         Subscription getBankInformItem_subscription = NetWork.getBankService()
-                .getBankInformItem(type, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE)
+                .getBankInformItem(type, Constan.HOMESHOW_FALSE, pagNum, ITEM_COUNT)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<BankInformItem>>() {
@@ -148,5 +148,6 @@ public class RecyclerViewFragment extends Fragment {
         mCompositeSubscription = new CompositeSubscription();
         //        initRefreshlv();
         initDate(position + 1, pagNum);
+
     }
 }

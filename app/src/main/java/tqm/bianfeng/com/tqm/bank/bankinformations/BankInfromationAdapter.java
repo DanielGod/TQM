@@ -5,12 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import hugo.weaving.DebugLog;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.BankInformItem;
 
 /**
@@ -51,7 +55,7 @@ public class BankInfromationAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.TitleTv = (TextView) convertView.findViewById(R.id.Title_tv);
             holder.institutionNameTv = (TextView) convertView.findViewById(R.id.institutionName_tv);
-            holder.timeTv = (TextView) convertView.findViewById(R.id.time_tv);
+            holder.img = (ImageView) convertView.findViewById(R.id.bankinformation_img);
             holder.ViewsTv = (TextView) convertView.findViewById(R.id.Views_tv);
             convertView.setTag(holder);
         } else {
@@ -60,7 +64,7 @@ public class BankInfromationAdapter extends BaseAdapter {
         BankInformItem data = getItem(position);
         holder.TitleTv.setText(data.getInformTitle());
         holder.institutionNameTv.setText(data.getInstitutionName());
-        holder.timeTv.setText(data.getReleaseDate());
+        Picasso.with(mContext).load(NetWork.LOAD+data.getImageUrl()).placeholder(R.drawable.hotactivity_1).into(holder.img);
         holder.ViewsTv.setText(data.getInformViews()+"");
 
         return convertView;
@@ -76,7 +80,7 @@ public class BankInfromationAdapter extends BaseAdapter {
     static class ViewHolder {
         TextView TitleTv;
         TextView institutionNameTv;
-        TextView timeTv;
+        ImageView img;
         TextView ViewsTv;
     }
 
