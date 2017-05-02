@@ -121,7 +121,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/tinymdp"
-                        android:text="收藏"
+                        android:text="未收藏"
                         android:textColor="@color/cube_holo_orange_light"
                         android:textSize="@dimen/mediumsp"/>
                 </LinearLayout>

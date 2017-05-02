@@ -10,6 +10,7 @@ import retrofit2.http.Path;
 import rx.Observable;
 import tqm.bianfeng.com.tqm.pojo.InstitutionItem;
 import tqm.bianfeng.com.tqm.pojo.LawFirmOrInstitutionDetail;
+import tqm.bianfeng.com.tqm.pojo.ResultCode;
 
 /**
  * Created by johe on 2017/4/11.
@@ -43,4 +44,25 @@ public interface InstitutionService {
      */
     @GET("instit/getFinanceDetail/{institutionId}")
     Observable<LawFirmOrInstitutionDetail> getFinanceDetail(@Path("institutionId") int institutionId);
+
+    /**
+     * 收藏或取消收藏
+     */
+    @FormUrlEncoded
+    @POST("collect/saveOrUpdate")
+    Observable<ResultCode> saveOrUpdate(@Field("objectId") Integer objectId,
+                                        @Field("collectType") String collectType,
+                                        @Field("userId") String userId,
+                                        @Field("collectStatus") String collectStatus
+
+    );
+
+    /**
+     * 获取收藏列表
+     */
+    @FormUrlEncoded
+    @POST("collect/getInstitutionItem")
+    Observable<List<InstitutionItem>> getCollectInstitutionItem(@Field("collectType") String collectType,
+                                                         @Field("userId") Integer userId
+                                                         );
 }

@@ -32,6 +32,7 @@ import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.InstitutionItem;
+import tqm.bianfeng.com.tqm.pojo.User;
 
 /**
  * Created by johe on 2017/4/10.
@@ -87,7 +88,7 @@ public class MyCollectionLawAndCompanyFragment extends BaseFragment {
         if (datas.size() > 0) {
             loadMoreViewAnim(1);
         }
-        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getInstitutionItem("0" + (index + 1), page + 1, 10)
+        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getCollectInstitutionItem("0" + (index + 1), realm.where(User.class).findFirst().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<InstitutionItem>>() {
@@ -112,18 +113,7 @@ public class MyCollectionLawAndCompanyFragment extends BaseFragment {
                         page++;
                         initList(datas);
                         lodingIsFailOrSucess(2);
-
-                        //加载更多判断
-                        if (datas.size() < 10) {
-                            //隐藏
-                            loadMoreViewAnim(4);
-                        } else if (datas.size() > 10 && institutionItems.size() < 10) {
-                            //没有更多
-                            loadMoreViewAnim(3);
-                        } else {
-                            //加载完成
-                            loadMoreViewAnim(2);
-                        }
+                        loadMoreViewAnim(4);
                     }
                 });
 

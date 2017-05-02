@@ -29,11 +29,20 @@ public class LawFirmOrInstitutionDetail {
     private String contact;
     private String profile;
     private String address;
+    private String isCollect;
 
     private List<LawyerItem> lawyers;
     private List<BankActivityItem> activities;
     private List<BankLoanItem> loans;
     private List<BankFinancItem> financs;
+
+    public String getIsCollect() {
+        return isCollect;
+    }
+
+    public void setIsCollect(String isCollect) {
+        this.isCollect = isCollect;
+    }
 
     public int getInstitutionId() {
         return institutionId;
@@ -124,6 +133,7 @@ public class LawFirmOrInstitutionDetail {
                 ", contact='" + contact + '\'' +
                 ", profile='" + profile + '\'' +
                 ", address='" + address + '\'' +
+                ", isCollect='" + isCollect + '\'' +
                 ", lawyers=" + lawyers +
                 ", activities=" + activities +
                 ", loans=" + loans +

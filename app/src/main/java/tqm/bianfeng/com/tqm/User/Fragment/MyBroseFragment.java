@@ -173,7 +173,11 @@ public class MyBroseFragment extends BaseFragment {
                     public void onNext(List<BankFinancItem> bankFinancItems) {
                         BankFinancItems = bankFinancItems;
                         initFinancList(BankFinancItems);
-                        toastTxt.setVisibility(View.GONE);
+                        if(BankFinancItems.size()!=0){
+                            toastTxt.setVisibility(View.GONE);
+                        }else{
+                            toastTxt.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
         compositeSubscription.add(subscription);
@@ -198,7 +202,11 @@ public class MyBroseFragment extends BaseFragment {
                     public void onNext(List<BankInformItem> bankInformItems) {
                         BankInformItems = bankInformItems;
                         initInfoList(BankInformItems);
-                        toastTxt.setVisibility(View.GONE);
+                        if(BankInformItems.size()!=0){
+                            toastTxt.setVisibility(View.GONE);
+                        }else{
+                            toastTxt.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
         compositeSubscription.add(subscription);
@@ -223,7 +231,11 @@ public class MyBroseFragment extends BaseFragment {
                     public void onNext(List<LawyerItem> lawyerItems) {
                         LawyerItems = lawyerItems;
                         initLawList(LawyerItems);
-                        toastTxt.setVisibility(View.GONE);
+                        if(LawyerItems.size()!=0){
+                            toastTxt.setVisibility(View.GONE);
+                        }else{
+                            toastTxt.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
         compositeSubscription.add(subscription);
@@ -247,7 +259,11 @@ public class MyBroseFragment extends BaseFragment {
                     public void onNext(List<BankLoanItem> bankLoanItems) {
                         BankLoanItems = bankLoanItems;
                         initLoanList(BankLoanItems);
-                        toastTxt.setVisibility(View.GONE);
+                        if(BankLoanItems.size()!=0){
+                            toastTxt.setVisibility(View.GONE);
+                        }else{
+                            toastTxt.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
         compositeSubscription.add(subscription);
@@ -272,7 +288,11 @@ public class MyBroseFragment extends BaseFragment {
                     public void onNext(List<BankActivityItem> bankActivityItems) {
                         BankActivityItems = bankActivityItems;
                         initActivityList(BankActivityItems);
-                        toastTxt.setVisibility(View.GONE);
+                        if(BankActivityItems.size()!=0){
+                            toastTxt.setVisibility(View.GONE);
+                        }else{
+                            toastTxt.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
         compositeSubscription.add(subscription);

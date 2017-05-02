@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -30,6 +31,8 @@ import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.LawFirmOrInstitutionDetail;
+import tqm.bianfeng.com.tqm.pojo.ResultCode;
+import tqm.bianfeng.com.tqm.pojo.User;
 
 /**
  * Created by johe on 2017/4/10.
@@ -222,8 +225,16 @@ public class CompanyInfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //收藏
+                if(realm.where(User.class).findAll()!=null){
+                    saveOrUpdate();
+                }else{
+                    Toast.makeText(getApplicationContext(), "请登录后再收藏", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
+
+
         phoneNumTxt.setText("电话："+data.getContact());
         addressTxt.setText("地址："+data.getAddress());
         moreProfileLin.setOnClickListener(new View.OnClickListener() {
@@ -274,6 +285,40 @@ public class CompanyInfoActivity extends BaseActivity {
                 return false;
             }
         });
+    }
+    public void saveOrUpdate(){
+        String userId="";
+        if(realm.where(User.class).findFirst()!=null){
+            userId=realm.where(User.class).findFirst().getUserId()+"";
+        }
+        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().saveOrUpdate(InstitutionId,
+                userId,"0"+(index+1),data.getIsCollect())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResultCode>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultCode resultCode) {
+                        if(resultCode.getCode()==ResultCode.SECCESS){
+                            if(data.getIsCollect().equals("1")){
+
+                            }else{
+
+                            }
+                        }
+                    }
+                });
+
+        compositeSubscription.add(getBankFinancItem_subscription);
     }
 
 }

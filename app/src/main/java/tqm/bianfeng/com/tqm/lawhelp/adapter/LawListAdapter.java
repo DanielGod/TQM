@@ -106,10 +106,10 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mHolder.collectionLin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //mItemClickListener.CollectionClick(p);
+                mItemClickListener.CollectionClick(p);
             }
         });
-        mHolder.collectionLin.setVisibility(View.GONE);
+        //mHolder.collectionLin.setVisibility(View.GONE);
     }
 
     @Override
