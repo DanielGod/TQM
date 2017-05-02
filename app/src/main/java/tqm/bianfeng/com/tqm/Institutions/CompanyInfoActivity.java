@@ -306,8 +306,15 @@ public class CompanyInfoActivity extends BaseActivity {
         if(realm.where(User.class).findFirst()!=null){
             userId=realm.where(User.class).findFirst().getUserId()+"";
         }
+        String isCollect="";
+        if(data.getIsCollect().equals("01")){
+            isCollect="02";
+        }else {
+            isCollect="01";
+        }
+
         Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().saveOrUpdate(InstitutionId,
-                userId,"0"+(index+1),data.getIsCollect())
+                userId,"0"+(index+1),isCollect)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResultCode>() {
@@ -325,7 +332,7 @@ public class CompanyInfoActivity extends BaseActivity {
                     public void onNext(ResultCode resultCode) {
                         if(resultCode.getCode()==ResultCode.SECCESS){
                             if(data.getIsCollect().equals("01")){
-                                data.setIsCollect("00");
+                                data.setIsCollect("02");
                                 isCollectTxt.setText("未收藏");
                             }else {
                                 data.setIsCollect("01");
