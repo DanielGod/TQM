@@ -313,6 +313,7 @@ public class CompanyInfoActivity extends BaseActivity {
             isCollect="01";
         }
 
+
         Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().saveOrUpdate(InstitutionId,
                 userId,"0"+(index+1),isCollect)
                 .subscribeOn(Schedulers.io())
