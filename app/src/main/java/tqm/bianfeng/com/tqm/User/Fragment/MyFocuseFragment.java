@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,6 +51,9 @@ public class MyFocuseFragment extends BaseFragment {
     @BindView(R.id.toast_txt)
     TextView toastTxt;
 
+    private static final String TYPE="getMyAttentionItem";
+    Gson gson;
+
     public static MyFocuseFragment newInstance(int position) {
         MyFocuseFragment fragment = new MyFocuseFragment();
         Bundle args = new Bundle();
@@ -71,21 +76,94 @@ public class MyFocuseFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_focuse, container, false);
         ButterKnife.bind(this, view);
-       if(index==0){
+               if(index==0){
 
-           initActivityData();
-       }else if(index==1){
+                   initActivityData();
+               }else if(index==1){
 
-           initFinancData();
-       }else if(index==2){
+                   initFinancData();
+               }else if(index==2){
 
-           initLoanData();
-       }
+                   initLoanData();
+               }else if(index==3){
+                   initInfoData();
+               }else if(index==4){
+                   initLawyerData();
+               }
 
+        //initData();
         return view;
     }
+
+    List<BankActivityItem> BankActivityItems;
+    List<BankLoanItem> BankLoanItems;
+    List<BankFinancItem> BankFinancItems;
+    List<LawyerItem> LawyerItems;
+    List<BankInformItem> BankInformItems;
+
+//    public void initData() {
+//        gson = new Gson();
+//        Subscription subscription = NetWork.getUserService().getMyAttentionItem(TYPE,"0" + (index + 1), realm.where(User.class).findFirst().getUserId())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<List<Object>>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.i("gqf","onError"+e.toString());
+//                    }
+//
+//                    @Override
+//                    public void onNext(List<Object> strings) {
+//                        Log.i("gqf",strings.toString());
+//                        if (index == 0) {
+//                            //活动
+//                            BankActivityItems = new ArrayList<>();
+//                            for (Object json : strings) {
+//                                BankActivityItems.add(gson.fromJson(json.toString(), BankActivityItem.class));
+//                            }
+//                            initActivityList(BankActivityItems);
+//                        } else if (index == 1) {
+//                            //理财
+//                            BankFinancItems = new ArrayList<>();
+//                            for (Object json : strings) {
+//                                BankFinancItems.add(gson.fromJson(json.toString(), BankFinancItem.class));
+//                            }
+//                            initFinancList(BankFinancItems);
+//                        } else if (index == 2) {
+//                            //贷款
+//                            BankLoanItems = new ArrayList<>();
+//                            for (Object json : strings) {
+//                                BankLoanItems.add(gson.fromJson(json.toString(), BankLoanItem.class));
+//                            }
+//                            initLoanList(BankLoanItems);
+//                        } else if (index == 3) {
+//                            //资讯
+//                            BankInformItems = new ArrayList<>();
+//                            for (Object json : strings) {
+//                                BankInformItems.add(gson.fromJson(json.toString(), BankInformItem.class));
+//                            }
+//                            initInfoList(BankInformItems);
+//                        } else if (index == 4) {
+//                            //律师
+//                            LawyerItems = new ArrayList<>();
+//                            for (Object json : strings) {
+//                                LawyerItems.add(gson.fromJson(json.toString(), LawyerItem.class));
+//                            }
+//                            initLawList(LawyerItems);
+//                        }
+//                        toastTxt.setVisibility(View.GONE);
+//                    }
+//                });
+//        compositeSubscription.add(subscription);
+//    }
+
     public void initFinancData() {
-        Subscription subscription = NetWork.getUserService().getMyAttentionOfBankFinanc(realm.where(User.class).findFirst().getUserId())
+        Subscription subscription = NetWork.getUserService().getMyAttentionItem02(TYPE,realm.where(User.class).findFirst().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<BankFinancItem>>() {
@@ -108,8 +186,56 @@ public class MyFocuseFragment extends BaseFragment {
                 });
         compositeSubscription.add(subscription);
     }
+    public void initInfoData() {
+        Subscription subscription = NetWork.getUserService().getMyAttentionItem04(TYPE,realm.where(User.class).findFirst().getUserId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<BankInformItem>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<BankInformItem> bankInformItems) {
+                        BankInformItems = bankInformItems;
+                        initInfoList(BankInformItems);
+                        toastTxt.setVisibility(View.GONE);
+                    }
+                });
+        compositeSubscription.add(subscription);
+    }
+    public void initLawyerData() {
+        Subscription subscription = NetWork.getUserService().getMyAttentionItem05(TYPE,realm.where(User.class).findFirst().getUserId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<LawyerItem>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<LawyerItem> lawyerItems) {
+                        LawyerItems = lawyerItems;
+                        initLawList(LawyerItems);
+                        toastTxt.setVisibility(View.GONE);
+                    }
+                });
+        compositeSubscription.add(subscription);
+    }
     public void initLoanData() {
-        Subscription subscription = NetWork.getUserService().getMyAttentionOfBankLoan(realm.where(User.class).findFirst().getUserId())
+        Subscription subscription = NetWork.getUserService().getMyAttentionItem03(TYPE,realm.where(User.class).findFirst().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<BankLoanItem>>() {
@@ -131,8 +257,9 @@ public class MyFocuseFragment extends BaseFragment {
                 });
         compositeSubscription.add(subscription);
     }
+
     public void initActivityData() {
-        Subscription subscription = NetWork.getUserService().getMyAttentionOfBankActivity(realm.where(User.class).findFirst().getUserId())
+        Subscription subscription = NetWork.getUserService().getMyAttentionItem01(TYPE,realm.where(User.class).findFirst().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<BankActivityItem>>() {
@@ -155,11 +282,6 @@ public class MyFocuseFragment extends BaseFragment {
                 });
         compositeSubscription.add(subscription);
     }
-    List<BankActivityItem> BankActivityItems;
-    List<BankLoanItem> BankLoanItems;
-    List<BankFinancItem> BankFinancItems;
-    List<LawyerItem> LawyerItems;
-    List<BankInformItem> BankInformItems;
 
 
     HomeBankActivitysListAdapter bankActivitionsAdapter;
@@ -168,7 +290,7 @@ public class MyFocuseFragment extends BaseFragment {
     LawListAdapter lawListAdapter;
     HomeBankInfoListAdapter homeBankInfoListAdapter;
 
-    public void initInfoList(List<BankInformItem> datas){
+    public void initInfoList(List<BankInformItem> datas) {
         if (homeBankInfoListAdapter == null) {
             myFocuseList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
             homeBankInfoListAdapter = new HomeBankInfoListAdapter(getActivity(), datas);
@@ -190,7 +312,7 @@ public class MyFocuseFragment extends BaseFragment {
     }
 
     public void initActivityList(List<BankActivityItem> datas) {
-        if(bankActivitionsAdapter==null) {
+        if (bankActivitionsAdapter == null) {
             bankActivitionsAdapter = new HomeBankActivitysListAdapter(getActivity(), datas);
             bankActivitionsAdapter.setOnItemClickListener(new HomeBankActivitysListAdapter.HomeBankActivitysItemClickListener() {
                 @Override
@@ -204,13 +326,13 @@ public class MyFocuseFragment extends BaseFragment {
             });
             myFocuseList.setLayoutManager(new LinearLayoutManager(getActivity()));
             myFocuseList.setAdapter(bankActivitionsAdapter);
-        }else{
+        } else {
             bankActivitionsAdapter.update(datas);
         }
     }
 
     public void initLoanList(List<BankLoanItem> datas) {
-        if(bankLoanAdapter==null) {
+        if (bankLoanAdapter == null) {
             bankLoanAdapter = new HomeBankLoanListAdapter(getActivity(), datas);
             bankLoanAdapter.setBgNull();
             bankLoanAdapter.setOnItemClickListener(new HomeBankLoanListAdapter.HomeBankLoanClickListener() {
@@ -225,13 +347,13 @@ public class MyFocuseFragment extends BaseFragment {
             });
             myFocuseList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
             myFocuseList.setAdapter(bankLoanAdapter);
-        }else{
+        } else {
             bankLoanAdapter.update(datas);
         }
     }
 
     public void initFinancList(List<BankFinancItem> datas) {
-        if(bankFinancingAdapter==null) {
+        if (bankFinancingAdapter == null) {
             bankFinancingAdapter = new HomeBankFinancingListAdapter(getActivity(), datas);
             bankFinancingAdapter.setOnItemClickListener(new HomeBankFinancingListAdapter.HomeBankFinancingItemClickListener() {
                 @Override
@@ -245,13 +367,13 @@ public class MyFocuseFragment extends BaseFragment {
             });
             myFocuseList.setLayoutManager(new LinearLayoutManager(getActivity()));
             myFocuseList.setAdapter(bankFinancingAdapter);
-        }else{
+        } else {
             bankFinancingAdapter.update(datas);
         }
     }
 
     public void initLawList(List<LawyerItem> datas) {
-        if(lawListAdapter==null) {
+        if (lawListAdapter == null) {
             lawListAdapter = new LawListAdapter(getActivity(), datas);
             lawListAdapter.setOnItemClickListener(new LawListAdapter.MyItemClickListener() {
                 @Override
@@ -275,8 +397,9 @@ public class MyFocuseFragment extends BaseFragment {
             });
             myFocuseList.setLayoutManager(new LinearLayoutManager(getActivity()));
             myFocuseList.setAdapter(lawListAdapter);
-        }else{
+        } else {
             lawListAdapter.update(datas);
         }
     }
+
 }

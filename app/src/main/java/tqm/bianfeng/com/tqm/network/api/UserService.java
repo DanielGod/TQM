@@ -12,6 +12,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 import rx.Observable;
 import tqm.bianfeng.com.tqm.pojo.BankInformItem;
+import tqm.bianfeng.com.tqm.pojo.LawyerItem;
 import tqm.bianfeng.com.tqm.pojo.MyAttention;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithCompanyFile;
@@ -147,4 +148,33 @@ public interface UserService {
     Observable<ResultCode> saveEnter(@Field("proposer") String proposer,@Field("companyName") String companyName,
                                    @Field("businessLicense") String businessLicense,@Field("contact") String contact);
 
+    /**
+     * 我的关注/浏览记录
+     * 01活动 02理财 03 贷款 04资讯 05律师
+     */
+    @GET("{type}/01/{userId}")
+    Observable<List<BankActivityItem>> getMyAttentionItem01(@Path("type") String type,@Path("userId") int userId);
+    @GET("{type}/02/{userId}")
+    Observable<List<BankFinancItem>> getMyAttentionItem02(@Path("type") String type,@Path("userId") int userId);
+    @GET("{type}/03/{userId}")
+    Observable<List<BankLoanItem>> getMyAttentionItem03(@Path("type") String type,@Path("userId") int userId);
+    @GET("{type}/04/{userId}")
+    Observable<List<BankInformItem>> getMyAttentionItem04(@Path("type") String type,@Path("userId") int userId);
+    @GET("{type}/05/{userId}")
+    Observable<List<LawyerItem>> getMyAttentionItem05(@Path("type") String type,  @Path("userId") int userId);
+
+    /**
+     * 浏览记录
+     * 01活动 02理财 03 贷款 04资讯 05律师
+     */
+    @GET("history/{type}/01/{userId}")
+    Observable<List<BankActivityItem>>getBrowseHistoryItem01(@Path("type") String type,@Path("userId") int userId);
+    @GET("history/{type}/02/{userId}")
+    Observable<List<BankFinancItem>> getBrowseHistoryItem02(@Path("type") String type,@Path("userId") int userId);
+    @GET("history/{type}/03/{userId}")
+    Observable<List<BankLoanItem>>getBrowseHistoryItem03(@Path("type") String type,@Path("userId") int userId);
+    @GET("history/{type}/04/{userId}")
+    Observable<List<BankInformItem>> getBrowseHistoryItem04(@Path("type") String type,@Path("userId") int userId);
+    @GET("history/{type}/05/{userId}")
+    Observable<List<LawyerItem>> getBrowseHistoryItem05(@Path("type") String type,  @Path("userId") int userId);
 }

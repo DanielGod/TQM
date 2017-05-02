@@ -48,9 +48,9 @@ public class MyBroseViewPagerAdapter extends FragmentStatePagerAdapter {
             case 2:
                 return "贷款";
             case 3:
-                return "律师";
-            case 4:
                 return "资讯";
+            case 4:
+                return "律师";
         }
         return super.getPageTitle(position);
     }

@@ -5,32 +5,39 @@ package tqm.bianfeng.com.tqm.pojo;
  */
 
 public class LawyerItem {
+
+
     /**
-     * lawyerId : 2
-     * lawyerName : 蒋驰律师
+     * lawyerId : 15
+     * lawyerName : 张敏
      * contact : 15236101580
-     * avatar : /upload/avatar/20170330143718491.jpg
+     * avatar : /upload/avatar/20170411102409972.jpg
      * isAuthorize : 01
-     */
-    /**
-     *  "lawyerId": 13,
-     "lawyerName": "测试律师004",
-     "contact": "15236101580",
-     "avatar": "/upload/avatar/20170411094200552.jpg",
-     "isAuthorize": "01"
+     * institutionName : 中银律师事务所
+     * province : 浙江省
+     * city : 宁波市
+     * district : 江东区
+     * position : 律师
+     * practiceTime : 15年
      */
 
-    private Integer lawyerId;
+    private int lawyerId;
     private String lawyerName;
     private String contact;
     private String avatar;
     private String isAuthorize;
+    private String institutionName;
+    private String province;
+    private String city;
+    private String district;
+    private String position;
+    private String practiceTime;
 
-    public Integer getLawyerId() {
+    public int getLawyerId() {
         return lawyerId;
     }
 
-    public void setLawyerId(Integer lawyerId) {
+    public void setLawyerId(int lawyerId) {
         this.lawyerId = lawyerId;
     }
 
@@ -66,6 +73,54 @@ public class LawyerItem {
         this.isAuthorize = isAuthorize;
     }
 
+    public String getInstitutionName() {
+        return institutionName;
+    }
+
+    public void setInstitutionName(String institutionName) {
+        this.institutionName = institutionName;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getPracticeTime() {
+        return practiceTime;
+    }
+
+    public void setPracticeTime(String practiceTime) {
+        this.practiceTime = practiceTime;
+    }
+
     @Override
     public String toString() {
         return "LawyerItem{" +
@@ -74,6 +129,12 @@ public class LawyerItem {
                 ", contact='" + contact + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", isAuthorize='" + isAuthorize + '\'' +
+                ", institutionName='" + institutionName + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", position='" + position + '\'' +
+                ", practiceTime='" + practiceTime + '\'' +
                 '}';
     }
 }

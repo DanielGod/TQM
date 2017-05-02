@@ -75,7 +75,7 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int p) {
         final ViewHolder mHolder = (ViewHolder) holder;
         mHolder.lawyerNameTxt.setText(datas.get(p).getLawyerName());
-        mHolder.contactTxt.setText("联系电话"+datas.get(p).getContact());
+        mHolder.contactTxt.setText(datas.get(p).getInstitutionName());
 
 
 
@@ -106,9 +106,10 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mHolder.collectionLin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mItemClickListener.CollectionClick(p);
+                //mItemClickListener.CollectionClick(p);
             }
         });
+        mHolder.collectionLin.setVisibility(View.GONE);
     }
 
     @Override

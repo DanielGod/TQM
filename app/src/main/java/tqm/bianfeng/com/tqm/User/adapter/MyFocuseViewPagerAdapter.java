@@ -37,7 +37,7 @@ public class MyFocuseViewPagerAdapter extends FragmentStatePagerAdapter {
     public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
-
+    //01活动 02理财 03 贷款 04资讯 05律师
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position){
@@ -48,9 +48,9 @@ public class MyFocuseViewPagerAdapter extends FragmentStatePagerAdapter {
             case 2:
                 return "贷款";
             case 3:
-                return "律师";
-            case 4:
                 return "资讯";
+            case 4:
+                return "律师";
         }
         return super.getPageTitle(position);
     }

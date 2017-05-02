@@ -144,7 +144,12 @@ public class DetailActivity extends BaseActivity {
         webView.setHorizontalScrollBarEnabled(false);
         webView.getSettings().setBuiltInZoomControls(true);// 出现放大缩小提示
         webView.getSettings().setDisplayZoomControls(false);//隐藏缩放按钮
-        url = "http://211.149.235.17:8080/tqm-web/app/getDetail/" + detailType + "/" + detailId;
+        String userId="";
+        if(realm.where(User.class).findFirst()!=null){
+            userId=realm.where(User.class).findFirst().getUserId()+"";
+
+        }
+        url = "http://211.149.235.17:8080/tqm-web/app/getDetail/" + detailType + "/" + detailId+"/"+userId;
         webView.loadUrl(url);
 
 
