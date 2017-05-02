@@ -177,4 +177,11 @@ public interface UserService {
     Observable<List<BankInformItem>> getBrowseHistoryItem04(@Path("type") String type,@Path("userId") int userId);
     @GET("history/{type}/05/{userId}")
     Observable<List<LawyerItem>> getBrowseHistoryItem05(@Path("type") String type,  @Path("userId") int userId);
+
+    /**
+     * 清除浏览记录
+     */
+    @GET("history/deleteHistory/{userId}")
+    Observable<ResultCode>deleteHistory(@Path("userId") int userId);
+
 }
