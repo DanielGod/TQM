@@ -35,15 +35,15 @@ public interface InstitutionService {
      * 获取律师事务所详情
      *
      */
-    @GET("instit/getLawFirmDetail/{institutionId}")
-    Observable<LawFirmOrInstitutionDetail> getLawFirmDetail(@Path("institutionId") int institutionId);
+    @GET("instit/getLawFirmDetail/{institutionId}/{userId}")
+    Observable<LawFirmOrInstitutionDetail> getLawFirmDetail(@Path("institutionId") int institutionId,@Path("userId") String userId);
 
     /**
      * 获取律师事务所详情
      *
      */
-    @GET("instit/getFinanceDetail/{institutionId}")
-    Observable<LawFirmOrInstitutionDetail> getFinanceDetail(@Path("institutionId") int institutionId);
+    @GET("instit/getFinanceDetail/{institutionId}/{userId}")
+    Observable<LawFirmOrInstitutionDetail> getFinanceDetail(@Path("institutionId") int institutionId,@Path("userId") String userId);
 
     /**
      * 收藏或取消收藏

@@ -75,7 +75,11 @@ public class CompanyInfoActivity extends BaseActivity {
     }
 
     public void initCompanyInfoData(int id) {
-        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getFinanceDetail(id)
+        String userId="";
+        if(realm.where(User.class).findFirst()!=null){
+            userId=""+realm.where(User.class).findFirst().getUserId();
+        }
+        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getFinanceDetail(id,userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<LawFirmOrInstitutionDetail>() {
@@ -101,7 +105,11 @@ public class CompanyInfoActivity extends BaseActivity {
 
     }
     public void initLawInfoData(int id) {
-        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getLawFirmDetail(id)
+        String userId="";
+        if(realm.where(User.class).findFirst()!=null){
+            userId=""+realm.where(User.class).findFirst().getUserId();
+        }
+        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getLawFirmDetail(id,userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<LawFirmOrInstitutionDetail>() {
@@ -171,6 +179,7 @@ public class CompanyInfoActivity extends BaseActivity {
     TextView phoneNumTxt;
     TextView addressTxt;
     LinearLayout moreProfileLin;
+    TextView isCollectTxt;
     public void initHeaderRootView(){
         headerView = getLayoutInflater().from(this).inflate(R.layout.company_info_header_loading_view, null, true);
         coordinatortablayout.setTitle("加载中")
@@ -204,6 +213,7 @@ public class CompanyInfoActivity extends BaseActivity {
         phoneNumTxt=(TextView) headerView.findViewById(R.id.phone_num_txt);
         addressTxt=(TextView) headerView.findViewById(R.id.address_txt);
         moreProfileLin=(LinearLayout) headerView.findViewById(R.id.more_profile_lin);
+        isCollectTxt=(TextView) headerView.findViewById(R.id.is_collect_txt);
 
         Picasso.with(this).load(NetWork.LOAD+data.getInstitutionIcon()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(infoHeaderImg);
         titleTxt.setText(data.getInstitutionName());
@@ -230,9 +240,14 @@ public class CompanyInfoActivity extends BaseActivity {
                 }else{
                     Toast.makeText(getApplicationContext(), "请登录后再收藏", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
+
+        if(data.getIsCollect().equals("01")){
+            isCollectTxt.setText("已收藏");
+        }else {
+            isCollectTxt.setText("未收藏");
+        }
 
 
         phoneNumTxt.setText("电话："+data.getContact());
@@ -309,10 +324,12 @@ public class CompanyInfoActivity extends BaseActivity {
                     @Override
                     public void onNext(ResultCode resultCode) {
                         if(resultCode.getCode()==ResultCode.SECCESS){
-                            if(data.getIsCollect().equals("1")){
-
-                            }else{
-
+                            if(data.getIsCollect().equals("01")){
+                                data.setIsCollect("00");
+                                isCollectTxt.setText("未收藏");
+                            }else {
+                                data.setIsCollect("01");
+                                isCollectTxt.setText("已收藏");
                             }
                         }
                     }
