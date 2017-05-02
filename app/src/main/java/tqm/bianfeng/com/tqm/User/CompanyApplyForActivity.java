@@ -1,7 +1,12 @@
 package tqm.bianfeng.com.tqm.User;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -17,7 +22,10 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.soundcloud.android.crop.Crop;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -151,7 +159,63 @@ public class CompanyApplyForActivity extends BaseActivity {
             }
         });
     }
+    protected String getAbsoluteImagePath(Uri uri)
+    {
+        // can post image
+        String [] proj={MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery( uri,
+                proj,       // Which columns to return
+                null,       // WHERE clause; which rows to return (all rows)
+                null,       // WHERE clause selection arguments (none)
+                null);      // Order-by clause (ascending by name)
 
+
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+
+        return cursor.getString(column_index);
+    }
+    public File saveBitmapFile(Bitmap bitmap){
+        File file=new File(this.getExternalCacheDir().getAbsolutePath());//将要保存图片的路径
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  file;
+    }
+    public String getAbsolutePath(Uri uri) {
+        if(Build.VERSION.SDK_INT >= 19){
+            Log.i("gqf",uri.getLastPathSegment());
+            String id = uri.getLastPathSegment();//.split(":")[1];
+            Log.i("gqf2",uri.getEncodedPath());
+            final String[] imageColumns = {MediaStore.Images.Media.DATA };
+            final String imageOrderBy = null;
+            Uri tempUri =uri;// getUri();
+            Cursor imageCursor = getContentResolver().query(tempUri, imageColumns,
+                    MediaStore.Images.Media._ID + "="+id, null, imageOrderBy);
+            Log.i("gqf",imageCursor.getCount()+"imageCursor"+imageCursor.getColumnCount());
+            if (imageCursor.moveToFirst()) {
+                return imageCursor.getString(imageCursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }else{
+                return null;
+            }
+        }else{
+            String[] projection = { MediaStore.MediaColumns.DATA };
+
+            Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+            if (cursor != null) {
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+                cursor.moveToFirst();
+                return cursor.getString(column_index);
+            } else
+                return null;
+        }
+
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -160,12 +224,27 @@ public class CompanyApplyForActivity extends BaseActivity {
         if (resultCode == RESULT_OK){
             Log.i("gqf", "RESULT_OK");
             if (requestCode == REQUEST_IMAGE_CAPTURE){
-                Log.i("gqf", "REQUEST_IMAGE_CAPTURE");
-                photoGet.beginCrop(photoGet.getmCurrentPhotoUri());
+                try {
+                    Log.i("gqf", "REQUEST_IMAGE_CAPTURE");
+                    //photoGet.beginCrop(photoGet.getmCurrentPhotoUri());
+                    Uri uri = photoGet.getmCurrentPhotoUri();
+                    if (uri != null) {
+                        bitmap = new File(uri.getEncodedPath());
+                    } else {
+                        Bundle bundle = data.getExtras();
+                        Bitmap map = (Bitmap) bundle.get("data");
+                        bitmap = saveBitmapFile(map);
+                    }
+                }catch (Exception e){
+                    Log.i("gqf", "Exception"+e.toString());
+                }
 
             } else if (requestCode == Crop.REQUEST_PICK){
                 Log.i("gqf", "REQUEST_PICK");
-                photoGet. beginCrop(data.getData());
+                //photoGet. beginCrop(data.getData());
+                Uri uri=data.getData();
+                bitmap=new File(getAbsoluteImagePath(uri));
+
             }else if (requestCode == Crop.REQUEST_CROP) {
                 Log.i("gqf", "handleCrop");
                 photoGet.handleCrop(resultCode, data);
@@ -186,7 +265,11 @@ public class CompanyApplyForActivity extends BaseActivity {
         //            Log.i("gqf", "REQUEST_PICK");
         //            photoGet. beginCrop(data.getData());
         //        }
-
+        if (bitmap == null) {
+            Toast.makeText(CompanyApplyForActivity.this, "获取图片失败", Toast.LENGTH_SHORT).show();
+        } else {
+            applyForAddImgResultTxt.setText("已添加");
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -237,6 +320,7 @@ public class CompanyApplyForActivity extends BaseActivity {
             baseDialog = new BaseDialog(this);
         }
         photoGet.showAvatarDialog(CompanyApplyForActivity.this, baseDialog);
+
     }
 
     ToastType toastType;
