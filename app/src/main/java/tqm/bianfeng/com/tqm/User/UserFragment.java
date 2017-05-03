@@ -185,7 +185,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             userRegisterPhoneNumTxt.setText(mUser.getUserPhone());
             userPhongNumEdi.setVisibility(View.GONE);
             userLoginRegisteredBtn.setVisibility(View.GONE);
-            userTopRel.setBackgroundResource(R.drawable.user_top_bg);
+            //userTopRel.setBackgroundResource(R.drawable.user_top_bg);
             RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) userCircleImg.getLayoutParams();
             lp.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
             lp.addRule(RelativeLayout.CENTER_VERTICAL);

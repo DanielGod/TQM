@@ -78,7 +78,6 @@ public class HomeFragment extends BaseFragment {
     RecyclerView bankActivitysList;
 
 
-
     @BindView(R.id.bank_finaning_list)
     RecyclerView bankFinaningList;
     @BindView(R.id.bank_loan_list)
@@ -118,8 +117,8 @@ public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.my_scrollview)
     MyScrollview myScrollview;
-    int scrollHeight=0;
-    int sliderHeight=1;
+    int scrollHeight = 0;
+    int sliderHeight = 1;
     //ddddddddd
 
     private CompositeSubscription mCompositeSubscription;
@@ -169,38 +168,40 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onGlobalLayout() {
                 homeSlider.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                sliderHeight=homeSlider.getHeight();
+                sliderHeight = homeSlider.getHeight();
 
             }
         });
         try {
             mListener.setToolBarColorBg(getAlph(scrollHeight, sliderHeight));
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
 
-    public void initScroll(){
+    public void initScroll() {
         myScrollview.setOnScollChangedListener(new MyScrollview.OnScollChangedListener() {
             @Override
             public void onScrollChanged(MyScrollview scrollView, int x, int y, int oldx, int oldy) {
-                Log.i("gqf","x"+x+"y"+y+"oldx"+oldx+"oldy"+oldy);
-                scrollHeight=y;
-                if(sliderHeight!=1) {
-                    if(isNetWork) {
+                Log.i("gqf", "x" + x + "y" + y + "oldx" + oldx + "oldy" + oldy);
+                scrollHeight = y;
+                if (sliderHeight != 1) {
+                    if (isNetWork) {
                         try {
                             mListener.setToolBarColorBg(getAlph(scrollHeight, sliderHeight));
-                        }catch (Exception e){}
+                        } catch (Exception e) {
+                        }
 
                     }
                 }
             }
         });
     }
-    public int getAlph(int h1,int h2){
-        if(h1>h2){
+
+    public int getAlph(int h1, int h2) {
+        if (h1 > h2) {
             return 255;
-        }else {
+        } else {
             return (int) ((float) h1 / h2 * 255);
         }
     }
@@ -536,21 +537,24 @@ public class HomeFragment extends BaseFragment {
                 });
         compositeSubscription.add(subscription);
     }
-
+    Integer[] mSlider = {R.drawable.home_top_slider1,R.drawable.home_top_slider2,R.drawable.home_top_slider3};
     public void initImages(List<String> strings) {
         //加载首页轮播图
-//        if (strings.size() > 0) {
-//            for (String url : strings) {
-//                DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
-//                textSliderView.image(NetWork.LOAD + url)
-//                        .setScaleType(BaseSliderView.ScaleType.Fit);
-//                homeSlider.addSlider(textSliderView);
-//            }
-//        }
-        DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
-                        textSliderView.image(R.drawable.home_top_slider1)
-                                .setScaleType(BaseSliderView.ScaleType.Fit);
-                        homeSlider.addSlider(textSliderView);
+        //        if (strings.size() > 0) {
+        //            for (String url : strings) {
+        //                DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
+        //                textSliderView.image(NetWork.LOAD + url)
+        //                        .setScaleType(BaseSliderView.ScaleType.Fit);
+        //                homeSlider.addSlider(textSliderView);
+        //            }
+        //        }
+        int size = mSlider.length;
+        for (int i = 0; i <size ; i++) {
+
+            DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
+            textSliderView.image(mSlider[i]).setScaleType(BaseSliderView.ScaleType.Fit);
+            homeSlider.addSlider(textSliderView);
+        }
     }
 
 
@@ -622,10 +626,10 @@ public class HomeFragment extends BaseFragment {
             }
 
             //根据滑动高度设置toolbar
-            if(sliderHeight!=1) {
+            if (sliderHeight != 1) {
                 try {
                     mListener.setToolBarColorBg(getAlph(scrollHeight, sliderHeight));
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 

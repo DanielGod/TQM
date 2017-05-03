@@ -47,18 +47,18 @@ public class NewBankInformationActivity extends AppCompatActivity implements Rec
                     case 0:
                         logo.setText(getResources().getString(R.string.bankInfromations));
                         return HeaderDesign.fromColorResAndUrl(
-                                R.color.blue,
-                                "http://mpic.tiankong.com/797/164/797164bf0915835b994f75bf98623870/640.jpg@360h");
+                                R.color.blue1,
+                                "http://chenqiongimg.oss-cn-shanghai.aliyuncs.com/tqm/img/1.jpg");
                     case 1:
                         logo.setText(getResources().getString(R.string.hotInfromations));
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.green,
-                                "http://mpic.tiankong.com/ced/bf9/cedbf90668823a39b4da08499bbcf860/640.jpg@360h");
+                                "http://chenqiongimg.oss-cn-shanghai.aliyuncs.com/tqm/img/2.jpg");
                     case 2:
                         logo.setText(getResources().getString(R.string.moneyInfromations));
                         return HeaderDesign.fromColorResAndUrl(
-                                R.color.cyan,
-                                "http://mpic.tiankong.com/267/9c2/2679c2c1288b0444a6cb419bcde14ed2/640.jpg@360h");
+                                R.color.orange1,
+                                "http://chenqiongimg.oss-cn-shanghai.aliyuncs.com/tqm/img/3.jpg");
                 }
                 return null;
             }

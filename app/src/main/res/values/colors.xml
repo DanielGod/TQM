@@ -58,4 +58,7 @@
     <color name="home_hotActivity_gray3">#333333</color>
     <color name="home_hotActivity_gray6">#666666</color>
     <color name="home_hotActivity_gray9">#999999</color>
+    <!--咨询-->
+    <color name="blue1">#35CBF6</color>
+    <color name="orange1">#FFE07D</color>
 </resources>

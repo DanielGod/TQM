@@ -18,7 +18,10 @@ android {
             //abiFilters 'armeabi', 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64','mips','mips64'
         }
         resConfigs "zh"
+
     }
+
+
     buildTypes {
         release {
             // 是否进行混淆
