@@ -59,6 +59,8 @@ public class MyBrowseActivity extends BaseActivity {
     }
     boolean isClean=false;
 
+
+
     public void delectHistory() {
         if(isClean==false) {
             isClean=true;

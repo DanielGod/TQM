@@ -16,7 +16,7 @@
 
         <ImageView
             android:id="@+id/bank_info_img"
-            android:layout_width="@dimen/hugehxxxdp"
+            android:layout_width="@dimen/hugehxxxxxdp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/mediummdp"
             android:scaleType="fitXY"

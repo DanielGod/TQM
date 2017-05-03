@@ -76,6 +76,11 @@ public class MyBroseFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_focuse, container, false);
         ButterKnife.bind(this, view);
+        initData();
+        //initData();
+        return view;
+    }
+    public void initData(){
         if (index == 0) {
             initActivityData();
         } else if (index == 1) {
@@ -89,8 +94,6 @@ public class MyBroseFragment extends BaseFragment {
         } else if (index == 4) {
             initLawyerData();
         }
-        //initData();
-        return view;
     }
 
     //    public void initData() {

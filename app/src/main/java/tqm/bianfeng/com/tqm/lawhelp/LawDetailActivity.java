@@ -47,13 +47,11 @@ public class LawDetailActivity extends BaseActivity {
     @BindView(R.id.detail_web)
     WebView webView;
 
-    public String detailType="01";
 
     public String detailTitle = "my";
 
     boolean isCollection = false;
     boolean isInCollection = false;
-    public int detailId = -1;
     @BindView(R.id.multiple_actions_down)
     FloatingActionsMenu multipleActionsDown;
     @BindView(R.id.action_a)
@@ -122,8 +120,8 @@ public class LawDetailActivity extends BaseActivity {
     }
 
     public void initCollection() {
-        if (realm.where(User.class).findFirst() != null && !detailType.equals("04")) {
-            Subscription subscription = NetWork.getUserService().isAttention(detailId, detailType, realm.where(User.class).findFirst().getUserId())
+        if (realm.where(User.class).findFirst() != null ) {
+            Subscription subscription = NetWork.getUserService().isAttention(Integer.parseInt(lawyer), "05", realm.where(User.class).findFirst().getUserId())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<String>() {
@@ -249,14 +247,14 @@ public class LawDetailActivity extends BaseActivity {
             if (!isInCollection) {
                 if (!isCollection) {
                     //关注
-                    Subscription subscription = NetWork.getUserService().attention(detailId, detailType, realm.where(User.class).findFirst().getUserId(), "01")
+                    Subscription subscription = NetWork.getUserService().attention(Integer.parseInt(lawyer), "05", realm.where(User.class).findFirst().getUserId(), "01")
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(observer);
                     compositeSubscription.add(subscription);
                 } else {
                     //取消
-                    Subscription subscription = NetWork.getUserService().attention(detailId, detailType, realm.where(User.class).findFirst().getUserId(), "02")
+                    Subscription subscription = NetWork.getUserService().attention(Integer.parseInt(lawyer), "05", realm.where(User.class).findFirst().getUserId(), "02")
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(observer);
@@ -270,22 +268,20 @@ public class LawDetailActivity extends BaseActivity {
 
     //关注按钮背景变换
     public void initactionASrc() {
-        if (!detailType.equals("04")) {
-            if (isCollection) {
-                //关注状态
-                actionA.setIcon(R.drawable.ic_focuse);
-                actionA.setTitle("已关注");
-            } else {
-                //未关注状态
-                actionA.setIcon(R.drawable.ic_unfocuse);
-                actionA.setTitle("未关注");
-            }
-            multipleActionsDown.setVisibility(View.VISIBLE);
-            actionC.setVisibility(View.GONE);
+
+        if (isCollection) {
+            //关注状态
+            actionA.setIcon(R.drawable.ic_focuse);
+            actionA.setTitle("已关注");
         } else {
-            actionC.setVisibility(View.VISIBLE);
-            multipleActionsDown.setVisibility(View.GONE);
+            //未关注状态
+            actionA.setIcon(R.drawable.ic_unfocuse);
+            actionA.setTitle("未关注");
         }
+        multipleActionsDown.setVisibility(View.VISIBLE);
+        actionC.setVisibility(View.GONE);
+
+
     }
 
     public void toastFocuseResult() {
@@ -316,7 +312,7 @@ public class LawDetailActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.action_a:
-                //actionAFocuse();
+                actionAFocuse();
                 break;
             case R.id.action_b:
                 webView.setScrollY(0);

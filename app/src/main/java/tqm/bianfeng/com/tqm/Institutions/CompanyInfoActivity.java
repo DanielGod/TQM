@@ -75,7 +75,7 @@ public class CompanyInfoActivity extends BaseActivity {
     }
 
     public void initCompanyInfoData(int id) {
-        String userId="";
+        String userId="0";
         if(realm.where(User.class).findFirst()!=null){
             userId=""+realm.where(User.class).findFirst().getUserId();
         }
@@ -105,7 +105,7 @@ public class CompanyInfoActivity extends BaseActivity {
 
     }
     public void initLawInfoData(int id) {
-        String userId="";
+        String userId="0";
         if(realm.where(User.class).findFirst()!=null){
             userId=""+realm.where(User.class).findFirst().getUserId();
         }
@@ -305,6 +305,9 @@ public class CompanyInfoActivity extends BaseActivity {
         String userId="";
         if(realm.where(User.class).findFirst()!=null){
             userId=realm.where(User.class).findFirst().getUserId()+"";
+        }else{
+            Toast.makeText(getApplicationContext(),"请登录后再收藏",Toast.LENGTH_SHORT).show();
+            return;
         }
         String isCollect="";
         if(data.getIsCollect().equals("01")){
@@ -315,7 +318,7 @@ public class CompanyInfoActivity extends BaseActivity {
 
 
         Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().saveOrUpdate(InstitutionId,
-                userId,"0"+(index+1),isCollect)
+                "0"+(index+1),userId,isCollect)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResultCode>() {

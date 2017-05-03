@@ -34,5 +34,8 @@ public class MyFocusActivity extends BaseActivity {
         focuseViewpager.setAdapter(myFocuseViewPagerAdapter);
         focuseTablayout.setupWithViewPager(focuseViewpager);
     }
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }

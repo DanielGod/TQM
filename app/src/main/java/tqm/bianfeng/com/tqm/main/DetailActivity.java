@@ -155,7 +155,7 @@ public class DetailActivity extends BaseActivity {
     }
 
     public void initCollection() {
-        if (realm.where(User.class).findFirst() != null && !detailType.equals("04")) {
+        if (realm.where(User.class).findFirst() != null) {
             Subscription subscription = NetWork.getUserService().isAttention(detailId, detailType, realm.where(User.class).findFirst().getUserId())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

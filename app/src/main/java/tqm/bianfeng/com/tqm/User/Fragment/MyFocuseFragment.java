@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -76,25 +77,29 @@ public class MyFocuseFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_focuse, container, false);
         ButterKnife.bind(this, view);
-               if(index==0){
-
-                   initActivityData();
-               }else if(index==1){
-
-                   initFinancData();
-               }else if(index==2){
-
-                   initLoanData();
-               }else if(index==3){
-                   initInfoData();
-               }else if(index==4){
-                   initLawyerData();
-               }
-
+        //initData();
         //initData();
         return view;
     }
+    public void initData(){
+        if(index==0){
+            initActivityData();
+        }else if(index==1){
+            initFinancData();
+        }else if(index==2){
+            initLoanData();
+        }else if(index==3){
+            initInfoData();
+        }else if(index==4){
+            initLawyerData();
+        }
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
     List<BankActivityItem> BankActivityItems;
     List<BankLoanItem> BankLoanItems;
     List<BankFinancItem> BankFinancItems;
@@ -180,13 +185,14 @@ public class MyFocuseFragment extends BaseFragment {
                     @Override
                     public void onNext(List<BankFinancItem> bankFinancItems) {
                         BankFinancItems = bankFinancItems;
-                        initFinancList(BankFinancItems);
+
                         if(BankFinancItems.size()!=0){
                             toastTxt.setVisibility(View.GONE);
                         }else{
                             toastTxt.setVisibility(View.VISIBLE);
+                            BankFinancItems=new ArrayList<BankFinancItem>();
                         }
-
+                        initFinancList(BankFinancItems);
                     }
                 });
         compositeSubscription.add(subscription);
@@ -210,12 +216,14 @@ public class MyFocuseFragment extends BaseFragment {
                     @Override
                     public void onNext(List<BankInformItem> bankInformItems) {
                         BankInformItems = bankInformItems;
-                        initInfoList(BankInformItems);
+
                         if(BankInformItems.size()!=0){
                             toastTxt.setVisibility(View.GONE);
                         }else{
                             toastTxt.setVisibility(View.VISIBLE);
+                            BankInformItems=new ArrayList<BankInformItem>();
                         }
+                        initInfoList(BankInformItems);
                     }
                 });
         compositeSubscription.add(subscription);
@@ -238,12 +246,14 @@ public class MyFocuseFragment extends BaseFragment {
                     @Override
                     public void onNext(List<LawyerItem> lawyerItems) {
                         LawyerItems = lawyerItems;
-                        initLawList(LawyerItems);
+
                         if(LawyerItems.size()!=0){
                             toastTxt.setVisibility(View.GONE);
                         }else{
                             toastTxt.setVisibility(View.VISIBLE);
+                            LawyerItems=new ArrayList<LawyerItem>();
                         }
+                        initLawList(LawyerItems);
                     }
                 });
         compositeSubscription.add(subscription);
@@ -265,12 +275,14 @@ public class MyFocuseFragment extends BaseFragment {
                     @Override
                     public void onNext(List<BankLoanItem> bankLoanItems) {
                         BankLoanItems = bankLoanItems;
-                        initLoanList(BankLoanItems);
+
                         if(BankLoanItems.size()!=0){
                             toastTxt.setVisibility(View.GONE);
                         }else{
                             toastTxt.setVisibility(View.VISIBLE);
+                            BankLoanItems=new ArrayList<BankLoanItem>();
                         }
+                        initLoanList(BankLoanItems);
                     }
                 });
         compositeSubscription.add(subscription);
@@ -294,12 +306,14 @@ public class MyFocuseFragment extends BaseFragment {
                     @Override
                     public void onNext(List<BankActivityItem> bankActivityItems) {
                         BankActivityItems = bankActivityItems;
-                        initActivityList(BankActivityItems);
+
                         if(BankActivityItems.size()!=0){
                             toastTxt.setVisibility(View.GONE);
                         }else{
                             toastTxt.setVisibility(View.VISIBLE);
+                            BankActivityItems=new ArrayList<BankActivityItem>();
                         }
+                        initActivityList(BankActivityItems);
                     }
                 });
         compositeSubscription.add(subscription);
@@ -421,6 +435,7 @@ public class MyFocuseFragment extends BaseFragment {
             myFocuseList.setAdapter(lawListAdapter);
         } else {
             lawListAdapter.update(datas);
+            lawListAdapter.notifyDataSetChanged();
         }
     }
 

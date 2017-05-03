@@ -78,10 +78,16 @@ public class MyCollectionLawAndCompanyFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         lodingIsFailOrSucess(1);
         datas = new ArrayList<>();
-        initData();
+        //initData();
 
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
     }
 
     public void initData() {
@@ -105,9 +111,11 @@ public class MyCollectionLawAndCompanyFragment extends BaseFragment {
 
                     @Override
                     public void onNext(List<InstitutionItem> institutionItems) {
+                        datas=new ArrayList<InstitutionItem>();
                         for (InstitutionItem institutionItem : institutionItems) {
                             datas.add(institutionItem);
                         }
+
 
                         Log.i("gqf", "institutionItems" + institutionItems.toString());
                         page++;
