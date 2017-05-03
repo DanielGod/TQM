@@ -113,9 +113,8 @@ public class LawDetailActivity extends BaseActivity {
         String userId="0";
         if(realm.where(User.class).findFirst()!=null){
             userId=realm.where(User.class).findFirst().getUserId()+"";
-
         }
-        url = "http://211.149.235.17:8080/tqm-web/app/getDetail/" + "05" + "/" + lawyer+"/"+userId;
+        url = NetWork.LOAD+"/app/getDetail/" + "05" + "/" + lawyer+"/"+userId;
         Log.i("gqf","lawyerUrl"+url);
         webView.loadUrl(url);
 

@@ -148,7 +148,7 @@ public class DetailActivity extends BaseActivity {
         if(realm.where(User.class).findFirst()!=null){
             userId=realm.where(User.class).findFirst().getUserId()+"";
         }
-        url = "http://211.149.235.17:8080/tqm-web/app/getDetail/" + detailType + "/" + detailId+"/"+userId;
+        url = NetWork.LOAD+"/app/getDetail/" + detailType + "/" + detailId+"/"+userId;
         webView.loadUrl(url);
 
 
