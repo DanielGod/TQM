@@ -143,7 +143,7 @@ public class MarqueeView extends ViewFlipper {
                     @Override
                     public void onClick(View v) {
                         if (onItemClickListener != null) {
-                            onItemClickListener.onItemClick(finalI, null);
+                            //onItemClickListener.onItemClick(finalI, null);
                         }
                     }
                 });
@@ -159,12 +159,23 @@ public class MarqueeView extends ViewFlipper {
     }
 
     // 创建ViewFlipper下的TextView
-    private LinearLayout createTextView(String text1,String text2, int position) {
+    private LinearLayout createTextView(String text1,String text2,final int position) {
         LinearLayout lin=(LinearLayout) ((Activity)mContext).getLayoutInflater().from(mContext).inflate(R.layout.marquee_view, null, true);
 
         TextView txt1=(TextView) lin.findViewById(R.id.marquee_txt1);
         TextView txt2=(TextView) lin.findViewById(R.id.marquee_txt2);
-
+        txt1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(position*2,null);
+            }
+        });
+        txt2.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(position*2+1,null);
+            }
+        });
         txt1.setText(text1);
         txt2.setText(text2);
 
@@ -182,6 +193,7 @@ public class MarqueeView extends ViewFlipper {
     public void setNotices(List<String> notices) {
         this.notices = notices;
     }
+
 
     public void setOnItemClickListener(com.sunfusheng.marqueeview.MarqueeView.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
