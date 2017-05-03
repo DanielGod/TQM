@@ -24,13 +24,14 @@
            style="@style/hotActivity_title_tv"
             android:text="中信银行看大片"
            android:textSize="@dimen/mediumxsp"
+            android:gravity="center"
             android:textColor="@color/home_hotActivity_orange"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="关注送豪礼"
+            android:text="关注有惊喜"
             android:textColor="@color/home_hotActivity_gray6"
             />
         <ImageView
