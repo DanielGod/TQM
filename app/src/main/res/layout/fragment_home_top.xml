@@ -393,29 +393,14 @@
                     android:orientation="vertical"
                     android:visibility="visible">
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/smallhdp"
-                        android:layout_marginLeft="@dimen/smallmdp"
-                        android:layout_marginRight="@dimen/smallmdp"
-                        android:layout_marginTop="@dimen/smallmdp"
-                        android:background="@android:color/white"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="3dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/mediummdp"
-                            android:background="@android:color/holo_orange_dark"
-                            />
-
+                        style="@style/home_bar_linear">
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
+                            style="@style/sty_home_title_line_tv"
+                            />
+                        <TextView
+                            style="@style/sty_home_title_tv"
                             android:text="银行资讯"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/mediumxsp"/>
+                           />
 
                         <TextView
                             android:id="@+id/select_more_bank_make_money_txt"

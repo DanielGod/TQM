@@ -3,7 +3,6 @@ package tqm.bianfeng.com.tqm.Institutions;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,7 +22,6 @@ import tqm.bianfeng.com.tqm.lawhelp.adapter.LawListAdapter;
 import tqm.bianfeng.com.tqm.main.DetailActivity;
 import tqm.bianfeng.com.tqm.main.HomeBankActivitysListAdapter;
 import tqm.bianfeng.com.tqm.main.HomeBankFinancingListAdapter;
-import tqm.bianfeng.com.tqm.main.HomeBankLoanListAdapter;
 import tqm.bianfeng.com.tqm.pojo.LawyerItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
@@ -125,14 +123,14 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
     }
 
     HomeBankActivitysListAdapter bankActivitionsAdapter;
-    HomeBankLoanListAdapter bankLoanAdapter;
+    tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter bankLoanAdapter;
     HomeBankFinancingListAdapter bankFinancingAdapter;
     LawListAdapter lawListAdapter;
 
     public void initActivityList(List<BankActivityItem> datas) {
         Log.i("gqf","initActivityList"+datas.toString());
         bankActivitionsAdapter = new HomeBankActivitysListAdapter(getActivity(), datas);
-        bankActivitionsAdapter.setInName("123");
+        bankActivitionsAdapter.setInName("");
         bankActivitionsAdapter.setOnItemClickListener(new HomeBankActivitysListAdapter.HomeBankActivitysItemClickListener() {
             @Override
             public void OnClickListener(int position) {
@@ -148,19 +146,20 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
     }
 
     public void initLoanList(List<BankLoanItem> datas) {
-        bankLoanAdapter = new HomeBankLoanListAdapter(getActivity(), datas);
-        bankLoanAdapter.setBgNull();
-        bankLoanAdapter.setOnItemClickListener(new HomeBankLoanListAdapter.HomeBankLoanClickListener() {
+        bankLoanAdapter = new tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter(getActivity(), datas);
+       // bankLoanAdapter.setBgNull();
+        bankLoanAdapter.setOnItemClickListener(new tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter.BankLoanItemClickListener() {
             @Override
-            public void OnClickListener(int position) {
+            public void onItemClick(View view,int position) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("detailType", "03");
-                intent.putExtra("detailId", bankLoanAdapter.getItem(position).getLoanId());
-                intent.putExtra("detailTitle", bankLoanAdapter.getDataItem(position).getLoanName());
+                intent.putExtra("detailId", BankLoanItems.get(position).getLoanId());
+                intent.putExtra("detailTitle", BankLoanItems.get(position).getLoanName());
                 startActivity(intent);
             }
         });
-        activityLoanFinancingLawList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        //activityLoanFinancingLawList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        activityLoanFinancingLawList.setLayoutManager(new LinearLayoutManager(getActivity()));
         activityLoanFinancingLawList.setAdapter(bankLoanAdapter);
     }
 

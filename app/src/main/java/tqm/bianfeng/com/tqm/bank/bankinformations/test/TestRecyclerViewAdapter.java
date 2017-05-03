@@ -100,7 +100,9 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
         //                break;
         //        }
         ViewHolder viewHolder = (ViewHolder) holder;
+
         BankInformItem data = datas.get(position);
+        viewHolder.TitleTv.setText(data.getInformTitle());
         viewHolder.institutionNameTv.setText(data.getInstitutionName());
         Picasso.with(mContext).load(NetWork.LOAD+data.getImageUrl()).placeholder(R.drawable.hotactivity_2).into( viewHolder.bankinformationImg);
 

@@ -34,10 +34,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:lines="1"
+            android:ellipsize="end"
             android:gravity="center_horizontal"
             android:textColor="@color/red"
             android:textSize="@dimen/mediumsp"
-            android:text="4.1020%"/>
+            />
         <TextView
             android:id="@+id/tv2"
             android:layout_width="match_parent"
@@ -56,7 +58,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:textSize="@dimen/tinysp"
-            android:text="预期年化"
+            android:lines="1"
+            android:ellipsize="end"
             android:textColor="@color/home_hotActivity_gray9"
             android:gravity="center_horizontal"
             />
@@ -70,6 +73,8 @@
             android:textColor="@color/white"
             android:background="#FF772D"
             android:gravity="center"
+            android:lines="1"
+            android:ellipsize="end"
             />
     </LinearLayout>
 
