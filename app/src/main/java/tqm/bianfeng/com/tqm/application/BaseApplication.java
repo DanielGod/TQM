@@ -9,7 +9,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.Log;
 
-import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
@@ -33,7 +32,7 @@ public class BaseApplication extends Application {
         //豆瓣RENREN平台目前只能在服务器端配置
         PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");
         //PlatformConfig.setYixin("yxc0614e80c9304c11b0391514d09f13bf");
-        //PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
         //PlatformConfig.setTwitter("3aIN7fuF685MuZ7jtXkQxalyi", "MK6FEYG63eWcpDFgRYw4w9puJhzDl0tyuqWjZ3M7XJuuG7mMbO");
         //PlatformConfig.setAlipay("2017032406383358");
         //PlatformConfig.setLaiwang("laiwangd497e70d4", "d497e70d4c3e4efeab1381476bac4c5e");
@@ -94,7 +93,7 @@ public class BaseApplication extends Application {
         mList = new ArrayList<>();
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).schemaVersion(2).deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(realmConfig);
-        Config.DEBUG = true;
+        //Config.DEBUG = true;
         UMShareAPI.get(this);
 
     }
