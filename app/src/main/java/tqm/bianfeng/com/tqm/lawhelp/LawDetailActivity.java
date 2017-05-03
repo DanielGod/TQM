@@ -1,7 +1,11 @@
 package tqm.bianfeng.com.tqm.lawhelp;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -41,7 +45,7 @@ import tqm.bianfeng.com.tqm.pojo.User;
 
 public class LawDetailActivity extends BaseActivity {
 
-
+    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1234;
     @BindView(R.id.detail_toolbar)
     Toolbar detailToolbar;
     @BindView(R.id.detail_web)
@@ -73,7 +77,18 @@ public class LawDetailActivity extends BaseActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.collection_false) {
-                    share();
+//                    if (Build.VERSION.SDK_INT >= 23) {
+//                        String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
+//                        ActivityCompat.requestPermissions(LawDetailActivity.this, mPermissionList, 123);
+//                    }
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        //申请WRITE_EXTERNAL_STORAGE权限
+                        ActivityCompat.requestPermissions(LawDetailActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+                    }
+                        share();
+
                 }
                 return false;
             }
