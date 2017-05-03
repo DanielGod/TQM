@@ -302,6 +302,7 @@ public class LawHelpFragment extends BaseFragment {
                 public void OnClickListener(int position) {
                     Intent intent = new Intent(getActivity(), LawDetailActivity.class);
                     intent.putExtra("lawyer", datas.get(position).getLawyerId() + "");
+                    intent.putExtra("detailTitle", datas.get(position).getLawyerName());
                     mListener.detailActivity(intent);
                 }
 

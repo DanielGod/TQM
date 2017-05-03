@@ -240,7 +240,7 @@ public class DetailActivity extends BaseActivity {
         UMWeb web = new UMWeb(url);
         web.setTitle(detailTitle);//标题
         web.setDescription(detailTitle);
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
         if (bmp == null) {
             Log.i("gqf", "bmp==null");
         }

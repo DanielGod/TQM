@@ -3,6 +3,8 @@ package tqm.bianfeng.com.tqm.lawhelp;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +26,7 @@ import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 
 import butterknife.BindView;
@@ -95,6 +98,7 @@ public class LawDetailActivity extends BaseActivity {
         });
 
         lawyer=getIntent().getStringExtra("lawyer");
+        detailTitle = getIntent().getStringExtra("detailTitle");
         setToolbar(detailToolbar, "个人资料");
         initWebView();
         initactionASrc();
@@ -212,6 +216,12 @@ public class LawDetailActivity extends BaseActivity {
         UMWeb web = new UMWeb(url);
         web.setTitle(detailTitle);//标题
         web.setDescription(detailTitle);
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+        if (bmp == null) {
+            Log.i("gqf", "bmp==null");
+        }
+        web.setThumb(new UMImage(this, bmp
+        ));  //缩略图
         //web.setThumb(thumb);  //缩略图
         new ShareAction(this).withMedia(web)
                 .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN)

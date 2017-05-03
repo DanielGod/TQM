@@ -137,6 +137,7 @@ public class RecyclerViewFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("detailType", "04");
                 intent.putExtra("detailId", recyclerViewAdapter.getItem(position).getInformId());
+                intent.putExtra("detailTitle",recyclerViewAdapter.getItem(position).getInformTitle());
                 mListener.detailActivity(intent);
             }
         });

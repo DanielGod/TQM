@@ -436,6 +436,7 @@ public void initLoanList(List<BankLoanItem> datas) {
                 public void OnClickListener(int position) {
                     Intent intent = new Intent(getActivity(), LawDetailActivity.class);
                     intent.putExtra("lawyer", LawyerItems.get(position).getLawyerId() + "");
+                    intent.putExtra("detailTitle", LawyerItems.get(position).getLawyerName());
                     startActivity(intent);
                 }
 

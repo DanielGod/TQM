@@ -81,7 +81,7 @@
                     android:layout_below="@id/hotActivity_rightUp_tv"
                     android:layout_alignLeft="@id/hotActivity_rightUp_tv"
                     android:textColor="@color/home_hotActivity_gray6"
-                    android:text="关注送豪礼"
+                    android:text="分享有惊喜"
                     />
                 <ImageView
                     android:layout_width="wrap_content"
@@ -140,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/hotActivity_rightDown_tv"
                     android:layout_alignLeft="@id/hotActivity_rightDown_tv"
-                    android:text="关注送豪礼"
+                    android:text="宝宝你快来"
                     android:textColor="@color/home_hotActivity_gray6"
                     />
                 <ImageView
