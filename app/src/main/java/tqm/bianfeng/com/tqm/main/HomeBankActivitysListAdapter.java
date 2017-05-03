@@ -26,15 +26,19 @@ import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 public class HomeBankActivitysListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-
     private Context mContext;
     private List<BankActivityItem> datas;
     private final LayoutInflater mLayoutInflater;
     private HomeBankActivitysItemClickListener mItemClickListener;
+    String inName = "";
 
 
     public BankActivityItem getDataItem(int position) {
         return datas == null ? null : datas.get(position);
+    }
+
+    public void setInName(String name) {
+        inName = name;
     }
 
     public HomeBankActivitysListAdapter(Context mContext, List<BankActivityItem> mDatas) {
@@ -80,11 +84,13 @@ public class HomeBankActivitysListAdapter extends RecyclerView.Adapter<RecyclerV
         mHolder.loanMoneyLinear.setVisibility(View.GONE);
         mHolder.riskGradeNameLinear.setVisibility(View.GONE);
         mHolder.investmentTermLinear.setVisibility(View.GONE);
-        Picasso.with(mContext).load(NetWork.LOAD + data.getInstitutionIcon()).placeholder(R.drawable.banklogo).into(mHolder.logoImg);
+        Picasso.with(mContext).load(NetWork.LOAD + data.getInstitutionIcon()).placeholder(R.drawable.ic_img_loading).into(mHolder.logoImg);
         mHolder.titleTv.setText(data.getActivityTitle());
-        mHolder.activityViewsTv.setText(data.getActivityViews()+"");
+        mHolder.activityViewsTv.setText(data.getActivityViews() + "");
         mHolder.institutionNameTv.setText(data.getInstitutionName());
-
+        if (!inName.equals("")) {
+            mHolder.institutionName2Tv.setVisibility(View.GONE);
+        }
 
     }
 
@@ -107,6 +113,8 @@ public class HomeBankActivitysListAdapter extends RecyclerView.Adapter<RecyclerV
         TextView titleTv;
         @BindView(R.id.institutionName_tv)
         TextView institutionNameTv;
+        @BindView(R.id.institutionName2_tv)
+        TextView institutionName2Tv;
         @BindView(R.id.institutionName_linear)
         LinearLayout institutionNameLinear;
         @BindView(R.id.activityViews_tv)
