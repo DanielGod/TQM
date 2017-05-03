@@ -61,4 +61,7 @@
     <!--咨询-->
     <color name="blue1">#35CBF6</color>
     <color name="orange1">#FFE07D</color>
+    <color name="information_headColor1">#35CBF6</color>
+    <color name="information_headColor3">#FFE07D</color>
+    <color name="information_headColor2">#E3F8F6</color>
 </resources>

@@ -45,20 +45,26 @@ public class NewBankInformationActivity extends AppCompatActivity implements Rec
             public HeaderDesign getHeaderDesign(int page) {
                 switch (page) {
                     case 0:
-                        logo.setText(getResources().getString(R.string.bankInfromations));
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.blue1,
-                                "http://chenqiongimg.oss-cn-shanghai.aliyuncs.com/tqm/img/1.jpg");
+//                        logo.setText(getResources().getString(R.string.bankInfromations));
+                       return  HeaderDesign.fromColorAndDrawable(getResources().getColor(R.color.information_headColor1),
+                               getResources().getDrawable(R.drawable.information_top_slider1));
+//                        return HeaderDesign.fromColorResAndUrl(
+//                                R.color.blue1,
+//                                "http://chenqiongimg.oss-cn-shanghai.aliyuncs.com/tqm/img/1.jpg");
                     case 1:
-                        logo.setText(getResources().getString(R.string.hotInfromations));
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.green,
-                                "http://chenqiongimg.oss-cn-shanghai.aliyuncs.com/tqm/img/2.jpg");
+//                        logo.setText(getResources().getString(R.string.hotInfromations));
+                        return  HeaderDesign.fromColorAndDrawable(getResources().getColor(R.color.information_headColor2),
+                                getResources().getDrawable(R.drawable.information_top_slider2));
+//                        return HeaderDesign.fromColorResAndUrl(
+//                                R.color.information_headColor2,
+//                                "http://chenqiongimg.oss-cn-shanghai.aliyuncs.com/tqm/img/2.jpg");
                     case 2:
-                        logo.setText(getResources().getString(R.string.moneyInfromations));
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.orange1,
-                                "http://chenqiongimg.oss-cn-shanghai.aliyuncs.com/tqm/img/3.jpg");
+//                        logo.setText(getResources().getString(R.string.moneyInfromations));
+                        return  HeaderDesign.fromColorAndDrawable(getResources().getColor(R.color.information_headColor3),
+                                getResources().getDrawable(R.drawable.information_top_slider3));
+//                        return HeaderDesign.fromColorResAndUrl(
+//                                R.color.orange1,
+//                                "http://chenqiongimg.oss-cn-shanghai.aliyuncs.com/tqm/img/3.jpg");
                 }
                 return null;
             }
