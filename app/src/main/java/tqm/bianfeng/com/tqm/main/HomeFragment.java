@@ -481,14 +481,26 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+    List<BankInformItem> bankInformItems;
     //初始化热点资讯轮播
-    public void initHotMsgList(List<BankInformItem> bankInformItems) {
+    public void initHotMsgList(List<BankInformItem> data) {
+        bankInformItems=data;
         List<String> titles = new ArrayList<>();
         for (BankInformItem bankInformItem : bankInformItems) {
             titles.add(bankInformItem.getInformTitle());
         }
         marqueeView.setNotices(titles);
         marqueeView.start();
+        marqueeView.setOnItemClickListener(new com.sunfusheng.marqueeview.MarqueeView.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, TextView textView) {
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("detailType", "04");
+                intent.putExtra("detailId", bankInformItems.get(position).getInformId());
+                intent.putExtra("detailTitle", bankInformItems.get(position).getInformTitle());
+                mListener.detailActivity(intent);
+            }
+        });
     }
 
     public void getBankLoanItemHot() {

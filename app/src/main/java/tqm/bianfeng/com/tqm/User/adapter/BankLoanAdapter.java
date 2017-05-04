@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
+import tqm.bianfeng.com.tqm.update.StringUtils;
 
 /**
  * Created by wjy on 2016/11/7.
@@ -36,7 +37,7 @@ public class BankLoanAdapter extends RecyclerView.Adapter<BankLoanAdapter.ViewHo
         return R.layout.listitem;
     }
 
-    public BankLoanAdapter(List<BankLoanItem> datas, Context mContext) {
+    public BankLoanAdapter( Context mContext,List<BankLoanItem> datas) {
         this.mContext = mContext;
         this.datas = datas;
         mLayoutInflater = LayoutInflater.from(mContext);
@@ -65,8 +66,8 @@ public class BankLoanAdapter extends RecyclerView.Adapter<BankLoanAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        data = datas.get(position);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        BankLoanItem data =datas.get(position);
         holder.institutionNameLinear.setVisibility(View.VISIBLE);
         holder.investmentTermLinear.setVisibility(View.VISIBLE);
         holder.financViewsLinear.setVisibility(View.VISIBLE);
@@ -77,10 +78,19 @@ public class BankLoanAdapter extends RecyclerView.Adapter<BankLoanAdapter.ViewHo
         holder.loanMoneyTv.setText("" + data.getLoanMoney().setScale(0, BigDecimal.ROUND_DOWN));
         holder.investmentTermTv.setText(data.getLoanPeriod());
         holder.financViewsTv.setText(data.getLoanViews() + "");
-        holder.loanTypeNameTv.setText(data.getLoanTypeName());
 
+        if (StringUtils.isEmpty(data.getLoanTypeName())){
+            holder.loanTypeNameLinear.setVisibility(View.GONE);
+        }else {
 
-
+            holder.loanTypeNameTv.setText(data.getLoanTypeName());
+        }
+            holder.linearlayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mItemClickListener.onItemClick(null,position);
+                }
+            });
     }
 
     @Override
@@ -102,22 +112,26 @@ public class BankLoanAdapter extends RecyclerView.Adapter<BankLoanAdapter.ViewHo
         TextView rateNameTv;
         @BindView(R.id.title_tv)
         TextView titleTv;
-        @BindView(R.id.loanTypeName_tv)
-        TextView loanTypeNameTv;
-        @BindView(R.id.loanTypeName_linear)
-        LinearLayout loanTypeNameLinear;
-        @BindView(R.id.riskGradeName_tv)
-        TextView riskGradeNameTv;
-        @BindView(R.id.riskGradeName_linear)
-        LinearLayout riskGradeNameLinear;
-        @BindView(R.id.loanMoney_tv)
-        TextView loanMoneyTv;
-        @BindView(R.id.loanMoney_linear)
-        LinearLayout loanMoneyLinear;
         @BindView(R.id.purchaseMoney_tv)
         TextView purchaseMoneyTv;
         @BindView(R.id.purchaseMoney_linear)
         LinearLayout purchaseMoneyLinear;
+        @BindView(R.id.riskGradeName_tv)
+        TextView riskGradeNameTv;
+        @BindView(R.id.riskGradeName_linear)
+        LinearLayout riskGradeNameLinear;
+        @BindView(R.id.purchaseMoneyAndRiskGradeName_linear)
+        LinearLayout purchaseMoneyAndRiskGradeNameLinear;
+        @BindView(R.id.loanMoney_tv)
+        TextView loanMoneyTv;
+        @BindView(R.id.loanMoney_linear)
+        LinearLayout loanMoneyLinear;
+        @BindView(R.id.loanTypeName_tv)
+        TextView loanTypeNameTv;
+        @BindView(R.id.loanTypeName_linear)
+        LinearLayout loanTypeNameLinear;
+        @BindView(R.id.loanMoneyAndloanTypeName_linear)
+        LinearLayout loanMoneyAndloanTypeNameLinear;
         @BindView(R.id.investmentTerm_tv)
         TextView investmentTermTv;
         @BindView(R.id.investmentTerm_linear)
@@ -132,8 +146,6 @@ public class BankLoanAdapter extends RecyclerView.Adapter<BankLoanAdapter.ViewHo
         LinearLayout financViewsLinear;
         @BindView(R.id.linearlayout)
         LinearLayout linearlayout;
-        @BindView(R.id.loanMoneyAndloanTypeName_linear)
-        LinearLayout loanMoneyAndloanTypeNameLinear;
 
 
         ViewHolder(View view, BankLoanItemClickListener listener) {

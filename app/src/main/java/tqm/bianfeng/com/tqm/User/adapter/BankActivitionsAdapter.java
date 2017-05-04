@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -15,6 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 
 /**
@@ -66,17 +68,18 @@ public class BankActivitionsAdapter extends RecyclerView.Adapter<BankActivitions
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        data = datas.get(position);
-        if (data.getInstitutionIcon() != null) {
-            if (!data.getInstitutionIcon().equals("")) {
-                Picasso.with(mContext).load(data.getInstitutionIcon()).placeholder(R.drawable.banklogo).into(holder.logoImg);
-            }
-        }
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        BankActivityItem data = datas.get(position);
+        Picasso.with(mContext).load(NetWork.LOAD + data.getImageUrl()).placeholder(R.drawable.banklogo).into(holder.logoImg);
         holder.activityTitleTv.setText(data.getActivityTitle());
         holder.institutionNameTv.setText(data.getInstitutionName());
         holder.activityViewsTv.setText(data.getActivityViews() + "");
-
+        holder.linearlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mItemClickListener.onItemClick(null,position);
+            }
+        });
 
     }
 
@@ -101,6 +104,8 @@ public class BankActivitionsAdapter extends RecyclerView.Adapter<BankActivitions
         TextView institutionNameTv;
         @BindView(R.id.activityViews_tv)
         TextView activityViewsTv;
+        @BindView(R.id.linearlayout)
+        LinearLayout linearlayout;
 
         ViewHolder(View view, BankActivityItemClickListener listener) {
             super(view);

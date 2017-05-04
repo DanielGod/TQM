@@ -3,7 +3,6 @@ package tqm.bianfeng.com.tqm.User.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +23,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.CustomView.AutoHeightLayoutManager;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.lawhelp.LawDetailActivity;
 import tqm.bianfeng.com.tqm.lawhelp.adapter.LawListAdapter;
@@ -31,7 +31,6 @@ import tqm.bianfeng.com.tqm.main.DetailActivity;
 import tqm.bianfeng.com.tqm.main.HomeBankActivitysListAdapter;
 import tqm.bianfeng.com.tqm.main.HomeBankFinancingListAdapter;
 import tqm.bianfeng.com.tqm.main.HomeBankInfoListAdapter;
-import tqm.bianfeng.com.tqm.main.HomeBankLoanListAdapter;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.BankInformItem;
 import tqm.bianfeng.com.tqm.pojo.LawyerItem;
@@ -321,7 +320,8 @@ public class MyFocuseFragment extends BaseFragment {
 
 
     HomeBankActivitysListAdapter bankActivitionsAdapter;
-    HomeBankLoanListAdapter bankLoanAdapter;
+    //HomeBankLoanListAdapter bankLoanAdapter;
+    BankLoanAdapter bankLoanAdapter;
     HomeBankFinancingListAdapter bankFinancingAdapter;
     LawListAdapter lawListAdapter;
     HomeBankInfoListAdapter homeBankInfoListAdapter;
@@ -367,26 +367,46 @@ public class MyFocuseFragment extends BaseFragment {
         }
     }
 
-    public void initLoanList(List<BankLoanItem> datas) {
-        if (bankLoanAdapter == null) {
-            bankLoanAdapter = new HomeBankLoanListAdapter(getActivity(), datas);
-            bankLoanAdapter.setBgNull();
-            bankLoanAdapter.setOnItemClickListener(new HomeBankLoanListAdapter.HomeBankLoanClickListener() {
-                @Override
-                public void OnClickListener(int position) {
-                    Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra("detailType", "03");
-                    intent.putExtra("detailId", bankLoanAdapter.getItem(position).getLoanId());
-                    intent.putExtra("detailTitle", bankLoanAdapter.getDataItem(position).getLoanName());
-                    startActivity(intent);
-                }
-            });
-            myFocuseList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-            myFocuseList.setAdapter(bankLoanAdapter);
-        } else {
-            bankLoanAdapter.update(datas);
-        }
+//    public void initLoanList(List<BankLoanItem> datas) {
+//        if (bankLoanAdapter == null) {
+//            bankLoanAdapter = new HomeBankLoanListAdapter(getActivity(), datas);
+//            bankLoanAdapter.setBgNull();
+//            bankLoanAdapter.setOnItemClickListener(new HomeBankLoanListAdapter.HomeBankLoanClickListener() {
+//                @Override
+//                public void OnClickListener(int position) {
+//                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+//                    intent.putExtra("detailType", "03");
+//                    intent.putExtra("detailId", bankLoanAdapter.getItem(position).getLoanId());
+//                    intent.putExtra("detailTitle", bankLoanAdapter.getDataItem(position).getLoanName());
+//                    startActivity(intent);
+//                }
+//            });
+//            myFocuseList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+//            myFocuseList.setAdapter(bankLoanAdapter);
+//        } else {
+//            bankLoanAdapter.update(datas);
+//        }
+//    }
+public void initLoanList(List<BankLoanItem> datas) {
+    if (bankLoanAdapter == null) {
+        bankLoanAdapter = new tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter(getActivity(), datas);
+        // bankLoanAdapter.setBgNull();
+        bankLoanAdapter.setOnItemClickListener(new tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter.BankLoanItemClickListener() {
+            @Override
+            public void onItemClick(View view,int position) {
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("detailType", "03");
+                intent.putExtra("detailId", BankLoanItems.get(position).getLoanId());
+                intent.putExtra("detailTitle", BankLoanItems.get(position).getLoanName());
+                startActivity(intent);
+            }
+        });
+        myFocuseList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        myFocuseList.setAdapter(bankLoanAdapter);
+    } else {
+        bankLoanAdapter.setdatas(datas);
     }
+}
 
     public void initFinancList(List<BankFinancItem> datas) {
         if (bankFinancingAdapter == null) {
@@ -416,6 +436,7 @@ public class MyFocuseFragment extends BaseFragment {
                 public void OnClickListener(int position) {
                     Intent intent = new Intent(getActivity(), LawDetailActivity.class);
                     intent.putExtra("lawyer", LawyerItems.get(position).getLawyerId() + "");
+                    intent.putExtra("detailTitle", LawyerItems.get(position).getLawyerName());
                     startActivity(intent);
                 }
 

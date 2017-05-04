@@ -49,7 +49,7 @@ public class WelcomeActivity extends Activity {
         mCompositeSubscription = new CompositeSubscription();
         ButterKnife.bind(this);
         if(!NetUtils.isConnected(this)){
-            Picasso.with(WelcomeActivity.this).load(R.drawable.startpage).into(startPageImg);
+            Picasso.with(WelcomeActivity.this).load(R.drawable.qidongye).into(startPageImg);
             countToEnter();
         }else{
             Subscription subscription = NetWork.getUserService().getImages("01")
