@@ -60,7 +60,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="银行活动"
-                        android:textColor="@color/black"
+                        android:textColor="@color/font_black_1"
                         android:textSize="@dimen/mediumsp"/>
                 </LinearLayout>
 
@@ -90,7 +90,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="银行理财"
-                        android:textColor="@color/black"
+                        android:textColor="@color/font_black_1"
                         android:textSize="@dimen/mediumsp"/>
 
                 </LinearLayout>
@@ -120,7 +120,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="银行贷款"
-                        android:textColor="@color/black"
+                        android:textColor="@color/font_black_1"
                         android:textSize="@dimen/mediumsp"/>
 
                 </LinearLayout>
@@ -150,7 +150,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="网点查询"
-                        android:textColor="@color/black"
+                        android:textColor="@color/font_black_1"
                         android:textSize="@dimen/mediumsp"/>
 
                 </LinearLayout>

@@ -43,7 +43,7 @@
                     android:layout_centerVertical="true"
                     android:gravity="center"
                     android:text="12345678900"
-                    android:textColor="@color/black"
+                    android:textColor="@color/font_black_1"
                     android:textSize="@dimen/mediumxsp"
                     android:visibility="invisible"
                     />
@@ -118,7 +118,7 @@
                         android:layout_weight="0.8"
                         android:gravity="center"
                         android:text="我的收藏"
-                        android:textColor="@color/black"
+                        android:textColor="@color/font_black_1"
                         android:textSize="@dimen/smallsp"/>
                 </LinearLayout>
 
@@ -154,7 +154,7 @@
                         android:layout_weight="0.8"
                         android:gravity="center"
                         android:text="我的关注"
-                        android:textColor="@color/black"
+                        android:textColor="@color/font_black_1"
                         android:textSize="@dimen/smallsp"/>
                 </LinearLayout>
 
@@ -190,7 +190,7 @@
                         android:layout_weight="0.8"
                         android:gravity="center"
                         android:text="浏览记录"
-                        android:textColor="@color/black"
+                        android:textColor="@color/font_black_1"
                         android:textSize="@dimen/smallsp"/>
                 </LinearLayout>
 
@@ -231,7 +231,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="入驻申请"
-                    android:textColor="@color/black"
+                    android:textColor="@color/font_black_1"
                     android:textSize="@dimen/mediumsp"
                     />
 
@@ -274,7 +274,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="反馈"
-                    android:textColor="@color/black"
+                    android:textColor="@color/font_black_1"
                     android:textSize="@dimen/mediumsp"/>
 
                 <ImageView
@@ -312,7 +312,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="设置"
-                    android:textColor="@color/black"
+                    android:textColor="@color/font_black_1"
                     android:textSize="@dimen/mediumsp"/>
             </LinearLayout>
 
@@ -340,7 +340,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="关于我们"
-                    android:textColor="@color/black"
+                    android:textColor="@color/font_black_1"
                     android:textSize="@dimen/mediumsp"/>
             </LinearLayout>
 

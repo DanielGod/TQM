@@ -24,7 +24,6 @@ import tqm.bianfeng.com.tqm.CustomView.AutoHeightLayoutManager;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
-import tqm.bianfeng.com.tqm.lawhelp.LawDetailActivity;
 import tqm.bianfeng.com.tqm.lawhelp.adapter.LawListAdapter;
 import tqm.bianfeng.com.tqm.main.DetailActivity;
 import tqm.bianfeng.com.tqm.main.HomeBankActivitysListAdapter;
@@ -325,7 +324,7 @@ public class MyBroseFragment extends BaseFragment {
                 public void OnClickListener(int position) {
                     //跳转银行咨询详情
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra("detailType", "04");
+                    intent.putExtra("detailType",DetailActivity.INFOR_TYPE);
                     intent.putExtra("detailId", homeBankInfoListAdapter.getDataItem(position).getInformId());
                     intent.putExtra("detailTitle", homeBankInfoListAdapter.getDataItem(position).getInformTitle());
                     startActivity(intent);
@@ -343,7 +342,7 @@ public class MyBroseFragment extends BaseFragment {
                 @Override
                 public void OnClickListener(int position) {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra("detailType", "01");
+                    intent.putExtra("detailType", DetailActivity.ACTIVITY_TYPE);
                     intent.putExtra("detailId", bankActivitionsAdapter.getDataItem(position).getActivityId());
                     intent.putExtra("detailTitle", bankActivitionsAdapter.getDataItem(position).getActivityTitle());
                     startActivity(intent);
@@ -384,7 +383,7 @@ public void initLoanList(List<BankLoanItem> datas) {
             @Override
             public void onItemClick(View view,int position) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("detailType", "03");
+                intent.putExtra("detailType", DetailActivity.LOAN_TYPE);
                 intent.putExtra("detailId", BankLoanItems.get(position).getLoanId());
                 intent.putExtra("detailTitle", BankLoanItems.get(position).getLoanName());
                 startActivity(intent);
@@ -404,7 +403,7 @@ public void initLoanList(List<BankLoanItem> datas) {
                 @Override
                 public void OnClickListener(int position) {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra("detailType", "02");
+                    intent.putExtra("detailType", DetailActivity.FINANC_TYPE);
                     intent.putExtra("detailId", bankFinancingAdapter.getDataItem(position).getFinancId());
                     intent.putExtra("detailTitle", bankFinancingAdapter.getDataItem(position).getProductName());
                     startActivity(intent);
@@ -423,9 +422,10 @@ public void initLoanList(List<BankLoanItem> datas) {
             lawListAdapter.setOnItemClickListener(new LawListAdapter.MyItemClickListener() {
                 @Override
                 public void OnClickListener(int position) {
-                    Intent intent = new Intent(getActivity(), LawDetailActivity.class);
-                    intent.putExtra("lawyer", LawyerItems.get(position).getLawyerId() + "");
+                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    intent.putExtra("detailId", LawyerItems.get(position).getLawyerId());
                     intent.putExtra("detailTitle", LawyerItems.get(position).getLawyerName());
+                    intent.putExtra("detailType", DetailActivity.LAWYER_TYPE);
                     startActivity(intent);
                 }
 

@@ -2,6 +2,7 @@ package tqm.bianfeng.com.tqm.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -168,7 +169,13 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onGlobalLayout() {
                 homeSlider.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                sliderHeight = homeSlider.getHeight();
+                int toolBarHeight=0;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    toolBarHeight=(int)getResources().getDimension(R.dimen.hugehdp);
+                }else{
+                    toolBarHeight=(int)getResources().getDimension(R.dimen.smallhdp);
+                }
+                sliderHeight = homeSlider.getHeight()- toolBarHeight;
 
             }
         });
@@ -469,7 +476,7 @@ public class HomeFragment extends BaseFragment {
                 public void OnClickListener(int position) {
                     //跳转银行咨询详情
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra("detailType", "04");
+                    intent.putExtra("detailType", DetailActivity.INFOR_TYPE);
                     intent.putExtra("detailId", homeBankInfoListAdapter.getDataItem(position).getInformId());
                     intent.putExtra("detailTitle", homeBankInfoListAdapter.getDataItem(position).getInformTitle());
                     mListener.detailActivity(intent);
@@ -495,7 +502,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onItemClick(int position, TextView textView) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("detailType", "04");
+                intent.putExtra("detailType", DetailActivity.INFOR_TYPE);
                 intent.putExtra("detailId", bankInformItems.get(position).getInformId());
                 intent.putExtra("detailTitle", bankInformItems.get(position).getInformTitle());
                 mListener.detailActivity(intent);

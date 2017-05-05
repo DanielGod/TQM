@@ -48,6 +48,12 @@ import tqm.bianfeng.com.tqm.pojo.User;
 
 public class DetailActivity extends BaseActivity {
 
+    public static final String ACTIVITY_TYPE="01";
+    public static final String FINANC_TYPE="02";
+    public static final String LOAN_TYPE="03";
+    public static final String INFOR_TYPE="04";
+    public static final String LAWYER_TYPE="05";
+
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1234;
     @BindView(R.id.detail_toolbar)
     Toolbar detailToolbar;
@@ -121,6 +127,9 @@ public class DetailActivity extends BaseActivity {
                 break;
             case "04":
                 toolbarTitle = "银行资讯";
+                break;
+            case "05":
+                toolbarTitle = "个人资料";
                 break;
         }
         setToolbar(detailToolbar, toolbarTitle);
@@ -379,5 +388,6 @@ public class DetailActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         UMShareAPI.get(this).release();
+        webView.destroy();
     }
 }

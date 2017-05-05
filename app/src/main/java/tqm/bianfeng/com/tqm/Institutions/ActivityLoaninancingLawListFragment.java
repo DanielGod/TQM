@@ -17,7 +17,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
-import tqm.bianfeng.com.tqm.lawhelp.LawDetailActivity;
 import tqm.bianfeng.com.tqm.lawhelp.adapter.LawListAdapter;
 import tqm.bianfeng.com.tqm.main.DetailActivity;
 import tqm.bianfeng.com.tqm.main.HomeBankActivitysListAdapter;
@@ -135,7 +134,7 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
             @Override
             public void OnClickListener(int position) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("detailType", "01");
+                intent.putExtra("detailType", DetailActivity.ACTIVITY_TYPE);
                 intent.putExtra("detailId", bankActivitionsAdapter.getDataItem(position).getActivityId());
                 intent.putExtra("detailTitle", bankActivitionsAdapter.getDataItem(position).getActivityTitle());
                 startActivity(intent);
@@ -152,7 +151,7 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
             @Override
             public void onItemClick(View view,int position) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("detailType", "03");
+                intent.putExtra("detailType", DetailActivity.LOAN_TYPE);
                 intent.putExtra("detailId", BankLoanItems.get(position).getLoanId());
                 intent.putExtra("detailTitle", BankLoanItems.get(position).getLoanName());
                 startActivity(intent);
@@ -169,7 +168,7 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
             @Override
             public void OnClickListener(int position) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("detailType", "02");
+                intent.putExtra("detailType", DetailActivity.FINANC_TYPE);
                 intent.putExtra("detailId", bankFinancingAdapter.getDataItem(position).getFinancId());
                 intent.putExtra("detailTitle", bankFinancingAdapter.getDataItem(position).getProductName());
                 startActivity(intent);
@@ -184,9 +183,10 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
         lawListAdapter.setOnItemClickListener(new LawListAdapter.MyItemClickListener() {
             @Override
             public void OnClickListener(int position) {
-                Intent intent = new Intent(getActivity(), LawDetailActivity.class);
-                intent.putExtra("lawyer", LawyerItems.get(position).getLawyerId() + "");
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("detailId", LawyerItems.get(position).getLawyerId());
                 intent.putExtra("detailTitle", LawyerItems.get(position).getLawyerName());
+                intent.putExtra("detailType", DetailActivity.LAWYER_TYPE);
                 startActivity(intent);
             }
 

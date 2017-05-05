@@ -37,6 +37,7 @@ import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.lawhelp.adapter.LawListAdapter;
 import tqm.bianfeng.com.tqm.lawhelp.adapter.ListDropDownAdapter;
 import tqm.bianfeng.com.tqm.lawhelp.tools.ThreeAddTools;
+import tqm.bianfeng.com.tqm.main.DetailActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.LawAdd;
 import tqm.bianfeng.com.tqm.pojo.LawyerItem;
@@ -300,9 +301,10 @@ public class LawHelpFragment extends BaseFragment {
             lawListAdapter.setOnItemClickListener(new LawListAdapter.MyItemClickListener() {
                 @Override
                 public void OnClickListener(int position) {
-                    Intent intent = new Intent(getActivity(), LawDetailActivity.class);
-                    intent.putExtra("lawyer", datas.get(position).getLawyerId() + "");
+                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    intent.putExtra("detailId", datas.get(position).getLawyerId());
                     intent.putExtra("detailTitle", datas.get(position).getLawyerName());
+                    intent.putExtra("detailType", DetailActivity.LAWYER_TYPE);
                     mListener.detailActivity(intent);
                 }
 
