@@ -54,7 +54,6 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/mediumsp"
-                    android:text="宋江支行年收益4.5%，起购5000元"
                     android:textColor="@color/black"
                     />
             </LinearLayout>
@@ -77,7 +76,6 @@
                         android:layout_height="match_parent"
                         android:lines="1"
                         android:ellipsize="end"
-                        android:text="发行机构"
                         android:textSize="@dimen/smallsp"
                         android:gravity="center_vertical"
                         />
