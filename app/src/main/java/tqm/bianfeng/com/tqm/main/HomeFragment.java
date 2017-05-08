@@ -37,6 +37,7 @@ import tqm.bianfeng.com.tqm.CustomView.MarqueeView;
 import tqm.bianfeng.com.tqm.CustomView.MyScrollview;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
+import tqm.bianfeng.com.tqm.baidumap.WebListActivity;
 import tqm.bianfeng.com.tqm.bank.bankactivitys.BankActivitonsActivity;
 import tqm.bianfeng.com.tqm.bank.bankfinancing.BankFinancingActivity;
 import tqm.bianfeng.com.tqm.bank.bankinformations.test.NewBankInformationActivity;
@@ -579,7 +580,7 @@ public class HomeFragment extends BaseFragment {
 
     @OnClick({R.id.select_more_bankFinancing_txt, R.id.select_more_bankLoan_txt, R.id.select_more_bankActivitys_txt,
             R.id.home_bank_activity_lin, R.id.home_bank_loan_lin, R.id.home_bank_make_money_lin,
-            R.id.select_more_bank_make_money_txt, R.id.select_more_hot_information_txt})
+            R.id.select_more_bank_make_money_txt, R.id.select_more_hot_information_txt,R.id.home_select_branches_lin})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.select_more_bankFinancing_txt:
@@ -605,6 +606,9 @@ public class HomeFragment extends BaseFragment {
                 break;
             case R.id.select_more_hot_information_txt:
                 startActivity(new Intent(getActivity(), NewBankInformationActivity.class).putExtra("02", "02"));//02-热点资讯
+                break;
+            case R.id.home_select_branches_lin:
+                startActivity(new Intent(getActivity(), WebListActivity.class));
                 break;
 
         }

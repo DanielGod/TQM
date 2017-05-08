@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:background="@color/white"
+              android:layout_height="?actionBarSize">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/white"
+        />
+    <Button
+        android:id="@+id/previous_btn"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="?actionBarSize"
+        android:text="上一页"
+        />
+    <Button
+        android:id="@+id/next_btn"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="?actionBarSize"
+        android:text="下一页"
+        />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/white"
+        />
+
+</LinearLayout>

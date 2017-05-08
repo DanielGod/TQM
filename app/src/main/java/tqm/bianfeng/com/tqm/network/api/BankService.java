@@ -9,6 +9,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
+import tqm.bianfeng.com.tqm.pojo.bank.BankDotItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankInformItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
@@ -99,6 +100,16 @@ public interface BankService {
     Observable<List<BankActivityItem>> getBankActivityItem(@Field("homeShow") String homeShow,
                                                            @Field("pageNum") Integer pageNum,
                                                            @Field("pageSize") Integer pageSize);
+
+    /**
+     * 获取网点列表
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("dot/getBankDotItem")
+    Observable<List<BankDotItem>> getBankDotItem(@Field("uids") String uids);
+
+
 
 
 
