@@ -20,7 +20,6 @@ import java.util.List;
 
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.pojo.bank.BankDotItem;
-import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.pojo.bank.WebListViewType;
 
 import static tqm.bianfeng.com.tqm.network.NetWork.LOAD;
@@ -52,6 +51,10 @@ public class WebListAdapter extends RecyclerView.Adapter<WebListAdapter.ViewHold
 
     public int getLayout() {
         return R.layout.map_listitem;
+    }
+
+    public WebListAdapter(Context mContext) {
+        this.mContext = mContext;
     }
 
     public WebListAdapter(List<BankDotItem> datas, Context mContext) {
@@ -110,13 +113,14 @@ public class WebListAdapter extends RecyclerView.Adapter<WebListAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case TYPE_BOTTOM: //底部View
-                Log.e("Daniel", "---count---"+getItemCount());
-                Log.e("Daniel", "---count2---"+(Constan.PAGECAPACITY+1));
-                if (getItemCount()< (Constan.PAGECAPACITY+1))
-                    nextBtn.setEnabled(false);
-                else
-                    nextBtn.setEnabled(true);
-                if (WebListActivity.oldIndex==0)
+//                Log.e("Daniel", "---count---"+getItemCount());
+//                Log.e("Daniel", "---count2---"+(Constan.PAGECAPACITY+1));
+//                if (getItemCount()< (Constan.PAGECAPACITY+1))
+//                    nextBtn.setEnabled(false);
+//                else
+//                    nextBtn.setEnabled(true);
+                Log.e("Daniel", "---oldIndex---"+WebListActivity.loadIndex);
+                if (WebListActivity.loadIndex==0)
                     previousBtn.setEnabled(false);
                 else
                     previousBtn.setEnabled(true);
@@ -163,7 +167,7 @@ public class WebListAdapter extends RecyclerView.Adapter<WebListAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        Log.i("Daniel","---datas.size()---"+datas.size());
+//        Log.i("Daniel","---datas.size()---"+datas.size());
         return datas != null ? datas.size() + 1 : 0;
     }
 

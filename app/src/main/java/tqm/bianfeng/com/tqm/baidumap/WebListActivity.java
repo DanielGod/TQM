@@ -1,5 +1,6 @@
 package tqm.bianfeng.com.tqm.baidumap;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,7 @@ import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.poi.PoiSortType;
 import com.baidu.mapapi.search.sug.SuggestionSearch;
+import com.barryzhang.temptyview.TViewUtil;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -72,7 +74,7 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
     private SuggestionSearch mSuggestionSearch = null;
     private BaiduMap mBaiduMap = null;
     private List<String> suggest;
-    private int loadIndex = 0;
+    public static int loadIndex = 0;
     public static int oldIndex =0;
     public static double lat;
     public static double lnt;
@@ -95,12 +97,35 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
         mPoiSearch = PoiSearch.newInstance();
         mPoiSearch.setOnGetPoiSearchResultListener(this);//能绘制地点
         //        mPoiSearch.setOnGetPoiSearchResultListener(poiListener);//能返回结果
-
+//        tEmptyView();
         mBaiduMap = ((SupportMapFragment) (getSupportFragmentManager()
                 .findFragmentById(R.id.map)))
                 .getBaiduMap();
 
     }
+
+    private void tEmptyView() {
+        recycler.setLayoutManager(new AutoHeightLayoutManager(this));
+        recycler.setHasFixedSize(true);
+        WebListAdapter webListAdapter = new WebListAdapter(WebListActivity.this);
+        recycler.setAdapter(webListAdapter);
+        TViewUtil.EmptyViewBuilder.getInstance(getApplicationContext())
+                .setEmptyText("请检查网络！")
+                .setEmptyTextSize(12)
+                .setEmptyTextColor(Color.GRAY)
+                .setIconSrc(R.drawable.airplane)
+                .setShowButton(true)
+                .setActionText("重新加载")
+                .setAction(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getApplicationContext(),
+                                "Yes, clicked~",Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .bindView(recycler);
+    }
+
     /*****
      *
      * 定位结果回调，重写onReceiveLocation方法，可以直接拷贝如下代码到自己工程中修改
@@ -176,11 +201,10 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
     public void onEventMainThread(WebListViewType event) {
        switch (event.getType()){
            case 0:   //上一页
-               oldIndex = loadIndex; //记录当前下标
+
                goToPreviousPage();
                break;
            case 1:   //下一页
-               oldIndex = loadIndex;
                goToNextPage();
                break;
        }
@@ -200,11 +224,13 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
 //    }
 //
     public void goToNextPage() {
+        oldIndex = loadIndex; //记录当前下标
         loadIndex++;
         getPoiNearbySearchOption(loadIndex);
 
     }
     public void goToPreviousPage() {
+        oldIndex = loadIndex; //记录当前下标
         loadIndex--;
         getPoiNearbySearchOption(loadIndex);
 
@@ -312,6 +338,12 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
         WebListAdapter webListAdapter = new WebListAdapter(datas, WebListActivity.this);
         recycler.setAdapter(webListAdapter);
         locationService.stop();
+        TViewUtil.EmptyViewBuilder.getInstance(getApplicationContext())
+                .setEmptyTextSize(14)
+                .setEmptyTextColor(Color.GRAY)
+                .setEmptyText("This is a empty view in fragment 5 \n RecyclerView")
+                .setIconSrc(R.drawable.icon_geo)
+                .bindView(recycler);
 
     }
     static double DEF_PI = 3.14159265359; // PI

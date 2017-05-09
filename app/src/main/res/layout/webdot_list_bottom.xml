@@ -3,6 +3,8 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:background="@color/white"
+              android:paddingBottom="@dimen/mediummxdp"
+              android:paddingTop="@dimen/mediummxdp"
               android:layout_height="?actionBarSize">
 
     <TextView
@@ -15,15 +17,19 @@
         android:id="@+id/previous_btn"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="?actionBarSize"
-        android:text="上一页"
+        android:layout_height="match_parent"
+        android:background="@drawable/nextpage_btn_selector"
+        android:layout_marginRight="@dimen/tinymdp"
+        android:text="@string/previousPage"
         />
     <Button
         android:id="@+id/next_btn"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="?actionBarSize"
-        android:text="下一页"
+        android:layout_height="match_parent"
+        android:background="@drawable/nextpage_btn_selector"
+        android:layout_marginLeft="@dimen/tinymdp"
+        android:text="@string/nextPage"
         />
     <TextView
         android:layout_width="0dp"
