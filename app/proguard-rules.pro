@@ -267,6 +267,8 @@
 -dontwarn cn.hugeterry.coordinatortablayout.**
 -dontwarn com.soundcloud.android.**
 
+-keep class com.wang.avi.** { *; }
+-keep class com.wang.avi.indicators.** { *; }
 ####混淆保护自己项目的部分代码以及引用的第三方jar包library-end####
 
 

@@ -61,6 +61,25 @@ public class BaseActivity extends SwipeBackActivity implements InitViewInterface
         setSystemBarColor(R.color.colorPrimaryDark);
     }
 
+    public void setToolbar(boolean isHasBack,boolean isBackWrite,int textColor){
+        if(isHasBack==false){
+            mToolbar.setNavigationIcon(null);
+        }else{
+            if(isBackWrite){
+                mToolbar.setNavigationIcon(R.drawable.barcode__back_arrow);
+            }else{
+
+            }
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+        }
+        mToolbar.setTitleTextColor(getResources().getColor(textColor));
+    }
+
     //弹出网络设置dialog
     public void shouNetWorkActivity() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);

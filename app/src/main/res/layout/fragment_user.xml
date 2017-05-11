@@ -91,7 +91,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/hugehxxdp"
                 android:orientation="horizontal">
+                <LinearLayout
+                    android:id="@+id/my_release_lin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:src="@drawable/ic_user_collection"
+                        android:layout_marginTop="@dimen/mediummdp"
+                        android:padding="@dimen/smallmdp"
+
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:text="我的发布"
+                        android:textColor="@color/font_black_1"
+                        android:textSize="@dimen/smallsp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:background="@color/whitesmoke"/>
                 <LinearLayout
                     android:id="@+id/bank_collection_lin"
                     android:layout_width="0dp"
@@ -250,7 +285,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/whitesmoke"/>
+            <LinearLayout
+                android:id="@+id/user_release_lin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/mediumhdp"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_apply_for"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="发布信息"
+                    android:textColor="@color/font_black_1"
+                    android:textSize="@dimen/mediumsp"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_right_arrow"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/whitesmoke"/>
             <LinearLayout
                 android:id="@+id/user_feedback_lin"
                 android:layout_width="match_parent"

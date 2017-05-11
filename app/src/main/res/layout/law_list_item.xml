@@ -56,7 +56,54 @@
                     android:gravity="center_vertical"
                     android:text="联系电话：15670702651"
                     android:textColor="@color/font_black_2"
+                    android:visibility="gone"
                     android:textSize="@dimen/mediumsp"
+                    />
+
+                <TextView
+                    android:id="@+id/good_at1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_writesmoke_bg_shap"
+                    android:text="婚姻法律"
+                    android:gravity="center"
+                    android:textColor="@color/font_black_2"
+                    android:textSize="@dimen/tinysp"
+                    android:paddingLeft="@dimen/smallmdp"
+                    android:paddingRight="@dimen/smallmdp"
+                    android:layout_marginBottom="@dimen/tinymdp"
+                    android:layout_marginTop="@dimen/tinymdp"
+                    android:layout_marginRight="@dimen/mediummdp"
+                    />
+                <TextView
+                    android:id="@+id/good_at2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_writesmoke_bg_shap"
+                    android:text="婚姻法律"
+                    android:gravity="center"
+                    android:textColor="@color/font_black_2"
+                    android:textSize="@dimen/tinysp"
+                    android:paddingLeft="@dimen/smallmdp"
+                    android:paddingRight="@dimen/smallmdp"
+                    android:layout_marginBottom="@dimen/tinymdp"
+                    android:layout_marginTop="@dimen/tinymdp"
+                    android:layout_marginRight="@dimen/mediummdp"
+                    />
+                <TextView
+                    android:id="@+id/good_at3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_writesmoke_bg_shap"
+                    android:text="婚姻法律"
+                    android:gravity="center"
+                    android:textColor="@color/font_black_2"
+                    android:textSize="@dimen/tinysp"
+                    android:paddingLeft="@dimen/smallmdp"
+                    android:paddingRight="@dimen/smallmdp"
+                    android:layout_marginBottom="@dimen/tinymdp"
+                    android:layout_marginTop="@dimen/tinymdp"
+                    android:layout_marginRight="@dimen/mediummdp"
                     />
 
             </LinearLayout>

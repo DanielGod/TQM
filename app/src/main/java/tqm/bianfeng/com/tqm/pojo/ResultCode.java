@@ -27,4 +27,12 @@ public class ResultCode {
     public void setCode(int code) {
         this.code = code;
     }
+
+    @Override
+    public String toString() {
+        return "ResultCode{" +
+                "msg='" + msg + '\'' +
+                ", code=" + code +
+                '}';
+    }
 }

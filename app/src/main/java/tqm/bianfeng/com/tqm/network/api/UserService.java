@@ -21,6 +21,7 @@ import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
+import tqm.bianfeng.com.tqm.pojo.result.ResultCodeWithImgPathList;
 import tqm.bianfeng.com.tqm.update.UpdateMsg;
 
 /**
@@ -183,5 +184,24 @@ public interface UserService {
      */
     @GET("history/deleteHistory/{userId}")
     Observable<ResultCode>deleteHistory(@Path("userId") int userId);
+
+
+    /**
+     * 上传公司三张图片
+     */
+    @Multipart
+    @POST("enter/uploadCompanyFile")
+    Observable<ResultCodeWithImgPathList> uploadCompanyFile(@Part List<MultipartBody.Part> zichifile);
+
+    /**
+     * 提交信息 applyEnter
+     */
+    @FormUrlEncoded
+    @POST("enter/")
+    Observable<ResultCode> save(@Field("applyEnter") String applyEnter);
+
+
+
+
 
 }

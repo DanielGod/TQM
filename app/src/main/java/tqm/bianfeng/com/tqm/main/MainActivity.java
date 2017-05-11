@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.Dialog.BaseDialog;
 import tqm.bianfeng.com.tqm.Institutions.InstitutionsInFragment;
+import tqm.bianfeng.com.tqm.Institutions.SearchInstiutionsActivity;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.UserFragment;
 import tqm.bianfeng.com.tqm.Util.DisplayUtil;
@@ -93,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     RelativeLayout homeLin;
 
     Realm realm;
+    @BindView(R.id.action_search_img)
+    ImageView actionSearchImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 } else {
                     getSupportFragmentManager().beginTransaction().show(institutionsInFragment).commitNow();
                 }
-                setBelow(1);
+                setBelow(2);
                 break;
             case CONTENT_CATHOME:
                 String catHome_str = getResources().getString(R.string.catHome);
@@ -247,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 } else {
                     getSupportFragmentManager().beginTransaction().show(userFragemnt).commitNow();
                 }
-                setBelow(1);
+                setBelow(3);
                 break;
         }
 
@@ -270,15 +274,23 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
 
     public void setBelow(int index) {
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) containerLin.getLayoutParams();
-        if (index == 1) {
+        if (index == 0) {
+            params.removeRule(RelativeLayout.BELOW);
+            //toolbarTitle.setVisibility(View.GONE);
+            homeLocationTxt.setVisibility(View.VISIBLE);
+        } else {
+
             params.addRule(RelativeLayout.BELOW, R.id.toolbar);
             setToolBarColorBg(255);
             //toolbarTitle.setVisibility(View.VISIBLE);
             homeLocationTxt.setVisibility(View.INVISIBLE);
+
+        }
+
+        if (index == 2) {
+            actionSearchImg.setVisibility(View.VISIBLE);
         } else {
-            params.removeRule(RelativeLayout.BELOW);
-            //toolbarTitle.setVisibility(View.GONE);
-            homeLocationTxt.setVisibility(View.VISIBLE);
+            actionSearchImg.setVisibility(View.GONE);
         }
         containerLin.setLayoutParams(params);
 
@@ -550,10 +562,15 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         toolbarTitle.setAlpha(1);
     }
 
-    @OnClick(R.id.home_location_txt)
-    public void onClick() {
-        //定位
-        startActivity(new Intent(MainActivity.this, AllCityActivity.class));
-
+    @OnClick({R.id.home_location_txt, R.id.action_search_img})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.home_location_txt:
+                startActivity(new Intent(MainActivity.this, AllCityActivity.class));
+                break;
+            case R.id.action_search_img:
+                startActivity(new Intent(MainActivity.this, SearchInstiutionsActivity.class));
+                break;
+        }
     }
 }

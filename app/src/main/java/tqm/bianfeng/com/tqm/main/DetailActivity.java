@@ -1,27 +1,20 @@
 package tqm.bianfeng.com.tqm.main;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.jaeger.library.StatusBarUtil;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -36,7 +29,9 @@ import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import tqm.bianfeng.com.tqm.CustomView.ObservableWebView;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.User.CorrectOrReportActivity;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
@@ -48,17 +43,17 @@ import tqm.bianfeng.com.tqm.pojo.User;
 
 public class DetailActivity extends BaseActivity {
 
-    public static final String ACTIVITY_TYPE="01";
-    public static final String FINANC_TYPE="02";
-    public static final String LOAN_TYPE="03";
-    public static final String INFOR_TYPE="04";
-    public static final String LAWYER_TYPE="05";
+    public static final String ACTIVITY_TYPE = "01";
+    public static final String FINANC_TYPE = "02";
+    public static final String LOAN_TYPE = "03";
+    public static final String INFOR_TYPE = "04";
+    public static final String LAWYER_TYPE = "05";
 
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1234;
     @BindView(R.id.detail_toolbar)
-    Toolbar detailToolbar;
+    RelativeLayout detailToolbar;
     @BindView(R.id.detail_web)
-    WebView webView;
+    ObservableWebView webView;
 
     public String detailType;
 
@@ -67,14 +62,27 @@ public class DetailActivity extends BaseActivity {
     boolean isCollection = false;
     boolean isInCollection = false;
     public int detailId = -1;
-    @BindView(R.id.multiple_actions_down)
-    FloatingActionsMenu multipleActionsDown;
-    @BindView(R.id.action_a)
-    FloatingActionButton actionA;
-    @BindView(R.id.action_b)
-    FloatingActionButton actionB;
-    @BindView(R.id.action_c)
-    FloatingActionButton actionC;
+    @BindView(R.id.detail_back)
+    ImageView detailBack;
+    @BindView(R.id.comments_rel)
+    RelativeLayout commentsRel;
+    @BindView(R.id.icon_img)
+    ImageView iconImg;
+    @BindView(R.id.message_num)
+    TextView messageNum;
+    @BindView(R.id.icon_with_msg_rel)
+    RelativeLayout iconWithMsgRel;
+    @BindView(R.id.focuse_img)
+    ImageView focuseImg;
+    @BindView(R.id.toolbar_txt)
+    TextView toolbarTxt;
+    String toolbarTitle;
+    @BindView(R.id.share_img)
+    ImageView shareImg;
+    @BindView(R.id.more_menu_img)
+    ImageView moreMenuImg;
+    private int toolBarHeight = 0;
+    private int scrollHeight = 0;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -88,33 +96,27 @@ public class DetailActivity extends BaseActivity {
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
 
-        detailToolbar.inflateMenu(R.menu.collection_article_false);
-        detailToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.collection_false) {
-//                    if (Build.VERSION.SDK_INT >= 23) {
-//                        String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
-//                        ActivityCompat.requestPermissions(DetailActivity.this, mPermissionList, 123);
-//                    }
-
-                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        //申请WRITE_EXTERNAL_STORAGE权限
-                        ActivityCompat.requestPermissions(DetailActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
-                    }
-                        share();
-
-                }
-                return false;
-            }
-        });
+        //        detailToolbar.inflateMenu(R.menu.collection_article_false);
+        //        detailToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        //            @Override
+        //            public boolean onMenuItemClick(MenuItem item) {
+        //                if (item.getItemId() == R.id.collection_false) {
+        //                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        //                            != PackageManager.PERMISSION_GRANTED) {
+        //                        //申请WRITE_EXTERNAL_STORAGE权限
+        //                        ActivityCompat.requestPermissions(DetailActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+        //                                WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+        //                    }
+        //                    share();
+        //                }
+        //                return false;
+        //            }
+        //        });
 
         detailType = getIntent().getStringExtra("detailType");
         detailId = getIntent().getIntExtra("detailId", -1);
         detailTitle = getIntent().getStringExtra("detailTitle");
-        String toolbarTitle = "";
+        toolbarTitle = "";
         switch (detailType) {
             case "01":
                 toolbarTitle = "银行活动";
@@ -129,16 +131,28 @@ public class DetailActivity extends BaseActivity {
                 toolbarTitle = "银行资讯";
                 break;
             case "05":
-                toolbarTitle = "个人资料";
+                toolbarTitle = "律师资料";
                 break;
         }
-        setToolbar(detailToolbar, toolbarTitle);
+        //setToolbar(detailToolbar, toolbarTitle);
+        //setToolbar(false,false,R.color.white);
 
         initWebView();
         initactionASrc();
         initCollection();
         invalidateOptionsMenu();
+        initToolBar();
+
     }
+
+    public void initToolBar() {
+        toolbarTxt.setText(toolbarTitle);
+        toolbarTxt.setTextColor(getResources().getColor(R.color.font_black_1));
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.font_black_7));
+        detailToolbar.setBackgroundResource(R.color.whitesmoke);
+        setToolBarBgAlpha();
+    }
+
 
     String url;
 
@@ -162,14 +176,33 @@ public class DetailActivity extends BaseActivity {
         webView.setHorizontalScrollBarEnabled(false);
         webView.getSettings().setBuiltInZoomControls(true);// 出现放大缩小提示
         webView.getSettings().setDisplayZoomControls(false);//隐藏缩放按钮
-        String userId="0";
-        if(realm.where(User.class).findFirst()!=null){
-            userId=realm.where(User.class).findFirst().getUserId()+"";
+        String userId = "0";
+        if (realm.where(User.class).findFirst() != null) {
+            userId = realm.where(User.class).findFirst().getUserId() + "";
         }
-        url = NetWork.LOAD+"/app/getDetail/" + detailType + "/" + detailId+"/"+userId;
+        url = NetWork.LOAD + "/app/getDetail/" + detailType + "/" + detailId + "/" + userId;
         webView.loadUrl(url);
+        webView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
+            @Override
+            public void onScroll(int dx, int dy) {
+                //内容滚动
+                scrollHeight = dy / 2;
+                if (scrollHeight > toolBarHeight) {
+                    scrollHeight = toolBarHeight;
+                }
+                setToolBarBgAlpha();
+            }
+        });
 
+    }
 
+    public void setToolBarBgAlpha() {
+        if (toolBarHeight == 0) {
+            toolBarHeight = (int) getResources().getDimension(R.dimen.smallhdp);
+        }
+        Log.i("gqf", "setToolBarBgAlpha" + (float) scrollHeight / toolBarHeight);
+        detailToolbar.getBackground().setAlpha(scrollHeight * 255 / toolBarHeight);
+        toolbarTxt.setAlpha((float) scrollHeight / toolBarHeight);
     }
 
     public void initCollection() {
@@ -226,7 +259,6 @@ public class DetailActivity extends BaseActivity {
         @Override
         public void onError(Throwable e) {
             isInCollection = false;
-            animation.cancel();
             Toast.makeText(DetailActivity.this, "网络问题，关注失败", Toast.LENGTH_SHORT).show();
         }
 
@@ -240,7 +272,6 @@ public class DetailActivity extends BaseActivity {
                 Toast.makeText(DetailActivity.this, "关注失败，请重试", Toast.LENGTH_SHORT).show();
             }
             isInCollection = false;
-            animation.cancel();
         }
     };
 
@@ -295,7 +326,6 @@ public class DetailActivity extends BaseActivity {
 
     }
 
-    RotateAnimation animation;
 
     //关注网络接口调用
     public void actionAFocuse() {
@@ -319,7 +349,6 @@ public class DetailActivity extends BaseActivity {
                             .subscribe(observer);
                     compositeSubscription.add(subscription);
                 }
-                refAnim();
                 isInCollection = true;
             }
         }
@@ -330,19 +359,15 @@ public class DetailActivity extends BaseActivity {
         //if (!detailType.equals("04")) {
         if (isCollection) {
             //关注状态
-            actionA.setIcon(R.drawable.ic_focuse);
-            actionA.setTitle("已关注");
+            focuseImg.setImageResource(R.drawable.ic_user_fouces);
+            //actionA.setTitle("已关注");
         } else {
             //未关注状态
-            actionA.setIcon(R.drawable.ic_unfocuse);
-            actionA.setTitle("未关注");
+            focuseImg.setImageResource(R.drawable.ic_law_focuse);
+            //actionA.setTitle("未关注");
         }
-        multipleActionsDown.setVisibility(View.VISIBLE);
-        actionC.setVisibility(View.GONE);
-        //        } else {
-        //            actionC.setVisibility(View.VISIBLE);
-        //            multipleActionsDown.setVisibility(View.GONE);
-        //        }
+        //ultipleActionsDown.setVisibility(View.VISIBLE);
+        //actionC.setVisibility(View.GONE);
     }
 
     public void toastFocuseResult() {
@@ -355,39 +380,53 @@ public class DetailActivity extends BaseActivity {
         }
     }
 
-    public void refAnim() {
-        if (animation == null) {
-            animation = new RotateAnimation(0, 720, Animation.RELATIVE_TO_SELF,
-                    0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            AccelerateDecelerateInterpolator lir = new AccelerateDecelerateInterpolator();
-            animation.setInterpolator(lir);
-            animation.setDuration(2000);//设置动画持续时间
-            animation.setRepeatCount(Animation.INFINITE);//设置重复次数
-            animation.setFillAfter(true);//动画执行完后是否停留在执行完的状态
-        }
-        actionA.setIcon(R.drawable.ic_loding_anim_img);
-        actionA.startAnimation(animation);
-    }
 
-    @OnClick({R.id.action_a, R.id.action_b, R.id.action_c})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.action_a:
-                actionAFocuse();
-                break;
-            case R.id.action_b:
-                webView.setScrollY(0);
-                break;
-            case R.id.action_c:
-                webView.setScrollY(0);
-                break;
-        }
-    }
+    //    @OnClick({R.id.action_a, R.id.action_b, R.id.action_c})
+    //    public void onClick(View view) {
+    //        switch (view.getId()) {
+    //            case R.id.action_a:
+    //                actionAFocuse();
+    //                break;
+    //            case R.id.action_b:
+    //                webView.setScrollY(0);
+    //                break;
+    //            case R.id.action_c:
+    //                webView.setScrollY(0);
+    //                break;
+    //        }
+    //    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         UMShareAPI.get(this).release();
+        detailToolbar.setAlpha(1);
         webView.destroy();
     }
+
+    @OnClick({R.id.more_menu_img, R.id.detail_back, R.id.comments_rel, R.id.icon_with_msg_rel, R.id.focuse_img, R.id.share_img})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.detail_back:
+                onBackPressed();
+                break;
+            case R.id.comments_rel:
+                break;
+            case R.id.icon_with_msg_rel:
+                break;
+            case R.id.focuse_img:
+                actionAFocuse();
+                break;
+            case R.id.share_img:
+                share();
+                break;
+            case R.id.more_menu_img:
+                //跳转到举报界面
+                startActivity(new Intent(DetailActivity.this, CorrectOrReportActivity.class));
+
+
+                break;
+        }
+    }
+
 }

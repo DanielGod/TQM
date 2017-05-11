@@ -79,8 +79,6 @@ public class CompanyApplyForActivity extends BaseActivity {
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE2 = 7;
 
 
-
-
     PhotoGet photoGet;
     BaseDialog baseDialog;
     AlertDialog.Builder alert;

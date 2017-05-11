@@ -32,6 +32,9 @@ import tqm.bianfeng.com.tqm.User.Presenter.ILoginRegisterPresenterImpl;
 import tqm.bianfeng.com.tqm.User.Presenter.IUserWorkPresenter;
 import tqm.bianfeng.com.tqm.User.Presenter.IUserWorkPresenterImpl;
 import tqm.bianfeng.com.tqm.User.View.ILoginAndRegistered;
+import tqm.bianfeng.com.tqm.User.applyforactivity.ApplyForChooseActivity;
+import tqm.bianfeng.com.tqm.User.release.MyReleaseActivity;
+import tqm.bianfeng.com.tqm.User.release.ReleaseActivity;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.pojo.User;
 
@@ -81,13 +84,22 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         return fragment;
     }
 
-    @OnClick({R.id.bank_collection_lin, R.id.bank_focuse_lin, R.id.bank_browse_lin,R.id.user_apply_for_lin, user_circle_img, R.id.user_login_registered_btn, R.id.user_feedback_lin})
+    @OnClick({R.id.my_release_lin,R.id.user_release_lin,R.id.bank_collection_lin, R.id.bank_focuse_lin, R.id.bank_browse_lin,R.id.user_apply_for_lin, user_circle_img, R.id.user_login_registered_btn, R.id.user_feedback_lin})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.my_release_lin:
 
+                mListener.changeActivity(MyReleaseActivity.class);
+
+                break;
+            case R.id.user_release_lin:
+
+                mListener.changeActivity(ReleaseActivity.class);
+
+                break;
             case R.id.user_apply_for_lin:
 
-                mListener.changeActivity(CompanyApplyForActivity.class);
+                mListener.changeActivity(ApplyForChooseActivity.class);
 
                 break;
 

@@ -173,14 +173,85 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
 
+
+        </activity>
+        <!--机构搜索界面-->
+        <activity
+            android:name=".Institutions.SearchInstiutionsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+
+
+        </activity>
+        <!--申请选择界面-->
+        <activity
+            android:name=".User.applyforactivity.ApplyForChooseActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <!--公司申请界面-->
+        <activity
+            android:name=".User.applyforactivity.ApplyForCompanyActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <!--个人申请界面-->
+        <activity
+            android:name=".User.applyforactivity.ApplyForPersonalActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+
+
+        </activity>
+        <!--举报纠错-->
+        <activity
+            android:name=".User.CorrectOrReportActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+
         </activity>
 
-        <!--律师资料页面-->
+        <!--我发布的信息-->
         <activity
-            android:name=".lawhelp.LawDetailActivity"
+            android:name=".User.release.MyReleaseActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
+        </activity>
+        <!--发布信息选择-->
+        <activity
+            android:name=".User.release.ReleaseActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <!--发布贷款信息-->
+        <activity
+            android:name=".User.release.LoanReleaseActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <!--发布活动信息-->
+        <activity
+            android:name=".User.release.ActivityReleaseActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <!--多图选择界面-->
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
         <!--裁剪-->
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
         <!--自定义URI 需要 provider -->

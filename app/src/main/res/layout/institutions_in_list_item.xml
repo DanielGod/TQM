@@ -77,8 +77,54 @@
                     android:textColor="@color/font_black_2"
                     android:textSize="@dimen/smallsp"
                     android:paddingRight="@dimen/smallmdp"
+                    android:visibility="gone"
                     />
 
+                <TextView
+                    android:id="@+id/good_at1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_writesmoke_bg_shap"
+                    android:text="金融"
+                    android:gravity="center"
+                    android:textColor="@color/font_black_2"
+                    android:textSize="@dimen/tinysp"
+                    android:paddingLeft="@dimen/smallmdp"
+                    android:paddingRight="@dimen/smallmdp"
+                    android:layout_marginBottom="@dimen/smallmdp"
+                    android:layout_marginTop="@dimen/smallmdp"
+                    android:layout_marginRight="@dimen/mediummdp"
+                    />
+                <TextView
+                    android:id="@+id/good_at2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_writesmoke_bg_shap"
+                    android:text="理财"
+                    android:gravity="center"
+                    android:textColor="@color/font_black_2"
+                    android:textSize="@dimen/tinysp"
+                    android:paddingLeft="@dimen/smallmdp"
+                    android:paddingRight="@dimen/smallmdp"
+                    android:layout_marginBottom="@dimen/smallmdp"
+                    android:layout_marginTop="@dimen/smallmdp"
+                    android:layout_marginRight="@dimen/mediummdp"
+                    />
+                <TextView
+                    android:id="@+id/good_at3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_writesmoke_bg_shap"
+                    android:text="贷款"
+                    android:gravity="center"
+                    android:textColor="@color/font_black_2"
+                    android:textSize="@dimen/tinysp"
+                    android:paddingLeft="@dimen/smallmdp"
+                    android:paddingRight="@dimen/smallmdp"
+                    android:layout_marginBottom="@dimen/smallmdp"
+                    android:layout_marginTop="@dimen/smallmdp"
+                    android:layout_marginRight="@dimen/mediummdp"
+                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

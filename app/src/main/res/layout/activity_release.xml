@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/release_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hugehdp"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/loan_radio"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:buttonTint="@color/colorPrimary"
+            android:text="发布贷款信息"
+            android:textColor="@color/font_black_1"
+            android:textSize="@dimen/mediumsp"
+            />
+
+        <RadioButton
+            android:id="@+id/activity_radio"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:buttonTint="@color/colorPrimary"
+            android:text="发布活动信息"
+            android:textColor="@color/font_black_1"
+            android:textSize="@dimen/mediumsp"
+            />
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/commit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mediumhdp"
+        android:background="@drawable/apply_for_selector"
+        android:layout_margin="@dimen/smallmdp"
+        android:text="下一步"
+        android:textSize="@dimen/mediumxsp"
+        android:textColor="@drawable/apply_for_text_color_selector"
+        />
+</LinearLayout>

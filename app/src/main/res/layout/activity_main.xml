@@ -83,6 +83,16 @@
                 android:fitsSystemWindows="true"
                 android:textSize="@dimen/bigsp"
                 />
+            <ImageView
+                android:id="@+id/action_search_img"
+                android:layout_width="@dimen/smallhdp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_action_search"
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/smallmdp"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true"
+                />
 
         </RelativeLayout>
 

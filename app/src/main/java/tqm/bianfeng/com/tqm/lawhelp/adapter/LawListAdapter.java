@@ -78,10 +78,9 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mHolder.contactTxt.setText(datas.get(p).getInstitutionName());
 
 
-
-        if(datas.get(p).getIsAuthorize().equals("01")){
+        if (datas.get(p).getIsAuthorize().equals("01")) {
             mHolder.isAuthorizeTxt.setText("已认证");
-        }else{
+        } else {
             mHolder.isAuthorizeTxt.setText("未认证");
         }
 
@@ -132,14 +131,21 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView lawyerNameTxt;
         @BindView(R.id.contact_txt)
         TextView contactTxt;
+        @BindView(R.id.good_at1)
+        TextView goodAt1;
+        @BindView(R.id.good_at2)
+        TextView goodAt2;
+        @BindView(R.id.good_at3)
+        TextView goodAt3;
+        @BindView(R.id.isAuthorize_txt)
+        TextView isAuthorizeTxt;
         @BindView(R.id.call_lin)
         LinearLayout callLin;
         @BindView(R.id.collection_lin)
         LinearLayout collectionLin;
         @BindView(R.id.layer_info_lin)
         LinearLayout layerInfoLin;
-        @BindView(R.id.isAuthorize_txt)
-        TextView isAuthorizeTxt;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
