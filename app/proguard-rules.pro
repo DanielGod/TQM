@@ -271,4 +271,7 @@
 -keep class com.wang.avi.indicators.** { *; }
 ####混淆保护自己项目的部分代码以及引用的第三方jar包library-end####
 
-
+#百度地图
+-keep class com.baidu.** {*;}
+-keep class vi.com.** {*;}
+-dontwarn com.baidu.**

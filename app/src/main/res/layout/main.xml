@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="银行"
+            android:gravity="center"
+            android:textSize="@dimen/bigsp"
+            />
+
+        <TextView
+            android:id="@id/map"
+            android:layout_width="?actionBarSize"
+            android:layout_height="match_parent"
+            android:text="地图"
+            android:gravity="center"
+            android:textSize="@dimen/bigsp"
+            android:layout_alignParentRight="true"
+            />
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/umeng_socialize_grid_divider_line"
+            android:layout_alignLeft="@id/map"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/text_Info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp" >
+    </TextView>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="?android:attr/listDivider" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

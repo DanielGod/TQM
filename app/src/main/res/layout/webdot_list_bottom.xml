@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:background="@color/white"
+              android:paddingBottom="@dimen/mediummxdp"
+              android:paddingTop="@dimen/mediummxdp"
+              android:layout_height="?actionBarSize">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/white"
+        />
+    <Button
+        android:id="@+id/previous_btn"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:background="@drawable/nextpage_btn_selector"
+        android:layout_marginRight="@dimen/tinymdp"
+        android:text="@string/previousPage"
+        />
+    <Button
+        android:id="@+id/next_btn"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:background="@drawable/nextpage_btn_selector"
+        android:layout_marginLeft="@dimen/tinymdp"
+        android:text="@string/nextPage"
+        />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/white"
+        />
+
+</LinearLayout>
