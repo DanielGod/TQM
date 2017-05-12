@@ -13,8 +13,6 @@ import android.util.Log;
 
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
-import com.barryzhang.temptyview.TEmptyView;
-import com.barryzhang.temptyview.TViewUtil;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -117,11 +115,7 @@ public class BaseApplication extends Application {
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         SDKInitializer.setCoordType(CoordType.BD09LL);
 
-        TEmptyView.init(TViewUtil.EmptyViewBuilder.getInstance(this)
-                .setShowText(true)
-                .setEmptyText("NO DATA")
-                .setShowButton(true)
-                .setShowIcon(true));
+
 
 
 

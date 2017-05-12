@@ -19,6 +19,24 @@ public class User extends RealmObject{
     String userPhone;
     String userNickname;
     String userAvatar="";
+    String userType="";
+    String applyForStatu="-1";
+
+    public String getApplyForStatu() {
+        return applyForStatu;
+    }
+
+    public void setApplyForStatu(String applyForStatu) {
+        this.applyForStatu = applyForStatu;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
 
     public int getUserId() {
         return userId;
@@ -59,6 +77,7 @@ public class User extends RealmObject{
                 ", userPhone='" + userPhone + '\'' +
                 ", userNickname='" + userNickname + '\'' +
                 ", userAvatar='" + userAvatar + '\'' +
+                ", userType='" + userType + '\'' +
                 '}';
     }
 }

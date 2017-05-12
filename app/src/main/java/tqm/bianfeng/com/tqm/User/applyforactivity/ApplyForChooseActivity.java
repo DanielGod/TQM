@@ -42,10 +42,15 @@ public class ApplyForChooseActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.choose_company_apply_lin:
-                startActivity(new Intent(ApplyForChooseActivity.this, ApplyForCompanyActivity.class));
+                ApplyForActivity.APPLYFORTYPE=ApplyForActivity.APPLYFORCOMPANYTYPE;
+
+                startActivity(new Intent(ApplyForChooseActivity.this, ApplyForActivity.class));
+                finish();
                 break;
             case R.id.choose_personal_apply_lin:
-                startActivity(new Intent(ApplyForChooseActivity.this, ApplyForPersonalActivity.class));
+                ApplyForActivity.APPLYFORTYPE=ApplyForActivity.APPLYFORPERSONALTYPE;
+                startActivity(new Intent(ApplyForChooseActivity.this, ApplyForActivity.class));
+                finish();
                 break;
         }
     }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -15,9 +16,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.LawyerItem;
+import tqm.bianfeng.com.tqm.pojo.User;
 
 /**
  * Created by johe on 2017/3/14.
@@ -33,6 +36,7 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private MyItemClickListener mItemClickListener;
 
 
+    Realm realm;
     public LawyerItem getDataItem(int position) {
         return datas == null ? null : datas.get(position);
     }
@@ -41,6 +45,7 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mContext = mContext;
         this.datas = mDatas;
         mLayoutInflater = LayoutInflater.from(mContext);
+        realm=Realm.getDefaultInstance();
     }
 
     public void update(List<LawyerItem> mDatas) {
@@ -105,10 +110,30 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mHolder.collectionLin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mItemClickListener.CollectionClick(p);
+                if(realm.where(User.class).findFirst()==null){
+                    Toast.makeText(mContext, "请先登录后查看", Toast.LENGTH_SHORT).show();
+                }else {
+                    mItemClickListener.CollectionClick(p);
+                }
             }
         });
         //mHolder.collectionLin.setVisibility(View.GONE);
+        String [] specialFields;
+        specialFields=datas.get(p).getSpecialField().split(",");
+        for(int i=0;i<((specialFields.length>3)?3:specialFields.length);i++){
+            if(i==0){
+                mHolder.goodAt1.setVisibility(View.VISIBLE);
+                mHolder.goodAt1.setText(specialFields[0]);
+            }else if(i==1){
+                mHolder.goodAt2.setVisibility(View.VISIBLE);
+                mHolder.goodAt2.setText(specialFields[1]);
+            }else{
+                mHolder.goodAt3.setVisibility(View.VISIBLE);
+                mHolder.goodAt3.setText(specialFields[2]);
+            }
+        }
+
+
     }
 
     @Override

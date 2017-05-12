@@ -13,44 +13,73 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-    <RadioGroup
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:src="@drawable/release_top_toast"
+        android:adjustViewBounds="true"/>
 
-        <RadioButton
-            android:id="@+id/loan_radio"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:buttonTint="@color/colorPrimary"
-            android:text="发布贷款信息"
-            android:textColor="@color/font_black_1"
-            android:textSize="@dimen/mediumsp"
-            />
-
-        <RadioButton
-            android:id="@+id/activity_radio"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:buttonTint="@color/colorPrimary"
-            android:text="发布活动信息"
-            android:textColor="@color/font_black_1"
-            android:textSize="@dimen/mediumsp"
-            />
-    </RadioGroup>
-
-
-    <Button
-        android:id="@+id/commit"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mediumhdp"
-        android:background="@drawable/apply_for_selector"
-        android:layout_margin="@dimen/smallmdp"
-        android:text="下一步"
-        android:textSize="@dimen/mediumxsp"
-        android:textColor="@drawable/apply_for_text_color_selector"
-        />
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/hugehdp">
+
+        <LinearLayout
+            android:id="@+id/release_loan_lin"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?android:selectableItemBackground"
+            android:clickable="true"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/hugehxxdp"
+                android:src="@drawable/ic_release_loan_radio_bg"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="发布贷款信息"
+                android:textSize="@dimen/bigsp"
+                android:gravity="center"
+                android:textColor="@color/font_black_1"
+                android:padding="@dimen/activity_horizontal_margin"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/release_activity_lin"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?android:selectableItemBackground"
+            android:clickable="true"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/hugehxxdp"
+                android:src="@drawable/ic_release_loan_radio_bg"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="发布贷款信息"
+                android:textSize="@dimen/bigsp"
+                android:gravity="center"
+                android:textColor="@color/font_black_1"
+                android:padding="@dimen/activity_horizontal_margin"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

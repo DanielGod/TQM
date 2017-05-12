@@ -5,20 +5,19 @@ package tqm.bianfeng.com.tqm.pojo;
  */
 
 public class LawyerItem {
-
-
     /**
-     * lawyerId : 15
-     * lawyerName : 张敏
+     * lawyerId : 13
+     * lawyerName : 王战强
      * contact : 15236101580
-     * avatar : /upload/avatar/20170411102409972.jpg
+     * avatar : /upload/avatar/20170502112921923.jpg
      * isAuthorize : 01
      * institutionName : 中银律师事务所
-     * province : 浙江省
-     * city : 宁波市
-     * district : 江东区
-     * position : 律师
-     * practiceTime : 15年
+     * province : 天津市
+     * city : 天津市
+     * district : 河东区
+     * position : 教授
+     * practiceTime : 20年
+     * specialField : 行政诉讼,婚姻法律,刑事法律,房产法律
      */
 
     private int lawyerId;
@@ -32,6 +31,7 @@ public class LawyerItem {
     private String district;
     private String position;
     private String practiceTime;
+    private String specialField;
 
     public int getLawyerId() {
         return lawyerId;
@@ -121,6 +121,14 @@ public class LawyerItem {
         this.practiceTime = practiceTime;
     }
 
+    public String getSpecialField() {
+        return specialField;
+    }
+
+    public void setSpecialField(String specialField) {
+        this.specialField = specialField;
+    }
+
     @Override
     public String toString() {
         return "LawyerItem{" +
@@ -135,6 +143,7 @@ public class LawyerItem {
                 ", district='" + district + '\'' +
                 ", position='" + position + '\'' +
                 ", practiceTime='" + practiceTime + '\'' +
+                ", specialField='" + specialField + '\'' +
                 '}';
     }
 }

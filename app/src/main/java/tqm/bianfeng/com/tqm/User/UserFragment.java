@@ -33,6 +33,7 @@ import tqm.bianfeng.com.tqm.User.Presenter.IUserWorkPresenter;
 import tqm.bianfeng.com.tqm.User.Presenter.IUserWorkPresenterImpl;
 import tqm.bianfeng.com.tqm.User.View.ILoginAndRegistered;
 import tqm.bianfeng.com.tqm.User.applyforactivity.ApplyForChooseActivity;
+import tqm.bianfeng.com.tqm.User.applyforactivity.ApplyForStatusActivity;
 import tqm.bianfeng.com.tqm.User.release.MyReleaseActivity;
 import tqm.bianfeng.com.tqm.User.release.ReleaseActivity;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
@@ -75,6 +76,12 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     LinearLayout bankFocuseLin;
     @BindView(R.id.bank_browse_lin)
     LinearLayout bankBrowseLin;
+    @BindView(R.id.my_release_lin)
+    LinearLayout myReleaseLin;
+    @BindView(R.id.user_release_lin)
+    LinearLayout userReleaseLin;
+    @BindView(R.id.apply_for_status_txt)
+    TextView applyForStatusTxt;
 
     public static UserFragment newInstance(String param1) {
         UserFragment fragment = new UserFragment();
@@ -84,7 +91,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         return fragment;
     }
 
-    @OnClick({R.id.my_release_lin,R.id.user_release_lin,R.id.bank_collection_lin, R.id.bank_focuse_lin, R.id.bank_browse_lin,R.id.user_apply_for_lin, user_circle_img, R.id.user_login_registered_btn, R.id.user_feedback_lin})
+    @OnClick({R.id.my_release_lin, R.id.user_release_lin, R.id.bank_collection_lin, R.id.bank_focuse_lin, R.id.bank_browse_lin, R.id.user_apply_for_lin, user_circle_img, R.id.user_login_registered_btn, R.id.user_feedback_lin})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.my_release_lin:
@@ -98,11 +105,15 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
 
                 break;
             case R.id.user_apply_for_lin:
-
-                mListener.changeActivity(ApplyForChooseActivity.class);
-
+                if (isLogin()) {
+                    if(mUser.getApplyForStatu().equals("00")||mUser.getApplyForStatu().equals("01")||mUser.getApplyForStatu().equals("02")){
+                       //查看审核状态
+                        mListener.changeActivity(ApplyForStatusActivity.class);
+                    }else{
+                        mListener.changeActivity(ApplyForChooseActivity.class);
+                    }
+                }
                 break;
-
             case R.id.user_feedback_lin:
                 mListener.changeActivity(UserFeedbackActivity.class);
                 break;
@@ -117,23 +128,22 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
 
                 break;
             case R.id.bank_collection_lin:
-                if(isLogin()){
+                if (isLogin()) {
                     mListener.changeActivity(MyCollectionActivity.class);
                 }
                 break;
             case R.id.bank_focuse_lin:
-                if(isLogin()){
+                if (isLogin()) {
                     mListener.changeActivity(MyFocusActivity.class);
                 }
                 break;
             case R.id.bank_browse_lin:
-                if(isLogin()){
+                if (isLogin()) {
                     mListener.changeActivity(MyBrowseActivity.class);
                 }
                 break;
         }
     }
-
 
 
     public interface mListener {
@@ -166,6 +176,9 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     @Override
     public void onResume() {
         super.onResume();
+        if(realm.where(User.class).findFirst() != null){
+            iUserWorkPresenter.getAuditCode(realm.where(User.class).findFirst().getUserId());
+        }
 
     }
 
@@ -190,23 +203,37 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     public void initView() {
         if (realm.where(User.class).findFirst() != null) {
             mUser = realm.where(User.class).findFirst();
+            Log.i("gqf", "mUser" + mUser.toString());
             //开起信息同步
             iUserWorkPresenter.getUserMsg(mUser.getUserPhone());
             //显示账户信息
             userRegisterPhoneNumTxt.setVisibility(View.VISIBLE);
             userRegisterPhoneNumTxt.setText(mUser.getUserPhone());
             userPhongNumEdi.setVisibility(View.GONE);
-            userLoginRegisteredBtn.setVisibility(View.GONE);
-            //userTopRel.setBackgroundResource(R.drawable.user_top_bg);
-            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) userCircleImg.getLayoutParams();
-            lp.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
-            lp.addRule(RelativeLayout.CENTER_VERTICAL);
-            userCircleImg.setLayoutParams(lp);
-            LinearLayout.LayoutParams linlp = (LinearLayout.LayoutParams) userTopRel.getLayoutParams();
-            linlp.height = (int) getResources().getDimension(R.dimen.hugehxxxxxxdp);
-            userTopRel.setLayoutParams(linlp);
-            //显示头像
-            resetUserHeadImg(true);
+                userLoginRegisteredBtn.setVisibility(View.GONE);
+                //userTopRel.setBackgroundResource(R.drawable.user_top_bg);
+                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) userCircleImg.getLayoutParams();
+                lp.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
+                lp.addRule(RelativeLayout.CENTER_VERTICAL);
+                userCircleImg.setLayoutParams(lp);
+                LinearLayout.LayoutParams linlp = (LinearLayout.LayoutParams) userTopRel.getLayoutParams();
+                linlp.height = (int) getResources().getDimension(R.dimen.hugehxxxxxxdp);
+                userTopRel.setLayoutParams(linlp);
+                //显示头像
+                resetUserHeadImg(true);
+            if(mUser.getUserType()!=null) {
+                if (mUser.getUserType().equals("1001") || mUser.getUserType().equals("1002") || mUser.getUserType().equals("2001") || mUser.getUserType().equals("2002")) {
+                    userReleaseLin.setVisibility(View.VISIBLE);
+                    myReleaseLin.setVisibility(View.VISIBLE);
+                } else {
+                    userReleaseLin.setVisibility(View.GONE);
+                    myReleaseLin.setVisibility(View.GONE);
+                }
+            }else{
+                userReleaseLin.setVisibility(View.GONE);
+                myReleaseLin.setVisibility(View.GONE);
+            }
+
         }
     }
 
@@ -288,6 +315,23 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
                 initView();
             }
         }
+    }
+
+    public void showStatus(String code) {
+        if(code.equals("00")){
+            applyForStatusTxt.setText("待审");
+        }else if(code.equals("01")){
+            applyForStatusTxt.setText("");
+            //userApplyForLin.setVisibility(View.GONE);
+            userReleaseLin.setVisibility(View.VISIBLE);
+            myReleaseLin.setVisibility(View.VISIBLE);
+        }else if(code.equals("02")){
+            applyForStatusTxt.setText("未通过");
+        }
+        realm.beginTransaction();
+        mUser.setApplyForStatu(code);
+        realm.copyToRealmOrUpdate(mUser);
+        realm.commitTransaction();
     }
 
     //提示是否打开网络设置

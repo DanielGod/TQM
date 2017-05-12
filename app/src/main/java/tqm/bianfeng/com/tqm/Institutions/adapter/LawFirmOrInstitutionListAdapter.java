@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,9 +18,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.InstitutionItem;
+import tqm.bianfeng.com.tqm.pojo.User;
 
 /**
  * Created by johe on 2017/4/11.
@@ -34,6 +37,7 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
     private final LayoutInflater mLayoutInflater;
     private MyItemClickListener mItemClickListener;
 
+    Realm realm;
 
     public InstitutionItem getDataItem(int position) {
         return datas == null ? null : datas.get(position);
@@ -43,6 +47,7 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         this.mContext = mContext;
         this.datas = mDatas;
         mLayoutInflater = LayoutInflater.from(mContext);
+        realm=Realm.getDefaultInstance();
     }
 
     public void update(List<InstitutionItem> mDatas) {
@@ -91,11 +96,18 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         mHolder.callLin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentPhone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" +datas.get(p).getContact()));
-                intentPhone.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intentPhone);
+                if(realm.where(User.class).findFirst()==null){
+                    Toast.makeText(mContext, "请先登录后查看", Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent intentPhone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + datas.get(p).getContact()));
+                    intentPhone.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intentPhone);
+                }
             }
         });
+
+
+
     }
 
     @Override

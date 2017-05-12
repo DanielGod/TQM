@@ -153,7 +153,7 @@ public class HomeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_home_top, container, false);
         ButterKnife.bind(this, view);
         mCompositeSubscription = new CompositeSubscription();
-
+        initImages(new ArrayList<String>());
         if (isNetWork) {
             showViewWhenNetWork(isNetWork);
         }

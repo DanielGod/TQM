@@ -11,4 +11,5 @@ public interface ILoginAndRegistered {
     public void setUserHeadImg(File bitmap);
     public void resetUserHeadImg(boolean isChange);
     public void shouNetWorkActivity();
+    public void showStatus(String code);
 }

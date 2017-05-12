@@ -19,6 +19,7 @@ import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.User;
+import tqm.bianfeng.com.tqm.pojo.result.ResultWithAuditCode;
 
 /**
  * Created by johe on 2017/3/14.
@@ -128,12 +129,36 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                                     realm.beginTransaction();
                                     user.setUserId(resultCodeWithUser.getUser().getUserId());
                                     user.setUserAvatar(resultCodeWithUser.getUser().getUserAvatar());
+                                    user.setUserType(resultCodeWithUser.getUser().getUserType());
                                     realm.copyToRealmOrUpdate(user);
                                     realm.commitTransaction();
                                     iLoginAndRegistered.resetUserHeadImg(true);
                                 }
                             }
                         }
+                    }
+                });
+        compositeSubscription.add(subscription);
+    }
+    public void getAuditCode(int userId){
+        Subscription subscription = NetWork.getUserService().getStatus(userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResultWithAuditCode>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultWithAuditCode resultWithAuditCode) {
+                        Log.i("gqf","resultWithAuditCode"+resultWithAuditCode.toString());
+                        iLoginAndRegistered.showStatus(resultWithAuditCode.getAuditCode());
                     }
                 });
         compositeSubscription.add(subscription);

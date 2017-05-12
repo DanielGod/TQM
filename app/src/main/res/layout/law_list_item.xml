@@ -74,6 +74,7 @@
                     android:layout_marginBottom="@dimen/tinymdp"
                     android:layout_marginTop="@dimen/tinymdp"
                     android:layout_marginRight="@dimen/mediummdp"
+                    android:visibility="gone"
                     />
                 <TextView
                     android:id="@+id/good_at2"
@@ -89,6 +90,7 @@
                     android:layout_marginBottom="@dimen/tinymdp"
                     android:layout_marginTop="@dimen/tinymdp"
                     android:layout_marginRight="@dimen/mediummdp"
+                    android:visibility="gone"
                     />
                 <TextView
                     android:id="@+id/good_at3"
@@ -104,6 +106,7 @@
                     android:layout_marginBottom="@dimen/tinymdp"
                     android:layout_marginTop="@dimen/tinymdp"
                     android:layout_marginRight="@dimen/mediummdp"
+                    android:visibility="gone"
                     />
 
             </LinearLayout>

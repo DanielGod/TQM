@@ -191,21 +191,19 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
         </activity>
-        <!--公司申请界面-->
+        <!--申请界面-->
         <activity
-            android:name=".User.applyforactivity.ApplyForCompanyActivity"
+            android:name=".User.applyforactivity.ApplyForActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
         </activity>
-        <!--个人申请界面-->
+        <!--申请状态-->
         <activity
-            android:name=".User.applyforactivity.ApplyForPersonalActivity"
+            android:name=".User.applyforactivity.ApplyForStatusActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
-
         </activity>
         <!--举报纠错-->
         <activity
@@ -232,17 +230,9 @@
             android:windowSoftInputMode="adjustPan">
 
         </activity>
-        <!--发布贷款信息-->
+        <!--发布贷款或活动信息-->
         <activity
-            android:name=".User.release.LoanReleaseActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
-        <!--发布活动信息-->
-        <activity
-            android:name=".User.release.ActivityReleaseActivity"
+            android:name=".User.release.LoanOrActivityReleaseActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">

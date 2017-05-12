@@ -31,11 +31,10 @@
                     app:auto_cycle="true"
                     />
 
-                <View
+                <tqm.bianfeng.com.tqm.CustomView.SliderBottomView
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/white"/>
+                    android:layout_height="@dimen/smallmdp"
+                    android:layout_alignParentBottom="true"/>
             </RelativeLayout>
 
             <LinearLayout

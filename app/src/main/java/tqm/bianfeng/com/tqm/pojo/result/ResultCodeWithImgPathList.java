@@ -19,4 +19,11 @@ public class ResultCodeWithImgPathList extends ResultCode{
     public void setFiles(List<String> files) {
         this.files = files;
     }
+
+    @Override
+    public String toString() {
+        return "ResultCodeWithImgPathList{" +
+                "files=" + files +
+                '}';
+    }
 }

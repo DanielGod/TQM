@@ -18,10 +18,12 @@ import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithCompanyFile;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
+import tqm.bianfeng.com.tqm.pojo.YwApplyEnter;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 import tqm.bianfeng.com.tqm.pojo.result.ResultCodeWithImgPathList;
+import tqm.bianfeng.com.tqm.pojo.result.ResultWithAuditCode;
 import tqm.bianfeng.com.tqm.update.UpdateMsg;
 
 /**
@@ -201,7 +203,16 @@ public interface UserService {
     Observable<ResultCode> save(@Field("applyEnter") String applyEnter);
 
 
+    /**
+     * 获取入驻申请信息
+     */
+    @GET("enter/{userId}")
+    Observable<YwApplyEnter> getOne(@Path("userId") int userId);
 
-
+    /**
+     * 查看入驻申请当前状态
+     */
+    @GET("enter/auditCode/{userId}")
+    Observable<ResultWithAuditCode> getStatus(@Path("userId") int userId);
 
 }

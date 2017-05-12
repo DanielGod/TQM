@@ -25,7 +25,46 @@ public class YwApplyEnter {
 
     private String companyImageOther;//公司其他图片
 
-    private Integer applyUser;//申请用户Id
+   private Integer applyUser;//申请用户Id
+
+    String auditCode;//审核结果状态
+
+    String auditRemark;//审核结果备注
+
+    Long createDate;//申请日期
+
+    public Long getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Long createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getAuditCode() {
+
+        return auditCode;
+    }
+
+    public void setAuditCode(String auditCode) {
+        this.auditCode = auditCode;
+    }
+
+    public String getAuditRemark() {
+        return auditRemark;
+    }
+
+    public void setAuditRemark(String auditRemark) {
+        this.auditRemark = auditRemark;
+    }
+
+//    public Date getCreateDate() {
+//        return createDate;
+//    }
+//
+//    public void setCreateDate(Date createDate) {
+//        this.createDate = createDate;
+//    }
 
     public Integer getApplyId() {
         return applyId;
@@ -115,4 +154,23 @@ public class YwApplyEnter {
         this.applyUser = applyUser;
     }
 
+    @Override
+    public String toString() {
+        return "YwApplyEnter{" +
+                "applyId=" + applyId +
+                ", applyName='" + applyName + '\'' +
+                ", proposer='" + proposer + '\'' +
+                ", contact='" + contact + '\'' +
+                ", idCard='" + idCard + '\'' +
+                ", address='" + address + '\'' +
+                ", applyType='" + applyType + '\'' +
+                ", companyLogo='" + companyLogo + '\'' +
+                ", companyImage='" + companyImage + '\'' +
+                ", companyImageOther='" + companyImageOther + '\'' +
+                ", applyUser=" + applyUser +
+                ", auditCode='" + auditCode + '\'' +
+                ", auditRemark='" + auditRemark + '\'' +
+                ", createDate='" + createDate + '\'' +
+                '}';
+    }
 }

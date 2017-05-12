@@ -179,6 +179,7 @@ public class CompanyInfoActivity extends BaseActivity {
     TextView phoneNumTxt;
     TextView addressTxt;
     LinearLayout moreProfileLin;
+    LinearLayout phoneNumLin;
     TextView isCollectTxt;
     public void initHeaderRootView(){
         headerView = getLayoutInflater().from(this).inflate(R.layout.company_info_header_loading_view, null, true);
@@ -214,7 +215,10 @@ public class CompanyInfoActivity extends BaseActivity {
         addressTxt=(TextView) headerView.findViewById(R.id.address_txt);
         moreProfileLin=(LinearLayout) headerView.findViewById(R.id.more_profile_lin);
         isCollectTxt=(TextView) headerView.findViewById(R.id.is_collect_txt);
-
+        if(realm.where(User.class).findFirst()==null){
+            phoneNumLin=(LinearLayout) headerView.findViewById(R.id.phone_num_lin);
+            phoneNumLin.setVisibility(View.GONE);
+        }
         Picasso.with(this).load(NetWork.LOAD+data.getInstitutionIcon()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(infoHeaderImg);
         titleTxt.setText(data.getInstitutionName());
         profileTxt.setText("简介："+data.getProfile());
@@ -222,12 +226,16 @@ public class CompanyInfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //电话
-                if(data.getContact()!=null){
-                    Intent intentPhone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + data.getContact()));
-                    intentPhone.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intentPhone);
-                }else{
+                if(realm.where(User.class).findFirst()==null){
+                    Toast.makeText(CompanyInfoActivity.this, "请登录后使用", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (data.getContact() != null) {
+                        Intent intentPhone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + data.getContact()));
+                        intentPhone.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intentPhone);
+                    } else {
 
+                    }
                 }
             }
         });
