@@ -157,7 +157,7 @@
                     android:digits=""
                     android:background="@drawable/radio_writesmoke_bg_shap"
                     android:layout_margin="@dimen/smallmdp"
-
+                    android:dropDownHeight="@dimen/hugehxxxxxxxxxdp"
                     android:focusableInTouchMode="false"
                     />
                 <AutoCompleteTextView
@@ -176,7 +176,7 @@
                     android:digits=""
                     android:background="@drawable/radio_writesmoke_bg_shap"
                     android:layout_margin="@dimen/smallmdp"
-
+                    android:dropDownHeight="@dimen/hugehxxxxxxxxxdp"
                     android:focusableInTouchMode="false"
                     />
                 <AutoCompleteTextView
@@ -195,9 +195,8 @@
                     android:digits=""
                     android:background="@drawable/radio_writesmoke_bg_shap"
                     android:layout_margin="@dimen/smallmdp"
-
+                    android:dropDownHeight="@dimen/hugehxxxxxxxxxdp"
                     android:focusableInTouchMode="false"
-
                     />
             </LinearLayout>
             <LinearLayout
