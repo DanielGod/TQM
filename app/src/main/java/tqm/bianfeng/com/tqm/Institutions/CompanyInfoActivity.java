@@ -28,6 +28,7 @@ import tqm.bianfeng.com.tqm.CustomView.MyViewPager;
 import tqm.bianfeng.com.tqm.Institutions.adapter.MyPagerAdapter;
 import tqm.bianfeng.com.tqm.Institutions.listener.LoadHeaderImagesListener;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.User.CorrectOrReportActivity;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.LawFirmOrInstitutionDetail;
@@ -48,6 +49,7 @@ public class CompanyInfoActivity extends BaseActivity {
     private ArrayList<Fragment> fragments;
 
     private String [] mCompanyTitles={"理财", "贷款", "活动"};
+    private String [] mCapitalTitles={ "贷款", "活动"};
     private String [] mLawTitles={"旗下全部律师"};
     private  String[] mTitles ;
 
@@ -67,11 +69,13 @@ public class CompanyInfoActivity extends BaseActivity {
         InstitutionId = getIntent().getIntExtra("InstitutionId", 0);
         initHeaderRootView();
 
-        if(index==1){
+        if(index==1||index==3){
             initCompanyInfoData(InstitutionId);
         }else{
             initLawInfoData(InstitutionId);
         }
+
+
     }
 
     public void initCompanyInfoData(int id) {
@@ -145,8 +149,10 @@ public class CompanyInfoActivity extends BaseActivity {
 
         if(index==1){
             initCompanyFragment();
-        }else{
+        }else if(index==2){
             initLawFragment();
+        }else{
+            initCapitalFragment();
         }
 
         initViewPager();
@@ -169,6 +175,18 @@ public class CompanyInfoActivity extends BaseActivity {
             //设置选中下划线为透明
             coordinatortablayout.setTabInColor(R.color.max_transparent);
         }
+        coordinatortablayout.setmLinsener(new CoordinatorTabLayout.Linsener() {
+            @Override
+            public void changActivity(int id) {
+                if(id==R.id.correct_report){
+                    Intent intent=new Intent(CompanyInfoActivity.this, CorrectOrReportActivity.class);
+                    intent.putExtra(CorrectOrReportActivity.objectId,InstitutionId);
+                    intent.putExtra(CorrectOrReportActivity.objectModule,"06");
+                    intent.putExtra(CorrectOrReportActivity.objectTitle,data.getInstitutionName());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     ImageView infoHeaderImg;
@@ -222,6 +240,7 @@ public class CompanyInfoActivity extends BaseActivity {
         Picasso.with(this).load(NetWork.LOAD+data.getInstitutionIcon()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(infoHeaderImg);
         titleTxt.setText(data.getInstitutionName());
         profileTxt.setText("简介："+data.getProfile());
+        profileTxt.setVisibility(View.INVISIBLE);
         callLin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -291,13 +310,27 @@ public class CompanyInfoActivity extends BaseActivity {
         fragments.add(activityLoaninancingLawListFragment);
 
     }
+    public void initCapitalFragment() {
+        fragments = new ArrayList<>();
+        ActivityLoaninancingLawListFragment activityLoaninancingLawListFragment1 = ActivityLoaninancingLawListFragment.newInstance(1);
+        ActivityLoaninancingLawListFragment activityLoaninancingLawListFragment2 = ActivityLoaninancingLawListFragment.newInstance(2);
+
+        activityLoaninancingLawListFragment1.setLoanDatas(data.getLoans());
+        activityLoaninancingLawListFragment2.setActivityDatas(data.getActivities());
+        fragments.add(activityLoaninancingLawListFragment1);
+        fragments.add(activityLoaninancingLawListFragment2);
+
+    }
     private void initViewPager() {
         mViewPager.setOffscreenPageLimit(4);
         if(index==1){
             mTitles=mCompanyTitles;
-        }else{
+        }else if(index==2){
             mTitles=mLawTitles;
+        }else{
+            mTitles=mCapitalTitles;
         }
+
 
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragments, mTitles));
         mViewPager.setOnTouchListener(new View.OnTouchListener() {

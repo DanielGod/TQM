@@ -1,22 +1,17 @@
-package tqm.bianfeng.com.tqm.Institutions;
+package tqm.bianfeng.com.tqm.capital;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.jaeger.library.StatusBarUtil;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.zhy.adapter.recyclerview.wrapper.LoadMoreWrapper;
 
@@ -25,12 +20,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.CustomView.LoadMoreView;
+import tqm.bianfeng.com.tqm.Institutions.CompanyInfoActivity;
+import tqm.bianfeng.com.tqm.Institutions.SearchInstiutionsActivity;
 import tqm.bianfeng.com.tqm.Institutions.adapter.LawFirmOrInstitutionListAdapter;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
@@ -39,62 +35,51 @@ import tqm.bianfeng.com.tqm.pojo.InstitutionItem;
 import tqm.bianfeng.com.tqm.pojo.User;
 
 /**
- * Created by johe on 2017/5/10.
+ * Created by johe on 2017/5/13.
  */
 
-public class SearchInstiutionsActivity extends BaseActivity {
+public class PrivateCapitalActivity extends BaseActivity {
 
-
-    @BindView(R.id.toolbar)
-    Toolbar searchToolbar;
-    @BindView(R.id.search_city_edi)
-    EditText searchCityEdi;
-    @BindView(R.id.appbar)
-    AppBarLayout appbar;
-    @BindView(R.id.search_recyclerView)
-    RecyclerView searchRecyclerView;
-    @BindView(R.id.main_content)
-    CoordinatorLayout mainContent;
-    @BindView(R.id.search_btn)
-    Button searchBtn;
-    @BindView(R.id.no_search_txt)
-    TextView noSearchTxt;
+    @BindView(R.id.private_capital_toolbar)
+    Toolbar privateCapitalToolbar;
+    @BindView(R.id.private_capital_list)
+    RecyclerView privateCapitalList;
     @BindView(R.id.indicator)
     AVLoadingIndicatorView indicator;
+    @BindView(R.id.no_search_txt)
+    TextView noSearchTxt;
 
-    public String searchName;
-    boolean isMore=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_instiutions);
+        setContentView(R.layout.activity_private_capital);
         ButterKnife.bind(this);
-        //setToolbar(searchToolbar, "搜索机构");
-        //searchToolbar.
-        searchToolbar.setTitle("搜索机构");
-        searchToolbar.setNavigationIcon(R.drawable.ic_back_arrow_dark);
-        searchToolbar.setTitleTextColor(getResources().getColor(R.color.font_black_1));
-        searchToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        setToolbar(privateCapitalToolbar, "民间资本");
+        privateCapitalToolbar.inflateMenu(R.menu.search_menu);
+        privateCapitalToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.search) {
+                    startActivity(new Intent(PrivateCapitalActivity.this, SearchInstiutionsActivity.class));
+                }
+                return false;
             }
         });
-        indicator.hide();
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.font_black_7));
         datas=new ArrayList<>();
+        noSearchTxt.setVisibility(View.GONE);
+        initData();
     }
 
     LawFirmOrInstitutionListAdapter lawFirmOrInstitutionListAdapter;
     List<InstitutionItem> datas;
 
-    int page=1;
-    public void initData(String search) {
-        searchName=search;
-        searchBtn.setEnabled(false);
+    boolean isMore = false;
+    int page = 1;
+
+    public void initData() {
         showLoading(0);
         if (datas.size() > 0) {
-            if(loadMoreTxt!=null){
+            if (loadMoreTxt != null) {
                 loadMoreTxt.loadMoreViewAnim(1);
             }
         }
@@ -102,7 +87,7 @@ public class SearchInstiutionsActivity extends BaseActivity {
         if(realm.where(User.class).findFirst()!=null){
             userId=realm.where(User.class).findFirst().getUserId();
         }
-        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().searchInstitutionItem(searchName,userId,page,10)
+        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getInstitutionItem("03",userId, page, 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<InstitutionItem>>() {
@@ -113,28 +98,27 @@ public class SearchInstiutionsActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        searchBtn.setEnabled(true);
+                        Log.i("gqf","onError"+e.toString());
                         showLoading(1);
                         showSearchResult();
-                        if(loadMoreTxt!=null){
+                        if (loadMoreTxt != null) {
                             loadMoreTxt.loadMoreViewAnim(4);
                         }
                     }
 
                     @Override
                     public void onNext(List<InstitutionItem> institutionItems) {
-                        if(!isMore){
-                            datas=new ArrayList<InstitutionItem>();
-                        }else{
-                            isMore=false;
+                        if (!isMore) {
+                            datas = new ArrayList<InstitutionItem>();
+                        } else {
+                            isMore = false;
                         }
 
-                        for(InstitutionItem institutionItem:institutionItems){
+                        for (InstitutionItem institutionItem : institutionItems) {
                             datas.add(institutionItem);
                         }
                         Log.i("gqf", "institutionItems" + institutionItems.toString());
                         initList();
-                        searchBtn.setEnabled(true);
                         showSearchResult();
                         showLoading(1);
 
@@ -210,18 +194,21 @@ public class SearchInstiutionsActivity extends BaseActivity {
             countDownTimer.onFinish();
         }
     }
+
     LoadMoreWrapper mLoadMoreWrapper;
     View loadMoreView;
     LoadMoreView loadMoreTxt;
     Intent intent;
+
     public void initList() {
         if (lawFirmOrInstitutionListAdapter == null) {
             lawFirmOrInstitutionListAdapter = new LawFirmOrInstitutionListAdapter(this, datas);
             lawFirmOrInstitutionListAdapter.setOnItemClickListener(new LawFirmOrInstitutionListAdapter.MyItemClickListener() {
                 @Override
                 public void OnClickListener(int position) {
-                    intent=new Intent(SearchInstiutionsActivity.this,CompanyInfoActivity.class);
-                    intent.putExtra("InstitutionId",datas.get(position).getInstitutionId());
+                    CompanyInfoActivity.index=3;
+                    intent = new Intent(PrivateCapitalActivity.this, CompanyInfoActivity.class);
+                    intent.putExtra("InstitutionId", datas.get(position).getInstitutionId());
                     startActivity(intent);
                 }
                 @Override
@@ -241,29 +228,20 @@ public class SearchInstiutionsActivity extends BaseActivity {
                 public void onLoadMoreRequested() {
                     //在此开起加载动画，更新数据
                     Log.e("gqf", "onLoadMoreRequested");
-                    if(datas.size()%10==0&&datas.size()!=0){
+                    if (datas.size() % 10 == 0 && datas.size() != 0) {
                         page++;
-                        isMore=true;
-                        initData(searchName);
+                        isMore = true;
+                        initData();
                     }
                 }
             });
-            searchRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            searchRecyclerView.setAdapter(mLoadMoreWrapper);
+            privateCapitalList.setLayoutManager(new LinearLayoutManager(this));
+            privateCapitalList.setAdapter(mLoadMoreWrapper);
         } else {
             lawFirmOrInstitutionListAdapter.update(datas);
             mLoadMoreWrapper.notifyDataSetChanged();
         }
     }
 
-    @OnClick(R.id.search_btn)
-    public void onClick() {
-        if (searchCityEdi.getText().toString().equals("")) {
-            Toast.makeText(this, "搜索名称不能为空", Toast.LENGTH_SHORT).show();
 
-        } else {
-            initList();
-            initData(searchCityEdi.getText().toString());
-        }
-    }
 }

@@ -421,8 +421,13 @@ public class DetailActivity extends BaseActivity {
                 share();
                 break;
             case R.id.more_menu_img:
-                //跳转到举报界面
-                startActivity(new Intent(DetailActivity.this, CorrectOrReportActivity.class));
+                //跳报界面
+
+                Intent intent=new Intent(DetailActivity.this, CorrectOrReportActivity.class);
+                intent.putExtra(CorrectOrReportActivity.objectId,detailId);
+                intent.putExtra(CorrectOrReportActivity.objectModule,detailType);
+                intent.putExtra(CorrectOrReportActivity.objectTitle,detailTitle);
+                startActivity(intent);
 
 
                 break;

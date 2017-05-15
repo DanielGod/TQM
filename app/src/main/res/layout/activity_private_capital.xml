@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/private_capital_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hugehdp"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/private_capital_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:id="@+id/no_search_txt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="无查询结果"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/hugehxxxxxxxxxdp"
+            android:textSize="@dimen/mediumxsp"
+            android:textColor="@color/gary_dark"
+            android:visibility="visible"
+            android:drawableTop="@drawable/ic_no_city"
+            android:drawablePadding="@dimen/smallmdp"
+            />
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/indicator"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/hugehxxxxxxxxxdp"
+            app:indicatorColor="@color/colorPrimary"
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

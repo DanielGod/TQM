@@ -169,7 +169,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/mediummdp"
                 android:text="电话：1312312312423"
-                android:textColor="@color/font_black_1"
+                android:textColor="@color/font_black_2"
                 android:textSize="@dimen/smallsp"/>
         </LinearLayout>
 
@@ -199,7 +199,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/mediummdp"
                 android:text="地址：上海市浦东区艾付广场1楼88层"
-                android:textColor="@color/font_black_1"
+                android:textColor="@color/font_black_2"
                 android:textSize="@dimen/smallsp"/>
         </LinearLayout>
         <View
@@ -231,7 +231,7 @@
                 android:gravity="center_vertical"
                 android:text="公司介绍"
                 android:paddingLeft="@dimen/mediummdp"
-                android:textColor="@color/font_black_1"
+                android:textColor="@color/font_black_2"
                 android:textSize="@dimen/smallsp"/>
 
             <ImageView

@@ -42,6 +42,7 @@ import tqm.bianfeng.com.tqm.bank.bankactivitys.BankActivitonsActivity;
 import tqm.bianfeng.com.tqm.bank.bankfinancing.BankFinancingActivity;
 import tqm.bianfeng.com.tqm.bank.bankinformations.test.NewBankInformationActivity;
 import tqm.bianfeng.com.tqm.bank.bankloan.BankLoanActivity;
+import tqm.bianfeng.com.tqm.capital.PrivateCapitalActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.BankInformItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
@@ -578,11 +579,14 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.select_more_bankFinancing_txt, R.id.select_more_bankLoan_txt, R.id.select_more_bankActivitys_txt,
+    @OnClick({R.id.home_select_capital_lin,R.id.select_more_bankFinancing_txt, R.id.select_more_bankLoan_txt, R.id.select_more_bankActivitys_txt,
             R.id.home_bank_activity_lin, R.id.home_bank_loan_lin, R.id.home_bank_make_money_lin,
             R.id.select_more_bank_make_money_txt, R.id.select_more_hot_information_txt,R.id.home_select_branches_lin})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.home_select_capital_lin:
+                startActivity(new Intent(getActivity(), PrivateCapitalActivity.class));
+                break;
             case R.id.select_more_bankFinancing_txt:
                 startActivity(new Intent(getActivity(), BankFinancingActivity.class));
                 break;

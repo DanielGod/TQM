@@ -30,7 +30,7 @@ public class MyCollectionViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -45,6 +45,8 @@ public class MyCollectionViewPagerAdapter extends FragmentStatePagerAdapter {
                 return "律师事务所";
             case 1:
                 return "金融机构";
+            case 2:
+                return "民间资本";
         }
         return super.getPageTitle(position);
     }

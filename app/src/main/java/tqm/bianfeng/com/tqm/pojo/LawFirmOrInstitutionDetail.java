@@ -31,6 +31,7 @@ public class LawFirmOrInstitutionDetail {
     private String address;
     private String isCollect;
 
+
     private List<LawyerItem> lawyers;
     private List<BankActivityItem> activities;
     private List<BankLoanItem> loans;

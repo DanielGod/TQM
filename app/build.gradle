@@ -43,6 +43,18 @@ android {
             jniLibs.srcDirs 'libs'
         }
     }
+    configurations.all {
+
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '25.1.0'
+                }
+            }
+        }
+    }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -145,7 +157,6 @@ dependencies {
     compile files('libs/umeng_social_shareview.jar')
     compile files('libs/umeng_social_tool.jar')
     compile 'com.android.support:recyclerview-v7:25.1.0'
-    compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:support-v4:25.1.0'
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'com.zhy:base-rvadapter:3.0.3'

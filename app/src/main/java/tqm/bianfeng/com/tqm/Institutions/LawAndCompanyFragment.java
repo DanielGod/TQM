@@ -26,11 +26,13 @@ import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import tqm.bianfeng.com.tqm.CustomView.LoadMoreView;
 import tqm.bianfeng.com.tqm.Institutions.adapter.LawFirmOrInstitutionListAdapter;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.InstitutionItem;
+import tqm.bianfeng.com.tqm.pojo.User;
 
 /**
  * Created by johe on 2017/4/10.
@@ -84,9 +86,16 @@ public class LawAndCompanyFragment extends BaseFragment {
 
     public void initData() {
         if (datas.size() > 0) {
-            loadMoreViewAnim(1);
+            if(loadMoreTxt!=null){
+                loadMoreTxt.loadMoreViewAnim(1);
+            }
+
         }
-        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getInstitutionItem("0" + (index + 1), page + 1, 10)
+        int userId=0;
+        if(realm.where(User.class).findFirst()!=null){
+            userId=realm.where(User.class).findFirst().getUserId();
+        }
+        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getInstitutionItem("0" + (index + 1),userId, page + 1, 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<InstitutionItem>>() {
@@ -98,7 +107,10 @@ public class LawAndCompanyFragment extends BaseFragment {
                     @Override
                     public void onError(Throwable e) {
                         lodingIsFailOrSucess(3);
-                        loadMoreViewAnim(4);
+                        if(loadMoreTxt!=null){
+                            loadMoreTxt.loadMoreViewAnim(4);
+                        }
+
                     }
 
                     @Override
@@ -115,13 +127,13 @@ public class LawAndCompanyFragment extends BaseFragment {
                         //加载更多判断
                         if (datas.size() < 10) {
                             //隐藏
-                            loadMoreViewAnim(4);
+                            loadMoreTxt.loadMoreViewAnim(4);
                         } else if (datas.size() > 10 && institutionItems.size() < 10) {
                             //没有更多
-                            loadMoreViewAnim(3);
+                            loadMoreTxt.loadMoreViewAnim(3);
                         } else {
                             //加载完成
-                            loadMoreViewAnim(2);
+                            loadMoreTxt.loadMoreViewAnim(2);
                         }
                     }
                 });
@@ -131,7 +143,7 @@ public class LawAndCompanyFragment extends BaseFragment {
 
     LoadMoreWrapper mLoadMoreWrapper;
     View loadMoreView;
-    TextView loadMoreTxt;
+    LoadMoreView loadMoreTxt;
     Intent intent;
     public void initList(List<InstitutionItem> institutionItems) {
         if (lawFirmOrInstitutionListAdapter == null) {
@@ -144,14 +156,19 @@ public class LawAndCompanyFragment extends BaseFragment {
                     CompanyInfoActivity.index=index;
                     EventBus.getDefault().post(intent);
                 }
+
+                @Override
+                public void changePosition(int position) {
+                    mLoadMoreWrapper.notifyItemChanged(position);
+                }
             });
             //添加上拉加载
             mLoadMoreWrapper = new LoadMoreWrapper(lawFirmOrInstitutionListAdapter);
             loadMoreView = getActivity().getLayoutInflater().inflate(R.layout.default_loading, null);
-            loadMoreTxt = (TextView) loadMoreView.findViewById(R.id.load_more_txt);
+            loadMoreTxt = (LoadMoreView) loadMoreView.findViewById(R.id.load_more_txt);
             loadMoreView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             mLoadMoreWrapper.setLoadMoreView(loadMoreView);
-            //加载监听
+            //加载监听,
             mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
                 @Override
                 public void onLoadMoreRequested() {
@@ -205,27 +222,6 @@ public class LawAndCompanyFragment extends BaseFragment {
         }
     }
 
-    public void loadMoreViewAnim(int statu) {
-        //操作加载更多动画
-        if (loadMoreTxt != null) {
-            loadMoreTxt.setVisibility(View.VISIBLE);
-            switch (statu) {
-                case 1://动画开始
-                    loadMoreTxt.setText("加载中...");
-                    break;
-                case 2://加载完成恢复初始状态
-                    loadMoreTxt.setText("加载更多");
-                    break;
-                case 3://没有更多
-                    loadMoreTxt.setText("没有更多");
-                    break;
-                case 4://不显示
-                    loadMoreTxt.setVisibility(View.GONE);
-                    break;
-            }
-        }
-
-    }
 
     @Override
     public void onDetach() {

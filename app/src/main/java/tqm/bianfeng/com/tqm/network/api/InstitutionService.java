@@ -28,12 +28,12 @@ public interface InstitutionService {
     @FormUrlEncoded
     @POST("instit/getInstitutionItem")
     Observable<List<InstitutionItem>> getInstitutionItem(@Field("institutionType") String institutionType,
+                                                         @Field("userId") int userId,
                                                          @Field("pageNum") Integer pageNum,
                                                          @Field("pageSize") Integer pageSize);
 
     /**
      * 获取律师事务所详情
-     *
      */
     @GET("instit/getLawFirmDetail/{institutionId}/{userId}")
     Observable<LawFirmOrInstitutionDetail> getLawFirmDetail(@Path("institutionId") int institutionId,@Path("userId") String userId);
@@ -65,4 +65,14 @@ public interface InstitutionService {
     Observable<List<InstitutionItem>> getCollectInstitutionItem(@Field("collectType") String collectType,
                                                          @Field("userId") Integer userId
                                                          );
+
+    /**
+     * 搜索机构
+     */
+    @FormUrlEncoded
+    @POST("instit/search")
+    Observable<List<InstitutionItem>> searchInstitutionItem(@Field("search") String search,
+                                                            @Field("userId") int userId,
+                                                         @Field("pageNum") Integer pageNum,
+                                                         @Field("pageSize") Integer pageSize);
 }

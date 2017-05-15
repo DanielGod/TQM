@@ -17,6 +17,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -44,6 +45,27 @@ public class CoordinatorTabLayout extends CoordinatorLayout {
     private boolean isOpen=true;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private LoadHeaderImagesListener mLoadHeaderImagesListener;
+
+    public interface Linsener{
+        public void changActivity(int id);
+    }
+    Linsener mLinsener;
+
+    boolean isHaveMenu=false;
+    public void setmLinsener(Linsener Linsener) {
+        this.mLinsener = Linsener;
+        mToolbar.inflateMenu(R.menu.error_report);
+        isHaveMenu=true;
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(item.getItemId()==R.id.correct_report_light||item.getItemId()==R.id.correct_report_dark){
+                    mLinsener.changActivity(R.id.correct_report);
+                }
+                return false;
+            }
+        });
+    }
 
     public CoordinatorTabLayout(Context context) {
         super(context);
@@ -73,6 +95,7 @@ public class CoordinatorTabLayout extends CoordinatorLayout {
         initToolbar();
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById( R.id.collapsingtoolbarlayout);
         mTabLayout = (TabLayout) findViewById( R.id.tabLayout);
+
         //mImageView = (ImageView) findViewById( R.id.imageview);
         //mHeaderView=(View) findViewById(R.id.view);
         lin_view=(LinearLayout) findViewById(R.id.lin_view);
@@ -85,6 +108,7 @@ public class CoordinatorTabLayout extends CoordinatorLayout {
                 Log.i("gqf","appBarLayout"+appBarLayout.getHeight());
             }
         });
+
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
@@ -92,13 +116,17 @@ public class CoordinatorTabLayout extends CoordinatorLayout {
                 if( state == State.EXPANDED ) {
                     //展开状态
                     if(!isOpen) {
-                        mToolbar.setTitleTextColor(getResources().getColor(R.color.font_black_2));
+                        mToolbar.setTitleTextColor(getResources().getColor(R.color.black));
                         //mTabLayout.setBackgroundColor(getResources().getColor(R.color.whitesmoke));
                         mTabLayout.setTabTextColors(getResources().getColor(R.color.black), getResources().getColor(R.color.colorPrimary));
                         mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorPrimary));
                         //mActionbar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_dark);
                         mToolbar.setNavigationIcon(R.drawable.ic_back_arrow_dark);
                         isOpen=true;
+                        if(isHaveMenu) {
+                            mToolbar.getMenu().getItem(0).setVisible(false);
+                            mToolbar.getMenu().getItem(1).setVisible(true);
+                        }
                     }
                 }else if(state == State.COLLAPSED){
                     //折叠状态
@@ -110,6 +138,11 @@ public class CoordinatorTabLayout extends CoordinatorLayout {
                         //mActionbar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_write);
                         mToolbar.setNavigationIcon(R.drawable.ic_back_arrow_write);
                         isOpen=false;
+                        if(isHaveMenu){
+                            mToolbar.getMenu().getItem(0).setVisible(true);
+                            mToolbar.getMenu().getItem(1).setVisible(false);
+                        }
+
                     }
                 }
                 if(myLinsener!=null) {

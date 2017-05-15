@@ -215,4 +215,11 @@ public interface UserService {
     @GET("enter/auditCode/{userId}")
     Observable<ResultWithAuditCode> getStatus(@Path("userId") int userId);
 
+    /**
+     * 纠错举报
+     */
+    @FormUrlEncoded
+    @POST("errorReport/")
+    Observable<ResultCode> saveErrorReport(@Field("errorReport") String errorReport);
+
 }

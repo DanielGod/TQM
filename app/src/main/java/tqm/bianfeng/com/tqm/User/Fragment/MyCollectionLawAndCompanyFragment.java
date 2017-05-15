@@ -143,6 +143,10 @@ public class MyCollectionLawAndCompanyFragment extends BaseFragment {
                     CompanyInfoActivity.index=index;
                     EventBus.getDefault().post(intent);
                 }
+                @Override
+                public void changePosition(int position) {
+                    mLoadMoreWrapper.notifyItemChanged(position);
+                }
             });
             //添加上拉加载
             mLoadMoreWrapper = new LoadMoreWrapper(lawFirmOrInstitutionListAdapter);

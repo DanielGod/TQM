@@ -23,6 +23,7 @@ public interface LawService {
     @FormUrlEncoded
     @POST("lawyer/getLawyerItem")
     Observable<List<LawyerItem>> getLawyerItem(@Field("queryParams") String queryParams,
+                                               @Field("userId") int userId,
                                                @Field("pageNum") Integer pageNum,
                                                @Field("pageSize") Integer pageSize);
 

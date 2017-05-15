@@ -201,6 +201,11 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
             public void CollectionClick(int position) {
 
             }
+
+            @Override
+            public void changePosition(int position) {
+                lawListAdapter.notifyItemChanged(position);
+            }
         });
         activityLoanFinancingLawList.setLayoutManager(new LinearLayoutManager(getActivity()));
         activityLoanFinancingLawList.setAdapter(lawListAdapter);

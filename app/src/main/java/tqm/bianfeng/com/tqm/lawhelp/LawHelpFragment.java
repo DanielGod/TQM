@@ -32,6 +32,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.CustomView.DropDownMenu;
+import tqm.bianfeng.com.tqm.CustomView.LoadMoreView;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.lawhelp.adapter.LawListAdapter;
@@ -41,6 +42,7 @@ import tqm.bianfeng.com.tqm.main.DetailActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.LawAdd;
 import tqm.bianfeng.com.tqm.pojo.LawyerItem;
+import tqm.bianfeng.com.tqm.pojo.User;
 
 public class LawHelpFragment extends BaseFragment {
 
@@ -68,7 +70,7 @@ public class LawHelpFragment extends BaseFragment {
     private LawListAdapter lawListAdapter;
     private View loadMoreView;
     private ThreeAddTools threeAddTools;
-    private TextView loadMoreTxt;//加载更多文字
+    private LoadMoreView loadMoreTxt;//加载更多文字
 
     private boolean isOnLoading = false;
 
@@ -234,8 +236,15 @@ public class LawHelpFragment extends BaseFragment {
         Log.e("gqf", index + "queryParams" + queryParams);
         isOnLoading = true;
         //开始加载动画
-        loadMoreViewAnim(1);
-        Subscription getBankFinancItem_subscription = NetWork.getLawService().getLawyerItem(queryParams, index, 10)
+        if(loadMoreTxt!=null){
+            loadMoreTxt.loadMoreViewAnim(1);
+        }
+        int userId=0;
+        if(realm.where(User.class).findFirst()!=null){
+            userId=realm.where(User.class).findFirst().getUserId();
+        }
+
+        Subscription getBankFinancItem_subscription = NetWork.getLawService().getLawyerItem(queryParams,userId, index, 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<LawyerItem>>() {
@@ -248,6 +257,9 @@ public class LawHelpFragment extends BaseFragment {
                     public void onError(Throwable e) {
                         if (datas.size() == 0) {
                             lodingIsFailOrSucess(3);
+                        }
+                        if(loadMoreTxt!=null){
+                            loadMoreTxt.loadMoreViewAnim(4);
                         }
                     }
 
@@ -270,13 +282,13 @@ public class LawHelpFragment extends BaseFragment {
                         //加载更多判断
                         if (datas.size() < 10) {
                             //隐藏
-                            loadMoreViewAnim(4);
+                            loadMoreTxt.loadMoreViewAnim(4);
                         } else if (datas.size() > 10 && lawyerItems.size() < 10) {
                             //没有更多
-                            loadMoreViewAnim(3);
+                            loadMoreTxt.loadMoreViewAnim(3);
                         } else {
                             //加载完成
-                            loadMoreViewAnim(2);
+                            loadMoreTxt.loadMoreViewAnim(2);
                         }
                         isOnLoading = false;
                     }
@@ -319,11 +331,15 @@ public class LawHelpFragment extends BaseFragment {
                 public void CollectionClick(int position) {
 
                 }
+                @Override
+                public void changePosition(int position) {
+                    mLoadMoreWrapper.notifyItemChanged(position);
+                }
             });
             //添加上拉加载
             mLoadMoreWrapper = new LoadMoreWrapper(lawListAdapter);
             loadMoreView = getActivity().getLayoutInflater().inflate(R.layout.default_loading, null);
-            loadMoreTxt = (TextView) loadMoreView.findViewById(R.id.load_more_txt);
+            loadMoreTxt = (LoadMoreView) loadMoreView.findViewById(R.id.load_more_txt);
             loadMoreView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             mLoadMoreWrapper.setLoadMoreView(loadMoreView);
             //加载监听
@@ -345,27 +361,7 @@ public class LawHelpFragment extends BaseFragment {
         }
     }
 
-    public void loadMoreViewAnim(int statu) {
-        //操作加载更多动画
-        if (loadMoreTxt != null) {
-            loadMoreTxt.setVisibility(View.VISIBLE);
-            switch (statu) {
-                case 1://动画开始
-                    loadMoreTxt.setText("加载中...");
-                    break;
-                case 2://加载完成恢复初始状态
-                    loadMoreTxt.setText("加载更多");
-                    break;
-                case 3://没有更多
-                    loadMoreTxt.setText("没有更多");
-                    break;
-                case 4://不显示
-                    loadMoreTxt.setVisibility(View.GONE);
-                    break;
-            }
-        }
 
-    }
 
     //获取顶部选择器条件
     public void initSpecialFields() {

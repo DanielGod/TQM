@@ -451,6 +451,10 @@ public void initLoanList(List<BankLoanItem> datas) {
                 public void CollectionClick(int position) {
 
                 }
+                @Override
+                public void changePosition(int position) {
+                    lawListAdapter.notifyItemChanged(position);
+                }
             });
             myFocuseList.setLayoutManager(new LinearLayoutManager(getActivity()));
             myFocuseList.setAdapter(lawListAdapter);

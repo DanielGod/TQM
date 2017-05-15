@@ -2,6 +2,7 @@ package tqm.bianfeng.com.tqm.lawhelp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,21 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.LawyerItem;
+import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.User;
 
 /**
@@ -34,8 +42,8 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<LawyerItem> datas;
     private final LayoutInflater mLayoutInflater;
     private MyItemClickListener mItemClickListener;
-
-
+    List<LawyerItem> inCollectItem;
+    CompositeSubscription compositeSubscription;
     Realm realm;
     public LawyerItem getDataItem(int position) {
         return datas == null ? null : datas.get(position);
@@ -46,6 +54,8 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.datas = mDatas;
         mLayoutInflater = LayoutInflater.from(mContext);
         realm=Realm.getDefaultInstance();
+        inCollectItem=new ArrayList<>();
+        compositeSubscription=new CompositeSubscription();
     }
 
     public void update(List<LawyerItem> mDatas) {
@@ -65,7 +75,54 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         return viewHolder;
     }
+    public void Collect(final int position,final int id){
 
+        String isCollect="";
+        if(datas.get(position).getIsAttention().equals("01")){
+            isCollect="02";
+        }else {
+            isCollect="01";
+        }
+        Subscription getBankFinancItem_subscription = NetWork.getUserService()
+                .attention(datas.get(position).getLawyerId(), "05", realm.where(User.class).findFirst().getUserId(), isCollect)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResultCode>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.i("gqf","Throwable"+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(ResultCode resultCode) {
+                        Log.i("gqf",position+"resultCode"+resultCode.toString());
+                        int p=position;
+                        if(resultCode.getCode()==ResultCode.SECCESS){
+                            Log.i("gqf",datas.get(p).getIsAttention()+"resultCode"+datas.get(p).getIsAttention());
+                            for(int i=0;i<inCollectItem.size();i++){
+                                if(inCollectItem.get(i).getLawyerId()== datas.get(position).getLawyerId()){
+                                    inCollectItem.remove(i);
+
+                                    if(datas.get(p).getIsAttention().equals("01")){
+                                        datas.get(p).setIsAttention("02");
+                                    }else {
+                                        datas.get(p).setIsAttention("01");
+                                    }
+                                    mItemClickListener.changePosition(position);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                });
+
+        compositeSubscription.add(getBankFinancItem_subscription);
+    }
 
     /**
      * 设置Item点击监听
@@ -87,6 +144,19 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             mHolder.isAuthorizeTxt.setText("已认证");
         } else {
             mHolder.isAuthorizeTxt.setText("未认证");
+        }
+
+        if (datas.get(p).getIsAttention().equals("02")) {
+            //未关注
+            mHolder.isCollectTxt.setText("关注");
+        } else {
+            //已关注
+            mHolder.isCollectTxt.setText("已关注");
+        }
+        for(int i=0;i<inCollectItem.size();i++){
+            if(inCollectItem.get(i).getLawyerId()==datas.get(p).getLawyerId()){
+                mHolder.isCollectTxt.setText("关注中");
+            }
         }
 
         if (datas.get(p).getAvatar() != null) {
@@ -114,6 +184,28 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Toast.makeText(mContext, "请先登录后查看", Toast.LENGTH_SHORT).show();
                 }else {
                     mItemClickListener.CollectionClick(p);
+                }
+            }
+        });
+        mHolder.isCollectTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isHave=false;
+                for(int i=0;i<inCollectItem.size();i++){
+                    if(inCollectItem.get(i).getLawyerId()==datas.get(p).getLawyerId()){
+                        isHave=true;
+                    }
+                }
+                if(!isHave){
+                    if(realm.where(User.class).findFirst()!=null){
+                        inCollectItem.add(datas.get(p));
+                        Collect(p,datas.get(p).getLawyerId());
+                        mHolder.isCollectTxt.setText("关注中");
+                    }else{
+                        Toast.makeText(mContext,"请登录后再关注",Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(mContext, "正在关注请稍后", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -147,6 +239,7 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public void CallClick(int position);
 
         public void CollectionClick(int position);
+        public void changePosition(int position);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -164,6 +257,9 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView goodAt3;
         @BindView(R.id.isAuthorize_txt)
         TextView isAuthorizeTxt;
+
+        @BindView(R.id.is_collect_txt)
+        TextView isCollectTxt;
         @BindView(R.id.call_lin)
         LinearLayout callLin;
         @BindView(R.id.collection_lin)

@@ -33,6 +33,16 @@ public class LawyerItem {
     private String practiceTime;
     private String specialField;
 
+    String isAttention;
+
+    public String getIsAttention() {
+        return isAttention;
+    }
+
+    public void setIsAttention(String isAttention) {
+        this.isAttention = isAttention;
+    }
+
     public int getLawyerId() {
         return lawyerId;
     }
