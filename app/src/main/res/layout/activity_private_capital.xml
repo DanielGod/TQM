@@ -38,7 +38,7 @@
             android:drawableTop="@drawable/ic_no_city"
             android:drawablePadding="@dimen/smallmdp"
             />
-        <com.wang.avi.AVLoadingIndicatorView
+        <tqm.bianfeng.com.tqm.CustomView.LoadingIndicator
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/indicator"

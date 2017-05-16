@@ -439,8 +439,15 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                         NetUtils.openSetting(MainActivity.this);
                     }
                 });
+
+                RelativeLayout.LayoutParams labelParams = (RelativeLayout.LayoutParams) netWorkLin.getLayoutParams();
+                labelParams.addRule(RelativeLayout.BELOW, toolbar.getId());
+                netWorkLin.setLayoutParams(labelParams);
             } else {
                 netWorkLin.setVisibility(View.GONE);
+                RelativeLayout.LayoutParams labelParams = (RelativeLayout.LayoutParams) netWorkLin.getLayoutParams();
+                labelParams.removeRule(RelativeLayout.BELOW);
+                netWorkLin.setLayoutParams(labelParams);
             }
         }
         //        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) netWorkLin.getLayoutParams();

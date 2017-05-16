@@ -25,18 +25,18 @@
         android:layout_marginBottom="50dp"
         >
 
-        <include android:id="@+id/net_work_lin" android:visibility="gone" layout="@layout/dialog_net_work"/>
+
 
         <FrameLayout
             android:id="@+id/container"
-            android:layout_below="@+id/net_work_lin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:showIn="@layout/activity_main">
 
         </FrameLayout>
     </RelativeLayout>
-
+    <include android:id="@+id/net_work_lin"
+             android:visibility="gone" layout="@layout/dialog_net_work"/>
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"

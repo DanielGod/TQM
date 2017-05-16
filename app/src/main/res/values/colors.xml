@@ -52,7 +52,7 @@
     <color name="pink_pressed">#ec407a</color>
     <color name="blue_semi_transparent">#805677fc</color>
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
-    <color name="pink_less">#ffd8da</color>
+    <color name="pink_less">#ffe3e4</color>
 
     <color name="home_orange">#FF772D</color>
     <color name="home_hotActivity_orange">#FF6D37</color><!--热门活动-橙色-->

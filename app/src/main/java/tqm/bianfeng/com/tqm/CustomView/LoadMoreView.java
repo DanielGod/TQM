@@ -50,4 +50,17 @@ public class LoadMoreView extends TextView {
 
     }
 
+    public void doLoad(int size,int resultSize){
+        if (size < 10) {
+            //隐藏
+            this.loadMoreViewAnim(4);
+        } else if (size > 10 && resultSize < 10) {
+            //没有更多
+            this.loadMoreViewAnim(3);
+        } else {
+            //加载完成
+            this.loadMoreViewAnim(2);
+        }
+    }
+
 }

@@ -67,13 +67,13 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/hugehxxdp"
-                android:src="@drawable/ic_release_loan_radio_bg"
+                android:src="@drawable/ic_release_activity_radio_bg"
                 android:adjustViewBounds="true"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="发布贷款信息"
+                android:text="发布活动信息"
                 android:textSize="@dimen/bigsp"
                 android:gravity="center"
                 android:textColor="@color/font_black_1"

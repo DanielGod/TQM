@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+<tqm.bianfeng.com.tqm.CustomView.DefaultLoadView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
+                android:id="@+id/default_loadview"
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_view"
-        android:layout_width="@dimen/hugehxxdp"
-        android:layout_height="@dimen/hugehxxdp"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        app:lottie_fileName="data.json"
-        app:lottie_loop="true"
-        app:lottie_autoPlay="true"/>
 
-    <TextView
-        android:id="@+id/YBJ_loding_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:text="加载中..."
-        android:layout_below="@+id/animation_view"
-        android:drawablePadding="@dimen/smallmdp"
-        android:paddingTop="@dimen/activity_horizontal_margin"
-        android:textSize="@dimen/bigsp"
-        android:layout_centerHorizontal="true"/>
-</RelativeLayout>
+</tqm.bianfeng.com.tqm.CustomView.DefaultLoadView>

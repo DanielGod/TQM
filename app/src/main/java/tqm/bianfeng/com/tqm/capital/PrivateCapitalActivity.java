@@ -2,7 +2,6 @@ package tqm.bianfeng.com.tqm.capital;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.wang.avi.AVLoadingIndicatorView;
 import com.zhy.adapter.recyclerview.wrapper.LoadMoreWrapper;
 
 import java.util.ArrayList;
@@ -25,6 +23,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.CustomView.LoadMoreView;
+import tqm.bianfeng.com.tqm.CustomView.LoadingIndicator;
 import tqm.bianfeng.com.tqm.Institutions.CompanyInfoActivity;
 import tqm.bianfeng.com.tqm.Institutions.SearchInstiutionsActivity;
 import tqm.bianfeng.com.tqm.Institutions.adapter.LawFirmOrInstitutionListAdapter;
@@ -45,7 +44,7 @@ public class PrivateCapitalActivity extends BaseActivity {
     @BindView(R.id.private_capital_list)
     RecyclerView privateCapitalList;
     @BindView(R.id.indicator)
-    AVLoadingIndicatorView indicator;
+    LoadingIndicator indicator;
     @BindView(R.id.no_search_txt)
     TextView noSearchTxt;
 
@@ -77,10 +76,14 @@ public class PrivateCapitalActivity extends BaseActivity {
     int page = 1;
 
     public void initData() {
-        showLoading(0);
+        indicator.showLoading();
         if (datas.size() > 0) {
             if (loadMoreTxt != null) {
                 loadMoreTxt.loadMoreViewAnim(1);
+            }
+        } else {
+            if (loadMoreTxt != null) {
+                loadMoreTxt.loadMoreViewAnim(4);
             }
         }
         int userId=0;
@@ -99,7 +102,7 @@ public class PrivateCapitalActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         Log.i("gqf","onError"+e.toString());
-                        showLoading(1);
+                        indicator.hideLoading();
                         showSearchResult();
                         if (loadMoreTxt != null) {
                             loadMoreTxt.loadMoreViewAnim(4);
@@ -120,19 +123,10 @@ public class PrivateCapitalActivity extends BaseActivity {
                         Log.i("gqf", "institutionItems" + institutionItems.toString());
                         initList();
                         showSearchResult();
-                        showLoading(1);
+                        indicator.hideLoading();
 
                         //加载更多判断
-                        if (datas.size() < 10) {
-                            //隐藏
-                            loadMoreTxt.loadMoreViewAnim(4);
-                        } else if (datas.size() > 10 && institutionItems.size() < 10) {
-                            //没有更多
-                            loadMoreTxt.loadMoreViewAnim(3);
-                        } else {
-                            //加载完成
-                            loadMoreTxt.loadMoreViewAnim(2);
-                        }
+                        loadMoreTxt.doLoad(datas.size(),institutionItems.size());
                     }
                 });
 
@@ -147,53 +141,7 @@ public class PrivateCapitalActivity extends BaseActivity {
         }
     }
 
-    CountDownTimer countDownTimer;
-    int progressIndex = 6;
 
-    public void showLoading(int index) {
-        if (index == 0) {
-            //开始
-            indicator.show();
-            countDownTimer = new CountDownTimer(1000 * 100, 1000) {
-                public void onTick(long millisUntilFinished) {
-                    // you can change the progress bar color by ProgressHelper every 800 millis
-                    progressIndex++;
-                    switch (progressIndex % 6) {
-                        case 0:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.blue_btn_bg_color));
-                            break;
-                        case 1:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.material_deep_teal_50));
-                            break;
-                        case 2:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.success_stroke_color));
-                            break;
-                        case 3:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.material_deep_teal_20));
-                            break;
-                        case 4:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.material_blue_grey_80));
-                            break;
-                        case 5:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.warning_stroke_color));
-                            break;
-                        case 6:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.success_stroke_color));
-                            break;
-                    }
-                }
-
-                public void onFinish() {
-                    progressIndex = 6;
-                }
-            }.start();
-
-        } else {
-            //结束
-            indicator.hide();
-            countDownTimer.onFinish();
-        }
-    }
 
     LoadMoreWrapper mLoadMoreWrapper;
     View loadMoreView;

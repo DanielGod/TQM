@@ -8,12 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.TextView;
-
-import com.airbnb.lottie.LottieAnimationView;
-import com.zhy.adapter.recyclerview.wrapper.LoadMoreWrapper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,6 +20,7 @@ import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import tqm.bianfeng.com.tqm.CustomView.DefaultLoadView;
 import tqm.bianfeng.com.tqm.Institutions.CompanyInfoActivity;
 import tqm.bianfeng.com.tqm.Institutions.adapter.LawFirmOrInstitutionListAdapter;
 import tqm.bianfeng.com.tqm.R;
@@ -44,15 +39,11 @@ public class MyCollectionLawAndCompanyFragment extends BaseFragment {
     public static String ARG_TYPE = "arg_type";
     @BindView(R.id.law_or_company_list)
     RecyclerView lawOrCompanyList;
-    @BindView(R.id.animation_view)
-    LottieAnimationView animationView;
-    @BindView(R.id.YBJ_loding_txt)
-    TextView YBJLodingTxt;
+    @BindView(R.id.default_loadview)
+    DefaultLoadView defaultLoadview;
+    List<InstitutionItem> datas;
 
-    int page = 0;
-    private List<InstitutionItem> datas;
-
-    private LawFirmOrInstitutionListAdapter lawFirmOrInstitutionListAdapter;
+    LawFirmOrInstitutionListAdapter lawFirmOrInstitutionListAdapter;
 
     public static MyCollectionLawAndCompanyFragment newInstance(int position) {
         MyCollectionLawAndCompanyFragment fragment = new MyCollectionLawAndCompanyFragment();
@@ -76,24 +67,30 @@ public class MyCollectionLawAndCompanyFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_low_and_company, container, false);
         ButterKnife.bind(this, view);
-        lodingIsFailOrSucess(1);
+        defaultLoadview.lodingIsFailOrSucess(1);
         datas = new ArrayList<>();
         //initData();
-
+        initData();
 
         return view;
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            initData();
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        initData();
+
     }
 
     public void initData() {
-        if (datas.size() > 0) {
-            loadMoreViewAnim(1);
-        }
+
         Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getCollectInstitutionItem("0" + (index + 1), realm.where(User.class).findFirst().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -105,130 +102,59 @@ public class MyCollectionLawAndCompanyFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        lodingIsFailOrSucess(3);
-                        loadMoreViewAnim(4);
+                        defaultLoadview.lodingIsFailOrSucess(3);
                     }
 
                     @Override
                     public void onNext(List<InstitutionItem> institutionItems) {
-                        datas=new ArrayList<InstitutionItem>();
-                        for (InstitutionItem institutionItem : institutionItems) {
-                            datas.add(institutionItem);
+
+                        datas=institutionItems;
+                        Log.i("gqf", "institutionItems" + institutionItems.toString());
+
+                        if(datas.size()==0){
+                            defaultLoadview.lodingIsFailOrSucess(3);
+                        }else{
+                            defaultLoadview.lodingIsFailOrSucess(2);
                         }
 
-
-                        Log.i("gqf", "institutionItems" + institutionItems.toString());
-                        page++;
                         initList(datas);
-                        lodingIsFailOrSucess(2);
-                        loadMoreViewAnim(4);
+                        //initview();
                     }
                 });
 
         compositeSubscription.add(getBankFinancItem_subscription);
     }
 
-    LoadMoreWrapper mLoadMoreWrapper;
-    View loadMoreView;
-    TextView loadMoreTxt;
+
     Intent intent;
+
     public void initList(List<InstitutionItem> institutionItems) {
+        Log.i("gqf","initList"+index);
         if (lawFirmOrInstitutionListAdapter == null) {
             lawFirmOrInstitutionListAdapter = new LawFirmOrInstitutionListAdapter(getActivity(), institutionItems);
             lawFirmOrInstitutionListAdapter.setOnItemClickListener(new LawFirmOrInstitutionListAdapter.MyItemClickListener() {
                 @Override
                 public void OnClickListener(int position) {
-                    intent=new Intent(getActivity(),CompanyInfoActivity.class);
-                    intent.putExtra("InstitutionId",datas.get(position).getInstitutionId());
-                    CompanyInfoActivity.index=index;
+                    intent = new Intent(getActivity(), CompanyInfoActivity.class);
+                    intent.putExtra("InstitutionId", datas.get(position).getInstitutionId());
+                    CompanyInfoActivity.index = index;
                     EventBus.getDefault().post(intent);
                 }
+
                 @Override
                 public void changePosition(int position) {
-                    mLoadMoreWrapper.notifyItemChanged(position);
-                }
-            });
-            //添加上拉加载
-            mLoadMoreWrapper = new LoadMoreWrapper(lawFirmOrInstitutionListAdapter);
-            loadMoreView = getActivity().getLayoutInflater().inflate(R.layout.default_loading, null);
-            loadMoreTxt = (TextView) loadMoreView.findViewById(R.id.load_more_txt);
-            loadMoreView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            mLoadMoreWrapper.setLoadMoreView(loadMoreView);
-            //加载监听
-            mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
-                @Override
-                public void onLoadMoreRequested() {
-                    //在此开起加载动画，更新数据
-                    Log.e("gqf", "onLoadMoreRequested");
-                    if(datas.size()%10==0&&datas.size()!=0){
-                        initData();
-                    }
+                    lawFirmOrInstitutionListAdapter.notifyItemChanged(position);
                 }
             });
             lawOrCompanyList.setLayoutManager(new LinearLayoutManager(getActivity()));
-            lawOrCompanyList.setAdapter(mLoadMoreWrapper);
+            lawOrCompanyList.setAdapter(lawFirmOrInstitutionListAdapter);
         } else {
             lawFirmOrInstitutionListAdapter.update(institutionItems);
-            mLoadMoreWrapper.notifyDataSetChanged();
+            lawFirmOrInstitutionListAdapter.notifyDataSetChanged();
         }
 
     }
 
-    public void lodingIsFailOrSucess(int i) {
-        if (i == 1) {
-            //加载中
-            animationView.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setText("加载中...");
-            //开始动画
-            boolean inPlaying = animationView.isAnimating();
-            if (!inPlaying) {
-                animationView.setProgress(0f);
-                animationView.playAnimation();
-            }
-        } else if (i == 2) {
-            //加载成功
-            //借书动画
-            animationView.cancelAnimation();
-            animationView.setVisibility(View.GONE);
-            YBJLodingTxt.setVisibility(View.GONE);
-        } else if (i == 3) {
-            //没有数据
-            animationView.setVisibility(View.GONE);
-            YBJLodingTxt.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setText("没有查询到数据");
-            //YBJLoding.setImageResource(R.drawable.ic_no_city);
-            YBJLodingTxt.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_no_city), null, null);
-            Animation myAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.dd_mask_in);
-            animationView.setAnimation(myAnimation);
-            YBJLodingTxt.setAnimation(myAnimation);
-            myAnimation.start();
-        } else {
-
-        }
-    }
-
-    public void loadMoreViewAnim(int statu) {
-        //操作加载更多动画
-        if (loadMoreTxt != null) {
-            loadMoreTxt.setVisibility(View.VISIBLE);
-            switch (statu) {
-                case 1://动画开始
-                    loadMoreTxt.setText("加载中...");
-                    break;
-                case 2://加载完成恢复初始状态
-                    loadMoreTxt.setText("加载更多");
-                    break;
-                case 3://没有更多
-                    loadMoreTxt.setText("没有更多");
-                    break;
-                case 4://不显示
-                    loadMoreTxt.setVisibility(View.GONE);
-                    break;
-            }
-        }
-
-    }
 
     @Override
     public void onDetach() {

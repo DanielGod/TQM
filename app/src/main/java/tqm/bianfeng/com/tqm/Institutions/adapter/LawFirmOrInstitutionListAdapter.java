@@ -173,12 +173,14 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         //mHolder.profileTxt.setText("简介：" + datas.get(p).getProfile());
         mHolder.profileTxt.setVisibility(View.GONE);
 
-        if (datas.get(p).getIsCollect().equals("02")) {
-            //未收藏
-            mHolder.isCollectTxt.setText("收藏");
-        } else {
-            //已收藏
-            mHolder.isCollectTxt.setText("已收藏");
+        if(datas.get(p).getIsCollect()!=null) {
+            if (datas.get(p).getIsCollect().equals("02")) {
+                //未收藏
+                mHolder.isCollectTxt.setText("收藏");
+            } else {
+                //已收藏
+                mHolder.isCollectTxt.setText("已收藏");
+            }
         }
         for(int i=0;i<inCollectItem.size();i++){
             if(inCollectItem.get(i).getInstitutionId()==datas.get(p).getInstitutionId()){
@@ -238,6 +240,7 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         public void changePosition(int position);
 
     }
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.inin_img)

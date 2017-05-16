@@ -1,10 +1,15 @@
-package tqm.bianfeng.com.tqm.pojo.bank;
+package tqm.bianfeng.com.tqm.pojo;
+
+import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 
 /**
- * Created by Daniel on 2017/3/14.
+ * Created by johe on 2017/5/16.
  */
 
-public class BankActivityItem {
+public class ReleaseActivityItem extends BankActivityItem{
+    private String statusCode;//状态:00-待审核;01-审核通过;02-审核未通过
+
+    private String remark;//备注
     public Integer activityId;
     public String activityTitle;
     public String institutionName;
@@ -14,8 +19,10 @@ public class BankActivityItem {
 
     @Override
     public String toString() {
-        return "BankActivityItem{" +
-                "activityId=" + activityId +
+        return "ReleaseActivityItem{" +
+                "statusCode='" + statusCode + '\'' +
+                ", remark='" + remark + '\'' +
+                ", activityId=" + activityId +
                 ", activityTitle='" + activityTitle + '\'' +
                 ", institutionName='" + institutionName + '\'' +
                 ", activityViews=" + activityViews +
@@ -71,4 +78,21 @@ public class BankActivityItem {
     public void setInstitutionIcon(String institutionIcon) {
         this.institutionIcon = institutionIcon;
     }
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+
 }

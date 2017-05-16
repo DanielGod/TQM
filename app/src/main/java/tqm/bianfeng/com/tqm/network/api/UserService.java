@@ -14,6 +14,8 @@ import rx.Observable;
 import tqm.bianfeng.com.tqm.pojo.BankInformItem;
 import tqm.bianfeng.com.tqm.pojo.LawyerItem;
 import tqm.bianfeng.com.tqm.pojo.MyAttention;
+import tqm.bianfeng.com.tqm.pojo.ReleaseActivityItem;
+import tqm.bianfeng.com.tqm.pojo.ReleaseLoanItem;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithCompanyFile;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
@@ -221,5 +223,23 @@ public interface UserService {
     @FormUrlEncoded
     @POST("errorReport/")
     Observable<ResultCode> saveErrorReport(@Field("errorReport") String errorReport);
+
+    /**
+     * 获取发布的活动
+     */
+    @GET("activity/{userId}")
+    Observable<List<ReleaseActivityItem>> getBankActivityItem(@Path("userId") int userId);
+
+    /**
+     * 获取发布的贷款
+     */
+    @GET("loan/{userId}")
+    Observable<List<ReleaseLoanItem>> getReleaseLoanItem(@Path("userId") int userId);
+
+    /**
+     * 发布贷款信息删除
+     */
+    @GET("loan/delete/{loanId}")
+    Observable<ResultCode> deleteById(@Path("loanId") int loanId);
 
 }

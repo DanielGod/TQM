@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.soundcloud.android.crop.Crop;
 
@@ -86,8 +85,7 @@ public class CompanyApplyForActivity extends BaseActivity {
     TextView YBJLodingTxt;
     @BindView(R.id.loding_lin)
     LinearLayout lodingLin;
-    @BindView(R.id.animation_view)
-    LottieAnimationView animationView;
+
 
     private File bitmap;
 
@@ -106,7 +104,7 @@ public class CompanyApplyForActivity extends BaseActivity {
         initEdi();
         YBJLodingTxt.setText("提交中...");
         lodingLin.setVisibility(View.GONE);
-        animationView.setVisibility(View.VISIBLE);
+
         YBJLodingTxt.setVisibility(View.GONE);
         toastType = new ToastType();
     }

@@ -8,11 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.zhy.adapter.recyclerview.wrapper.LoadMoreWrapper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,6 +22,7 @@ import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import tqm.bianfeng.com.tqm.CustomView.DefaultLoadView;
 import tqm.bianfeng.com.tqm.CustomView.LoadMoreView;
 import tqm.bianfeng.com.tqm.Institutions.adapter.LawFirmOrInstitutionListAdapter;
 import tqm.bianfeng.com.tqm.R;
@@ -44,11 +41,8 @@ public class LawAndCompanyFragment extends BaseFragment {
     public static String ARG_TYPE = "arg_type";
     @BindView(R.id.law_or_company_list)
     RecyclerView lawOrCompanyList;
-    @BindView(R.id.animation_view)
-    LottieAnimationView animationView;
-    @BindView(R.id.YBJ_loding_txt)
-    TextView YBJLodingTxt;
-
+    @BindView(R.id.default_loadview)
+    DefaultLoadView defaultLoadview;
     int page = 0;
     private List<InstitutionItem> datas;
 
@@ -76,7 +70,7 @@ public class LawAndCompanyFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_low_and_company, container, false);
         ButterKnife.bind(this, view);
-        lodingIsFailOrSucess(1);
+        defaultLoadview.lodingIsFailOrSucess(1);
         datas = new ArrayList<>();
         initData();
 
@@ -86,10 +80,13 @@ public class LawAndCompanyFragment extends BaseFragment {
 
     public void initData() {
         if (datas.size() > 0) {
-            if(loadMoreTxt!=null){
+            if (loadMoreTxt != null) {
                 loadMoreTxt.loadMoreViewAnim(1);
             }
-
+        } else {
+            if (loadMoreTxt != null) {
+                loadMoreTxt.loadMoreViewAnim(4);
+            }
         }
         int userId=0;
         if(realm.where(User.class).findFirst()!=null){
@@ -106,7 +103,7 @@ public class LawAndCompanyFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        lodingIsFailOrSucess(3);
+                        defaultLoadview.lodingIsFailOrSucess(3);
                         if(loadMoreTxt!=null){
                             loadMoreTxt.loadMoreViewAnim(4);
                         }
@@ -122,19 +119,10 @@ public class LawAndCompanyFragment extends BaseFragment {
                         Log.i("gqf", "institutionItems" + institutionItems.toString());
                         page++;
                         initList(datas);
-                        lodingIsFailOrSucess(2);
+                        defaultLoadview.lodingIsFailOrSucess(2);
 
                         //加载更多判断
-                        if (datas.size() < 10) {
-                            //隐藏
-                            loadMoreTxt.loadMoreViewAnim(4);
-                        } else if (datas.size() > 10 && institutionItems.size() < 10) {
-                            //没有更多
-                            loadMoreTxt.loadMoreViewAnim(3);
-                        } else {
-                            //加载完成
-                            loadMoreTxt.loadMoreViewAnim(2);
-                        }
+                        loadMoreTxt.doLoad(datas.size(),institutionItems.size());
                     }
                 });
 
@@ -186,40 +174,6 @@ public class LawAndCompanyFragment extends BaseFragment {
             mLoadMoreWrapper.notifyDataSetChanged();
         }
 
-    }
-
-    public void lodingIsFailOrSucess(int i) {
-        if (i == 1) {
-            //加载中
-            animationView.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setText("加载中...");
-            //开始动画
-            boolean inPlaying = animationView.isAnimating();
-            if (!inPlaying) {
-                animationView.setProgress(0f);
-                animationView.playAnimation();
-            }
-        } else if (i == 2) {
-            //加载成功
-            //借书动画
-            animationView.cancelAnimation();
-            animationView.setVisibility(View.GONE);
-            YBJLodingTxt.setVisibility(View.GONE);
-        } else if (i == 3) {
-            //没有数据
-            animationView.setVisibility(View.GONE);
-            YBJLodingTxt.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setText("没有查询到数据");
-            //YBJLoding.setImageResource(R.drawable.ic_no_city);
-            YBJLodingTxt.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_no_city), null, null);
-            Animation myAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.dd_mask_in);
-            animationView.setAnimation(myAnimation);
-            YBJLodingTxt.setAnimation(myAnimation);
-            myAnimation.start();
-        } else {
-
-        }
     }
 
 

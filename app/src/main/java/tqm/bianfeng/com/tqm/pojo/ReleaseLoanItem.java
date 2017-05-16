@@ -1,12 +1,18 @@
-package tqm.bianfeng.com.tqm.pojo.bank;
+package tqm.bianfeng.com.tqm.pojo;
 
 import java.math.BigDecimal;
 
+import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
+
 /**
- * Created by Daniel on 2017/3/14.
+ * Created by johe on 2017/5/16.
  */
 
-public class BankLoanItem {
+public class ReleaseLoanItem extends BankLoanItem{
+
+    private String statusCode;//状态:00-待审核;01-审核通过;02-审核未通过
+
+    private String remark;//备注
     public Integer loanId;
     public String loanName;
     public String loanTypeName;
@@ -17,10 +23,11 @@ public class BankLoanItem {
     public Integer loanViews;
 
     @Override
-    public String
-    toString() {
-        return "BankLoanItem{" +
-                "loanId=" + loanId +
+    public String toString() {
+        return "ReleaseLoanItem{" +
+                "statusCode='" + statusCode + '\'' +
+                ", remark='" + remark + '\'' +
+                ", loanId=" + loanId +
                 ", loanName='" + loanName + '\'' +
                 ", loanTypeName='" + loanTypeName + '\'' +
                 ", rate=" + rate +
@@ -94,4 +101,21 @@ public class BankLoanItem {
     public void setLoanViews(Integer loanViews) {
         this.loanViews = loanViews;
     }
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+
 }

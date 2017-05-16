@@ -2,7 +2,6 @@ package tqm.bianfeng.com.tqm.Institutions;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jaeger.library.StatusBarUtil;
-import com.wang.avi.AVLoadingIndicatorView;
 import com.zhy.adapter.recyclerview.wrapper.LoadMoreWrapper;
 
 import java.util.ArrayList;
@@ -31,6 +29,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.CustomView.LoadMoreView;
+import tqm.bianfeng.com.tqm.CustomView.LoadingIndicator;
 import tqm.bianfeng.com.tqm.Institutions.adapter.LawFirmOrInstitutionListAdapter;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
@@ -60,7 +59,7 @@ public class SearchInstiutionsActivity extends BaseActivity {
     @BindView(R.id.no_search_txt)
     TextView noSearchTxt;
     @BindView(R.id.indicator)
-    AVLoadingIndicatorView indicator;
+    LoadingIndicator indicator;
 
     public String searchName;
     boolean isMore=false;
@@ -92,12 +91,17 @@ public class SearchInstiutionsActivity extends BaseActivity {
     public void initData(String search) {
         searchName=search;
         searchBtn.setEnabled(false);
-        showLoading(0);
+        indicator.showLoading();
         if (datas.size() > 0) {
-            if(loadMoreTxt!=null){
+            if (loadMoreTxt != null) {
                 loadMoreTxt.loadMoreViewAnim(1);
             }
+        } else {
+            if (loadMoreTxt != null) {
+                loadMoreTxt.loadMoreViewAnim(4);
+            }
         }
+        noSearchTxt.setVisibility(View.GONE);
         int userId=0;
         if(realm.where(User.class).findFirst()!=null){
             userId=realm.where(User.class).findFirst().getUserId();
@@ -114,7 +118,7 @@ public class SearchInstiutionsActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         searchBtn.setEnabled(true);
-                        showLoading(1);
+                        indicator.hideLoading();
                         showSearchResult();
                         if(loadMoreTxt!=null){
                             loadMoreTxt.loadMoreViewAnim(4);
@@ -136,19 +140,14 @@ public class SearchInstiutionsActivity extends BaseActivity {
                         initList();
                         searchBtn.setEnabled(true);
                         showSearchResult();
-                        showLoading(1);
+                        indicator.hideLoading();
+                        if(datas.size()==0){
+                            noSearchTxt.setVisibility(View.VISIBLE);
+                        }
 
                         //加载更多判断
-                        if (datas.size() < 10) {
-                            //隐藏
-                            loadMoreTxt.loadMoreViewAnim(4);
-                        } else if (datas.size() > 10 && institutionItems.size() < 10) {
-                            //没有更多
-                            loadMoreTxt.loadMoreViewAnim(3);
-                        } else {
-                            //加载完成
-                            loadMoreTxt.loadMoreViewAnim(2);
-                        }
+                        loadMoreTxt.doLoad(datas.size(),institutionItems.size());
+
                     }
                 });
 
@@ -163,53 +162,7 @@ public class SearchInstiutionsActivity extends BaseActivity {
         }
     }
 
-    CountDownTimer countDownTimer;
-    int progressIndex = 6;
 
-    public void showLoading(int index) {
-        if (index == 0) {
-            //开始
-            indicator.show();
-            countDownTimer = new CountDownTimer(1000 * 100, 1000) {
-                public void onTick(long millisUntilFinished) {
-                    // you can change the progress bar color by ProgressHelper every 800 millis
-                    progressIndex++;
-                    switch (progressIndex % 6) {
-                        case 0:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.blue_btn_bg_color));
-                            break;
-                        case 1:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.material_deep_teal_50));
-                            break;
-                        case 2:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.success_stroke_color));
-                            break;
-                        case 3:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.material_deep_teal_20));
-                            break;
-                        case 4:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.material_blue_grey_80));
-                            break;
-                        case 5:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.warning_stroke_color));
-                            break;
-                        case 6:
-                            indicator.setIndicatorColor(getResources().getColor(R.color.success_stroke_color));
-                            break;
-                    }
-                }
-
-                public void onFinish() {
-                    progressIndex = 6;
-                }
-            }.start();
-
-        } else {
-            //结束
-            indicator.hide();
-            countDownTimer.onFinish();
-        }
-    }
     LoadMoreWrapper mLoadMoreWrapper;
     View loadMoreView;
     LoadMoreView loadMoreTxt;

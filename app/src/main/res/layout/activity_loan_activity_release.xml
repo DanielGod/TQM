@@ -13,4 +13,26 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </WebView>
+        <tqm.bianfeng.com.tqm.CustomView.LoadingIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/indicator"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/hugehxxxxxxxxxdp"
+            app:indicatorColor="@color/colorPrimary"
+            />
+    </RelativeLayout>
+
 </LinearLayout>
