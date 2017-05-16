@@ -127,6 +127,7 @@
         <item name="android:textSize">@dimen/smallsp</item>
         <item name="android:lines">1</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:layout_marginLeft">@dimen/tinymdp</item>
     </style>
 
     <!--首页-->
@@ -146,7 +147,6 @@
         <item name="android:lines">1</item>
         <item name="android:ellipsize">end</item>
     </style>
-
     <!--查看更多-->
     <style name="sty_home_lookmore_tv">
         <item name="android:layout_width">wrap_content</item>
@@ -170,9 +170,29 @@
         <item name="android:textColor">@color/home_hotActivity_gray3</item>
         <item name="android:textSize">@dimen/mediumsp</item>
     </style>
-    android:background="@color/home_orange"
-    android:layout_marginLeft="@dimen/tinymdp"
-    android:layout_marginRight="@dimen/mediummdp"
+    <!--筛选-文本Edit-->
+    <style name="sty_filter_Edit_et">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?actionBarSize</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:textColorHint">@color/home_hotActivity_gray6</item>
+        <item name="android:textColor">@color/home_hotActivity_gray3</item>
+        <item name="android:textSize">@dimen/smallsp</item>
+    </style>
+
+    <!--筛选-区间Edit-->
+    <style name="sty_filter_sectionEdit_et">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/home_hotActivity_gray3</item>
+        <item name="android:textSize">@dimen/smallsp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">number</item>
+    </style>
     <!--极速贷款-理财推荐-热门活动-左橘色线条-->
     <style name="sty_home_title_line_tv">
         <item name="android:layout_width">2dp</item>

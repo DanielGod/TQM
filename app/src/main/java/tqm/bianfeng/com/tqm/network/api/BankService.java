@@ -12,8 +12,10 @@ import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankDotItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankInformItem;
+import tqm.bianfeng.com.tqm.pojo.bank.BankListItems;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 import tqm.bianfeng.com.tqm.pojo.bank.Institution;
+import tqm.bianfeng.com.tqm.pojo.bank.LoanType;
 import tqm.bianfeng.com.tqm.pojo.bank.ProductType;
 import tqm.bianfeng.com.tqm.pojo.bank.QueryCondition;
 import tqm.bianfeng.com.tqm.pojo.bank.RiskGrade;
@@ -25,9 +27,9 @@ import tqm.bianfeng.com.tqm.pojo.bank.RiskGrade;
 public interface BankService {
 
 
-
     /**
      * 获取金融机构
+     *
      * @return
      */
     @GET("getInstitutions")
@@ -35,6 +37,7 @@ public interface BankService {
 
     /**
      * 获取风险等级
+     *
      * @return
      */
     @GET("getRiskGrades")
@@ -42,13 +45,23 @@ public interface BankService {
 
     /**
      * 获取产品类型
+     *
      * @return
      */
     @GET("getProductTypes")
     Observable<List<ProductType>> getProductTypes();
 
     /**
+     * 获取贷款类型
+     *
+     * @return
+     */
+    @GET("getLoanTypes")
+    Observable<List<LoanType>> getLoanTypes();
+
+    /**
      * 获取查询条件
+     *
      * @param module
      * @return
      */
@@ -58,6 +71,7 @@ public interface BankService {
 
     /**
      * 获取银行资讯
+     *
      * @return
      */
     @FormUrlEncoded
@@ -69,50 +83,53 @@ public interface BankService {
 
     /**
      * 获取银行理财
+     *
      * @return
      */
     @FormUrlEncoded
     @POST("getBankFinancItem")
-    Observable<List<BankFinancItem>> getBankFinancItem(@Field("queryParams") String queryParams,
-                                                       @Field("homeShow") String homeShow,
-                                                       @Field("pageNum") Integer pageNum,
-                                                       @Field("pageSize") Integer pageSize);
+    Observable<BankListItems<BankFinancItem>> getBankFinancItem(@Field("search") String search,
+                                                                @Field("queryParams") String queryParams,
+                                                                @Field("homeShow") String homeShow,
+                                                                @Field("pageNum") Integer pageNum,
+                                                                @Field("pageSize") Integer pageSize);
 
 
     /**
      * 获取银行贷款
+     *
      * @return
      */
     @FormUrlEncoded
     @POST("getBankLoanItem")
-    Observable<List<BankLoanItem>> getBankLoanItem(@Field("queryParams") String queryParams,
-                                                   @Field("homeShow") String homeShow,
-                                                   @Field("pageNum") Integer pageNum,
-                                                   @Field("pageSize") Integer pageSize);
+    Observable<BankListItems<BankLoanItem>> getBankLoanItem(@Field("search") String search,
+                                                            @Field("queryParams") String queryParams,
+                                                            @Field("homeShow") String homeShow,
+                                                            @Field("pageNum") Integer pageNum,
+                                                            @Field("pageSize") Integer pageSize);
 
 
     /**
      * 获取银行活动
+     *
      * @return
      */
     @FormUrlEncoded
     @POST("getBankActivityItem")
-    Observable<List<BankActivityItem>> getBankActivityItem(@Field("homeShow") String homeShow,
-                                                           @Field("pageNum") Integer pageNum,
-                                                           @Field("pageSize") Integer pageSize);
+    Observable<BankListItems<BankActivityItem>> getBankActivityItem(@Field("search") String search,
+                                                                    @Field("queryParams") String queryParams,
+                                                                    @Field("homeShow") String homeShow,
+                                                                    @Field("pageNum") Integer pageNum,
+                                                                    @Field("pageSize") Integer pageSize);
 
     /**
      * 获取网点列表
+     *
      * @return
      */
     @FormUrlEncoded
     @POST("dot/getBankDotItem")
     Observable<List<BankDotItem>> getBankDotItem(@Field("uids") String uids);
-
-
-
-
-
 
 
 }

@@ -21,6 +21,7 @@ import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.YwApplyEnter;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
+import tqm.bianfeng.com.tqm.pojo.bank.BankListItems;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 import tqm.bianfeng.com.tqm.pojo.result.ResultCodeWithImgPathList;
 import tqm.bianfeng.com.tqm.pojo.result.ResultWithAuditCode;
@@ -79,7 +80,7 @@ public interface UserService {
      * 获取我的银行活动关注
      */
     @GET("getMyAttentionOfBankActivity/{userId}")
-    Observable<List<BankActivityItem>> getMyAttentionOfBankActivity(@Path("userId")int userId);
+    Observable<BankListItems<BankActivityItem>> getMyAttentionOfBankActivity(@Path("userId")int userId);
 
     /**
      * 注册或登录
@@ -156,7 +157,7 @@ public interface UserService {
      * 01活动 02理财 03 贷款 04资讯 05律师
      */
     @GET("{type}/01/{userId}")
-    Observable<List<BankActivityItem>> getMyAttentionItem01(@Path("type") String type,@Path("userId") int userId);
+    Observable<List<BankActivityItem>> getMyAttentionItem01(@Path("type") String type, @Path("userId") int userId);
     @GET("{type}/02/{userId}")
     Observable<List<BankFinancItem>> getMyAttentionItem02(@Path("type") String type,@Path("userId") int userId);
     @GET("{type}/03/{userId}")

@@ -40,5 +40,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="bottomBarMargin">-5dp</dimen>
-    <dimen name="homeFragmentTop">-26dp</dimen>
+    <dimen name="homeFragmentTop">-25dp</dimen>
+    <!-- spinner -->
+    <dimen name="three_grid_unit">24dp</dimen>
+    <dimen name="one_and_a_half_grid_unit">12dp</dimen>
+    <dimen name="homeFragmentTop_spinner">-26dp</dimen>
 </resources>

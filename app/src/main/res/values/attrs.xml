@@ -29,4 +29,7 @@
         <attr name="pwContourColor" format="color"/>
         <attr name="pwContourSize" format="float"/>
     </declare-styleable>
-</resources>
+        <declare-styleable name="NiceSpinner">
+            <attr name="arrowTint" format="color" />
+        </declare-styleable>
+    </resources>

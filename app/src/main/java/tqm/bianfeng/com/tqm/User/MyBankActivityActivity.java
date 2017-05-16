@@ -24,6 +24,7 @@ import tqm.bianfeng.com.tqm.main.HomeBankActivitysListAdapter;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.User;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
+import tqm.bianfeng.com.tqm.pojo.bank.BankListItems;
 
 /**
  * Created by johe on 2017/3/13.
@@ -53,7 +54,7 @@ public class MyBankActivityActivity extends BaseActivity {
         Subscription subscription = NetWork.getUserService().getMyAttentionOfBankActivity(realm.where(User.class).findFirst().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<BankActivityItem>>() {
+                .subscribe(new Observer<BankListItems<BankActivityItem>>() {
                     @Override
                     public void onCompleted() {
 
@@ -61,16 +62,14 @@ public class MyBankActivityActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
                         shouNetWorkActivity();
                     }
 
                     @Override
-                    public void onNext(List<BankActivityItem> bankActivityItems) {
-
-                        datas = bankActivityItems;
+                    public void onNext(BankListItems<BankActivityItem> bankActivityItemBankListItems) {
+                        datas = bankActivityItemBankListItems.getItem();
                         Log.i("gqf", "onNext" + datas.toString());
-                        initList(bankActivityItems);
+                        initList(bankActivityItemBankListItems.getItem());
                     }
                 });
         compositeSubscription.add(subscription);

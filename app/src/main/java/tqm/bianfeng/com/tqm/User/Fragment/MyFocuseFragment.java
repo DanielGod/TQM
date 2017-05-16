@@ -125,11 +125,11 @@ public class MyFocuseFragment extends BaseFragment {
 //                        Log.i("gqf",strings.toString());
 //                        if (index == 0) {
 //                            //活动
-//                            BankActivityItems = new ArrayList<>();
+//                            BankListItems = new ArrayList<>();
 //                            for (Object json : strings) {
-//                                BankActivityItems.add(gson.fromJson(json.toString(), BankActivityItem.class));
+//                                BankListItems.add(gson.fromJson(json.toString(), BankActivityItem.class));
 //                            }
-//                            initActivityList(BankActivityItems);
+//                            initActivityList(BankListItems);
 //                        } else if (index == 1) {
 //                            //理财
 //                            BankFinancItems = new ArrayList<>();

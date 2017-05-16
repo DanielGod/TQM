@@ -1,42 +1,31 @@
 package tqm.bianfeng.com.tqm.pojo.bank;
 
 /**
- * Created by Daniel on 2017/3/14.
+ * Created by Daniel on 2017/5/11.
  */
 
 public class BankActivityItem {
-    private Integer activityId;
+    /**
+     * activityId : 11
+     * activityTitle : 欧洲九大精品购物村 建行龙卡信用卡享最高16%优惠
+     * institution : 中国建设银行
+     * activityViews : 0
+     * imageUrl : /upload/inform/20170511095929727.jpg
+     * atttenNum : 2
+     */
+
+    private int activityId;
     private String activityTitle;
-    private String institutionName;
-    private Integer activityViews;
-    private String institutionIcon;
+    private String institution;
+    private int activityViews;
     private String imageUrl;
+    private int atttenNum;
 
-    @Override
-    public String toString() {
-        return "BankActivityItem{" +
-                "activityId=" + activityId +
-                ", activityTitle='" + activityTitle + '\'' +
-                ", institutionName='" + institutionName + '\'' +
-                ", activityViews=" + activityViews +
-                ", institutionIcon='" + institutionIcon + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                '}';
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public Integer getActivityId() {
+    public int getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(Integer activityId) {
+    public void setActivityId(int activityId) {
         this.activityId = activityId;
     }
 
@@ -48,27 +37,35 @@ public class BankActivityItem {
         this.activityTitle = activityTitle;
     }
 
-    public String getInstitutionName() {
-        return institutionName;
+    public String getInstitution() {
+        return institution;
     }
 
-    public void setInstitutionName(String institutionName) {
-        this.institutionName = institutionName;
+    public void setInstitution(String institution) {
+        this.institution = institution;
     }
 
-    public Integer getActivityViews() {
+    public int getActivityViews() {
         return activityViews;
     }
 
-    public void setActivityViews(Integer activityViews) {
+    public void setActivityViews(int activityViews) {
         this.activityViews = activityViews;
     }
 
-    public String getInstitutionIcon() {
-        return institutionIcon;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setInstitutionIcon(String institutionIcon) {
-        this.institutionIcon = institutionIcon;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public int getAtttenNum() {
+        return atttenNum;
+    }
+
+    public void setAtttenNum(int atttenNum) {
+        this.atttenNum = atttenNum;
     }
 }

@@ -36,7 +36,7 @@ public class BankActivitionsAdapter extends BaseAdapter {
         return R.layout.bank_activity_item;
     }
 
-    public BankActivitionsAdapter(List<BankActivityItem> datas, Context mContext,boolean isFistPage) {
+    public BankActivitionsAdapter(List<BankActivityItem> datas, Context mContext, boolean isFistPage) {
         this.isFistPage =isFistPage;
         this.mContext = mContext;
         this.datas = datas;
@@ -73,9 +73,10 @@ public class BankActivitionsAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         BankActivityItem data = getItem(position);
+
         Picasso.with(mContext).load(NetWork.LOAD+data.getImageUrl()).placeholder(R.drawable.banklogo).into(holder.logoImg);
         holder.activityTitleTv.setText(data.getActivityTitle());
-        holder.institutionNameTv.setText(data.getInstitutionName());
+        holder.institutionNameTv.setText(data.getInstitution());
         holder.activityViewsTv.setText(data.getActivityViews()+"");
         if (!isFistPage) {
             holder.linearlayout.setOnClickListener(new View.OnClickListener() {

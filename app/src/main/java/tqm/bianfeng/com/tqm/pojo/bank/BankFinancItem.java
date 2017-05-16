@@ -9,9 +9,9 @@ import java.math.BigDecimal;
 public class BankFinancItem {
     private Integer financId;
     private String productName;
-    private String institutionName;
+    private String institution;
     private String issuingCity;
-    private String riskGradeName;
+    private String riskGrade;
     private String investmentTerm;
     private BigDecimal annualReturn;
     private BigDecimal purchaseMoney;
@@ -22,9 +22,9 @@ public class BankFinancItem {
         return "BankFinancItem{" +
                 "financId=" + financId +
                 ", productName='" + productName + '\'' +
-                ", institutionName='" + institutionName + '\'' +
+                ", institution='" + institution + '\'' +
                 ", issuingCity='" + issuingCity + '\'' +
-                ", riskGradeName='" + riskGradeName + '\'' +
+                ", riskGrade='" + riskGrade + '\'' +
                 ", investmentTerm='" + investmentTerm + '\'' +
                 ", annualReturn=" + annualReturn +
                 ", purchaseMoney=" + purchaseMoney +
@@ -48,12 +48,12 @@ public class BankFinancItem {
         this.productName = productName;
     }
 
-    public String getInstitutionName() {
-        return institutionName;
+    public String getInstitution() {
+        return institution;
     }
 
-    public void setInstitutionName(String institutionName) {
-        this.institutionName = institutionName;
+    public void setInstitution(String institution) {
+        this.institution = institution;
     }
 
     public String getIssuingCity() {
@@ -64,12 +64,12 @@ public class BankFinancItem {
         this.issuingCity = issuingCity;
     }
 
-    public String getRiskGradeName() {
-        return riskGradeName;
+    public String getRiskGrade() {
+        return riskGrade;
     }
 
-    public void setRiskGradeName(String riskGradeName) {
-        this.riskGradeName = riskGradeName;
+    public void setRiskGrade(String riskGrade) {
+        this.riskGrade = riskGrade;
     }
 
     public String getInvestmentTerm() {

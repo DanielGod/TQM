@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,14 +22,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hugo.weaving.DebugLog;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import tqm.bianfeng.com.tqm.CustomView.AutoHeightLayoutManager;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.FilterEvens;
@@ -48,8 +45,8 @@ import tqm.bianfeng.com.tqm.pojo.bank.buttonViewEven;
  */
 
 public class FilterFragment extends Fragment implements FilterAdapter.QueryConditionItemClickListener {
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+//    @BindView(R.id.recyclerView)
+//    RecyclerView recyclerView;
     private DrawerLayout mDrawerLayout;
     private FrameLayout mDrawerContent;
     private ImageView iv_back;
@@ -64,6 +61,7 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
     public static List<Integer> filter_value_ProductType;
     private FilterInfo mFilterInfo;
     private Map<String, Object> mapFilterInfo;
+    private String filterType;//01:贷款 02：理财
 
     @Nullable
     @Override
@@ -332,8 +330,8 @@ public class FilterFragment extends Fragment implements FilterAdapter.QueryCondi
 
     private void setAdapter(List<QueryCondition> queryConditions) {
         filterAdapter = new FilterAdapter(queryConditions, mMapFilterName, getActivity());
-        recyclerView.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
-        recyclerView.setAdapter(filterAdapter);
+//        recyclerView.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
+//        recyclerView.setAdapter(filterAdapter);
         filterAdapter.setOnItemClickListener(this);
     }
 

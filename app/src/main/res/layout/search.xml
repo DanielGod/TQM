@@ -20,6 +20,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/bankActivity_pageView_linear"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -29,27 +30,32 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/bankActivity_pageView_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_image"
                 android:layout_centerHorizontal="true"
-                android:text="@string/all"
+                android:text="@string/bankActivity_pageView"
                 android:textColor="@color/font_black_2"
-                android:textSize="13sp"/>
+                android:textSize="@dimen/mediummxdp"/>
 
             <ImageView
+                android:id="@+id/bankActivity_pageView_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/home_down_arrow"/>
-        </LinearLayout>
+                android:scaleY="0.4"
+                android:scaleX="0.4"
+                android:src="@drawable/asc_dark"/>
+        </LinearLayout
+            >
 
         <View
             android:layout_width="1px"
             android:layout_height="20dp"
-            android:background="@color/font_black_5"/>
+            android:background="@color/colorPrimary"/>
 
         <LinearLayout
+            android:id="@+id/bankActivity_focus_linear"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -59,13 +65,14 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/bankActivity_focus_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_image"
                 android:layout_centerHorizontal="true"
-                android:text="@string/mostFocus"
+                android:text="@string/bankActivity_focus"
                 android:textColor="@color/font_black_2"
-                android:textSize="13sp"/>
+                android:textSize="@dimen/mediummxdp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -78,7 +85,7 @@
         <View
             android:layout_width="1px"
             android:layout_height="20dp"
-            android:background="@color/font_black_5"/>
+            android:background="@color/colorPrimary"/>
 
         <LinearLayout
             android:id="@+id/ll_filter"
@@ -103,7 +110,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/home_down_arrow"/>
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:visibility="gone"
+                android:src="@drawable/jt_down"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -127,14 +137,14 @@
         android:layout_centerHorizontal="true"/>
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/smallmdp"
-            android:layout_marginRight="@dimen/smallmdp"
-            android:layout_marginTop="@dimen/smallmdp"
-            android:id="@+id/main_pull_refresh_lv"
-            app:ptrAnimationStyle="rotate"
-            android:layout_below="@+id/ll_head_layout"
-            app:ptrHeaderBackground="@android:color/transparent"
-            app:ptrHeaderTextColor="@color/home_hotActivity_gray9"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/smallmdp"
+        android:layout_marginRight="@dimen/smallmdp"
+        android:id="@+id/main_pull_refresh_lv"
+        app:ptrAnimationStyle="rotate"
+        app:ptrHeaderBackground="@android:color/transparent"
+        app:ptrHeaderTextColor="@color/home_hotActivity_gray9"
+        android:layout_below="@+id/ll_head_layout"
+       />
 </RelativeLayout>

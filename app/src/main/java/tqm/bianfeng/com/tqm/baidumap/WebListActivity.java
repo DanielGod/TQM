@@ -37,7 +37,6 @@ import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.poi.PoiSortType;
 import com.baidu.mapapi.search.sug.SuggestionSearch;
 import com.google.gson.Gson;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -101,29 +100,6 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
                 .getBaiduMap();
 
     }
-
-    private void tEmptyView() {
-        recycler.setLayoutManager(new AutoHeightLayoutManager(this));
-        recycler.setHasFixedSize(true);
-        WebListAdapter webListAdapter = new WebListAdapter(WebListActivity.this);
-        recycler.setAdapter(webListAdapter);
-//        TViewUtil.EmptyViewBuilder.getInstance(getApplicationContext())
-//                .setEmptyText("请检查网络！")
-//                .setEmptyTextSize(12)
-//                .setEmptyTextColor(Color.GRAY)
-//                .setIconSrc(R.drawable.airplane)
-//                .setShowButton(true)
-//                .setActionText("重新加载")
-//                .setAction(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Toast.makeText(getApplicationContext(),
-//                                "Yes, clicked~",Toast.LENGTH_SHORT).show();
-//                    }
-//                })
-//                .bindView(recycler);
-    }
-
     /*****
      *
      * 定位结果回调，重写onReceiveLocation方法，可以直接拷贝如下代码到自己工程中修改
@@ -336,12 +312,6 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
         WebListAdapter webListAdapter = new WebListAdapter(datas, WebListActivity.this);
         recycler.setAdapter(webListAdapter);
         locationService.stop();
-//        TViewUtil.EmptyViewBuilder.getInstance(getApplicationContext())
-        //                .setEmptyTextSize(14)
-        //                .setEmptyTextColor(Color.GRAY)
-        //                .setEmptyText("This is a empty view in fragment 5 \n RecyclerView")
-        //                .setIconSrc(R.drawable.icon_geo)
-        //                .bindView(recycler);
 
     }
     static double DEF_PI = 3.14159265359; // PI

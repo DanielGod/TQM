@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +48,7 @@ import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.BankInformItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
+import tqm.bianfeng.com.tqm.pojo.bank.BankListItems;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 
@@ -222,10 +224,10 @@ public class HomeFragment extends BaseFragment {
     private void getBankLoanServiceItem() {
         homeBankLoanTitleLin.setVisibility(View.VISIBLE);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
-                .getBankLoanItem(null, Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE)
+                .getBankLoanItem(null,null, Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<BankLoanItem>>() {
+                .subscribe(new Observer<BankListItems<BankLoanItem>>() {
                     @Override
                     public void onCompleted() {
 
@@ -239,10 +241,10 @@ public class HomeFragment extends BaseFragment {
 
                     @DebugLog
                     @Override
-                    public void onNext(List<BankLoanItem> bankloanItems) {
+                    public void onNext(BankListItems<BankLoanItem> bankLoanItemBankListItems) {
                         Log.e("Daniel", "---BankLoanItem---");
                         isLoan = true;
-                        setBankLoanListAdapter(bankloanItems);
+                        setBankLoanListAdapter(bankLoanItemBankListItems.getItem());
                         getBankActivitys();
                     }
                 });
@@ -281,10 +283,10 @@ public class HomeFragment extends BaseFragment {
     private void getBankActivitys() {
         homeBankActivityTitleLin.setVisibility(View.VISIBLE);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
-                .getBankActivityItem(Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE)
+                .getBankActivityItem(null,null,Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<BankActivityItem>>() {
+                .subscribe(new Observer<BankListItems<BankActivityItem>>() {
                     @DebugLog
                     @Override
                     public void onCompleted() {
@@ -298,10 +300,10 @@ public class HomeFragment extends BaseFragment {
 
                     @DebugLog
                     @Override
-                    public void onNext(List<BankActivityItem> bankActivityItems) {
+                    public void onNext(BankListItems<BankActivityItem> bankActivityItemBankListItems) {
                         isActivity = true;
-                        Log.e("Daniel", "---bankActivityItems.size()---" + bankActivityItems.size());
-                        setBankActivitysListAdapter(bankActivityItems);
+                        Log.e("Daniel", "---bankActivityItems.size()---" + bankActivityItemBankListItems.getItem().size());
+                        setBankActivitysListAdapter(bankActivityItemBankListItems.getItem());
 
                     }
                 });
@@ -349,28 +351,6 @@ public class HomeFragment extends BaseFragment {
                 mListener.detailActivity(intent);
             }
         });
-
-        //        if (homeBankActivitysListAdapter == null) {
-        //            bankActivitysList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
-        //            bankFinaningList.setHasFixedSize(true);
-        //            bankFinaningList.setNestedScrollingEnabled(false);
-        //            homeBankActivitysListAdapter = new HomeBankActivitysListAdapter(getActivity(), bankActivityItems);
-        //            bankActivitysList.setAdapter(homeBankActivitysListAdapter);
-        //            homeBankActivitysListAdapter.setOnItemClickListener(new HomeBankActivitysListAdapter.HomeBankActivitysItemClickListener() {
-        //                @Override
-        //                public void OnClickListener(int position) {
-        //                    //跳转银行活动详情
-        //                    Intent intent = new Intent(getActivity(), DetailActivity.class);
-        //                    intent.putExtra("detailType", "01");
-        //                    intent.putExtra("detailId", homeBankActivitysListAdapter.getDataItem(position).getActivityId());
-        //                    intent.putExtra("detailTitle", homeBankActivitysListAdapter.getDataItem(position).getActivityTitle());
-        //                    mListener.detailActivity(intent);
-        //                }
-        //            });
-        //        } else {
-        //            homeBankActivitysListAdapter.update(bankActivityItems);
-        //        }
-
     }
 
 
@@ -380,10 +360,10 @@ public class HomeFragment extends BaseFragment {
     private void getBankFinaningItem() {
         homeBankMakeMoneyTitleLin.setVisibility(View.VISIBLE);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
-                .getBankFinancItem(null, Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE)
+                .getBankFinancItem(null,null, Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<BankFinancItem>>() {
+                .subscribe(new Observer<BankListItems<BankFinancItem>>() {
                     @Override
                     public void onCompleted() {
 
@@ -397,10 +377,10 @@ public class HomeFragment extends BaseFragment {
 
                     @DebugLog
                     @Override
-                    public void onNext(List<BankFinancItem> bankFinancItems) {
+                    public void onNext(BankListItems<BankFinancItem> bankLoanItemBankListItems) {
                         isFinaning = true;
                         Log.e("Daniel", "---BankFinancItem---");
-                        setBankFinancListAdapter(bankFinancItems);
+                        setBankFinancListAdapter(bankLoanItemBankListItems.getItem());
                         getBankLoanServiceItem();
                     }
                 });
@@ -411,7 +391,7 @@ public class HomeFragment extends BaseFragment {
 
     private void setBankFinancListAdapter(List<BankFinancItem> bankFinancItems) {
         if (bankFinancingAdapter == null) {
-            bankFinaningList.setLayoutManager(new AutoHeightLayoutManager(getActivity()));
+            bankFinaningList.setLayoutManager(new LinearLayoutManager(getActivity()));
             bankFinaningList.setHasFixedSize(true);
             bankFinaningList.setNestedScrollingEnabled(false);
             bankFinancingAdapter = new HomeBankFinancingListAdapter(getActivity(), bankFinancItems);

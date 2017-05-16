@@ -69,11 +69,11 @@ public class BankFinancingAdapter extends BaseAdapter {
         holder.investmentTermLinear.setVisibility(View.VISIBLE);
         holder.purchaseMoneyAndRiskGradeNameLinear.setVisibility(View.VISIBLE);
         holder.titleTv.setText(data.getProductName());
-        holder.institutionNameTv.setText(data.getInstitutionName());
+        holder.institutionNameTv.setText(data.getInstitution());
         holder.annualReturnTv.setText(data.getAnnualReturn() + "%");
-        holder.riskGradeNameTv.setText(data.getRiskGradeName());
-        holder.investmentTermTv.setText(data.getInvestmentTerm());
-        holder.purchaseMoneyTv.setText("" + data.getPurchaseMoney().setScale(0, BigDecimal.ROUND_DOWN));
+        holder.riskGradeNameTv.setText(data.getRiskGrade());
+        holder.investmentTermTv.setText(data.getInvestmentTerm()+"天");
+        holder.purchaseMoneyTv.setText(data.getPurchaseMoney().setScale(0, BigDecimal.ROUND_DOWN)+"万");
         holder.financViewsTv.setText("" + data.getFinancViews());
         holder.rateNameTv.setText("预期年化");
         if (!isFistPage) {
