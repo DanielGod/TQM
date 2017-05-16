@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
@@ -18,7 +17,6 @@ import butterknife.ButterKnife;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 import tqm.bianfeng.com.tqm.pojo.bank.ListItemPositioin;
-import tqm.bianfeng.com.tqm.update.StringUtils;
 
 /**
  * Created by Daniel on 2017/3/16.
@@ -54,35 +52,24 @@ public class BankLoanAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.listitem, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.loan_listitem, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         BankLoanItem data = getItem(position);
-        holder.institutionNameLinear.setVisibility(View.VISIBLE);
-        holder.investmentTermLinear.setVisibility(View.VISIBLE);
-        holder.financViewsLinear.setVisibility(View.VISIBLE);
-        holder.loanMoneyAndloanTypeNameLinear.setVisibility(View.VISIBLE);
-        holder.annualReturnTv.setText(data.getRate() + "%");
-        holder.institutionNameTv.setText(data.getInstitutionName());
+        holder.annualReturnTv.setText(data.getRateMin() + "%" + "-" + data.getRateMax() + "%");
+        holder.institutionNameTv.setText(data.getInstitution());
         holder.titleTv.setText(data.getLoanName());
-        holder.loanMoneyTv.setText("" + data.getLoanMoney().setScale(0, BigDecimal.ROUND_DOWN));
-        holder.investmentTermTv.setText(data.getLoanPeriod());
+        holder.purchaseMoneyTv.setText(data.getLoanMoneyMin() + "-" + data.getLoanMoneyMax() + "万");
+        holder.investmentTermTv.setText(data.getLoanPeriodMin() + "-" + data.getLoanPeriodMax() + "个月");
         holder.financViewsTv.setText(data.getLoanViews() + "");
-
-        if (StringUtils.isEmpty(data.getLoanTypeName())){
-            holder.loanTypeNameLinear.setVisibility(View.GONE);
-        }else {
-
-            holder.loanTypeNameTv.setText(data.getLoanTypeName());
-        }
         if (!isFistPage) {
             holder.linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new ListItemPositioin("03",position));
+                    EventBus.getDefault().post(new ListItemPositioin("03", position));
                 }
             });
         }
@@ -94,25 +81,13 @@ public class BankLoanAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    static class ViewHolder {
+    class ViewHolder {
         @BindView(R.id.annualReturn_tv)
         TextView annualReturnTv;
         @BindView(R.id.rateName_tv)
         TextView rateNameTv;
         @BindView(R.id.title_tv)
         TextView titleTv;
-        @BindView(R.id.loanTypeName_tv)
-        TextView loanTypeNameTv;
-        @BindView(R.id.loanTypeName_linear)
-        LinearLayout loanTypeNameLinear;
-        @BindView(R.id.riskGradeName_tv)
-        TextView riskGradeNameTv;
-        @BindView(R.id.riskGradeName_linear)
-        LinearLayout riskGradeNameLinear;
-        @BindView(R.id.loanMoney_tv)
-        TextView loanMoneyTv;
-        @BindView(R.id.loanMoney_linear)
-        LinearLayout loanMoneyLinear;
         @BindView(R.id.purchaseMoney_tv)
         TextView purchaseMoneyTv;
         @BindView(R.id.purchaseMoney_linear)
@@ -121,6 +96,8 @@ public class BankLoanAdapter extends BaseAdapter {
         TextView investmentTermTv;
         @BindView(R.id.investmentTerm_linear)
         LinearLayout investmentTermLinear;
+        @BindView(R.id.purchaseMoneyAndRiskGradeName_linear)
+        LinearLayout purchaseMoneyAndRiskGradeNameLinear;
         @BindView(R.id.institutionName_tv)
         TextView institutionNameTv;
         @BindView(R.id.institutionName_linear)
@@ -131,8 +108,6 @@ public class BankLoanAdapter extends BaseAdapter {
         LinearLayout financViewsLinear;
         @BindView(R.id.linearlayout)
         LinearLayout linearlayout;
-        @BindView(R.id.loanMoneyAndloanTypeName_linear)
-        LinearLayout loanMoneyAndloanTypeNameLinear;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

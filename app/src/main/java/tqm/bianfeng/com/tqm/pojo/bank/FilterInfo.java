@@ -10,6 +10,15 @@ public class FilterInfo {
     List<ProductType> lProductType;
     List<RiskGrade> lRiskGrade;
     List<Institution> lInstitution;
+    List<LoanType> loanType;
+
+    public List<LoanType> getLoanType() {
+        return loanType;
+    }
+
+    public void setLoanType(List<LoanType> loanType) {
+        this.loanType = loanType;
+    }
 
     @Override
     public String toString() {
@@ -17,6 +26,7 @@ public class FilterInfo {
                 "lProductType=" + lProductType +
                 ", lRiskGrade=" + lRiskGrade +
                 ", lInstitution=" + lInstitution +
+                ", loanType=" + loanType +
                 '}';
     }
 

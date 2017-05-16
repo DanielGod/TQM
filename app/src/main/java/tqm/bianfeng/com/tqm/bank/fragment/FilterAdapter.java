@@ -1,7 +1,6 @@
 package tqm.bianfeng.com.tqm.bank.fragment;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -134,9 +133,9 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
             ButterKnife.bind(this, view);
             this.mListener = listener;
             view.setOnClickListener(this);
-            gridViewAdapter = new GridViewAdapter(mContext);
-            recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
-            recyclerView.setAdapter(gridViewAdapter);
+//            gridViewAdapter = new GridViewAdapter(mContext,list_str);
+//            recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
+//            recyclerView.setAdapter(gridViewAdapter);
 
 
         }

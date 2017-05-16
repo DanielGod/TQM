@@ -72,7 +72,7 @@ public class BankActivitionsAdapter extends RecyclerView.Adapter<BankActivitions
         BankActivityItem data = datas.get(position);
         Picasso.with(mContext).load(NetWork.LOAD + data.getImageUrl()).placeholder(R.drawable.banklogo).into(holder.logoImg);
         holder.activityTitleTv.setText(data.getActivityTitle());
-        holder.institutionNameTv.setText(data.getInstitutionName());
+        holder.institutionNameTv.setText(data.getInstitution());
         holder.activityViewsTv.setText(data.getActivityViews() + "");
         holder.linearlayout.setOnClickListener(new View.OnClickListener() {
             @Override

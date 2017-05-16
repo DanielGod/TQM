@@ -8,14 +8,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
-import tqm.bianfeng.com.tqm.update.StringUtils;
 
 /**
  * Created by wjy on 2016/11/7.
@@ -72,19 +70,12 @@ public class BankLoanAdapter extends RecyclerView.Adapter<BankLoanAdapter.ViewHo
         holder.investmentTermLinear.setVisibility(View.VISIBLE);
         holder.financViewsLinear.setVisibility(View.VISIBLE);
         holder.loanMoneyAndloanTypeNameLinear.setVisibility(View.VISIBLE);
-        holder.annualReturnTv.setText(data.getRate() + "%");
-        holder.institutionNameTv.setText(data.getInstitutionName());
+        holder.annualReturnTv.setText(data.getRateMin() + "%"+"-"+data.getRateMax() + "%");
+        holder.institutionNameTv.setText(data.getInstitution());
         holder.titleTv.setText(data.getLoanName());
-        holder.loanMoneyTv.setText("" + data.getLoanMoney().setScale(0, BigDecimal.ROUND_DOWN));
-        holder.investmentTermTv.setText(data.getLoanPeriod());
+        holder.loanMoneyTv.setText(data.getLoanMoneyMin()+"-"+data.getLoanMoneyMax()+ "万");
+        holder.investmentTermTv.setText(data.getLoanPeriodMin() +"-"+data.getLoanPeriodMax()+ "个月");
         holder.financViewsTv.setText(data.getLoanViews() + "");
-
-        if (StringUtils.isEmpty(data.getLoanTypeName())){
-            holder.loanTypeNameLinear.setVisibility(View.GONE);
-        }else {
-
-            holder.loanTypeNameTv.setText(data.getLoanTypeName());
-        }
             holder.linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

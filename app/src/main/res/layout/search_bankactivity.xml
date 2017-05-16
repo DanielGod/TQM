@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="@color/whitesmoke"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/font_black_5"
+        />
+
+    <ImageView
+        android:id="@+id/YBJ_loding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/YBJ_loding_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="加载中..."
+        android:layout_below="@+id/YBJ_loding"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/bigsp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"/>
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/smallmdp"
+        android:layout_marginRight="@dimen/smallmdp"
+        android:id="@+id/main_pull_refresh_lv"
+        app:ptrAnimationStyle="rotate"
+        app:ptrHeaderBackground="@android:color/transparent"
+        app:ptrHeaderTextColor="@color/home_hotActivity_gray9"
+        android:layout_below="@+id/ll_head_layout"
+       />
+
+    <LinearLayout
+        android:id="@+id/ll_head_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/smallxhdp"
+        android:background="@color/whitesmoke"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:id="@+id/bankActivity_pageView_linear"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_item_clicked"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bankActivity_pageView_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_image"
+                android:layout_centerHorizontal="true"
+                android:text="@string/bankActivity_pageView"
+                android:textColor="@color/font_black_2"
+                android:textSize="@dimen/mediummxdp"/>
+
+            <ImageView
+                android:id="@+id/bankActivity_pageView_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleY="0.4"
+                android:scaleX="0.4"
+                android:src="@drawable/asc_dark"/>
+        </LinearLayout
+>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="20dp"
+            android:background="@color/colorPrimary"/>
+
+        <LinearLayout
+            android:id="@+id/bankActivity_focus_linear"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_item_clicked"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bankActivity_focus_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_image"
+                android:layout_centerHorizontal="true"
+                android:text="@string/bankActivity_focus"
+                android:textColor="@color/font_black_2"
+                android:textSize="@dimen/mediummxdp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:visibility="gone"
+                android:src="@drawable/home_down_arrow"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="20dp"
+            android:background="@color/colorPrimary"/>
+
+        <LinearLayout
+            android:id="@+id/ll_filter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_item_clicked"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <tqm.bianfeng.com.tqm.bank.spinner.NiceSpinner
+                android:id="@+id/niceSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bankActivity_organizationScreen"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_image"
+                android:layout_centerHorizontal="true"
+                android:text="@string/bankActivity_organizationScreen"
+                android:visibility="gone"
+                android:textColor="@color/font_black_2"
+                android:textSize="@dimen/mediummxdp"
+                android:id="@+id/textView"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleY="0.6"
+                android:scaleX="0.6"
+                android:visibility="gone"
+                android:src="@drawable/asc"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

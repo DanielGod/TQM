@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/titleBar_relative"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/home_orange">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/mediummdp"
+            android:background="@drawable/back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="筛选"
+            android:textColor="@color/white"
+            android:textSize="@dimen/mediumxsp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_text"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/titleBar_relative"
+        android:paddingBottom="@dimen/smallhdp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <!--贷款-->
+            <LinearLayout
+                android:id="@+id/filter_loan_linear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+
+                >
+                <!--机构查询-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/mediummdp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_institution"
+                        android:textColor="@color/black"
+                        />
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:textColor="@color/gray_text"
+                        />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/mediummdp"
+                        android:background="@drawable/bank_filter_txt_sel"
+                        android:button="@null"
+                        />
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/filter_institution_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                </android.support.v7.widget.RecyclerView>
+                <!--贷款类型-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/class_arrow"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:textColor="@color/gray_text"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/mediummdp"
+                        android:background="@drawable/bank_filter_txt_sel"
+                        android:button="@null"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="@dimen/mediummdp"
+                        android:layout_marginRight="@dimen/mediummdp"
+                        android:layout_marginStart="10dp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_loanType"
+                        android:textColor="@color/black"/>
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/filter_loanType_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                </android.support.v7.widget.RecyclerView>
+
+                <!--适合人群-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/mediummdp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_crowd"
+                        android:textColor="@color/black"
+                        />
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/filter_crowd_et"
+                    android:hint="请输入适用人群"
+                    style="@style/sty_filter_Edit_et"
+                    />
+                <!--发行地区-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/mediummdp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_issuingCity"
+                        android:textColor="@color/black"
+                        />
+
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/filter_city_et"
+                    android:hint="请输入发行地区"
+                    style="@style/sty_filter_Edit_et"/>
+                <!--利率区间-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/mediummdp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_rateInterval"
+                        android:textColor="@color/black"
+                        />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <EditText
+                        android:id="@+id/filter_rateMin_et"
+                       style="@style/sty_filter_sectionEdit_et"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="~"
+                        />
+
+                    <EditText
+                        android:id="@+id/filter_rateMax_et"
+                        style="@style/sty_filter_sectionEdit_et"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+                </LinearLayout>
+                <!--贷款金额区间-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/mediummdp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_loanMoneyInterval"
+                        android:textColor="@color/black"
+                        />
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:textColor="@color/gray_text"
+                        />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <EditText
+                        android:id="@+id/filter_loanMoneyMin_et"
+                        style="@style/sty_filter_sectionEdit_et"
+
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="~"
+                        />
+
+                    <EditText
+                        android:id="@+id/filter_loanMoneyMax_et"
+                        style="@style/sty_filter_sectionEdit_et"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+                </LinearLayout>
+                <!--贷款期限区间-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/mediummdp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_loanTermInterval"
+                        android:textColor="@color/black"
+                        />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <EditText
+                        android:id="@+id/filter_loanPeriodMin_et"
+                        style="@style/sty_filter_sectionEdit_et"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="~"
+                        />
+
+                    <EditText
+                        android:id="@+id/filter_loanPeriodMax_et"
+                        style="@style/sty_filter_sectionEdit_et"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/smallhdp"/>
+            </LinearLayout>
+            <!--理财-->
+            <LinearLayout
+                android:id="@+id/filter_financing_linear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <!--机构查询-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/mediummdp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_institution"
+                        android:textColor="@color/black"
+                        />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/mediummdp"
+                        android:background="@drawable/bank_filter_txt_sel"
+                        android:button="@null"
+                        />
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/filter_fInstitution_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                </android.support.v7.widget.RecyclerView>
+                <!--产品类型-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/mediummdp"
+                        android:background="@drawable/bank_filter_txt_sel"
+                        android:button="@null"
+                        />
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="@dimen/mediummdp"
+                        android:layout_marginRight="@dimen/mediummdp"
+                        android:layout_marginStart="10dp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_productType"
+                        android:textColor="@color/black"/>
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/filter_productType_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                </android.support.v7.widget.RecyclerView>
+                <!--风险等级-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/mediummdp"
+                        android:background="@drawable/bank_filter_txt_sel"
+                        android:button="@null"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="@dimen/mediummdp"
+                        android:layout_marginRight="@dimen/mediummdp"
+                        android:layout_marginStart="10dp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_riskGrade"
+                        android:textColor="@color/black"/>
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/filter_riskGrade_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                </android.support.v7.widget.RecyclerView>
+
+                <!--投资模式-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/mediummdp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_investmentModel"
+                        android:textColor="@color/black"
+                        />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:gravity="center"
+                   >
+
+                    <CheckBox
+                        android:id="@+id/filter_redeemable_cBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bank_filter_item_rb_sel"
+                        android:button="@null"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/filter_redeemable"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/tinysp"
+                        />
+                    <CheckBox
+                        android:id="@+id/filter_notRedeemable_cBox"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bank_filter_item_rb_sel"
+                        android:button="@null"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/filter_notRedeemable"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/tinysp"
+                        />
+
+                </LinearLayout>
+                <!--发行地区-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/mediummdp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_issuingCity"
+                        android:textColor="@color/black"
+                        />
+
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/filter_issuingCity_et"
+                    android:hint="请输入适用人群"
+                    style="@style/sty_filter_Edit_et"/>
+                <!--投资期限区间-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/mediummdp"
+                        android:drawableLeft="@drawable/patrol_heading1"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="@string/filter_investmentTermInterval"
+                        android:textColor="@color/black"
+                        />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <EditText
+                        android:id="@+id/filter_investmentTermIntervalMin_et"
+                        style="@style/sty_filter_sectionEdit_et"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="~"
+                        />
+
+                    <EditText
+                        android:id="@+id/filter_investmentTermIntervalMax_et"
+                        style="@style/sty_filter_sectionEdit_et"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/smallhdp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/smallhdp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_patrol_corners_blue_confirm"
+            android:text="重置"
+            android:textColor="@color/home_orange"/>
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/home_orange"
+            android:text="确定"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

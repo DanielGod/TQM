@@ -74,7 +74,7 @@ public class HomeBankFinancingListAdapter extends RecyclerView.Adapter<RecyclerV
         BankFinancItem data = datas.get(position);
         mHolder.titleTv.setText(data.getProductName());
         mHolder.annualReturnTv.setText(data.getAnnualReturn() + "%");
-        mHolder.riskGradeNameTv.setText(data.getRiskGradeName());
+        mHolder.riskGradeNameTv.setText(data.getRiskGrade());
         mHolder.investmentTermTv.setText("定期"+data.getInvestmentTerm());
         mHolder.rateNameTv.setText("预期年化");
 

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
@@ -73,10 +72,10 @@ public class HomeBankLoanListAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder mHolder = (ViewHolder) holder;
         BankLoanItem data = datas.get(position);
-        mHolder.tv1.setText(data.getRate() + "%");
+        mHolder.tv1.setText(data.getRateMin() + "%"+"-"+data.getRateMax() + "%");
         mHolder.tv2.setText(data.getLoanName());
-        mHolder.tv3.setText(data.getLoanPeriod() + "期");
-        mHolder.tv4.setText("最高可贷：" + data.getLoanMoney().setScale(0, BigDecimal.ROUND_DOWN) + "万");
+        mHolder.tv3.setText(data.getLoanPeriodMin() +"-"+data.getLoanPeriodMax()+ "个月");
+        mHolder.tv4.setText("最高可贷：" + data.getLoanMoneyMin()+"-"+data.getLoanMoneyMax()+ "万");
 
         if(isBgNull){
             mHolder.loanItemBg.setBackgroundResource(R.drawable.loan_item_shap);

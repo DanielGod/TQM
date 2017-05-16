@@ -1,97 +1,130 @@
 package tqm.bianfeng.com.tqm.pojo.bank;
 
-import java.math.BigDecimal;
-
 /**
  * Created by Daniel on 2017/3/14.
  */
 
 public class BankLoanItem {
-    public Integer loanId;
-    public String loanName;
-    public String loanTypeName;
-    public BigDecimal rate;
-    public BigDecimal loanMoney;
-    public String loanPeriod;
-    public String institutionName;
-    public Integer loanViews;
+        /**
+         * loanId : 55
+         * loanName : 房贷
+         * loanType : 质押贷
+         * rateMin : 2.3
+         * rateMax : 3.6
+         * loanMoneyMin : 5
+         * loanMoneyMax : 20
+         * loanPeriodMin : 30
+         * loanPeriodMax : 60
+         * institution : 东元资本公司
+         * loanViews : 0
+         * atttenNum : 0
+         */
+        private int loanId;
+        private String loanName;
+        private String loanType;
+        private float rateMin;
+        private float rateMax;
+        private float loanMoneyMin;
+        private float loanMoneyMax;
+        private int loanPeriodMin;
+        private int loanPeriodMax;
+        private String institution;
+        private int loanViews;
+        private int atttenNum;
 
-    @Override
-    public String
-    toString() {
-        return "BankLoanItem{" +
-                "loanId=" + loanId +
-                ", loanName='" + loanName + '\'' +
-                ", loanTypeName='" + loanTypeName + '\'' +
-                ", rate=" + rate +
-                ", loanMoney=" + loanMoney +
-                ", loanPeriod='" + loanPeriod + '\'' +
-                ", institutionName='" + institutionName + '\'' +
-                ", loanViews=" + loanViews +
-                '}';
-    }
+        public int getLoanId() {
+            return loanId;
+        }
 
-    public Integer getLoanId() {
-        return loanId;
-    }
+        public void setLoanId(int loanId) {
+            this.loanId = loanId;
+        }
 
-    public void setLoanId(Integer loanId) {
-        this.loanId = loanId;
-    }
+        public String getLoanName() {
+            return loanName;
+        }
 
-    public String getLoanName() {
-        return loanName;
-    }
+        public void setLoanName(String loanName) {
+            this.loanName = loanName;
+        }
 
-    public void setLoanName(String loanName) {
-        this.loanName = loanName;
-    }
+        public String getLoanType() {
+            return loanType;
+        }
 
-    public String getLoanTypeName() {
-        return loanTypeName;
-    }
+        public void setLoanType(String loanType) {
+            this.loanType = loanType;
+        }
 
-    public void setLoanTypeName(String loanTypeName) {
-        this.loanTypeName = loanTypeName;
-    }
+        public float getRateMin() {
+            return rateMin;
+        }
 
-    public BigDecimal getRate() {
-        return rate;
-    }
+        public void setRateMin(float rateMin) {
+            this.rateMin = rateMin;
+        }
 
-    public void setRate(BigDecimal rate) {
-        this.rate = rate;
-    }
+        public float getRateMax() {
+            return rateMax;
+        }
 
-    public BigDecimal getLoanMoney() {
-        return loanMoney;
-    }
+        public void setRateMax(float rateMax) {
+            this.rateMax = rateMax;
+        }
 
-    public void setLoanMoney(BigDecimal loanMoney) {
-        this.loanMoney = loanMoney;
-    }
+        public float getLoanMoneyMin() {
+            return loanMoneyMin;
+        }
 
-    public String getLoanPeriod() {
-        return loanPeriod;
-    }
+        public void setLoanMoneyMin(float loanMoneyMin) {
+            this.loanMoneyMin = loanMoneyMin;
+        }
 
-    public void setLoanPeriod(String loanPeriod) {
-        this.loanPeriod = loanPeriod;
-    }
+        public float getLoanMoneyMax() {
+            return loanMoneyMax;
+        }
 
-    public String getInstitutionName() {
-        return institutionName;
-    }
+        public void setLoanMoneyMax(float loanMoneyMax) {
+            this.loanMoneyMax = loanMoneyMax;
+        }
 
-    public void setInstitutionName(String institutionName) {
-        this.institutionName = institutionName;
-    }
+        public int getLoanPeriodMin() {
+            return loanPeriodMin;
+        }
 
-    public Integer getLoanViews() {
-        return loanViews;
-    }
+        public void setLoanPeriodMin(int loanPeriodMin) {
+            this.loanPeriodMin = loanPeriodMin;
+        }
 
-    public void setLoanViews(Integer loanViews) {
-        this.loanViews = loanViews;
-    }
+        public int getLoanPeriodMax() {
+            return loanPeriodMax;
+        }
+
+        public void setLoanPeriodMax(int loanPeriodMax) {
+            this.loanPeriodMax = loanPeriodMax;
+        }
+
+        public String getInstitution() {
+            return institution;
+        }
+
+        public void setInstitution(String institution) {
+            this.institution = institution;
+        }
+
+        public int getLoanViews() {
+            return loanViews;
+        }
+
+        public void setLoanViews(int loanViews) {
+            this.loanViews = loanViews;
+        }
+
+        public int getAtttenNum() {
+            return atttenNum;
+        }
+
+        public void setAtttenNum(int atttenNum) {
+            this.atttenNum = atttenNum;
+        }
 }

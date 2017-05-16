@@ -68,7 +68,6 @@
                     </RelativeLayout>
                 </android.support.v7.widget.Toolbar>
             </android.support.design.widget.AppBarLayout>
-
             <include layout="@layout/search"/>
     </LinearLayout>
     <!-- 抽屉内容 -->

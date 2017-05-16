@@ -31,10 +31,13 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
     GridViewAdapterItemClickListener mItemClickListener;
 
 
-
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     String data;
+
+    public GridViewAdapter() {
+
+    }
 
 
     public int getLayout() {
@@ -45,8 +48,9 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
         this.datas = mList;
     }
 
-    public GridViewAdapter(Context mContext) {
+    public GridViewAdapter(Context mContext,List<String> datas) {
         this.mContext = mContext;
+        this.datas = datas;
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 
@@ -75,15 +79,18 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         data = datas.get(position);
-        Log.e("Daniel", "---data----" + data);
         holder.text.setText(data);
 
-        if (FilterFragment.filter_item){
+        if (TestFilterFragment.filter_item){
             holder.text.setChecked(false);
-            if (position==datas.size()){
-                FilterFragment.filter_item=true;
+               Log.e("Daniel", "---position----" + position);
+               Log.e("Daniel", "---datas.size()----" + datas.size());
+            if (position==datas.size()-1){
+                FilterFragment.filter_item=false;
+                EventBus.getDefault().post(new ClearFilter(true));//清除筛选集合
             }
         }
+
 
         holder.text.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -91,17 +98,14 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 String str_buttonView = buttonView.getText().toString();
-                Log.i("Daniel","----str_buttonView-----"+str_buttonView);
 
+                Log.i("Daniel","----str_buttonView-----"+str_buttonView);
                 if (!isChecked){
                     EventBus.getDefault().post(new buttonViewEven(buttonView.getText().toString(),false));
                     holder.text.setTextColor(mContext.getResources().getColor(R.color.black));
                 }else {
                     EventBus.getDefault().post(new buttonViewEven(buttonView.getText().toString(),true));
                     holder.text.setTextColor(mContext.getResources().getColor(R.color.white));
-//
-//                    Map<String,String> map = new HashMap<String, String>();
-//                    map.put()
 
                 }
             }
@@ -114,6 +118,10 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
     public int getItemCount() {
         //        Log.i("Daniel","---datas.size()---"+datas.size());
         return datas != null ? datas.size() : 0;
+    }
+
+    public void refreshAdapter() {
+        notifyDataSetChanged();
     }
 
     public void setdatas(List<String> datas) {

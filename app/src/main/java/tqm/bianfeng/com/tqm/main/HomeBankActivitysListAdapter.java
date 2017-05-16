@@ -87,7 +87,7 @@ public class HomeBankActivitysListAdapter extends RecyclerView.Adapter<RecyclerV
         Picasso.with(mContext).load(NetWork.LOAD + data.getImageUrl()).placeholder(R.drawable.ic_img_loading).into(mHolder.logoImg);
         mHolder.titleTv.setText(data.getActivityTitle());
         mHolder.activityViewsTv.setText(data.getActivityViews() + "");
-        mHolder.institutionNameTv.setText(data.getInstitutionName());
+        mHolder.institutionNameTv.setText(data.getInstitution());
         if (!inName.equals("")) {
             mHolder.institutionName2Tv.setVisibility(View.GONE);
         }

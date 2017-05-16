@@ -17,9 +17,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -42,10 +44,12 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
-import tqm.bianfeng.com.tqm.bank.fragment.FilterFragment;
+import tqm.bianfeng.com.tqm.bank.fragment.TestFilterFragment;
 import tqm.bianfeng.com.tqm.main.DetailActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
+import tqm.bianfeng.com.tqm.pojo.bank.AQueryParams;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
+import tqm.bianfeng.com.tqm.pojo.bank.BankListItems;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.pojo.bank.FilterEvens;
 import tqm.bianfeng.com.tqm.pojo.bank.ListItemPositioin;
@@ -68,6 +72,17 @@ public class BankFinancingActivity extends AppCompatActivity {
     @BindView(R.id.YBJ_loding_txt)
     TextView YBJLodingTxt;
 
+    @BindView(R.id.bankActivity_pageView_linear)
+    LinearLayout bankActivityPageViewLinear;
+    @BindView(R.id.bankActivity_focus_linear)
+    LinearLayout bankActivityFocusLinear;
+    @BindView(R.id.bankActivity_pageView_tv)
+    TextView bankActivityPageViewTv;
+    @BindView(R.id.bankActivity_pageView_img)
+    ImageView bankActivityPageViewImg;
+    @BindView(R.id.bankActivity_focus_tv)
+    TextView bankActivityFocusTv;
+
 
     private CompositeSubscription mCompositeSubscription;
     private Unbinder unbinder;
@@ -89,7 +104,7 @@ public class BankFinancingActivity extends AppCompatActivity {
         lodingIsFailOrSucess(1);
         mCompositeSubscription = new CompositeSubscription();
         initDrawLayout();
-        initDate(null, pagNum, Constan.NOTPULLUP);
+        initDate(pagNum, Constan.NOTPULLUP,null,null);
         etSearch.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -151,7 +166,19 @@ public class BankFinancingActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         SystemClock.sleep(1000);
-                        initDate(null, pagNum, Constan.NOTPULLUP);
+                        if (isClickPageView) {
+                            String queryParams = setQuerParams("activityViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
+                            Log.i("Daniel", "---queryParams---" + queryParams);
+                            initDate(pagNum, Constan.NOTPULLUP, null, queryParams);
+                        }
+                        if (isClickFocus) {
+                            String queryParams = setQuerParams("atttenNum", Constan.DESC, "");//筛选条件 “关注”字段，降序
+                            Log.i("Daniel", "---queryParams---" + queryParams);
+                            initDate(pagNum, Constan.NOTPULLUP, null, queryParams);
+                        }
+                        if (!isClickPageView && !isClickFocus) {
+                            initDate(pagNum, Constan.NOTPULLUP, null, null);
+                        }
                     }
                 }).start();
 
@@ -161,13 +188,13 @@ public class BankFinancingActivity extends AppCompatActivity {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Log.i("Daniel", "---onPullUpToRefresh---");
-                pagNum = pagNum + 1;
+                pagNum = pagNum + Constan.PAGESIZE;
                 Log.i("Daniel", "---onPullUpToRefresh---" + pagNum);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         SystemClock.sleep(1000);
-                        initDate(null, pagNum, Constan.PULLUP);
+                        initDate(pagNum, Constan.PULLUP, null, null);
                     }
                 }).start();
 
@@ -189,13 +216,13 @@ public class BankFinancingActivity extends AppCompatActivity {
 
     }
 
-    private void initDate(String json, int pagNum, final boolean pullUp) {
+    private void initDate(int pagNum, final boolean pullUp,String search,String json) {
         Log.e("Daniel", "---pagNum---" + pagNum);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
-                .getBankFinancItem(json, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE)
+                .getBankFinancItem(search,json, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<BankFinancItem>>() {
+                .subscribe(new Observer<BankListItems<BankFinancItem>>() {
                     @Override
                     public void onCompleted() {
                         //设置可上拉刷新和下拉刷新
@@ -219,19 +246,19 @@ public class BankFinancingActivity extends AppCompatActivity {
 
                     @DebugLog
                     @Override
-                    public void onNext(List<BankFinancItem> bankFinancItems) {
-                        mPagItemSize = bankFinancItems.size();
+                    public void onNext(BankListItems<BankFinancItem> bankLoanItemBankListItems) {
+                        mPagItemSize = bankLoanItemBankListItems.getItem().size();
                         Log.e("Daniel", "---mPagItemSize---" + mPagItemSize);
                         Log.e("Daniel", "---pullUp---" + pullUp);
                         lodingIsFailOrSucess(2);
                         if (mAllBankLoanItems == null) {
                             mAllBankLoanItems = new ArrayList<>();
                         }
-                        mAllBankLoanItems.addAll(bankFinancItems);
+                        mAllBankLoanItems.addAll( bankLoanItemBankListItems.getItem());
                         if (pullUp) {
                             setAdapter(mAllBankLoanItems);
                         } else {
-                            setAdapter(bankFinancItems);
+                            setAdapter(bankLoanItemBankListItems.getItem());
                         }
 
                     }
@@ -242,7 +269,7 @@ public class BankFinancingActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(FilterEvens event) {
         Log.i("Daniel", "---onEventMainThread---" + event.getFilterValue());
-        initDate(event.getFilterValue(), pagNum, Constan.NOTPULLUP);
+        initDate(pagNum, Constan.NOTPULLUP,null,event.getFilterValue());
 
     }
 
@@ -288,22 +315,9 @@ public class BankFinancingActivity extends AppCompatActivity {
             @DebugLog
             @Override
             public void afterTextChanged(Editable editable) {
-
                 if (!editable.toString().equals("")) {
-                    List<BankFinancItem> decoCompanyItemList = new ArrayList();
-                    for (BankFinancItem decoCompanyItem : bankFinancItems) {
-                        Log.e("Daniel", "----editable.toString()---" + editable.toString());
-                        Log.e("Daniel", "----decoCompanyItem.getProductName()---" + decoCompanyItem.getProductName());
-                        if (editable.toString().contains(decoCompanyItem.getProductName())) {
-                            decoCompanyItemList.add(decoCompanyItem);
-                        } else if (decoCompanyItem.getProductName().contains(editable.toString())) {
-                            decoCompanyItemList.add(decoCompanyItem);
-                        }
-                    }
-                    Log.e("Daniel", "----decoCompanyItemList.size()---" + decoCompanyItemList.size());
-                    bankFinancingAdapter.setdatas(decoCompanyItemList);
-                } else {
-                    bankFinancingAdapter.setdatas(bankFinancItems);
+                    Log.i("Daniel", "---editable.toString()---" + editable.toString());
+                    initDate(0, Constan.NOTPULLUP, editable.toString(), null);
                 }
 
             }
@@ -311,31 +325,88 @@ public class BankFinancingActivity extends AppCompatActivity {
     }
 
     private void initDrawLayout() {
-        Fragment fragment = new FilterFragment();
+        Fragment fragment = TestFilterFragment.newInstance(2);//1:贷款 2：；理财
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Bundle bundle = new Bundle();
-        bundle.putString("departmentName", "");
-        fragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.drawer_content, fragment).commit();
 
     }
 
-
-    @OnClick({R.id.etSearch, R.id.ll_filter, R.id.ivDeleteText})
+    boolean isClickPageView = false;//点击浏览量
+    boolean isClickFocus = false;//关注
+    @OnClick({R.id.etSearch, R.id.ll_filter, R.id.ivDeleteText, R.id.bankActivity_pageView_linear,
+            R.id.bankActivity_focus_linear})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.etSearch:
-//                etSearch.setFocusableInTouchMode(true);
                 break;
             case R.id.ll_filter:
-                drawerLayout.openDrawer(drawerContent);
+                drawerLayout.openDrawer(drawerContent);//筛选页
                 break;
             case R.id.ivDeleteText:
                 etSearch.setText("");
                 ivDeleteText.setVisibility(View.GONE);
                 etSearch.setFocusableInTouchMode(false);
                 break;
+            case R.id.bankActivity_pageView_linear:  //浏览量
+                pageViewOnClick();
+                break;
+            case R.id.bankActivity_focus_linear:
+                focusOnClick();
+                break;
+
         }
+    }
+
+    /**
+     * 点击关注
+     */
+    private void focusOnClick() {
+        if (!isClickFocus) {
+            bankActivityFocusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
+            isClickFocus = true;
+            bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
+            bankActivityPageViewImg.setImageResource(R.drawable.asc_dark);
+            isClickPageView = false;
+            String queryParams = setQuerParams("atttenNum", Constan.DESC, "");//筛选条件 “关注”字段，降序
+            Log.i("Daniel", "---queryParams---" + queryParams);
+            initDate(0, Constan.NOTPULLUP, null, queryParams);
+        } else {
+            bankActivityFocusTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
+            isClickFocus = false;
+            initDate(0, Constan.NOTPULLUP, null, null);
+        }
+    }
+
+    /**
+     * 点击浏览量
+     */
+    private void pageViewOnClick() {
+        if (!isClickPageView) {
+            bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.colorPrimary));
+            bankActivityPageViewImg.setImageResource(R.drawable.asc_light);
+            isClickPageView = true;
+            bankActivityFocusTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
+            isClickFocus = false;
+            String queryParams = setQuerParams("financViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
+            Log.i("Daniel", "---queryParams---" + queryParams);
+            initDate(0, Constan.NOTPULLUP, null, queryParams);
+        } else {
+            bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
+            bankActivityPageViewImg.setImageResource(R.drawable.asc_dark);
+            isClickPageView = false;
+            initDate(0, Constan.NOTPULLUP, null, null);
+        }
+    }
+
+    public  String order = null;  //查询字段
+    public  String sort = null;   //asc:升序 desc：降序
+    public  String institution = null; //查询机构名称
+    private String setQuerParams(String pOrder, String pSort, String pInstitution) {
+        order = pOrder;
+        sort = pSort;
+        institution = pInstitution;
+        AQueryParams aQueryParams = new AQueryParams(order, sort, institution);
+        return new Gson().toJson(aQueryParams);
     }
 
 
