@@ -5,6 +5,7 @@
               android:layout_height="wrap_content"
               android:background="@color/white"
     >
+
     <LinearLayout
         android:id="@+id/linearlayout"
         android:layout_width="match_parent"
@@ -27,7 +28,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="4.0%"
-                android:textSize="@dimen/bigsp"
+                android:textSize="@dimen/mediumsp"
                 android:textColor="@color/home_orange"
                 android:gravity="center_horizontal|bottom"
                 />
@@ -36,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:textSize="@dimen/tinysp"
                 android:text="@string/loanYearRate"
                 android:textColor="@color/home_hotActivity_gray6"
                 android:gravity="center_horizontal"
@@ -44,13 +46,13 @@
 
         </LinearLayout>
         <View
-            android:layout_width="1dp"
+            android:layout_width="1px"
             android:layout_height="@dimen/hugehxxdp"
             android:layout_marginBottom="@dimen/tinymdp"
             android:layout_marginTop="@dimen/tinymdp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/smallmdp"
-            android:background="@color/colorPrimary"
+            android:background="@color/home_hotActivity_gray9"
             />
         <LinearLayout
             android:layout_width="0dp"
@@ -69,10 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:textColor="@color/home_orange"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:textSize="@dimen/mediumsp"
+                    style="@style/sty_title_tv"
                     android:gravity="center_vertical"
                     android:id="@+id/title_tv"/>
                 <LinearLayout
@@ -98,7 +97,6 @@
                         <TextView
                             android:id="@+id/purchaseMoney_tv"
                             style="@style/listitemLayout_tv"
-                            android:textColor="@color/home_hotActivity_gray9"
                             />
                     </LinearLayout>
                     <LinearLayout
@@ -118,7 +116,7 @@
                         <TextView
                             android:id="@+id/investmentTerm_tv"
                             style="@style/listitemLayout_tv"
-                            android:textColor="@color/home_hotActivity_gray9"
+
                             />
                     </LinearLayout>
                 </LinearLayout>
@@ -139,18 +137,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:src="@drawable/institution1"
-                            android:scaleX="0.8"
-                            android:scaleY="0.8"
+                            android:scaleX="0.7"
+                            android:scaleY="0.7"
                             android:paddingRight="5dp"
                             android:id="@+id/imageView"/>
 
                         <TextView
                             android:id="@+id/institutionName_tv"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:lines="1"
-                            android:textSize="@dimen/smallsp"
-                            android:gravity="center_vertical"
+                            style="@style/listitemLayout_tv"
+                            android:textSize="@dimen/tinysp"
                             />
                     </LinearLayout>
                     <LinearLayout
@@ -176,9 +171,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="5dp"
-                            android:textSize="@dimen/smallsp"
+                            style="@style/listitemLayout_tv"
+                            android:textSize="@dimen/tinysp"
                             />
 
                     </LinearLayout>

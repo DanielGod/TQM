@@ -8,6 +8,7 @@
               android:descendantFocusability="blocksDescendants"
               android:orientation="vertical"
     >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -82,12 +83,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:text="111111111111111111111"
                     android:gravity="center_vertical"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:text="1111111111111111111111111111111111"
-                    android:textColor="@color/home_hotActivity_gray6"
-                    android:textSize="@dimen/smallsp"/>
+                    style="@style/sty_title_tv"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -99,6 +97,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:paddingRight="@dimen/bigmdp"
                         >
 
                         <TextView
@@ -109,6 +108,8 @@
                             android:lines="1"
                             android:layout_marginRight="@dimen/tinymdp"
                             android:gravity="center"
+                            android:scaleY="0.8"
+                            android:scaleX="0.8"
                             android:background="@drawable/bankrecommendation_home_bg"
                             android:ellipsize="end"
                             android:textColor="@color/home_hotActivity_orange"
@@ -116,32 +117,14 @@
                             />
 
                     </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/loanType_linear"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        >
 
-                        <TextView
-                            android:id="@+id/loanType_tv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/tinysp"
-                            android:lines="1"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:layout_marginRight="@dimen/tinymdp"
-                            android:background="@drawable/bankrecommendation_home_bg"
-                            android:text="定期"
-                            android:textColor="@color/home_hotActivity_orange"
-                            />
-                    </LinearLayout>
                     <LinearLayout
                         android:id="@+id/investmentTerm_linear"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:paddingLeft="@dimen/mediummdp"
+                        android:paddingRight="@dimen/mediummdp"
                         >
 
                         <TextView
@@ -152,13 +135,13 @@
                             android:lines="1"
                             android:ellipsize="end"
                             android:text="定期100天"
+                            android:scaleY="0.8"
+                            android:scaleX="0.8"
                             android:textColor="@color/home_hotActivity_orange"
                             android:gravity="center"
                             android:background="@drawable/bankrecommendation_home_bg"
                             />
                     </LinearLayout>
-
-
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

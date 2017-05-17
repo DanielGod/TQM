@@ -75,7 +75,7 @@ public class HomeBankLoanListAdapter extends RecyclerView.Adapter<RecyclerView.V
         mHolder.tv1.setText(data.getRateMin() + "%"+"-"+data.getRateMax() + "%");
         mHolder.tv2.setText(data.getLoanName());
         mHolder.tv3.setText(data.getLoanPeriodMin() +"-"+data.getLoanPeriodMax()+ "个月");
-        mHolder.tv4.setText("最高可贷：" + data.getLoanMoneyMin()+"-"+data.getLoanMoneyMax()+ "万");
+        mHolder.tv4.setText(data.getLoanMoneyMin()+"-"+data.getLoanMoneyMax()+ "万");
 
         if(isBgNull){
             mHolder.loanItemBg.setBackgroundResource(R.drawable.loan_item_shap);

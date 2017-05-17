@@ -19,7 +19,7 @@
     <!--银行贷款-->
     <string name="bankloan">银行贷款</string>
     <string name="lookMore">查看更多</string>
-    <string name="loanYearRate">贷款年利率</string>
+    <string name="loanYearRate">贷款月利率</string>
     <string name="money_tv">金额</string>
     <string name="deadline_tv">期限</string>
     <!--银行资讯-->
@@ -51,12 +51,14 @@
     <string name="filter_riskGrade">风险等级</string>
     <string name="filter_investmentModel">投资模式</string>
     <string name="filter_issuingCity">发行地区</string>
+    <string name="filter_hintIssuingCity">请输入发行地区</string>
     <string name="filter_investmentTermInterval">投资期限区间</string>
     <string name="filter_redeemable">可赎回</string>
     <string name="filter_notRedeemable">不可赎回</string>
     <!--筛选-贷款-->
     <string name="filter_loanType">贷款类型</string>
     <string name="filter_crowd">适用人群</string>
+    <string name="filter_hintCrowd">请输入适用人群</string>
     <string name="filter_loanMoneyInterval">贷款金额区间</string>
     <string name="filter_loanTermInterval">贷款期限区间</string>
     <string name="filter_rateInterval">利率区间</string>

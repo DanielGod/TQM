@@ -16,6 +16,7 @@ public class BankFinancItem {
     private BigDecimal annualReturn;
     private BigDecimal purchaseMoney;
     private Integer financViews;
+    private String presaleStatus;
 
     @Override
     public String toString() {
@@ -29,7 +30,16 @@ public class BankFinancItem {
                 ", annualReturn=" + annualReturn +
                 ", purchaseMoney=" + purchaseMoney +
                 ", financViews=" + financViews +
+                ", presaleStatus='" + presaleStatus + '\'' +
                 '}';
+    }
+
+    public String getPresaleStatus() {
+        return presaleStatus;
+    }
+
+    public void setPresaleStatus(String presaleStatus) {
+        this.presaleStatus = presaleStatus;
     }
 
     public Integer getFinancId() {

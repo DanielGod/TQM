@@ -122,10 +122,8 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
 //                                .city(location.getCity())
 //                                .keyword(Constan.SEARCHFILTER)
 //                                .pageNum(loadIndex));
-
             }
         }
-
         public void onConnectHotSpotMessage(String s, int i){
         }
     };
