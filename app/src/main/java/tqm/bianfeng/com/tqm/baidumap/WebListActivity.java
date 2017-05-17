@@ -1,11 +1,14 @@
 package tqm.bianfeng.com.tqm.baidumap;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -37,6 +40,8 @@ import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.poi.PoiSortType;
 import com.baidu.mapapi.search.sug.SuggestionSearch;
 import com.google.gson.Gson;
+import com.wang.avi.AVLoadingIndicatorView;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -46,13 +51,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import hugo.weaving.DebugLog;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.CustomView.AutoHeightLayoutManager;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.application.BaseApplication;
 import tqm.bianfeng.com.tqm.baidumap.overlayutil.PoiOverlay;
 import tqm.bianfeng.com.tqm.baidumap.service.LocationService;
@@ -61,18 +66,24 @@ import tqm.bianfeng.com.tqm.pojo.bank.BankDotItem;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.pojo.bank.WebListViewType;
 
-public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearchResultListener {
+public class WebListActivity extends BaseActivity implements OnGetPoiSearchResultListener {
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
     @BindView(R.id.map_linear)
     LinearLayout mapLinear;
+    @BindView(R.id.no_search_txt)
+    TextView noSearchTxt;
+    @BindView(R.id.indicator)
+    AVLoadingIndicatorView indicator;
+    @BindView(R.id.private_capital_toolbar)
+    Toolbar privateCapitalToolbar;
     private PoiSearch mPoiSearch = null;
     private SuggestionSearch mSuggestionSearch = null;
     private BaiduMap mBaiduMap = null;
     private List<String> suggest;
     public static int loadIndex = 0;
-    public static int oldIndex =0;
+    public static int oldIndex = 0;
     public static double lat;
     public static double lnt;
 
@@ -83,6 +94,7 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
     LatLngBounds searchbound = new LatLngBounds.Builder().include(southwest).include(northeast).build();
 
     int searchType = 0;  // 搜索的类型，在显示时区分
+    boolean isCheck_edit=false;//点击地图图标
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,20 +102,101 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
         setContentView(R.layout.activity_web_list);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        setToolbar(privateCapitalToolbar, "网点查询");
+        privateCapitalToolbar.inflateMenu(R.menu.map_img_menu);
+        privateCapitalToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                if (!isCheck_edit) {
+                    item.setIcon(R.drawable.map_list);
+                    recycler.setVisibility(View.GONE);
+                    mapLinear.setVisibility(View.VISIBLE);
+                    isCheck_edit=true;
+                }else {
+                    item.setIcon(R.drawable.map_img);
+                    recycler.setVisibility(View.VISIBLE);
+                    mapLinear.setVisibility(View.GONE);
+                    isCheck_edit=false;
+                }
+                return false;
+            }
+        });
+
         // 初始化搜索模块，注册搜索事件监听
         mPoiSearch = PoiSearch.newInstance();
         mPoiSearch.setOnGetPoiSearchResultListener(this);//能绘制地点
         //        mPoiSearch.setOnGetPoiSearchResultListener(poiListener);//能返回结果
-//        tEmptyView();
+        //        tEmptyView();
         mBaiduMap = ((SupportMapFragment) (getSupportFragmentManager()
                 .findFragmentById(R.id.map)))
                 .getBaiduMap();
 
+        noSearchTxt.setVisibility(View.GONE);
     }
+
+
+    CountDownTimer countDownTimer;
+    int progressIndex = 6;
+
+    public void showLoading(int index) {
+        if (index == 0) {
+            //开始
+            indicator.show();
+            countDownTimer = new CountDownTimer(1000 * 100, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    // you can change the progress bar color by ProgressHelper every 800 millis
+                    progressIndex++;
+                    switch (progressIndex % 6) {
+                        case 0:
+                            indicator.setIndicatorColor(getResources().getColor(R.color.blue_btn_bg_color));
+                            break;
+                        case 1:
+                            indicator.setIndicatorColor(getResources().getColor(R.color.material_deep_teal_50));
+                            break;
+                        case 2:
+                            indicator.setIndicatorColor(getResources().getColor(R.color.success_stroke_color));
+                            break;
+                        case 3:
+                            indicator.setIndicatorColor(getResources().getColor(R.color.material_deep_teal_20));
+                            break;
+                        case 4:
+                            indicator.setIndicatorColor(getResources().getColor(R.color.material_blue_grey_80));
+                            break;
+                        case 5:
+                            indicator.setIndicatorColor(getResources().getColor(R.color.warning_stroke_color));
+                            break;
+                        case 6:
+                            indicator.setIndicatorColor(getResources().getColor(R.color.success_stroke_color));
+                            break;
+                    }
+                }
+
+                public void onFinish() {
+                    progressIndex = 6;
+                }
+            }.start();
+
+        } else {
+            //结束
+            indicator.hide();
+            countDownTimer.onFinish();
+        }
+    }
+
+    List<BankDotItem> mBbankDotItems;
+
+    public void showSearchResult() {
+
+        if (mBbankDotItems == null || mBbankDotItems.size() == 0) {
+            noSearchTxt.setVisibility(View.VISIBLE);
+        } else {
+            noSearchTxt.setVisibility(View.GONE);
+        }
+    }
+
     /*****
-     *
      * 定位结果回调，重写onReceiveLocation方法，可以直接拷贝如下代码到自己工程中修改
-     *
      */
     private BDLocationListener mListener = new BDLocationListener() {
 
@@ -112,23 +205,25 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
                 //poi 搜索
                 Log.e("Daniel", "----BDLocationListener---");
-                lat= location.getLatitude();
-                lnt=location.getLongitude();
-                loadIndex=0;
+                lat = location.getLatitude();
+                lnt = location.getLongitude();
+                loadIndex = 0;
                 getPoiNearbySearchOption(loadIndex);
 
 
-//                mPoiSearch.searchInCity((new PoiCitySearchOption())
-//                                .city(location.getCity())
-//                                .keyword(Constan.SEARCHFILTER)
-//                                .pageNum(loadIndex));
+                //                mPoiSearch.searchInCity((new PoiCitySearchOption())
+                //                                .city(location.getCity())
+                //                                .keyword(Constan.SEARCHFILTER)
+                //                                .pageNum(loadIndex));
             }
         }
-        public void onConnectHotSpotMessage(String s, int i){
+
+        public void onConnectHotSpotMessage(String s, int i) {
         }
     };
 
     private LocationService locationService;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -154,53 +249,38 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
         super.onStop();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(WebListViewType event) {
-       switch (event.getType()){
-           case 0:   //上一页
+        switch (event.getType()) {
+            case 0:   //上一页
 
-               goToPreviousPage();
-               break;
-           case 1:   //下一页
-               goToNextPage();
-               break;
-       }
+                goToPreviousPage();
+                break;
+            case 1:   //下一页
+                goToNextPage();
+                break;
+        }
 
     }
 
     /**
      * 响应城市内搜索按钮点击事件
-     *
      */
-//    public void searchButtonProcess(View v) {
-////        searchType = 1;
-////        String citystr = editCity.getText().toString();
-////        String keystr = keyWorldsView.getText().toString();
-////        mPoiSearch.searchInCity((new PoiCitySearchOption())
-////                .city(citystr).keyword(keystr).pageNum(loadIndex));
-//    }
-//
+    //    public void searchButtonProcess(View v) {
+    ////        searchType = 1;
+    ////        String citystr = editCity.getText().toString();
+    ////        String keystr = keyWorldsView.getText().toString();
+    ////        mPoiSearch.searchInCity((new PoiCitySearchOption())
+    ////                .city(citystr).keyword(keystr).pageNum(loadIndex));
+    //    }
+    //
     public void goToNextPage() {
         oldIndex = loadIndex; //记录当前下标
         loadIndex++;
         getPoiNearbySearchOption(loadIndex);
 
     }
+
     public void goToPreviousPage() {
         oldIndex = loadIndex; //记录当前下标
         loadIndex--;
@@ -226,8 +306,9 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
      * @param result
      */
     List<String> mUidList;
+
     public void onGetPoiResult(PoiResult result) {
-        if (result.getAllPoi()!=null){
+        if (result.getAllPoi() != null) {
             mUidList = new ArrayList<>();
             List<PoiInfo> datas = result.getAllPoi();
             int lenth = datas.size();
@@ -281,8 +362,9 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
     }
 
     private void getBankDotItem(List<String> mUidList) {
-        Log.e("Daniel", "----uids---"+new Gson().toJson(mUidList));
-        NetWork.getBankService().getBankDotItem( new Gson().toJson(mUidList))
+        Log.e("Daniel", "----uids---" + new Gson().toJson(mUidList));
+        showLoading(0);
+        NetWork.getBankService().getBankDotItem(new Gson().toJson(mUidList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<BankDotItem>>() {
@@ -290,15 +372,20 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
                     public void onCompleted() {
 
                     }
+
                     @DebugLog
                     @Override
                     public void onError(Throwable e) {
-
+                        showLoading(1);
+                        showSearchResult();
                     }
+
                     @DebugLog
                     @Override
                     public void onNext(List<BankDotItem> bankDotItems) {
+                        mBbankDotItems = bankDotItems;
                         setAdapter(bankDotItems);//网点适配器
+                        showSearchResult();
                     }
                 });
 
@@ -310,15 +397,17 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
         WebListAdapter webListAdapter = new WebListAdapter(datas, WebListActivity.this);
         recycler.setAdapter(webListAdapter);
         locationService.stop();
+        showLoading(1);
 
     }
+
     static double DEF_PI = 3.14159265359; // PI
-    static double DEF_2PI= 6.28318530712; // 2*PI
-    static double DEF_PI180= 0.01745329252; // PI/180.0
-    static double DEF_R =6370693.5; // radius of earth
+    static double DEF_2PI = 6.28318530712; // 2*PI
+    static double DEF_PI180 = 0.01745329252; // PI/180.0
+    static double DEF_R = 6370693.5; // radius of earth
+
     //适用于近距离
-    public static double GetShortDistance(double lon1, double lat1, double lon2, double lat2)
-    {
+    public static double GetShortDistance(double lon1, double lat1, double lon2, double lat2) {
         double ew1, ns1, ew2, ns2;
         double dx, dy, dew;
         double distance;
@@ -340,9 +429,9 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
         distance = Math.sqrt(dx * dx + dy * dy);
         return distance;
     }
+
     //适用于远距离
-    public static double GetLongDistance(double lon1, double lat1, double lon2, double lat2)
-    {
+    public static double GetLongDistance(double lon1, double lat1, double lon2, double lat2) {
         double ew1, ns1, ew2, ns2;
         double distance;
         // 角度转换为弧度
@@ -418,21 +507,6 @@ public class WebListActivity extends AppCompatActivity implements  OnGetPoiSearc
             Log.e("Daniel", "----onGetPoiIndoorResult---" + datas.get(i).uid);
         }
     }
-
-    boolean isMap = false;//地图和列表切换
-    @OnClick(R.id.map_btn)
-    public void onClick() {
-        if (!isMap){
-            recycler.setVisibility(View.GONE);
-            mapLinear.setVisibility(View.VISIBLE);
-            isMap = true;
-        }else {
-            recycler.setVisibility(View.VISIBLE);
-            mapLinear.setVisibility(View.GONE);
-            isMap = false;
-        }
-    }
-
     private class MyPoiOverlay extends PoiOverlay {
 
         public MyPoiOverlay(BaiduMap baiduMap) {

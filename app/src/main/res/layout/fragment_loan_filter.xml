@@ -241,8 +241,11 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        style="@style/sty_units_tv"
+                        android:text="@string/units_rateInterval"
                         />
                 </LinearLayout>
                 <!--贷款金额区间-->
@@ -307,8 +310,11 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        style="@style/sty_units_tv"
+                        android:text="@string/units_miriade"
                         />
                 </LinearLayout>
                 <!--贷款期限区间-->
@@ -359,8 +365,11 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        style="@style/sty_units_tv"
+                        android:text="@string/units_month"
                         />
                 </LinearLayout>
 
@@ -618,8 +627,11 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        style="@style/sty_units_tv"
+                        android:text="@string/units_day"
                         />
                 </LinearLayout>
 

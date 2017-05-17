@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="90dp"
               android:background="@color/white"
     >
 
@@ -47,9 +47,9 @@
         </LinearLayout>
         <View
             android:layout_width="1px"
-            android:layout_height="@dimen/hugehxxdp"
-            android:layout_marginBottom="@dimen/tinymdp"
-            android:layout_marginTop="@dimen/tinymdp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/mediumsp"
+            android:layout_marginBottom="@dimen/mediumsp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/smallmdp"
             android:background="@color/home_hotActivity_gray9"
@@ -139,6 +139,7 @@
                             android:src="@drawable/institution1"
                             android:scaleX="0.7"
                             android:scaleY="0.7"
+                            android:visibility="gone"
                             android:paddingRight="5dp"
                             android:id="@+id/imageView"/>
 

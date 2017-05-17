@@ -133,6 +133,12 @@
         <item name="android:textColor">@color/home_hotActivity_gray3</item>
     </style>
 
+    <!--单位字体样式-text-->
+    <style name="sty_units_tv">
+        <item name="android:textSize">@dimen/tinysp</item>
+        <item name="android:textColor">@color/home_hotActivity_gray9</item>
+    </style>
+
     <!--银行详情-值-text-->
     <style name="listitemLayout_tv">
         <item name="android:layout_width">match_parent</item>
@@ -141,8 +147,7 @@
         <item name="android:textSize">@dimen/smallsp</item>
         <item name="android:lines">1</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:layout_marginLeft">@dimen/tinymdp</item>
-        <item name="android:textColor">@color/home_hotActivity_gray9</item>
+        <item name="android:textColor">@color/home_hotActivity_gray6</item>
     </style>
 
     <!--首页-->
