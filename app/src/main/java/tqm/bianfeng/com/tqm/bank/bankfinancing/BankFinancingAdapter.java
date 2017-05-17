@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -66,7 +67,6 @@ public class BankFinancingAdapter extends BaseAdapter {
         BankFinancItem data = getItem(position);
         holder.financViewsLinear.setVisibility(View.VISIBLE);
         holder.institutionNameLinear.setVisibility(View.VISIBLE);
-        holder.investmentTermLinear.setVisibility(View.VISIBLE);
         holder.purchaseMoneyAndRiskGradeNameLinear.setVisibility(View.VISIBLE);
         holder.titleTv.setText(data.getProductName());
         holder.institutionNameTv.setText(data.getInstitution());
@@ -84,6 +84,13 @@ public class BankFinancingAdapter extends BaseAdapter {
                 }
             });
         }
+        if ("01".equals(data.getPresaleStatus()))
+            holder.presaleStatusImg.setImageResource(R.drawable.ys);
+        if ("02".equals(data.getPresaleStatus()))
+            holder.presaleStatusImg.setImageResource(R.drawable.ks);
+        if ("03".equals(data.getPresaleStatus()))
+            holder.presaleStatusImg.setImageResource(R.drawable.ts);
+
 
         return convertView;
     }
@@ -119,8 +126,7 @@ public class BankFinancingAdapter extends BaseAdapter {
         LinearLayout purchaseMoneyLinear;
         @BindView(R.id.investmentTerm_tv)
         TextView investmentTermTv;
-        @BindView(R.id.investmentTerm_linear)
-        LinearLayout investmentTermLinear;
+
         @BindView(R.id.institutionName_tv)
         TextView institutionNameTv;
         @BindView(R.id.institutionName_linear)
@@ -133,6 +139,8 @@ public class BankFinancingAdapter extends BaseAdapter {
         LinearLayout linearlayout;
         @BindView(R.id.purchaseMoneyAndRiskGradeName_linear)
         LinearLayout purchaseMoneyAndRiskGradeNameLinear;
+        @BindView(R.id.presaleStatus_img)
+        ImageView presaleStatusImg;
 
 
         ViewHolder(View view) {

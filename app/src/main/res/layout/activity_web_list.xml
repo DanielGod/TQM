@@ -2,38 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" >
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/private_capital_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hugehdp"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="银行"
-            android:gravity="center"
-            android:textSize="@dimen/bigsp"
-            />
-
-        <TextView
-            android:id="@+id/map_btn"
-            android:layout_width="?actionBarSize"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="地图"
-            android:textSize="@dimen/bigsp"
-            android:layout_alignParentRight="true"
-            />
-        <TextView
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/umeng_socialize_grid_divider_line"
-            android:layout_alignLeft="@id/map_btn"
-            />
-    </RelativeLayout>
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="?android:attr/listDivider" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
@@ -41,6 +26,28 @@
         android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:id="@+id/no_search_txt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="网络错误"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/hugehxxxxxxxxxdp"
+            android:textSize="@dimen/mediumsp"
+            android:textColor="@color/gary_dark"
+            android:visibility="visible"
+            android:drawableTop="@drawable/loadfail"
+            android:drawablePadding="@dimen/smallmdp"
+            />
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/indicator"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/hugehxxxxxxxxxdp"
+            app:indicatorColor="@color/colorPrimary"
+            />
     <LinearLayout
         android:id="@+id/map_linear"
         android:layout_width="match_parent"
@@ -54,5 +61,10 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
+    </RelativeLayout>
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="?android:attr/listDivider" />
 </LinearLayout>

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="100dp"
               android:background="@color/white"
               >
 
@@ -28,7 +28,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="4.0%"
-            android:textSize="@dimen/bigsp"
+            android:textSize="@dimen/mediumsp"
             android:textColor="@color/home_orange"
             android:gravity="center_horizontal|bottom"
             />
@@ -38,6 +38,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="年利率"
+            android:textSize="@dimen/tinysp"
             android:textColor="@color/home_hotActivity_gray6"
             android:gravity="center_horizontal"
             />
@@ -45,44 +46,66 @@
 
     </LinearLayout>
     <View
-        android:layout_width="1dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="@dimen/smallmdp"
-        android:layout_marginTop="@dimen/smallmdp"
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/mediumxsp"
+        android:layout_marginTop="@dimen/mediumxsp"
+        android:background="@color/home_hotActivity_gray9"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/smallmdp"
-        android:background="@color/whitesmoke"
         />
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3"
         android:orientation="vertical"
-        android:paddingRight="16dp"
+        android:paddingRight="@dimen/mediummxdp"
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="2"
             >
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:textColor="@color/home_orange"
-                android:lines="1"
-                android:ellipsize="end"
-                android:textSize="@dimen/mediumsp"
-                android:gravity="center_vertical"
-                android:id="@+id/title_tv"/>
+                >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/sty_title_tv"
+                        android:layout_marginRight="@dimen/tinymdp"
+                        android:gravity="center_vertical"
+                        android:id="@+id/title_tv"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    >
+                    <ImageView
+                        android:id="@+id/presaleStatus_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ks"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--起购金额，风险-->
             <LinearLayout
                 android:id="@+id/purchaseMoneyAndRiskGradeName_linear"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
-               android:visibility="gone"
                 android:layout_weight="1">
                 <LinearLayout
                     android:id="@+id/purchaseMoney_linear"
@@ -93,21 +116,40 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="起购金额："
+                        android:text="起购金额"
                         android:textSize="@dimen/smallsp"
                         android:gravity="center_vertical"
                         android:textColor="@color/home_hotActivity_gray3"
                         />
-                <TextView
-                    android:id="@+id/purchaseMoney_tv"
-                   style="@style/listitemLayout_tv"
-                    android:textColor="@color/home_hotActivity_gray9"
-                    />
-                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/purchaseMoney_tv"
+                       style="@style/listitemLayout_tv"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="期限"
+                        android:textSize="@dimen/smallsp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/home_hotActivity_gray3"
+                        />
+                    <TextView
+                        android:id="@+id/investmentTerm_tv"
+                        style="@style/listitemLayout_tv"
+                        />
+                </LinearLayout>
                 <LinearLayout
                     android:id="@+id/riskGradeName_linear"
                     android:layout_width="@dimen/hugehxxxxdp"
                     android:layout_height="match_parent"
+                    android:visibility="gone"
                     android:layout_marginLeft="@dimen/tinymdp"
                     >
                     <TextView
@@ -123,37 +165,35 @@
                     style="@style/listitemLayout_tv"
                     />
                     </LinearLayout>
-
-
-
             </LinearLayout>
+            <!--贷款-->
             <LinearLayout
                 android:id="@+id/loanMoneyAndloanTypeName_linear"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:visibility="gone"
                 android:layout_weight="1">
-            <LinearLayout
-                android:id="@+id/loanMoney_linear"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-
-                >
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/loanMoney_linear"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="最高贷款(万)："
-                    android:textSize="@dimen/smallsp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/home_hotActivity_gray3"
-                    />
-                <TextView
-                    android:id="@+id/loanMoney_tv"
-                    style="@style/listitemLayout_tv"
-                    android:textColor="@color/home_hotActivity_gray9"
-                    />
-            </LinearLayout>
+                    android:layout_weight="1"
+
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="最高贷款(万)："
+                        android:textSize="@dimen/smallsp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/home_hotActivity_gray3"
+                        />
+                    <TextView
+                        android:id="@+id/loanMoney_tv"
+                        style="@style/listitemLayout_tv"
+                        android:textColor="@color/home_hotActivity_gray9"
+                        />
+                </LinearLayout>
                 <LinearLayout
                     android:id="@+id/loanTypeName_linear"
                     android:layout_width="0dp"
@@ -177,93 +217,58 @@
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/investmentTerm_linear"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:visibility="gone"
+                android:orientation="horizontal"
                 >
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/institutionName_linear"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="期限："
-                    android:textSize="@dimen/smallsp"
+                    android:layout_weight="1"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/institution1"
+                        android:scaleX="0.7"
+                        android:scaleY="0.7"
+                        android:visibility="gone"
+                        android:paddingRight="5dp"
+                        />
+                    <TextView
+                        android:id="@+id/institutionName_tv"
+                        style="@style/listitemLayout_tv"
+                        android:textSize="@dimen/tinysp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/financViews_linear"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:textColor="@color/home_hotActivity_gray3"
-                    />
-                <TextView
-                    android:id="@+id/investmentTerm_tv"
-                    style="@style/listitemLayout_tv"
-                    android:textColor="@color/home_hotActivity_gray9"
-                    />
-            </LinearLayout>
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/eye3"
+                        android:paddingLeft="2dp"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"
+                        android:paddingRight="5dp"
+                        />
 
+                    <TextView
+                        android:id="@+id/financViews_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        style="@style/listitemLayout_tv"
+                        />
 
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            >
-            <LinearLayout
-                android:id="@+id/institutionName_linear"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:visibility="gone"
-                >
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/institution1"
-                    android:adjustViewBounds="true"
-                    android:scaleX="0.6"
-                    android:scaleY="0.6"
-                    android:paddingRight="5dp"
-                    />
-                <TextView
-                    android:id="@+id/institutionName_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:lines="1"
-                    android:textSize="@dimen/smallsp"
-                    android:gravity="center_vertical"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/financViews_linear"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                >
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/eye3"
-                    android:paddingLeft="2dp"
-                    android:scaleX="0.8"
-                    android:scaleY="0.8"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-                    android:paddingRight="5dp"
-                    />
-                <TextView
-                    android:id="@+id/financViews_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="5dp"
-                    android:textSize="@dimen/smallsp"
-                    android:text="0"
-                    />
-
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

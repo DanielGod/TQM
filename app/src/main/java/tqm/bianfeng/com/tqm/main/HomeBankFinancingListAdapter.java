@@ -75,7 +75,7 @@ public class HomeBankFinancingListAdapter extends RecyclerView.Adapter<RecyclerV
         mHolder.titleTv.setText(data.getProductName());
         mHolder.annualReturnTv.setText(data.getAnnualReturn() + "%");
         mHolder.riskGradeNameTv.setText(data.getRiskGrade());
-        mHolder.investmentTermTv.setText("定期"+data.getInvestmentTerm());
+        mHolder.investmentTermTv.setText("定期"+data.getInvestmentTerm()+"天");
         mHolder.rateNameTv.setText("预期年化");
 
 
@@ -104,10 +104,6 @@ public class HomeBankFinancingListAdapter extends RecyclerView.Adapter<RecyclerV
         TextView riskGradeNameTv;
         @BindView(R.id.riskGradeName_linear)
         LinearLayout riskGradeNameLinear;
-        @BindView(R.id.loanType_tv)
-        TextView loanTypeTv;
-        @BindView(R.id.loanType_linear)
-        LinearLayout loanTypeLinear;
         @BindView(R.id.investmentTerm_tv)
         TextView investmentTermTv;
         @BindView(R.id.investmentTerm_linear)

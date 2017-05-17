@@ -74,7 +74,7 @@ public class BankActivitionsAdapter extends BaseAdapter {
         }
         BankActivityItem data = getItem(position);
 
-        Picasso.with(mContext).load(NetWork.LOAD+data.getImageUrl()).placeholder(R.drawable.banklogo).into(holder.logoImg);
+        Picasso.with(mContext).load(NetWork.LOAD+data.getImageUrl()).placeholder(R.drawable.placeholder).into(holder.logoImg);
         holder.activityTitleTv.setText(data.getActivityTitle());
         holder.institutionNameTv.setText(data.getInstitution());
         holder.activityViewsTv.setText(data.getActivityViews()+"");

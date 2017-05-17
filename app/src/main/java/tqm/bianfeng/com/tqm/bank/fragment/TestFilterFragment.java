@@ -112,6 +112,16 @@ public class TestFilterFragment extends Fragment {
     Button btnReset;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
+    @BindView(R.id.filterTitle_institution_cb)
+    CheckBox filterTitleInstitutionCb;
+    @BindView(R.id.filterTitle_loanType_cb)
+    CheckBox filterTitleLoanTypeCb;
+    @BindView(R.id.filterTitle_fInstitution_cb)
+    CheckBox filterTitleFInstitutionCb;
+    @BindView(R.id.filterTitle_productType_cb)
+    CheckBox filterTitleProductTypeCb;
+    @BindView(R.id.filterTitle_riskGrade_cb)
+    CheckBox filterTitleRiskGradeCb;
     private DrawerLayout mDrawerLayout;
     private FrameLayout mDrawerContent;
     private int mFilterType;//1:贷款 2 理财
@@ -130,6 +140,7 @@ public class TestFilterFragment extends Fragment {
 
     /**
      * 广播-添加或移除筛选条件
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -153,6 +164,7 @@ public class TestFilterFragment extends Fragment {
 
     /**
      * 清除筛选
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -160,14 +172,14 @@ public class TestFilterFragment extends Fragment {
     public void onEventMainThread(ClearFilter event) {
         Log.i("Daniel", "---event.isClearFilter()---" + event.isClearFilter());
         if (event.isClearFilter()) {
-            if (filter_value_RiskGrade!=null)
-            filter_value_RiskGrade.clear();
-            if (filter_value_Institution!=null)
-            filter_value_Institution.clear();
-            if (filter_value_loanType!=null)
-            filter_value_loanType.clear();
-            if (filter_value_ProductType!=null)
-            filter_value_ProductType.clear();
+            if (filter_value_RiskGrade != null)
+                filter_value_RiskGrade.clear();
+            if (filter_value_Institution != null)
+                filter_value_Institution.clear();
+            if (filter_value_loanType != null)
+                filter_value_loanType.clear();
+            if (filter_value_ProductType != null)
+                filter_value_ProductType.clear();
 
             //适合人群
             setTextEmpty(filterCrowdEt);
@@ -195,6 +207,7 @@ public class TestFilterFragment extends Fragment {
 
     /**
      * 清空筛选文本框内容
+     *
      * @param et
      */
     private void setTextEmpty(EditText et) {
@@ -596,7 +609,8 @@ public class TestFilterFragment extends Fragment {
     }
 
     @DebugLog
-    @OnClick({R.id.btn_reset, R.id.btn_confirm,R.id.filter_redeemable_cBox,R.id.filter_notRedeemable_cBox})
+    @OnClick({R.id.btn_reset, R.id.btn_confirm, R.id.filter_redeemable_cBox, R.id.filter_notRedeemable_cBox,
+            R.id.filterTitle_institution_cb, R.id.filterTitle_loanType_cb, R.id.filterTitle_fInstitution_cb, R.id.filterTitle_productType_cb, R.id.filterTitle_riskGrade_cb})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_reset:
@@ -618,7 +632,60 @@ public class TestFilterFragment extends Fragment {
                 filterRedeemableCBox.setTextColor(getActivity().getResources().getColor(R.color.black));
                 filterNotRedeemableCBox.setTextColor(getActivity().getResources().getColor(R.color.white));
                 filterRedeemableCBox.setChecked(false);
+                break;
+            case R.id.filterTitle_institution_cb:
+                setFilterTitle(R.id.filterTitle_institution_cb);
+                break;
+            case R.id.filterTitle_loanType_cb:
+                setFilterTitle(R.id.filterTitle_loanType_cb);
+                break;
+            case R.id.filterTitle_fInstitution_cb:
+                setFilterTitle(R.id.filterTitle_fInstitution_cb);
+                break;
+            case R.id.filterTitle_productType_cb:
+                setFilterTitle(R.id.filterTitle_productType_cb);
+                break;
+            case R.id.filterTitle_riskGrade_cb:
+                setFilterTitle(R.id.filterTitle_riskGrade_cb);
+                break;
+        }
+    }
 
+    /**
+     * 设置列表的显示与隐藏
+     * @param filterTitle_institution_cb
+     */
+    private void setFilterTitle(int filterTitle_institution_cb) {
+        switch (filterTitle_institution_cb){
+            case R.id.filterTitle_loanType_cb:
+                if (filterTitleLoanTypeCb.isChecked())
+                    filterLoanTypeRecyclerView.setVisibility(View.GONE);
+                else
+                    filterLoanTypeRecyclerView.setVisibility(View.VISIBLE);
+                break;
+            case R.id.filterTitle_fInstitution_cb:
+                if (filterTitleFInstitutionCb.isChecked())
+                    filterFInstitutionRecyclerView.setVisibility(View.GONE);
+                else
+                    filterFInstitutionRecyclerView.setVisibility(View.VISIBLE);
+                break;
+            case R.id.filterTitle_productType_cb:
+                if (filterTitleProductTypeCb.isChecked())
+                    filterProductTypeRecyclerView.setVisibility(View.GONE);
+                else
+                    filterProductTypeRecyclerView.setVisibility(View.VISIBLE);
+                break;
+            case R.id.filterTitle_riskGrade_cb:
+                if (filterTitleRiskGradeCb.isChecked())
+                    filterRiskGradeRecyclerView.setVisibility(View.GONE);
+                else
+                    filterRiskGradeRecyclerView.setVisibility(View.VISIBLE);
+                break;
+            case R.id.filterTitle_institution_cb:
+                if (filterTitleInstitutionCb.isChecked())
+                    filterInstitutionRecyclerView.setVisibility(View.GONE);
+                else
+                    filterInstitutionRecyclerView.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -688,10 +755,10 @@ public class TestFilterFragment extends Fragment {
             filterValues.setLoanType(getFilterStr(filter_value_RiskGrade));
         }
         //投资模式
-        if (filterRedeemableCBox.isChecked()){
+        if (filterRedeemableCBox.isChecked()) {
             filterValues.setInvestmentModel("02");//02可赎回
         }
-        if (filterNotRedeemableCBox.isChecked()){
+        if (filterNotRedeemableCBox.isChecked()) {
             filterValues.setInvestmentModel("01");//01不可赎回
         }
         //适合人群
@@ -734,4 +801,5 @@ public class TestFilterFragment extends Fragment {
         return strInstitution.toString();
     }
 
+   
 }

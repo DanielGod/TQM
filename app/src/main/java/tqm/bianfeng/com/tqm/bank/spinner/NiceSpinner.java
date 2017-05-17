@@ -165,7 +165,7 @@ public class NiceSpinner extends TextView {
             }
         });
 
-        Drawable basicDrawable = ContextCompat.getDrawable(context, R.drawable.arrow);
+        Drawable basicDrawable = ContextCompat.getDrawable(context, R.drawable.arrow);//图标
         int resId = typedArray.getColor(R.styleable.NiceSpinner_arrowTint, -1);
 
         if (basicDrawable != null) {
