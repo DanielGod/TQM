@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/mediummxdp"
-        android:src="@drawable/ic_law_focuse"
+        android:src="@drawable/ic_detail_chat"
         android:layout_centerInParent="true"
         />
     <TextView

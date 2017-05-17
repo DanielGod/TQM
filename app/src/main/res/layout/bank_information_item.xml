@@ -63,7 +63,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/smallmdp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/ic_eye"/>
+                    android:src="@drawable/eye3"/>
 
                 <TextView
                     android:id="@+id/read_num"
@@ -93,6 +93,6 @@
         android:layout_height="0.5dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:background="@color/whitesmoke"
+        android:background="@color/gray_light"
         />
 </LinearLayout>

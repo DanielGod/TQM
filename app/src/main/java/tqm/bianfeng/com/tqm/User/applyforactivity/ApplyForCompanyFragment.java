@@ -1,10 +1,14 @@
 package tqm.bianfeng.com.tqm.User.applyforactivity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -57,7 +61,7 @@ public class ApplyForCompanyFragment extends BaseFragment {
 
 
     private static final int REQUEST_IMAGE = 2;
-
+    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE=1234;
     @BindView(R.id.private_capital_radio)
     RadioButton privateCapitalRadio;
     @BindView(R.id.mediation_radio)
@@ -165,22 +169,31 @@ public class ApplyForCompanyFragment extends BaseFragment {
 
 
     public void addImg() {
-        MultiImageSelector multiImageSelector = MultiImageSelector.create(getActivity())
-                .showCamera(true) // show camera or not. true by default
-                // max select image size, 9 by default. used width #.multi()
-                .single() // single mode
-                .multi(); // original select data set, used width #.multi()
-        if (isAddCompanyImg) {
-            multiImageSelector.origin(mCompanyImgSelectPath);
-            multiImageSelector.count(3);
-        } else if (isAddLogo) {
-            multiImageSelector.origin(mLogoSelectPath);
-            multiImageSelector.count(1);
-        } else if (isAddPersonalImg) {
-            multiImageSelector.origin(mPersonalImgSelectPath);
-            multiImageSelector.count(2);
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+        } else {
+
+            MultiImageSelector multiImageSelector = MultiImageSelector.create(getActivity())
+                    .showCamera(true) // show camera or not. true by default
+                    // max select image size, 9 by default. used width #.multi()
+                    .single() // single mode
+                    .multi(); // original select data set, used width #.multi()
+            if (isAddCompanyImg) {
+                multiImageSelector.origin(mCompanyImgSelectPath);
+                multiImageSelector.count(3);
+            } else if (isAddLogo) {
+                multiImageSelector.origin(mLogoSelectPath);
+                multiImageSelector.count(1);
+            } else if (isAddPersonalImg) {
+                multiImageSelector.origin(mPersonalImgSelectPath);
+                multiImageSelector.count(2);
+            }
+            multiImageSelector.start(getActivity(), REQUEST_IMAGE);
         }
-        multiImageSelector.start(getActivity(), REQUEST_IMAGE);
     }
 
     List<ImageView> companyImgsView;
@@ -319,6 +332,7 @@ public class ApplyForCompanyFragment extends BaseFragment {
         addressModels = rj.getAddressModel(json);
         initPEdi();
     }
+
     //上传图片1.logo 2.公司 3.个人
     public void uploadImg(final int index,List<String> imgPaths){
         MultipartBody.Builder builder = new MultipartBody.Builder();

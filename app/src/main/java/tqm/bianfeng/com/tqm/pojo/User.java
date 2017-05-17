@@ -19,7 +19,7 @@ public class User extends RealmObject{
     String userPhone;
     String userNickname;
     String userAvatar="";
-    String userType="";
+    String userType;
     String applyForStatu="-1";
 
     public String getApplyForStatu() {

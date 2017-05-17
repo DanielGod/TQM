@@ -127,4 +127,22 @@ public class BankLoanItem {
         public void setAtttenNum(int atttenNum) {
             this.atttenNum = atttenNum;
         }
+
+    @Override
+    public String toString() {
+        return "BankLoanItem{" +
+                "loanId=" + loanId +
+                ", loanName='" + loanName + '\'' +
+                ", loanType='" + loanType + '\'' +
+                ", rateMin=" + rateMin +
+                ", rateMax=" + rateMax +
+                ", loanMoneyMin=" + loanMoneyMin +
+                ", loanMoneyMax=" + loanMoneyMax +
+                ", loanPeriodMin=" + loanPeriodMin +
+                ", loanPeriodMax=" + loanPeriodMax +
+                ", institution='" + institution + '\'' +
+                ", loanViews=" + loanViews +
+                ", atttenNum=" + atttenNum +
+                '}';
+    }
 }

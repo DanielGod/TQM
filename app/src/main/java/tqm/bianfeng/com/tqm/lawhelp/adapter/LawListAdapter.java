@@ -38,6 +38,7 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
 
+    boolean isInMyFocuse=false;
     private Context mContext;
     private List<LawyerItem> datas;
     private final LayoutInflater mLayoutInflater;
@@ -61,6 +62,14 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void update(List<LawyerItem> mDatas) {
         this.datas = mDatas;
         //this.notifyDataSetChanged();
+    }
+
+    public boolean isInMyFocuse() {
+        return isInMyFocuse;
+    }
+
+    public void setInMyFocuse(boolean inMyFocuse) {
+        isInMyFocuse = inMyFocuse;
     }
 
     public int getLayout() {
@@ -113,7 +122,12 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                     }else {
                                         datas.get(p).setIsAttention("01");
                                     }
-                                    mItemClickListener.changePosition(position);
+                                    if(isInMyFocuse){
+                                        datas.remove(p);
+                                        LawListAdapter.this.notifyDataSetChanged();
+                                    }else {
+                                        mItemClickListener.changePosition(position);
+                                    }
                                     break;
                                 }
                             }
@@ -146,16 +160,21 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             mHolder.isAuthorizeTxt.setText("未认证");
         }
 
-        if (datas.get(p).getIsAttention().equals("02")) {
-            //未关注
-            mHolder.isCollectTxt.setText("关注");
-        } else {
-            //已关注
-            mHolder.isCollectTxt.setText("已关注");
+        if(datas.get(p).getIsAttention()==null){
+            mHolder.collectionLin.setVisibility(View.INVISIBLE);
+        }else {
+            mHolder.collectionLin.setVisibility(View.VISIBLE);
+            if (datas.get(p).getIsAttention().equals("02")) {
+                //未关注
+                mHolder.isCollectTxt.setText("关注");
+            } else {
+                //已关注
+                mHolder.isCollectTxt.setText("已关注");
+            }
         }
         for(int i=0;i<inCollectItem.size();i++){
             if(inCollectItem.get(i).getLawyerId()==datas.get(p).getLawyerId()){
-                mHolder.isCollectTxt.setText("关注中");
+                mHolder.isCollectTxt.setText("稍等..");
             }
         }
 
@@ -180,16 +199,6 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mHolder.collectionLin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(realm.where(User.class).findFirst()==null){
-                    Toast.makeText(mContext, "请先登录后查看", Toast.LENGTH_SHORT).show();
-                }else {
-                    mItemClickListener.CollectionClick(p);
-                }
-            }
-        });
-        mHolder.isCollectTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 boolean isHave=false;
                 for(int i=0;i<inCollectItem.size();i++){
                     if(inCollectItem.get(i).getLawyerId()==datas.get(p).getLawyerId()){
@@ -200,7 +209,7 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     if(realm.where(User.class).findFirst()!=null){
                         inCollectItem.add(datas.get(p));
                         Collect(p,datas.get(p).getLawyerId());
-                        mHolder.isCollectTxt.setText("关注中");
+                        mHolder.isCollectTxt.setText("稍等..");
                     }else{
                         Toast.makeText(mContext,"请登录后再关注",Toast.LENGTH_SHORT).show();
                     }
@@ -209,6 +218,7 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             }
         });
+
         //mHolder.collectionLin.setVisibility(View.GONE);
         String [] specialFields;
         specialFields=datas.get(p).getSpecialField().split(",");

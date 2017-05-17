@@ -18,7 +18,7 @@
     <string name="bankActivity_organizationScreen">机构</string>
     <!--银行贷款-->
     <string name="bankloan">银行贷款</string>
-    <string name="lookMore">查看更多</string>
+    <string name="lookMore">更多</string>
     <string name="loanYearRate">贷款年利率</string>
     <string name="money_tv">金额</string>
     <string name="deadline_tv">期限</string>

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -177,7 +178,7 @@ public class MyFocuseFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.i("gqf","BankLoanItems"+e.toString());
                     }
 
                     @Override
@@ -208,7 +209,7 @@ public class MyFocuseFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.i("gqf","BankLoanItems"+e.toString());
                     }
 
                     @Override
@@ -238,7 +239,7 @@ public class MyFocuseFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.i("gqf","BankLoanItems"+e.toString());
                     }
 
                     @Override
@@ -268,6 +269,7 @@ public class MyFocuseFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.i("gqf","BankLoanItems"+e.toString());
                     }
 
                     @Override
@@ -280,6 +282,7 @@ public class MyFocuseFragment extends BaseFragment {
                             toastTxt.setVisibility(View.VISIBLE);
                             BankLoanItems=new ArrayList<BankLoanItem>();
                         }
+                        Log.i("gqf","BankLoanItems"+BankLoanItems.toString());
                         initLoanList(BankLoanItems);
                     }
                 });
@@ -298,7 +301,7 @@ public class MyFocuseFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.i("gqf","BankLoanItems"+e.toString());
                     }
 
                     @Override
@@ -430,6 +433,7 @@ public void initLoanList(List<BankLoanItem> datas) {
     public void initLawList(List<LawyerItem> datas) {
         if (lawListAdapter == null) {
             lawListAdapter = new LawListAdapter(getActivity(), datas);
+            lawListAdapter.setInMyFocuse(true);
             lawListAdapter.setOnItemClickListener(new LawListAdapter.MyItemClickListener() {
                 @Override
                 public void OnClickListener(int position) {

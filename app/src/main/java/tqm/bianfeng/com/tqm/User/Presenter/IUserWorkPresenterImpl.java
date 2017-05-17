@@ -121,10 +121,11 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
 
                     @Override
                     public void onNext(ResultCodeWithUser resultCodeWithUser) {
+                        Log.i("gqf","resultCodeWithUser"+resultCodeWithUser.toString());
                         if(resultCodeWithUser.getUser()!=null) {
                             if(realm.where(User.class).findFirst()!=null) {
-                                if (realm.where(User.class).findFirst().getUserId()!=resultCodeWithUser.getUser().getUserId()||
-                                        !resultCodeWithUser.getUser().getUserAvatar().equals(realm.where(User.class).findFirst().getUserAvatar())) {
+                                if (!realm.where(User.class).findFirst().equals(resultCodeWithUser.getUser()) ) {
+                                    Log.i("gqf","resultCodeWithUser"+resultCodeWithUser.toString());
                                     User user = realm.where(User.class).findFirst();
                                     realm.beginTransaction();
                                     user.setUserId(resultCodeWithUser.getUser().getUserId());

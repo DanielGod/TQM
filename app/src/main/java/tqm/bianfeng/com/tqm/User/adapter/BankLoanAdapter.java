@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,10 +33,10 @@ public class BankLoanAdapter extends RecyclerView.Adapter<BankLoanAdapter.ViewHo
 
 
     public int getLayout() {
-        return R.layout.listitem;
+        return R.layout.loan_listitem;
     }
 
-    public BankLoanAdapter( Context mContext,List<BankLoanItem> datas) {
+    public BankLoanAdapter(Context mContext, List<BankLoanItem> datas) {
         this.mContext = mContext;
         this.datas = datas;
         mLayoutInflater = LayoutInflater.from(mContext);
@@ -65,23 +66,21 @@ public class BankLoanAdapter extends RecyclerView.Adapter<BankLoanAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        BankLoanItem data =datas.get(position);
-        holder.institutionNameLinear.setVisibility(View.VISIBLE);
-        holder.investmentTermLinear.setVisibility(View.VISIBLE);
-        holder.financViewsLinear.setVisibility(View.VISIBLE);
-        holder.loanMoneyAndloanTypeNameLinear.setVisibility(View.VISIBLE);
-        holder.annualReturnTv.setText(data.getRateMin() + "%"+"-"+data.getRateMax() + "%");
+        BankLoanItem data = datas.get(position);
+
+
+        holder.annualReturnTv.setText(data.getRateMin() + "%" + "-" + data.getRateMax() + "%");
         holder.institutionNameTv.setText(data.getInstitution());
         holder.titleTv.setText(data.getLoanName());
-        holder.loanMoneyTv.setText(data.getLoanMoneyMin()+"-"+data.getLoanMoneyMax()+ "万");
-        holder.investmentTermTv.setText(data.getLoanPeriodMin() +"-"+data.getLoanPeriodMax()+ "个月");
+        holder.purchaseMoneyTv.setText(data.getLoanMoneyMin() + "-" + data.getLoanMoneyMax() + "万");
+        holder.investmentTermTv.setText(data.getLoanPeriodMin() + "-" + data.getLoanPeriodMax() + "个月");
         holder.financViewsTv.setText(data.getLoanViews() + "");
-            holder.linearlayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mItemClickListener.onItemClick(null,position);
-                }
-            });
+        holder.linearlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mItemClickListener.onItemClick(null, position);
+            }
+        });
     }
 
     @Override
@@ -107,26 +106,14 @@ public class BankLoanAdapter extends RecyclerView.Adapter<BankLoanAdapter.ViewHo
         TextView purchaseMoneyTv;
         @BindView(R.id.purchaseMoney_linear)
         LinearLayout purchaseMoneyLinear;
-        @BindView(R.id.riskGradeName_tv)
-        TextView riskGradeNameTv;
-        @BindView(R.id.riskGradeName_linear)
-        LinearLayout riskGradeNameLinear;
-        @BindView(R.id.purchaseMoneyAndRiskGradeName_linear)
-        LinearLayout purchaseMoneyAndRiskGradeNameLinear;
-        @BindView(R.id.loanMoney_tv)
-        TextView loanMoneyTv;
-        @BindView(R.id.loanMoney_linear)
-        LinearLayout loanMoneyLinear;
-        @BindView(R.id.loanTypeName_tv)
-        TextView loanTypeNameTv;
-        @BindView(R.id.loanTypeName_linear)
-        LinearLayout loanTypeNameLinear;
-        @BindView(R.id.loanMoneyAndloanTypeName_linear)
-        LinearLayout loanMoneyAndloanTypeNameLinear;
         @BindView(R.id.investmentTerm_tv)
         TextView investmentTermTv;
         @BindView(R.id.investmentTerm_linear)
         LinearLayout investmentTermLinear;
+        @BindView(R.id.purchaseMoneyAndRiskGradeName_linear)
+        LinearLayout purchaseMoneyAndRiskGradeNameLinear;
+        @BindView(R.id.imageView)
+        ImageView imageView;
         @BindView(R.id.institutionName_tv)
         TextView institutionNameTv;
         @BindView(R.id.institutionName_linear)
@@ -137,7 +124,6 @@ public class BankLoanAdapter extends RecyclerView.Adapter<BankLoanAdapter.ViewHo
         LinearLayout financViewsLinear;
         @BindView(R.id.linearlayout)
         LinearLayout linearlayout;
-
 
         ViewHolder(View view, BankLoanItemClickListener listener) {
             super(view);

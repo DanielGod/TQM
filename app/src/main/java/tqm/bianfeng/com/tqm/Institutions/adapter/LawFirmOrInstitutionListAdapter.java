@@ -184,7 +184,7 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         }
         for(int i=0;i<inCollectItem.size();i++){
             if(inCollectItem.get(i).getInstitutionId()==datas.get(p).getInstitutionId()){
-                mHolder.isCollectTxt.setText("收藏中");
+                mHolder.isCollectTxt.setText("稍等..");
             }
         }
         mHolder.isCollectTxt.setOnClickListener(new View.OnClickListener() {
@@ -201,7 +201,7 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
                     if(realm.where(User.class).findFirst()!=null){
                         inCollectItem.add(datas.get(p));
                         Collect(p,datas.get(p).getInstitutionId());
-                        mHolder.isCollectTxt.setText("收藏中");
+                        mHolder.isCollectTxt.setText("稍等..");
                     }else{
                         Toast.makeText(mContext,"请登录后再收藏",Toast.LENGTH_SHORT).show();
                     }

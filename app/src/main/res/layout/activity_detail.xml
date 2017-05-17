@@ -119,7 +119,7 @@
                         android:layout_weight="1"
                         android:background="?android:selectableItemBackground"
                         android:clickable="true"
-                        android:src="@drawable/ic_law_focuse"
+                        android:src="@drawable/ic_focuse_false"
                         android:padding="@dimen/mediummxdp"
                         />
                     <ImageView
@@ -129,7 +129,7 @@
                         android:layout_weight="1"
                         android:background="?android:selectableItemBackground"
                         android:clickable="true"
-                        android:src="@drawable/ic_law_focuse"
+                        android:src="@drawable/ic_detail_share"
                         android:padding="@dimen/mediummxdp"
                         />
                 </LinearLayout>

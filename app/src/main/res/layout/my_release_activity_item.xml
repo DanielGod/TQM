@@ -1,9 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="@dimen/hugehxxdp"
+              android:layout_margin="@dimen/smallmdp"
+              android:orientation="vertical"
+              android:background="@color/white"
 
-    <include layout="@layout/firstpage_listitem"/>
-    <include layout="@layout/my_release_item_bottom"/>
-</RelativeLayout>
+    >
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:background="?android:selectableItemBackground"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/smallmdp"
+            >
+            <ImageView
+                android:id="@+id/logo_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/banklogo"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/smallmdp"
+            android:layout_marginTop="@dimen/smallmdp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/smallmdp"
+            android:background="@color/whitesmoke"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/activityTitle_tv"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/mediumsp"
+                        android:text="宋江支行年收益4.5%，起购5000元"
+                        android:textColor="@color/black"
+                        />
+                    <ImageView
+                        android:id="@+id/release_type_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_release01"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:adjustViewBounds="true"
+                        android:layout_marginLeft="@dimen/smallmdp"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/institutionName_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:text="发行机构"
+                        android:textSize="@dimen/smallsp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/release_edi_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/radio_orgen_border_shap"
+                        android:text="编辑"
+                        android:gravity="center"
+                        android:textSize="@dimen/smallsp"
+                        android:textColor="@color/colorPrimary"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/tinymdp"
+                        android:layout_marginBottom="@dimen/tinymdp"
+                        android:adjustViewBounds="true"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+                    <TextView
+                        android:id="@+id/release_delect_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/radio_red_border_shap"
+                        android:text="删除"
+                        android:gravity="center"
+                        android:textSize="@dimen/smallsp"
+                        android:textColor="@color/red"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/tinymdp"
+                        android:layout_marginBottom="@dimen/tinymdp"
+                        android:adjustViewBounds="true"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/smallmdp"/>
+                    </LinearLayout>
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="@dimen/activity_horizontal_margin"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/eye3"
+                        android:adjustViewBounds="true"
+                        android:layout_marginRight="@dimen/tinymdp"
+                        />
+
+                    <TextView
+                        android:id="@+id/activityViews_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="0"
+                        android:textSize="@dimen/smallsp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_light"
+        />
+</LinearLayout>

@@ -43,6 +43,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_right_arrow"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/smallmdp"
                     />
             </LinearLayout>
 
@@ -185,16 +186,7 @@
                     android:text="    很抱歉，您的审核信息未通过"
                     />
 
-                <Button
-                    android:id="@+id/commit"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/mediumhdp"
-                    android:layout_margin="@dimen/smallmdp"
-                    android:background="@drawable/apply_for_selector"
-                    android:text="继续编辑"
-                    android:textColor="@drawable/apply_for_text_color_selector"
-                    android:textSize="@dimen/mediumxsp"
-                    />
+
 
             </LinearLayout>
 

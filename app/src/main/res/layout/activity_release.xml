@@ -49,7 +49,7 @@
                 android:text="发布贷款信息"
                 android:textSize="@dimen/bigsp"
                 android:gravity="center"
-                android:textColor="@color/font_black_1"
+                android:textColor="@color/black"
                 android:padding="@dimen/activity_horizontal_margin"
                 />
         </LinearLayout>
@@ -76,7 +76,7 @@
                 android:text="发布活动信息"
                 android:textSize="@dimen/bigsp"
                 android:gravity="center"
-                android:textColor="@color/font_black_1"
+                android:textColor="@color/black"
                 android:padding="@dimen/activity_horizontal_margin"
                 />
         </LinearLayout>

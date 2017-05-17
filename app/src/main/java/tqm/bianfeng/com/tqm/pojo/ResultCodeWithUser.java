@@ -15,4 +15,11 @@ public class ResultCodeWithUser extends ResultCode {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "ResultCodeWithUser{" +
+                "user=" + user +
+                '}';
+    }
 }

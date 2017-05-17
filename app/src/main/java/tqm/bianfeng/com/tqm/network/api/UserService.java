@@ -241,6 +241,11 @@ public interface UserService {
      * 发布贷款信息删除
      */
     @GET("loan/delete/{loanId}")
-    Observable<ResultCode> deleteById(@Path("loanId") int loanId);
+    Observable<ResultCode> deleteloanById(@Path("loanId") int loanId);
 
+    /**
+     * 发布贷款信息删除
+     */
+    @GET("activity/delete/{activityId}")
+    Observable<ResultCode> deleteactivityById(@Path("activityId") int activityId);
 }

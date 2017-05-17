@@ -14,8 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:orientation="vertical">
 
 
             <RelativeLayout
@@ -37,18 +37,48 @@
                     android:src="@drawable/ic_user_head_img"
                     />
 
-                <TextView
-                    android:id="@+id/user_register_phone_num_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/smallhdp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_above="@+id/user_login_registered_btn"
-                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:text="12345678900"
-                    android:textColor="@color/font_black_1"
-                    android:textSize="@dimen/mediumxsp"
-                    android:visibility="invisible"
-                    />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/user_register_phone_num_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/smallhdp"
+                        android:gravity="center"
+                        android:text="12345678900"
+                        android:textColor="@color/font_black_1"
+                        android:textSize="@dimen/mediumxsp"
+                        android:visibility="invisible"
+                        />
+
+                    <LinearLayout
+                        android:id="@+id/ic_company_lin"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/smallhdp"
+                        android:layout_below="@+id/user_login_registered_btn"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        >
+
+
+                        <ImageView
+                            android:id="@+id/ic_company_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/smallmdp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/ic_company1001"
+                            />
+
+
+                    </LinearLayout>
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/user_phong_num_edi"
@@ -63,7 +93,8 @@
                     android:inputType="phone"
                     android:paddingLeft="@dimen/smallmdp"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/mediumsp"/>
+                    android:textSize="@dimen/mediumsp"
+                    />
 
                 <Button
                     android:id="@+id/user_login_registered_btn"
@@ -88,11 +119,11 @@
                 android:background="@color/whitesmoke"/>
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/hugehxxdp"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:id="@+id/my_release_lin"
                     android:layout_width="0dp"
@@ -106,11 +137,11 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/mediummdp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:src="@drawable/ic_user_collection"
-                        android:layout_marginTop="@dimen/mediummdp"
                         android:padding="@dimen/smallmdp"
+                        android:src="@drawable/ic_user_attestation"
 
                         />
 
@@ -130,6 +161,7 @@
                     android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:background="@color/whitesmoke"/>
+
                 <LinearLayout
                     android:id="@+id/bank_collection_lin"
                     android:layout_width="0dp"
@@ -142,11 +174,11 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/mediummdp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:src="@drawable/ic_user_collection"
-                        android:layout_marginTop="@dimen/mediummdp"
                         android:padding="@dimen/smallmdp"
+                        android:src="@drawable/ic_user_collection"
 
                         />
 
@@ -179,11 +211,11 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/mediummdp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:src="@drawable/ic_user_fouces"
-                        android:layout_marginTop="@dimen/mediummdp"
                         android:padding="@dimen/smallmdp"
+                        android:src="@drawable/ic_user_fouces"
                         />
 
                     <TextView
@@ -215,11 +247,11 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/mediummdp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:src="@drawable/ic_user_read"
-                        android:layout_marginTop="@dimen/mediummdp"
                         android:padding="@dimen/smallmdp"
+                        android:src="@drawable/ic_user_read"
                         />
 
                     <TextView
@@ -283,6 +315,7 @@
                     android:textColor="@color/font_black_2"
                     android:textSize="@dimen/smallsp"
                     />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -298,6 +331,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/whitesmoke"/>
+
             <LinearLayout
                 android:id="@+id/user_release_lin"
                 android:layout_width="match_parent"
@@ -312,7 +346,7 @@
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_apply_for"
+                    android:src="@drawable/ic_user_release"
                     />
 
                 <TextView
@@ -340,6 +374,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/whitesmoke"/>
+
             <LinearLayout
                 android:id="@+id/user_feedback_lin"
                 android:layout_width="match_parent"

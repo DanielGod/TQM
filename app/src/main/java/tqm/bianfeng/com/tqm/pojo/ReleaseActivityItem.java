@@ -1,49 +1,25 @@
 package tqm.bianfeng.com.tqm.pojo;
 
-import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
-
 /**
  * Created by johe on 2017/5/16.
  */
 
-public class ReleaseActivityItem extends BankActivityItem{
+public class ReleaseActivityItem {
     private String statusCode;//状态:00-待审核;01-审核通过;02-审核未通过
 
     private String remark;//备注
-    public Integer activityId;
-    public String activityTitle;
-    public String institutionName;
-    public Integer activityViews;
-    public String institutionIcon;
-    public String imageUrl;
+    private int activityId;
+    private String activityTitle;
+    private String institution;
+    private int activityViews;
+    private String imageUrl;
+    private int atttenNum;
 
-    @Override
-    public String toString() {
-        return "ReleaseActivityItem{" +
-                "statusCode='" + statusCode + '\'' +
-                ", remark='" + remark + '\'' +
-                ", activityId=" + activityId +
-                ", activityTitle='" + activityTitle + '\'' +
-                ", institutionName='" + institutionName + '\'' +
-                ", activityViews=" + activityViews +
-                ", institutionIcon='" + institutionIcon + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                '}';
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public Integer getActivityId() {
+    public int getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(Integer activityId) {
+    public void setActivityId(int activityId) {
         this.activityId = activityId;
     }
 
@@ -55,29 +31,38 @@ public class ReleaseActivityItem extends BankActivityItem{
         this.activityTitle = activityTitle;
     }
 
-    public String getInstitutionName() {
-        return institutionName;
+    public String getInstitution() {
+        return institution;
     }
 
-    public void setInstitutionName(String institutionName) {
-        this.institutionName = institutionName;
+    public void setInstitution(String institution) {
+        this.institution = institution;
     }
 
-    public Integer getActivityViews() {
+    public int getActivityViews() {
         return activityViews;
     }
 
-    public void setActivityViews(Integer activityViews) {
+    public void setActivityViews(int activityViews) {
         this.activityViews = activityViews;
     }
 
-    public String getInstitutionIcon() {
-        return institutionIcon;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setInstitutionIcon(String institutionIcon) {
-        this.institutionIcon = institutionIcon;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
+
+    public int getAtttenNum() {
+        return atttenNum;
+    }
+
+    public void setAtttenNum(int atttenNum) {
+        this.atttenNum = atttenNum;
+    }
+
     public String getStatusCode() {
         return statusCode;
     }
@@ -94,5 +79,17 @@ public class ReleaseActivityItem extends BankActivityItem{
         this.remark = remark;
     }
 
-
+    @Override
+    public String toString() {
+        return "ReleaseActivityItem{" +
+                "statusCode='" + statusCode + '\'' +
+                ", remark='" + remark + '\'' +
+                ", activityId=" + activityId +
+                ", activityTitle='" + activityTitle + '\'' +
+                ", institution='" + institution + '\'' +
+                ", activityViews=" + activityViews +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", atttenNum=" + atttenNum +
+                '}';
+    }
 }

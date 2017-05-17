@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
         <TextView
             android:layout_width="@dimen/smallhdp"
             android:layout_height="match_parent"
@@ -34,7 +35,8 @@
             android:lines="1"
             android:paddingLeft="@dimen/smallmdp"
             android:textColor="@color/font_black_1"
-            android:textSize="@dimen/mediumsp"/>
+            android:layout_marginTop="@dimen/tinymdp"
+            android:textSize="@dimen/smallsp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,7 +67,8 @@
             android:clickable="true"
             android:background="?android:selectableItemBackground"
             android:paddingLeft="@dimen/smallmdp"
+            android:layout_marginBottom="@dimen/tinymdp"
             android:textColor="@color/font_black_1"
-            android:textSize="@dimen/mediumsp"/>
+            android:textSize="@dimen/smallsp"/>
     </LinearLayout>
 </LinearLayout>

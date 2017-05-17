@@ -359,11 +359,11 @@ public class DetailActivity extends BaseActivity {
         //if (!detailType.equals("04")) {
         if (isCollection) {
             //关注状态
-            focuseImg.setImageResource(R.drawable.ic_user_fouces);
+            focuseImg.setImageResource(R.drawable.ic_focuse_true);
             //actionA.setTitle("已关注");
         } else {
             //未关注状态
-            focuseImg.setImageResource(R.drawable.ic_law_focuse);
+            focuseImg.setImageResource(R.drawable.ic_focuse_false);
             //actionA.setTitle("未关注");
         }
         //ultipleActionsDown.setVisibility(View.VISIBLE);

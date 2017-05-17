@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -82,6 +83,10 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     LinearLayout userReleaseLin;
     @BindView(R.id.apply_for_status_txt)
     TextView applyForStatusTxt;
+    @BindView(R.id.ic_company_img)
+    ImageView icCompanyImg;
+    @BindView(R.id.ic_company_lin)
+    LinearLayout icCompanyLin;
 
     public static UserFragment newInstance(String param1) {
         UserFragment fragment = new UserFragment();
@@ -106,10 +111,10 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
                 break;
             case R.id.user_apply_for_lin:
                 if (isLogin()) {
-                    if(mUser.getApplyForStatu().equals("00")||mUser.getApplyForStatu().equals("01")||mUser.getApplyForStatu().equals("02")){
-                       //查看审核状态
+                    if (mUser.getApplyForStatu().equals("00") || mUser.getApplyForStatu().equals("01") || mUser.getApplyForStatu().equals("02")) {
+                        //查看审核状态
                         mListener.changeActivity(ApplyForStatusActivity.class);
-                    }else{
+                    } else {
                         mListener.changeActivity(ApplyForChooseActivity.class);
                     }
                 }
@@ -176,7 +181,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     @Override
     public void onResume() {
         super.onResume();
-        if(realm.where(User.class).findFirst() != null){
+        if (realm.where(User.class).findFirst() != null) {
             iUserWorkPresenter.getAuditCode(realm.where(User.class).findFirst().getUserId());
         }
 
@@ -210,26 +215,38 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             userRegisterPhoneNumTxt.setVisibility(View.VISIBLE);
             userRegisterPhoneNumTxt.setText(mUser.getUserPhone());
             userPhongNumEdi.setVisibility(View.GONE);
-                userLoginRegisteredBtn.setVisibility(View.GONE);
-                //userTopRel.setBackgroundResource(R.drawable.user_top_bg);
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) userCircleImg.getLayoutParams();
-                lp.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
-                lp.addRule(RelativeLayout.CENTER_VERTICAL);
-                userCircleImg.setLayoutParams(lp);
-                LinearLayout.LayoutParams linlp = (LinearLayout.LayoutParams) userTopRel.getLayoutParams();
-                linlp.height = (int) getResources().getDimension(R.dimen.hugehxxxxxxdp);
-                userTopRel.setLayoutParams(linlp);
-                //显示头像
-                resetUserHeadImg(true);
-            if(mUser.getUserType()!=null) {
+            userLoginRegisteredBtn.setVisibility(View.GONE);
+            //userTopRel.setBackgroundResource(R.drawable.user_top_bg);
+            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) userCircleImg.getLayoutParams();
+            lp.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
+            lp.addRule(RelativeLayout.CENTER_VERTICAL);
+            userCircleImg.setLayoutParams(lp);
+            LinearLayout.LayoutParams linlp = (LinearLayout.LayoutParams) userTopRel.getLayoutParams();
+            linlp.height = (int) getResources().getDimension(R.dimen.hugehxxxxxxdp);
+            userTopRel.setLayoutParams(linlp);
+            //显示头像
+            resetUserHeadImg(true);
+            if (mUser.getUserType() != null) {
                 if (mUser.getUserType().equals("1001") || mUser.getUserType().equals("1002") || mUser.getUserType().equals("2001") || mUser.getUserType().equals("2002")) {
                     userReleaseLin.setVisibility(View.VISIBLE);
                     myReleaseLin.setVisibility(View.VISIBLE);
+                    icCompanyLin.setVisibility(View.VISIBLE);
+                    if (mUser.getUserType().equals("1001")) {
+                        icCompanyImg.setImageResource(R.drawable.ic_company1001);
+
+                    } else if (mUser.getUserType().equals("1002")) {
+                        icCompanyImg.setImageResource(R.drawable.ic_company1002);
+                    } else if (mUser.getUserType().equals("2001")) {
+                        icCompanyImg.setImageResource(R.drawable.ic_company2001);
+                    } else if (mUser.getUserType().equals("2002")) {
+                        icCompanyImg.setImageResource(R.drawable.ic_company2002);
+                    }
                 } else {
+                    icCompanyLin.setVisibility(View.GONE);
                     userReleaseLin.setVisibility(View.GONE);
                     myReleaseLin.setVisibility(View.GONE);
                 }
-            }else{
+            } else {
                 userReleaseLin.setVisibility(View.GONE);
                 myReleaseLin.setVisibility(View.GONE);
             }
@@ -318,14 +335,14 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     }
 
     public void showStatus(String code) {
-        if(code.equals("00")){
+        if (code.equals("00")) {
             applyForStatusTxt.setText("待审");
-        }else if(code.equals("01")){
+        } else if (code.equals("01")) {
             applyForStatusTxt.setText("");
             //userApplyForLin.setVisibility(View.GONE);
             userReleaseLin.setVisibility(View.VISIBLE);
             myReleaseLin.setVisibility(View.VISIBLE);
-        }else if(code.equals("02")){
+        } else if (code.equals("02")) {
             applyForStatusTxt.setText("未通过");
         }
         realm.beginTransaction();

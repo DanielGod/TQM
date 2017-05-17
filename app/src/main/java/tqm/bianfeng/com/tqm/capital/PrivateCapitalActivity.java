@@ -6,9 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhy.adapter.recyclerview.wrapper.LoadMoreWrapper;
@@ -18,6 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -47,6 +48,8 @@ public class PrivateCapitalActivity extends BaseActivity {
     LoadingIndicator indicator;
     @BindView(R.id.no_search_txt)
     TextView noSearchTxt;
+    @BindView(R.id.action_search_img)
+    ImageView actionSearchImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,17 +57,17 @@ public class PrivateCapitalActivity extends BaseActivity {
         setContentView(R.layout.activity_private_capital);
         ButterKnife.bind(this);
         setToolbar(privateCapitalToolbar, "民间资本");
-        privateCapitalToolbar.inflateMenu(R.menu.search_menu);
-        privateCapitalToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.search) {
-                    startActivity(new Intent(PrivateCapitalActivity.this, SearchInstiutionsActivity.class));
-                }
-                return false;
-            }
-        });
-        datas=new ArrayList<>();
+        //        privateCapitalToolbar.inflateMenu(R.menu.search_menu);
+        //        privateCapitalToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        //            @Override
+        //            public boolean onMenuItemClick(MenuItem item) {
+        //                if (item.getItemId() == R.id.search) {
+        //                    startActivity(new Intent(PrivateCapitalActivity.this, SearchInstiutionsActivity.class));
+        //                }
+        //                return false;
+        //            }
+        //        });
+        datas = new ArrayList<>();
         noSearchTxt.setVisibility(View.GONE);
         initData();
     }
@@ -86,11 +89,11 @@ public class PrivateCapitalActivity extends BaseActivity {
                 loadMoreTxt.loadMoreViewAnim(4);
             }
         }
-        int userId=0;
-        if(realm.where(User.class).findFirst()!=null){
-            userId=realm.where(User.class).findFirst().getUserId();
+        int userId = 0;
+        if (realm.where(User.class).findFirst() != null) {
+            userId = realm.where(User.class).findFirst().getUserId();
         }
-        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getInstitutionItem("03",userId, page, 10)
+        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getInstitutionItem("03", userId, page, 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<InstitutionItem>>() {
@@ -101,7 +104,7 @@ public class PrivateCapitalActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.i("gqf","onError"+e.toString());
+                        Log.i("gqf", "onError" + e.toString());
                         indicator.hideLoading();
                         showSearchResult();
                         if (loadMoreTxt != null) {
@@ -126,7 +129,7 @@ public class PrivateCapitalActivity extends BaseActivity {
                         indicator.hideLoading();
 
                         //加载更多判断
-                        loadMoreTxt.doLoad(datas.size(),institutionItems.size());
+                        loadMoreTxt.doLoad(datas.size(), institutionItems.size());
                     }
                 });
 
@@ -142,7 +145,6 @@ public class PrivateCapitalActivity extends BaseActivity {
     }
 
 
-
     LoadMoreWrapper mLoadMoreWrapper;
     View loadMoreView;
     LoadMoreView loadMoreTxt;
@@ -154,11 +156,12 @@ public class PrivateCapitalActivity extends BaseActivity {
             lawFirmOrInstitutionListAdapter.setOnItemClickListener(new LawFirmOrInstitutionListAdapter.MyItemClickListener() {
                 @Override
                 public void OnClickListener(int position) {
-                    CompanyInfoActivity.index=3;
+                    CompanyInfoActivity.index = 3;
                     intent = new Intent(PrivateCapitalActivity.this, CompanyInfoActivity.class);
                     intent.putExtra("InstitutionId", datas.get(position).getInstitutionId());
                     startActivity(intent);
                 }
+
                 @Override
                 public void changePosition(int position) {
                     mLoadMoreWrapper.notifyItemChanged(position);
@@ -192,4 +195,8 @@ public class PrivateCapitalActivity extends BaseActivity {
     }
 
 
+    @OnClick(R.id.action_search_img)
+    public void onClick() {
+        startActivity(new Intent(PrivateCapitalActivity.this, SearchInstiutionsActivity.class));
+    }
 }

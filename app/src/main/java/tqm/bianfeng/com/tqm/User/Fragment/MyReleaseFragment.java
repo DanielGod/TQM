@@ -23,6 +23,7 @@ import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.adapter.MyReleaseActivityAdapter;
 import tqm.bianfeng.com.tqm.User.adapter.MyReleaseLoanAdapter;
+import tqm.bianfeng.com.tqm.User.release.LoanOrActivityReleaseActivity;
 import tqm.bianfeng.com.tqm.User.release.ReleaseProgressActivity;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
@@ -73,10 +74,11 @@ public class MyReleaseFragment extends BaseFragment{
         ButterKnife.bind(this, view);
         //initData();
         //initData();
+        gson=new Gson();
         if(index==0){
-            //initActivityData();
+            initActivityData();
         }else{
-            //initLoanData();
+            initLoanData();
         }
         return view;
     }
@@ -99,7 +101,10 @@ public class MyReleaseFragment extends BaseFragment{
                     @Override
                     public void onNext(List<ReleaseLoanItem> releaseLoanItems) {
                         Log.i("gqf","onNext"+releaseLoanItems.toString());
-                        //initLoanAdapter(releaseLoanItems);
+                        if(releaseLoanItems.size()>0){
+                            toastTxt.setVisibility(View.GONE);
+                        }
+                        initLoanAdapter(releaseLoanItems);
                     }
                 });
 
@@ -123,7 +128,10 @@ public class MyReleaseFragment extends BaseFragment{
                     @Override
                     public void onNext(List<ReleaseActivityItem> releaseActivityItems) {
                         Log.i("gqf","onNext"+releaseActivityItems.toString());
-                        //initActivityAdapter(releaseActivityItems);
+                        if(releaseActivityItems.size()>0){
+                            toastTxt.setVisibility(View.GONE);
+                        }
+                        initActivityAdapter(releaseActivityItems);
                     }
                 });
 
@@ -137,8 +145,17 @@ public class MyReleaseFragment extends BaseFragment{
                 public void onItemClick(View view, int postion) {
                     Intent intent=new Intent(getActivity(), ReleaseProgressActivity.class);
                     intent.putExtra(ReleaseProgressActivity.RELEASE_TYPE,ReleaseProgressActivity.loan_type);
+                    intent.putExtra(ReleaseProgressActivity.RELEASE_JSON,gson.toJson(myReleaseLoanAdapter.getDatas().get(postion)));
                     startActivity(intent);
 
+                }
+
+                @Override
+                public void EdiRelease(int position) {
+                    LoanOrActivityReleaseActivity.RELEASE_TYPE=LoanOrActivityReleaseActivity.RELEASE_LOAN_TYPE;
+                    Intent intent=new Intent(getActivity(),LoanOrActivityReleaseActivity.class);
+                    intent.putExtra(LoanOrActivityReleaseActivity.RELEASE_ID,myReleaseLoanAdapter.getDatas().get(position).getLoanId());
+                    startActivity(intent);
                 }
             });
             initList(myReleaseLoanAdapter);
@@ -155,6 +172,15 @@ public class MyReleaseFragment extends BaseFragment{
                 public void OnClickListener(int position) {
                     Intent intent=new Intent(getActivity(), ReleaseProgressActivity.class);
                     intent.putExtra(ReleaseProgressActivity.RELEASE_TYPE,ReleaseProgressActivity.activity_type);
+                    intent.putExtra(ReleaseProgressActivity.RELEASE_JSON,gson.toJson(myReleaseActivityAdapter.getDataItem(position)));
+                    startActivity(intent);
+                }
+
+                @Override
+                public void EdiRelease(int position) {
+                    LoanOrActivityReleaseActivity.RELEASE_TYPE=LoanOrActivityReleaseActivity.RELEASE_ACTIVITY_TYPE;
+                    Intent intent=new Intent(getActivity(),LoanOrActivityReleaseActivity.class);
+                    intent.putExtra(LoanOrActivityReleaseActivity.RELEASE_ID,myReleaseActivityAdapter.getDataItem(position).getActivityId());
                     startActivity(intent);
                 }
             });
@@ -165,6 +191,7 @@ public class MyReleaseFragment extends BaseFragment{
 
     }
     public void initList(RecyclerView.Adapter adapter){
+
         myFocuseList.setLayoutManager(new LinearLayoutManager(getActivity()));
         myFocuseList.setAdapter(adapter);
 
