@@ -43,8 +43,10 @@ public class ReleaseActivity extends BaseActivity {
                 startActivity(new Intent(ReleaseActivity.this,LoanOrActivityReleaseActivity.class));
                 break;
             case R.id.release_activity_lin:
-                LoanOrActivityReleaseActivity.RELEASE_TYPE=LoanOrActivityReleaseActivity.RELEASE_ACTIVITY_TYPE;
-                startActivity(new Intent(ReleaseActivity.this,LoanOrActivityReleaseActivity.class));
+                //LoanOrActivityReleaseActivity.RELEASE_TYPE=LoanOrActivityReleaseActivity.RELEASE_ACTIVITY_TYPE;
+                //startActivity(new Intent(ReleaseActivity.this,LoanOrActivityReleaseActivity.class));
+                Intent intent=new Intent(ReleaseActivity.this,ReleaseMyActivityActivity.class);
+                startActivity(intent);
                 break;
         }
     }

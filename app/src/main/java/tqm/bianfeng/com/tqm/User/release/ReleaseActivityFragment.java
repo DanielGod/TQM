@@ -85,9 +85,12 @@ public class ReleaseActivityFragment extends BaseFragment {
                     intent.putExtra("detailTitle", releaseActivityItem.getActivityTitle());
                     startActivity(intent);
                 }else{
-                    LoanOrActivityReleaseActivity.RELEASE_TYPE=LoanOrActivityReleaseActivity.RELEASE_ACTIVITY_TYPE;
-                    Intent intent=new Intent(getActivity(),LoanOrActivityReleaseActivity.class);
-                    intent.putExtra(LoanOrActivityReleaseActivity.RELEASE_ID,releaseActivityItem.getActivityId());
+//                    LoanOrActivityReleaseActivity.RELEASE_TYPE=LoanOrActivityReleaseActivity.RELEASE_ACTIVITY_TYPE;
+//                    Intent intent=new Intent(getActivity(),LoanOrActivityReleaseActivity.class);
+//                    intent.putExtra(LoanOrActivityReleaseActivity.RELEASE_ID,releaseActivityItem.getActivityId());
+//                    startActivity(intent);
+                    Intent intent=new Intent(getActivity(),ReleaseMyActivityActivity.class);
+                    intent.putExtra(ReleaseMyActivityActivity.ACTIVITY_ID,releaseActivityItem.getActivityId());
                     startActivity(intent);
                 }
             }

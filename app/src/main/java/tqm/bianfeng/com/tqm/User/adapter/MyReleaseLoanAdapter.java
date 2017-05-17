@@ -131,7 +131,7 @@ public class MyReleaseLoanAdapter extends RecyclerView.Adapter<MyReleaseLoanAdap
         });
     }
     public void delect(final int position){
-        Subscription getBankFinancItem_subscription = NetWork.getUserService().deleteactivityById(datas.get(position).getLoanId())
+        Subscription getBankFinancItem_subscription = NetWork.getUserService().deleteloanById(datas.get(position).getLoanId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResultCode>() {

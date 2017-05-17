@@ -23,6 +23,7 @@
         android:layout_weight="1">
 
     </FrameLayout>
+
     <Button
         android:id="@+id/commit"
         android:layout_width="match_parent"

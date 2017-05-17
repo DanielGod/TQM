@@ -15,6 +15,9 @@ public class ShowDialogAndLoading {
     public static class Show{
         public static ShowDialogAndLoading showDialogAndLoading=new ShowDialogAndLoading();
     }
+    private ShowDialogAndLoading(){
+
+    }
 
     public interface Linsener{
         public void showBefore();

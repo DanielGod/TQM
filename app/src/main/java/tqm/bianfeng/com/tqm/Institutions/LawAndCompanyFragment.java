@@ -141,7 +141,7 @@ public class LawAndCompanyFragment extends BaseFragment {
                 public void OnClickListener(int position) {
                     intent=new Intent(getActivity(),CompanyInfoActivity.class);
                     intent.putExtra("InstitutionId",datas.get(position).getInstitutionId());
-                    CompanyInfoActivity.index=index;
+                    CompanyInfoActivity.index=2;
                     EventBus.getDefault().post(intent);
                 }
 

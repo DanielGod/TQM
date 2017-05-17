@@ -21,12 +21,14 @@ import tqm.bianfeng.com.tqm.pojo.ResultCodeWithCompanyFile;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.YwApplyEnter;
+import tqm.bianfeng.com.tqm.pojo.YwBankActivity;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankListItems;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 import tqm.bianfeng.com.tqm.pojo.result.ResultCodeWithImgPathList;
 import tqm.bianfeng.com.tqm.pojo.result.ResultWithAuditCode;
+import tqm.bianfeng.com.tqm.pojo.result.ResultWithLink;
 import tqm.bianfeng.com.tqm.update.UpdateMsg;
 
 /**
@@ -248,4 +250,38 @@ public interface UserService {
      */
     @GET("activity/delete/{activityId}")
     Observable<ResultCode> deleteactivityById(@Path("activityId") int activityId);
+
+    /**
+     * 富文本图片上传
+     */
+    @Multipart
+    @POST("activity/upload")
+    Observable<ResultWithLink> upload(
+            @Part MultipartBody.Part file
+    );
+    /**
+     * 发布活动文章图片上传
+     */
+    @Multipart
+    @POST("activity/uploadImg")
+    Observable<ResultWithLink> uploadImg(
+            @Part MultipartBody.Part file
+    );
+    /**
+     * 发布活动
+     */
+    @FormUrlEncoded
+    @POST("activity/save")
+    Observable<ResultCode> saveReleaseActivity(@Field("imageUrl") String imageUrl, @Field("activityTitle") String activityTitle,
+                                                  @Field("institution") String institution, @Field("activityContent") String activityContent,
+                                                  @Field("createUser") int createUser
+                                                );
+
+    /**
+     * 获取活动
+     */
+    @GET("activity/{activityId}/{userId}")
+    Observable<YwBankActivity> getReleaseActivity(@Path("activityId") int activityId, @Path("userId") int userId);
+
+
 }

@@ -391,12 +391,15 @@ public class ApplyForCompanyFragment extends BaseFragment {
                             if(index==1){
                                 ywApplyEnter.setCompanyLogo(paths);
                                 uploadLogoImgTxt.setEnabled(false);
+                                addLogoImgImg.setEnabled(false);
                             }else if(index==2){
                                 ywApplyEnter.setCompanyImage(paths);
                                 uploadCompanyImgTxt.setEnabled(false);
+                                addCompanyImgImg.setEnabled(false);
                             }else{
                                 ywApplyEnter.setCompanyImageOther(paths);
                                 uploadPersonalImgTxt.setEnabled(false);
+                                addPersonalImgImg.setEnabled(false);
                             }
                             Log.i("gqf","paths"+paths);
                         }else{

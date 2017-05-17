@@ -24,6 +24,7 @@ import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.adapter.MyReleaseActivityAdapter;
 import tqm.bianfeng.com.tqm.User.adapter.MyReleaseLoanAdapter;
 import tqm.bianfeng.com.tqm.User.release.LoanOrActivityReleaseActivity;
+import tqm.bianfeng.com.tqm.User.release.ReleaseMyActivityActivity;
 import tqm.bianfeng.com.tqm.User.release.ReleaseProgressActivity;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
@@ -178,9 +179,12 @@ public class MyReleaseFragment extends BaseFragment{
 
                 @Override
                 public void EdiRelease(int position) {
-                    LoanOrActivityReleaseActivity.RELEASE_TYPE=LoanOrActivityReleaseActivity.RELEASE_ACTIVITY_TYPE;
-                    Intent intent=new Intent(getActivity(),LoanOrActivityReleaseActivity.class);
-                    intent.putExtra(LoanOrActivityReleaseActivity.RELEASE_ID,myReleaseActivityAdapter.getDataItem(position).getActivityId());
+//                    LoanOrActivityReleaseActivity.RELEASE_TYPE=LoanOrActivityReleaseActivity.RELEASE_ACTIVITY_TYPE;
+//                    Intent intent=new Intent(getActivity(),LoanOrActivityReleaseActivity.class);
+//                    intent.putExtra(LoanOrActivityReleaseActivity.RELEASE_ID,myReleaseActivityAdapter.getDataItem(position).getActivityId());
+//                    startActivity(intent);
+                    Intent intent=new Intent(getActivity(),ReleaseMyActivityActivity.class);
+                    intent.putExtra(ReleaseMyActivityActivity.ACTIVITY_ID,myReleaseActivityAdapter.getDataItem(position).getActivityId());
                     startActivity(intent);
                 }
             });

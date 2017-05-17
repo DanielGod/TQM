@@ -221,17 +221,22 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         //mHolder.collectionLin.setVisibility(View.GONE);
         String [] specialFields;
-        specialFields=datas.get(p).getSpecialField().split(",");
-        for(int i=0;i<((specialFields.length>3)?3:specialFields.length);i++){
-            if(i==0){
-                mHolder.goodAt1.setVisibility(View.VISIBLE);
-                mHolder.goodAt1.setText(specialFields[0]);
-            }else if(i==1){
-                mHolder.goodAt2.setVisibility(View.VISIBLE);
-                mHolder.goodAt2.setText(specialFields[1]);
-            }else{
-                mHolder.goodAt3.setVisibility(View.VISIBLE);
-                mHolder.goodAt3.setText(specialFields[2]);
+        if(datas.get(p).getSpecialField()!=null) {
+            if(!datas.get(p).getSpecialField().equals("")) {
+                Log.i("gqf","getSpecialField"+datas.get(p).getSpecialField());
+                specialFields = datas.get(p).getSpecialField().split(",");
+                for (int i = 0; i < ((specialFields.length > 3) ? 3 : specialFields.length); i++) {
+                    if (i == 0) {
+                        mHolder.goodAt1.setVisibility(View.VISIBLE);
+                        mHolder.goodAt1.setText(specialFields[0]);
+                    } else if (i == 1) {
+                        mHolder.goodAt2.setVisibility(View.VISIBLE);
+                        mHolder.goodAt2.setText(specialFields[1]);
+                    } else {
+                        mHolder.goodAt3.setVisibility(View.VISIBLE);
+                        mHolder.goodAt3.setText(specialFields[2]);
+                    }
+                }
             }
         }
 
