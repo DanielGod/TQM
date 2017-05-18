@@ -69,7 +69,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="银行活动"
+                        android:text="@string/bankActivity"
                         android:textColor="@color/font_black_1"
                         android:textSize="@dimen/smallsp"/>
                 </LinearLayout>
@@ -134,37 +134,6 @@
                         android:textSize="@dimen/smallsp"/>
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/home_select_branches_lin"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="1dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:clickable="true"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="3"
-                        android:padding="@dimen/mediummxdp"
-                        android:src="@drawable/ic_select_branches"
-                        />
-
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="网点查询"
-                        android:textColor="@color/font_black_1"
-                        android:textSize="@dimen/smallsp"/>
-
-                </LinearLayout>
-
                 <LinearLayout
                     android:id="@+id/home_select_capital_lin"
                     android:layout_width="0dp"
@@ -193,6 +162,37 @@
                         android:textSize="@dimen/smallsp"/>
 
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/home_select_branches_lin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:padding="@dimen/mediummxdp"
+                        android:src="@drawable/jqqd"
+                        />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="网点查询"
+                        android:textColor="@color/font_black_1"
+                        android:textSize="@dimen/smallsp"/>
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
             <LinearLayout

@@ -55,7 +55,7 @@ public class TestFilterFragment extends Fragment {
     private static final String SARG_PARAM1 = "param1";
     private static final String SINSTITUTIONQUERY = "机构查询";
     private static final String SLOANTYPE = "贷款类型";
-    private static final String SPRODUCTTYPE = "贷款类型";
+    private static final String SPRODUCTTYPE = "产品类型";
     private static final String SRISKGRADE = "风险等级";
     private static final int IINSTITUTIONQUERY = 10; //贷款机构adapter标识
     private static final int IFINSTITUTIONQUERY = 11; //理财机构adapter标识
@@ -147,6 +147,8 @@ public class TestFilterFragment extends Fragment {
     @DebugLog
     public void onEventMainThread(buttonViewEven event) {
         String value = event.getButtonView();
+        Log.i("Daniel", "---value---" +value);
+        Log.i("Daniel", "---mFilterType---" +mFilterType);
         if (event.isFlag()) {
             if (mFilterType == 1)//1 贷款
                 // 接受贷款筛选条件点击处理
@@ -257,6 +259,7 @@ public class TestFilterFragment extends Fragment {
      * @return
      */
     private boolean getLoanType(String value) {
+        Log.i("Daniel", "---getLoanType---");
         boolean bStop = false;
         if (!bStop) {
             List<Institution> lInstitution = (List<Institution>) mapFilterInfo.get(SINSTITUTIONQUERY);
@@ -322,6 +325,7 @@ public class TestFilterFragment extends Fragment {
      * @return
      */
     public boolean getFinancingType(String value) {
+        Log.i("Daniel", "---getFinancingType---");
         boolean bStop = false;
         if (!bStop) {
             List<RiskGrade> lRiskGrades = (List<RiskGrade>) mapFilterInfo.get(SRISKGRADE);
@@ -745,14 +749,14 @@ public class TestFilterFragment extends Fragment {
             filter_value_ProductType = new ArrayList<>();
         }
         if (filter_value_ProductType.size() != 0) {
-            filterValues.setLoanType(getFilterStr(filter_value_ProductType));
+            filterValues.setProductType(getFilterStr(filter_value_ProductType));
         }
         //风险等级
         if (filter_value_RiskGrade == null) {
             filter_value_RiskGrade = new ArrayList<>();
         }
         if (filter_value_RiskGrade.size() != 0) {
-            filterValues.setLoanType(getFilterStr(filter_value_RiskGrade));
+            filterValues.setRiskGrade(getFilterStr(filter_value_RiskGrade));
         }
         //投资模式
         if (filterRedeemableCBox.isChecked()) {
@@ -764,18 +768,24 @@ public class TestFilterFragment extends Fragment {
         //适合人群
         Log.i("Daniel", "---filterCrowdEt---" + filterCrowdEt.getText().toString());
         filterValues.setCrowd(filterCrowdEt.getText().toString());
-        //发行城市
+        //发行城市(贷款)
         Log.i("Daniel", "---filterCityEt---" + filterCityEt.getText().toString());
         filterValues.setDistriArea(filterCityEt.getText().toString());
+        //发行城市(理财)
+        Log.i("Daniel", "---filterIssuingCityEt---" + filterIssuingCityEt.getText().toString());
+        filterValues.setIssuingCity(filterIssuingCityEt.getText().toString());
         //利率区间
         filterValues.setRateMin(filterRateMinEt.getText().toString());
         filterValues.setRateMax(filterRateMaxEt.getText().toString());
         //贷款金额
         filterValues.setLoanMoneyMin(filterLoanMoneyMinEt.getText().toString());
         filterValues.setLoanMoneyMax(filterLoanMoneyMaxEt.getText().toString());
-        //贷款期限区间
+        //贷款期限
         filterValues.setLoanPeriodMin(filterLoanPeriodMinEt.getText().toString());
         filterValues.setLoanPerioMax(filterLoanPeriodMaxEt.getText().toString());
+        //投资期限
+        filterValues.setInvestmentTermMin(filterInvestmentTermIntervalMinEt.getText().toString());
+        filterValues.setInvestmentTermMax(filterInvestmentTermIntervalMaxEt.getText().toString());
         String json = gson.toJson(filterValues);
         Log.i("Daniel", "---json---" + json);
         EventBus.getDefault().post(new FilterEvens(json));

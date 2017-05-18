@@ -15,12 +15,12 @@ public class FilterLoanVaule {
     String loanMoneyMax;
     String loanPeriodMin;
     String loanPerioMax;
-    String productype;
+    String productType;
     String riskGrade;
     String investmentModel;
     String issuingCity;
     String investmentTermMin;
-    String getInvestmentTermMax;
+    String investmentTermMax;
 
     @Override
     public String toString() {
@@ -35,12 +35,12 @@ public class FilterLoanVaule {
                 ", loanMoneyMax='" + loanMoneyMax + '\'' +
                 ", loanPeriodMin='" + loanPeriodMin + '\'' +
                 ", loanPerioMax='" + loanPerioMax + '\'' +
-                ", productype='" + productype + '\'' +
+                ", productType='" + productType + '\'' +
                 ", riskGrade='" + riskGrade + '\'' +
                 ", investmentModel='" + investmentModel + '\'' +
                 ", issuingCity='" + issuingCity + '\'' +
                 ", investmentTermMin='" + investmentTermMin + '\'' +
-                ", getInvestmentTermMax='" + getInvestmentTermMax + '\'' +
+                ", investmentTermMax='" + investmentTermMax + '\'' +
                 '}';
     }
 
@@ -124,12 +124,12 @@ public class FilterLoanVaule {
         this.loanPerioMax = loanPerioMax;
     }
 
-    public String getProductype() {
-        return productype;
+    public String getProductType() {
+        return productType;
     }
 
-    public void setProductype(String productype) {
-        this.productype = productype;
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 
     public String getRiskGrade() {
@@ -164,11 +164,11 @@ public class FilterLoanVaule {
         this.investmentTermMin = investmentTermMin;
     }
 
-    public String getGetInvestmentTermMax() {
-        return getInvestmentTermMax;
+    public String getInvestmentTermMax() {
+        return investmentTermMax;
     }
 
-    public void setGetInvestmentTermMax(String getInvestmentTermMax) {
-        this.getInvestmentTermMax = getInvestmentTermMax;
+    public void setInvestmentTermMax(String investmentTermMax) {
+        this.investmentTermMax = investmentTermMax;
     }
 }
