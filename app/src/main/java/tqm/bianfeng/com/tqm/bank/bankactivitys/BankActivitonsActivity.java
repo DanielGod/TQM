@@ -417,6 +417,8 @@ public class BankActivitonsActivity extends AppCompatActivity {
                     bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.colorPrimary));
                     bankActivityPageViewImg.setImageResource(R.drawable.asc_light);
                     isClickPageView = true;
+                    bankActivityFocusTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
+                    isClickFocus = false;
                     String queryParams = setQuerParams("activityViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
                     Log.i("Daniel", "---queryParams---" + queryParams);
                     initDate(0, Constan.NOTPULLUP, null, queryParams);

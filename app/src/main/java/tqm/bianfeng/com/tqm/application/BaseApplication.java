@@ -1,8 +1,6 @@
 package tqm.bianfeng.com.tqm.application;
 
 import android.app.Activity;
-import android.app.Application;
-import android.app.Service;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -22,7 +20,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import tqm.bianfeng.com.tqm.baidumap.service.LocationService;
+
 
 /**
  *

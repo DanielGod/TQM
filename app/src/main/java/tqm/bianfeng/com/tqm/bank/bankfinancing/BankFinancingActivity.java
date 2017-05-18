@@ -167,7 +167,7 @@ public class BankFinancingActivity extends AppCompatActivity {
                     public void run() {
                         SystemClock.sleep(1000);
                         if (isClickPageView) {
-                            String queryParams = setQuerParams("activityViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
+                            String queryParams = setQuerParams("financViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
                             Log.i("Daniel", "---queryParams---" + queryParams);
                             initDate(pagNum, Constan.NOTPULLUP, null, queryParams);
                         }
@@ -239,6 +239,7 @@ public class BankFinancingActivity extends AppCompatActivity {
                     @DebugLog
                     @Override
                     public void onError(Throwable e) {
+                        mainPullRefreshLv.setRefreshing(false);
                         mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
                         lodingIsFailOrSucess(3);
 
