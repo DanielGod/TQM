@@ -183,7 +183,7 @@ public class BankLoanActivity extends AppCompatActivity {
                     public void run() {
                         SystemClock.sleep(1000);
                         if (isClickPageView) {
-                            String queryParams = setQuerParams("activityViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
+                            String queryParams = setQuerParams("loanViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
                             Log.i("Daniel", "---queryParams---" + queryParams);
                             initDate(pagNum, Constan.NOTPULLUP, null, queryParams);
                         }
