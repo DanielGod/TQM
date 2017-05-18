@@ -28,7 +28,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="4.0%"
-            android:textSize="@dimen/mediumsp"
+            android:textSize="@dimen/mediumxsp"
             android:textColor="@color/home_orange"
             android:gravity="center_horizontal|bottom"
             />
@@ -88,6 +88,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:padding="@dimen/tinymdp"
                     >
                     <ImageView
                         android:id="@+id/presaleStatus_img"
@@ -117,9 +118,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="起购金额"
-                        android:textSize="@dimen/smallsp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/home_hotActivity_gray3"
+                        style="@style/sty_listLab_tv"
                         />
 
                     <TextView
@@ -136,9 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="期限"
-                        android:textSize="@dimen/smallsp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/home_hotActivity_gray3"
+                        style="@style/sty_listLab_tv"
                         />
                     <TextView
                         android:id="@+id/investmentTerm_tv"

@@ -43,7 +43,7 @@ public class RecyclerViewFragment extends Fragment {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     private int position = 0;//1：银行咨询 2：热点资讯 3：财富资讯
-    private int pagNum = 1;
+    private int pagNum = 0;
     private int mPagItemSize = 0;
     private CompositeSubscription mCompositeSubscription;
     List<BankInformItem> AllBankInformItems;

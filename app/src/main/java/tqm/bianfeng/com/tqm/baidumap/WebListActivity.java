@@ -131,7 +131,6 @@ public class WebListActivity extends BaseActivity implements OnGetPoiSearchResul
         mBaiduMap = ((SupportMapFragment) (getSupportFragmentManager()
                 .findFragmentById(R.id.map)))
                 .getBaiduMap();
-
         noSearchTxt.setVisibility(View.GONE);
     }
 

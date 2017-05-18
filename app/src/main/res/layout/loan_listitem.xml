@@ -28,7 +28,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="4.0%"
-                android:textSize="@dimen/mediumsp"
+                android:textSize="@dimen/mediumxsp"
                 android:textColor="@color/home_orange"
                 android:gravity="center_horizontal|bottom"
                 />
@@ -90,9 +90,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/money_tv"
-                            android:textSize="@dimen/smallsp"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/home_hotActivity_gray3"
+                            style="@style/sty_listLab_tv"
                             />
                         <TextView
                             android:id="@+id/purchaseMoney_tv"
@@ -105,14 +103,13 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         >
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/deadline_tv"
-                            android:textSize="@dimen/smallsp"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/home_hotActivity_gray3"
-                            />
+                            style="@style/sty_listLab_tv"/>
+
                         <TextView
                             android:id="@+id/investmentTerm_tv"
                             style="@style/listitemLayout_tv"

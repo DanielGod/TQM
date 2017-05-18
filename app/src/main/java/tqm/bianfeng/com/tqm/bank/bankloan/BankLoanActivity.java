@@ -173,7 +173,7 @@ public class BankLoanActivity extends AppCompatActivity {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Log.i("Daniel", "---onPullDownToRefresh---");
                 //下拉从首页开始加载
-                pagNum = 1;
+                pagNum = 0;
                 if (mAllBankLoanItems != null) {
                     //清空预存集合
                     mAllBankLoanItems.clear();
@@ -205,7 +205,7 @@ public class BankLoanActivity extends AppCompatActivity {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Log.i("Daniel", "---onPullUpToRefresh---");
-                pagNum = pagNum + 1;
+                pagNum = pagNum + Constan.PAGESIZE;
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

@@ -86,7 +86,7 @@ public class BankFinancingActivity extends AppCompatActivity {
 
     private CompositeSubscription mCompositeSubscription;
     private Unbinder unbinder;
-    private int pagNum = 1;
+    private int pagNum = 0;//每页开始的下标数
     private int mPagItemSize = 0;
     private BankFinancingAdapter bankFinancingAdapter;
     private List<BankFinancItem> mAllBankLoanItems;
@@ -157,7 +157,7 @@ public class BankFinancingActivity extends AppCompatActivity {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Log.i("Daniel", "---onPullDownToRefresh---");
-                pagNum = 1;
+                pagNum = 0;
                 if (mAllBankLoanItems != null) {
 
                     mAllBankLoanItems.clear();

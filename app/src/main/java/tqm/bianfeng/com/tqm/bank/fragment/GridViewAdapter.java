@@ -21,6 +21,8 @@ import hugo.weaving.DebugLog;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.pojo.bank.buttonViewEven;
 
+import static tqm.bianfeng.com.tqm.bank.fragment.TestFilterFragment.filter_item;
+
 /**
  * Created by wjy on 2016/11/7.
  */
@@ -81,12 +83,12 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
         data = datas.get(position);
         holder.text.setText(data);
 
-        if (TestFilterFragment.filter_item){
+        if (filter_item){
             holder.text.setChecked(false);
                Log.e("Daniel", "---position----" + position);
                Log.e("Daniel", "---datas.size()----" + datas.size());
             if (position==datas.size()-1){
-                FilterFragment.filter_item=false;
+                filter_item=false;
                 EventBus.getDefault().post(new ClearFilter(true));//清除筛选集合
             }
         }
