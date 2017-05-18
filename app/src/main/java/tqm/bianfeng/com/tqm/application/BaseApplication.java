@@ -1,6 +1,7 @@
 package tqm.bianfeng.com.tqm.application;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.Service;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -12,8 +13,6 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
-import com.baidu.mapapi.CoordType;
-import com.baidu.mapapi.SDKInitializer;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -97,7 +96,7 @@ public class BaseApplication extends MultiDexApplication {
     //Realm初始化
     public static String username;
     Realm realm;
-    public LocationService locationService;
+//    public LocationService locationService;
     public Vibrator mVibrator;
     @Override
     public void onCreate() {
@@ -111,14 +110,14 @@ public class BaseApplication extends MultiDexApplication {
         /***
          * 初始化定位sdk，建议在Application中创建
          */
-        locationService = new LocationService(getApplicationContext());
-        mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
-        SDKInitializer.initialize(getApplicationContext());
-        // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
-        SDKInitializer.initialize(this);
-        //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
-        //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
-        SDKInitializer.setCoordType(CoordType.BD09LL);
+//        locationService = new LocationService(getApplicationContext());
+//        mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+//        SDKInitializer.initialize(getApplicationContext());
+//        // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
+//        SDKInitializer.initialize(this);
+//        //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
+//        //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
+//        SDKInitializer.setCoordType(CoordType.BD09LL);
 
 
 

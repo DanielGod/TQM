@@ -38,7 +38,6 @@ import tqm.bianfeng.com.tqm.CustomView.MarqueeView;
 import tqm.bianfeng.com.tqm.CustomView.MyScrollview;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
-import tqm.bianfeng.com.tqm.baidumap.WebListActivity;
 import tqm.bianfeng.com.tqm.bank.bankactivitys.BankActivitonsActivity;
 import tqm.bianfeng.com.tqm.bank.bankfinancing.BankFinancingActivity;
 import tqm.bianfeng.com.tqm.bank.bankinformations.test.NewBankInformationActivity;
@@ -500,14 +499,10 @@ public class HomeFragment extends BaseFragment {
                 .subscribe(new Observer<List<BankInformItem>>() {
                     @Override
                     public void onCompleted() {
-
                     }
-
                     @Override
                     public void onError(Throwable e) {
-
                     }
-
                     @Override
                     public void onNext(List<BankInformItem> bankInformItems) {
                         initHotMsgList(bankInformItems);
@@ -592,9 +587,9 @@ public class HomeFragment extends BaseFragment {
             case R.id.select_more_hot_information_txt:
                 startActivity(new Intent(getActivity(), NewBankInformationActivity.class).putExtra("02", "02"));//02-热点资讯
                 break;
-            case R.id.home_select_branches_lin:
-                startActivity(new Intent(getActivity(), WebListActivity.class));
-                break;
+//            case R.id.home_select_branches_lin:
+//                startActivity(new Intent(getActivity(), WebListActivity.class));
+//                break;
 
         }
     }
