@@ -11,15 +11,22 @@
         android:layout_height="@dimen/hugehdp"
         android:background="@color/colorPrimary"
         android:fitsSystemWindows="true"
+        android:title=""
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:fitsSystemWindows="true">
-
+            android:background="@color/colorPrimary">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="民间资本"
+                android:textColor="@color/white"
+                android:textSize="@dimen/bigsp"
+                />
             <ImageView
                 android:id="@+id/action_search_img"
                 android:layout_width="@dimen/mediumxhdp"
@@ -30,9 +37,10 @@
                 android:background="?android:selectableItemBackground"
                 android:clickable="true"
                 />
-
         </RelativeLayout>
         </android.support.v7.widget.Toolbar>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

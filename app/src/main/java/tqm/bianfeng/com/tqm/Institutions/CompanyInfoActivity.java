@@ -58,7 +58,7 @@ public class CompanyInfoActivity extends BaseActivity {
     int InstitutionId;
     LawFirmOrInstitutionDetail data;
 
-    public static int index=1;
+    public static int index=-1;//1律师//2机构//3民资
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,8 @@ public class CompanyInfoActivity extends BaseActivity {
         InstitutionId = getIntent().getIntExtra("InstitutionId", 0);
         initHeaderRootView();
 
-        if(index==1||index==3){
+        Log.i("gqf","CompanyInfoActivity"+index);
+        if(index==2||index==3){
             initCompanyInfoData(InstitutionId);
         }else{
             initLawInfoData(InstitutionId);
@@ -146,13 +147,13 @@ public class CompanyInfoActivity extends BaseActivity {
                 android.R.color.holo_blue_light,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light};
-
-        if(index==1){
+        Log.i("gqf","CompanyInfoActivity"+index);
+        if(index==2){
             initCompanyFragment();
-        }else if(index==2){
-            initLawFragment();
-        }else{
+        }else if(index==3){
             initCapitalFragment();
+        }else{
+            initLawFragment();
         }
 
         initViewPager();
@@ -323,12 +324,13 @@ public class CompanyInfoActivity extends BaseActivity {
     }
     private void initViewPager() {
         mViewPager.setOffscreenPageLimit(4);
-        if(index==1){
+        Log.i("gqf","CompanyInfoActivity"+index);
+        if(index==2){
             mTitles=mCompanyTitles;
-        }else if(index==2){
-            mTitles=mLawTitles;
-        }else{
+       }else if(index==3){
             mTitles=mCapitalTitles;
+        }else{
+            mTitles=mLawTitles;
         }
 
 

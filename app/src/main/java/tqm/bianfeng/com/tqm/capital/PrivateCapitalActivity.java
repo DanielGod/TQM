@@ -56,7 +56,7 @@ public class PrivateCapitalActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_private_capital);
         ButterKnife.bind(this);
-        setToolbar(privateCapitalToolbar, "民间资本");
+        setToolbar(privateCapitalToolbar, "");
         //        privateCapitalToolbar.inflateMenu(R.menu.search_menu);
         //        privateCapitalToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
         //            @Override

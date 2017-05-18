@@ -12,16 +12,16 @@
         android:orientation="horizontal"
         >
         <TextView
-            android:layout_width="@dimen/smallhdp"
+            android:layout_width="@dimen/tinyhdp"
             android:layout_height="match_parent"
             android:background="@drawable/hot_msg_bg"
             android:text="热门"
             android:gravity="center"
             android:textColor="@color/red"
             android:lines="1"
-            android:layout_marginTop="@dimen/smallmdp"
+            android:layout_marginTop="@dimen/mediummdp"
             android:layout_marginBottom="@dimen/tinymdp"
-            android:textSize="@dimen/smallsp"/>
+            android:textSize="@dimen/tinysp"/>
         <TextView
             android:id="@+id/marquee_txt1"
             android:layout_width="0dp"
@@ -41,20 +41,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-
         android:layout_weight="1"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="@dimen/smallhdp"
+            android:layout_width="@dimen/tinyhdp"
             android:layout_height="match_parent"
             android:background="@drawable/hot_msg_bg"
             android:text="热门"
             android:lines="1"
             android:gravity="center"
             android:layout_marginTop="@dimen/tinymdp"
-            android:layout_marginBottom="@dimen/smallmdp"
+            android:layout_marginBottom="@dimen/mediummdp"
             android:textColor="@color/red"
-            android:textSize="@dimen/smallsp"/>
+            android:textSize="@dimen/tinysp"/>
         <TextView
             android:id="@+id/marquee_txt2"
             android:layout_width="0dp"

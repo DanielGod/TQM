@@ -64,23 +64,27 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         toastTxt.setVisibility(View.VISIBLE);
         if (BankActivityItems != null) {
-            initActivityList(BankActivityItems);
+
             if(BankActivityItems.size()!=0){
+                initActivityList(BankActivityItems);
                 toastTxt.setVisibility(View.GONE);
             }
         } else if (BankLoanItems != null) {
-            initLoanList(BankLoanItems);
+
             if(BankLoanItems.size()!=0){
+                initLoanList(BankLoanItems);
                 toastTxt.setVisibility(View.GONE);
             }
         } else if (BankFinancItems != null) {
-            initFinancList(BankFinancItems);
+
             if(BankFinancItems.size()!=0){
+                initFinancList(BankFinancItems);
                 toastTxt.setVisibility(View.GONE);
             }
         } else if (LawyerItems != null) {
-            initLawList(LawyerItems);
+
             if(LawyerItems.size()!=0){
+                initLawList(LawyerItems);
                 toastTxt.setVisibility(View.GONE);
             }
         }

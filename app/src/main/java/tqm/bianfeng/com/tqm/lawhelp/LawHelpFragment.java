@@ -184,6 +184,9 @@ public class LawHelpFragment extends BaseFragment {
                     initListData(true, lawAdd.getQueryParams(), 1);
                 }
             }
+            if(datas.size()==0){
+                initListData(true, lawAdd.getQueryParams(), 1);
+            }
         }
     }
 

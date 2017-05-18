@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:text="加载更多 "
         android:textSize="@dimen/bigsp"
+        android:textColor="@color/font_black_5"
         android:gravity="center"
         android:layout_height="@dimen/hugehdp"/>
 </LinearLayout>

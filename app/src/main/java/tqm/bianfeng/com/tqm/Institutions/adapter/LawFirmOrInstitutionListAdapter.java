@@ -55,6 +55,7 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
     Realm realm;
 
     Gson gson;
+
     public InstitutionItem getDataItem(int position) {
         return datas == null ? null : datas.get(position);
     }
@@ -64,19 +65,21 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         this.datas = mDatas;
         mLayoutInflater = LayoutInflater.from(mContext);
         realm = Realm.getDefaultInstance();
-        compositeSubscription=new CompositeSubscription();
-        inCollectItem=new ArrayList<>();
-        gson=new Gson();
+        compositeSubscription = new CompositeSubscription();
+        inCollectItem = new ArrayList<>();
+        gson = new Gson();
     }
 
     public void update(List<InstitutionItem> mDatas) {
         this.datas = mDatas;
         //this.notifyDataSetChanged();
     }
+
     public void notifyData(List<InstitutionItem> mDatas) {
         this.datas = mDatas;
         this.notifyDataSetChanged();
     }
+
     public int getLayout() {
         return R.layout.institutions_in_list_item;
     }
@@ -90,23 +93,23 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         return viewHolder;
     }
 
-    public void Collect(final int position,final int id){
-        String userId="";
-        if(realm.where(User.class).findFirst()!=null){
-            userId=realm.where(User.class).findFirst().getUserId()+"";
-        }else{
-            Toast.makeText(mContext,"请登录后再收藏",Toast.LENGTH_SHORT).show();
+    public void Collect(final int position, final int id) {
+        String userId = "";
+        if (realm.where(User.class).findFirst() != null) {
+            userId = realm.where(User.class).findFirst().getUserId() + "";
+        } else {
+            Toast.makeText(mContext, "请登录后再收藏", Toast.LENGTH_SHORT).show();
             return;
         }
-        String isCollect="";
-        if(datas.get(position).getIsCollect().equals("01")){
-            isCollect="02";
-        }else {
-            isCollect="01";
+        String isCollect = "";
+        if (datas.get(position).getIsCollect().equals("01")) {
+            isCollect = "02";
+        } else {
+            isCollect = "01";
         }
-        lawFirmOrInstitutionListAdapter=this;
+        lawFirmOrInstitutionListAdapter = this;
         Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().saveOrUpdate(id,
-                "0"+(index+1),userId,isCollect)
+                "0" + (index + 1), userId, isCollect)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResultCode>() {
@@ -117,26 +120,26 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.i("gqf","Throwable"+e.toString());
+                        Log.i("gqf", "Throwable" + e.toString());
                     }
 
                     @Override
                     public void onNext(ResultCode resultCode) {
-                        Log.i("gqf",position+"resultCode"+resultCode.toString());
-                        int p=position;
-                        if(resultCode.getCode()==ResultCode.SECCESS){
-                            Log.i("gqf","resultCode"+datas.get(p).toString());
-                            for(int i=0;i<inCollectItem.size();i++){
-                                if(inCollectItem.get(i).getInstitutionId()== datas.get(position).getInstitutionId()){
+                        Log.i("gqf", position + "resultCode" + resultCode.toString());
+                        int p = position;
+                        if (resultCode.getCode() == ResultCode.SECCESS) {
+                            Log.i("gqf", "resultCode" + datas.get(p).toString());
+                            for (int i = 0; i < inCollectItem.size(); i++) {
+                                if (inCollectItem.get(i).getInstitutionId() == datas.get(position).getInstitutionId()) {
                                     inCollectItem.remove(i);
-                                    if(datas.get(p).getIsCollect().equals("01")){
+                                    if (datas.get(p).getIsCollect().equals("01")) {
                                         datas.get(p).setIsCollect("02");
                                         //changeView.get(i).setText("收藏");
-                                    }else {
+                                    } else {
                                         datas.get(p).setIsCollect("01");
                                         //changeView.get(i).setText("已收藏");
                                     }
-                                    Log.i("gqf","resultCode"+datas.get(p).toString());
+                                    Log.i("gqf", "resultCode" + datas.get(p).toString());
                                     mItemClickListener.changePosition(position);
                                     break;
                                 }
@@ -173,7 +176,18 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         //mHolder.profileTxt.setText("简介：" + datas.get(p).getProfile());
         mHolder.profileTxt.setVisibility(View.GONE);
 
-        if(datas.get(p).getIsCollect()!=null) {
+        if (datas.get(p).getInstitutionTypeLabel() != null) {
+            Log.i("gqf", "" + datas.get(p).getInstitutionTypeLabel());
+            mHolder.typeImg.setVisibility(View.VISIBLE);
+            if (datas.get(p).getInstitutionTypeLabel().equals("民间资本")) {
+                mHolder.typeImg.setImageResource(R.drawable.ic_company1001);
+            } else {
+                mHolder.typeImg.setImageResource(R.drawable.ic_company1002);
+            }
+        }else{
+            mHolder.typeImg.setVisibility(View.GONE);
+        }
+        if (datas.get(p).getIsCollect() != null) {
             if (datas.get(p).getIsCollect().equals("02")) {
                 //未收藏
                 mHolder.isCollectTxt.setText("收藏");
@@ -182,8 +196,8 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
                 mHolder.isCollectTxt.setText("已收藏");
             }
         }
-        for(int i=0;i<inCollectItem.size();i++){
-            if(inCollectItem.get(i).getInstitutionId()==datas.get(p).getInstitutionId()){
+        for (int i = 0; i < inCollectItem.size(); i++) {
+            if (inCollectItem.get(i).getInstitutionId() == datas.get(p).getInstitutionId()) {
                 mHolder.isCollectTxt.setText("稍等..");
             }
         }
@@ -191,21 +205,21 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
             @Override
             public void onClick(View v) {
 
-                boolean isHave=false;
-                for(int i=0;i<inCollectItem.size();i++){
-                    if(inCollectItem.get(i).getInstitutionId()==datas.get(p).getInstitutionId()){
-                        isHave=true;
+                boolean isHave = false;
+                for (int i = 0; i < inCollectItem.size(); i++) {
+                    if (inCollectItem.get(i).getInstitutionId() == datas.get(p).getInstitutionId()) {
+                        isHave = true;
                     }
                 }
-                if(!isHave){
-                    if(realm.where(User.class).findFirst()!=null){
+                if (!isHave) {
+                    if (realm.where(User.class).findFirst() != null) {
                         inCollectItem.add(datas.get(p));
-                        Collect(p,datas.get(p).getInstitutionId());
+                        Collect(p, datas.get(p).getInstitutionId());
                         mHolder.isCollectTxt.setText("稍等..");
-                    }else{
-                        Toast.makeText(mContext,"请登录后再收藏",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mContext, "请登录后再收藏", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     Toast.makeText(mContext, "正在收藏请稍后", Toast.LENGTH_SHORT).show();
                 }
 
@@ -237,6 +251,7 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
 
     public interface MyItemClickListener {
         public void OnClickListener(int position);
+
         public void changePosition(int position);
 
     }
@@ -251,6 +266,8 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         TextView contactTxt;
         @BindView(R.id.profile_txt)
         TextView profileTxt;
+        @BindView(R.id.type_img)
+        ImageView typeImg;
         @BindView(R.id.call_lin)
         LinearLayout callLin;
         @BindView(R.id.is_collect_txt)

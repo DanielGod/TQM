@@ -154,10 +154,12 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mHolder.contactTxt.setText(datas.get(p).getInstitutionName());
 
 
-        if (datas.get(p).getIsAuthorize().equals("01")) {
-            mHolder.isAuthorizeTxt.setText("已认证");
-        } else {
-            mHolder.isAuthorizeTxt.setText("未认证");
+        if(datas.get(p).getIsAuthorize()!=null) {
+            if (datas.get(p).getIsAuthorize().equals("01")) {
+                mHolder.isAuthorizeTxt.setText("已认证");
+            } else {
+                mHolder.isAuthorizeTxt.setText("未认证");
+            }
         }
 
         if(datas.get(p).getIsAttention()==null){

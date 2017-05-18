@@ -143,7 +143,10 @@ public class MyCollectionLawAndCompanyFragment extends BaseFragment {
 
                 @Override
                 public void changePosition(int position) {
-                    lawFirmOrInstitutionListAdapter.notifyItemChanged(position);
+                    //lawFirmOrInstitutionListAdapter.notifyItemChanged(position);
+                    datas.remove(position);
+                    lawFirmOrInstitutionListAdapter.update(datas);
+                    lawFirmOrInstitutionListAdapter.notifyDataSetChanged();
                 }
             });
             lawOrCompanyList.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -32,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tqm.bianfeng.com.tqm.CustomView.LoadingIndicator;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.User.Fragment.MyReleaseFragment;
 import tqm.bianfeng.com.tqm.Util.ImageFilePath;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
@@ -68,6 +69,7 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
         setContentView(R.layout.activity_loan_activity_release);
         ButterKnife.bind(this);
         String title = "";
+        MyReleaseFragment.isRefresh=true;
         if (RELEASE_TYPE == RELEASE_LOAN_TYPE) {
             title = "贷款信息发布";
             type="loan";
@@ -106,6 +108,7 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
         settings.setLoadWithOverviewMode(true);//设置webview加载的页面的模式
         settings.setTextZoom(100);//字体大小
         settings.setSupportZoom(true);//仅支持双击缩放r
+        settings.setJavaScriptEnabled(true);
         webView.setInitialScale(57);//最小缩放等级
         webView.getSettings().setBlockNetworkImage(false);//阻止图片网络数据
         webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);//图片加载放在最后
@@ -115,7 +118,7 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
         webView.getSettings().setDisplayZoomControls(false);//隐藏缩放按钮
         webView.loadUrl(url);
         //webView.loadDataWithBaseURL(url,getNewContent(IMAGE3),"text/html", "UTF-8", null);
-        webView.setWebChromeClient(mWebChromeClient);
+        //webView.setWebChromeClient(mWebChromeClient);
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -343,5 +346,11 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
             super.onActivityResult(requestCode, resultCode, data);
             return;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }

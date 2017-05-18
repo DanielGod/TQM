@@ -44,6 +44,7 @@ public class MyReleaseFragment extends BaseFragment{
     @BindView(R.id.toast_txt)
     TextView toastTxt;
 
+    public static boolean isRefresh=false;
     private static final String TYPE="getMyAttentionItem";
     Gson gson;
 
@@ -73,15 +74,28 @@ public class MyReleaseFragment extends BaseFragment{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_focuse, container, false);
         ButterKnife.bind(this, view);
-        //initData();
-        //initData();
         gson=new Gson();
+        isRefresh=false;
         if(index==0){
             initActivityData();
         }else{
             initLoanData();
         }
         return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(isRefresh){
+            isRefresh=false;
+            if(index==0){
+                initActivityData();
+            }else{
+                initLoanData();
+            }
+        }
     }
 
     public void initLoanData(){

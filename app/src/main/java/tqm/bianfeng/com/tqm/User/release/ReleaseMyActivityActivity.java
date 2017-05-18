@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.CustomView.ShowDialogAndLoading;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.User.Fragment.MyReleaseFragment;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
@@ -138,9 +141,8 @@ public class ReleaseMyActivityActivity extends BaseActivity {
         //mEditor.setBackgroundResource(R.drawable.bg);
         mEditor.setPadding(10, 10, 10, 10);
         //mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
-        mEditor.setPlaceholder("Insert text here...");
+        mEditor.setPlaceholder("输入活动内容...");
         //mEditor.setInputEnabled(false);
-
         mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
             @Override
             public void onTextChange(String text) {
@@ -170,40 +172,26 @@ public class ReleaseMyActivityActivity extends BaseActivity {
             @Override
             public void showBefore() {
                 showDialogAndLoading.showLoading("稍等。。", ReleaseMyActivityActivity.this);
-                save();
+                if(activityId!=0){
+                    edit();
+                }else {
+                    save();
+                }
             }
 
             @Override
             public void showAfter() {
+                MyReleaseFragment.isRefresh=true;
                 finish();
             }
         });
         activityId = getIntent().getIntExtra(ACTIVITY_ID, 0);
         Log.i("gqf", "activityId" + activityId);
         getActivity();
+        uploadLogoImgTxt.setVisibility(View.GONE);
     }
 
-    public void demodd() {
-        findViewById(R.id.action_txt_color).setOnClickListener(new View.OnClickListener() {
-            private boolean isChanged;
 
-            @Override
-            public void onClick(View v) {
-                mEditor.setTextColor(isChanged ? Color.BLACK : Color.RED);
-                isChanged = !isChanged;
-            }
-        });
-
-        findViewById(R.id.action_bg_color).setOnClickListener(new View.OnClickListener() {
-            private boolean isChanged;
-
-            @Override
-            public void onClick(View v) {
-                mEditor.setTextBackgroundColor(isChanged ? Color.TRANSPARENT : Color.YELLOW);
-                isChanged = !isChanged;
-            }
-        });
-    }
 
     @OnClick({R.id.commit_text_link, R.id.upload_logo_img_txt, R.id.add_logo_img_img, R.id.action_undo, R.id.action_redo, R.id.action_bold, R.id.action_italic, R.id.action_subscript, R.id.action_superscript, R.id.action_strikethrough, R.id.action_underline, R.id.action_heading1, R.id.action_heading2, R.id.action_heading3, R.id.action_heading4, R.id.action_heading5, R.id.action_heading6, R.id.action_txt_color, R.id.action_bg_color, R.id.action_indent, R.id.action_outdent, R.id.action_align_left, R.id.action_align_center, R.id.action_align_right, R.id.action_insert_bullets, R.id.action_insert_numbers, R.id.action_blockquote, R.id.action_insert_image, R.id.action_insert_link, R.id.action_insert_checkbox, R.id.commit})
     public void onClick(View view) {
@@ -396,12 +384,14 @@ public class ReleaseMyActivityActivity extends BaseActivity {
                 logoImg1.setImageBitmap(BitmapFactory.decodeFile(mLogoSelectPath.get(i)));
                 logoImg1.setVisibility(View.VISIBLE);
             }
+            uplodLogoImg(mLogoSelectPath);
             isAddLogo = false;
         }
     }
 
     public void uplodLogoImg(List<String> imgPaths) {
         Log.i("gqf", "imgPaths" + imgPaths.toString());
+        showDialogAndLoading.showLoading("上传中。。",this);
         MultipartBody.Builder builder = new MultipartBody.Builder();
         for (int i = 0; i < imgPaths.size(); i++) {
             File f = new File(imgPaths.get(i));
@@ -420,8 +410,8 @@ public class ReleaseMyActivityActivity extends BaseActivity {
         for (int i = 0; i < mb.size(); i++) {
             zichifile.add(mb.part(i));
         }
-        uploadLogoImgTxt.setText("上传中");
-        uploadLogoImgTxt.setEnabled(false);
+        //uploadLogoImgTxt.setText("上传中");
+        //uploadLogoImgTxt.setEnabled(false);
         Subscription subscription = NetWork.getUserService().uploadImg(zichifile.get(0))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -433,18 +423,25 @@ public class ReleaseMyActivityActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        uploadLogoImgTxt.setText("上传");
-                        uploadLogoImgTxt.setEnabled(true);
+                        //uploadLogoImgTxt.setText("上传");
+                        //uploadLogoImgTxt.setEnabled(true);
                         Log.i("gqf", "Throwable" + e.toString());
+                        showDialogAndLoading.stopLoaading();
                     }
 
                     @Override
                     public void onNext(ResultWithLink strings) {
                         Log.i("gqf", "onNext" + strings.toString());
-                        uploadLogoImgTxt.setText("已上传");
+                        //uploadLogoImgTxt.setText("已上传");
+                        showDialogAndLoading.stopLoaading();
                         ywBankActivity.setImageUrl(strings.getLink());
-                        uploadLogoImgTxt.setEnabled(false);
+                        //uploadLogoImgTxt.setEnabled(false);
                         addLogoImgImg.setEnabled(false);
+                        if(ywBankActivity.getImageUrl()!=null){
+                            if(ywBankActivity.getImageUrl().contains("/upload")){
+                                Picasso.with(ReleaseMyActivityActivity.this).load(NetWork.LOAD+ywBankActivity.getImageUrl()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(logoImg1);
+                            }
+                        }
                     }
                 });
         compositeSubscription.add(subscription);
@@ -453,6 +450,7 @@ public class ReleaseMyActivityActivity extends BaseActivity {
 
     public void uplodTxtImg(List<String> imgPaths) {
         Log.i("gqf", "imgPaths" + imgPaths.toString());
+
         MultipartBody.Builder builder = new MultipartBody.Builder();
         for (int i = 0; i < imgPaths.size(); i++) {
             File f = new File(imgPaths.get(i));
@@ -521,6 +519,12 @@ public class ReleaseMyActivityActivity extends BaseActivity {
                         Log.i("gqf", "onNext" + ywBankActivity.toString());
                         companyNameEdi.setText(ywBankActivity.getActivityTitle());
                         mEditor.setHtml(ywBankActivity.getActivityContent());
+                        if(ywBankActivity.getImageUrl()!=null){
+                            if(ywBankActivity.getImageUrl().contains("/upload")){
+                                logoImg1.setVisibility(View.VISIBLE);
+                                Picasso.with(ReleaseMyActivityActivity.this).load(NetWork.LOAD+ywBankActivity.getImageUrl()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(logoImg1);
+                            }
+                        }
 
 
                     }
@@ -561,5 +565,43 @@ public class ReleaseMyActivityActivity extends BaseActivity {
                 });
         compositeSubscription.add(subscription);
     }
+    public void edit() {
 
+        Log.i("gqf", "ywBankActivity" + ywBankActivity.toString());
+        Subscription subscription = NetWork.getUserService().editReleaseActivity(activityId,
+                ywBankActivity.getImageUrl(), ywBankActivity.getActivityTitle(), ywBankActivity.getInstitution(), ywBankActivity.getActivityContent(), realm.where(User.class).findFirst().getUserId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResultCode>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.i("gqf", "onError" + e.toString());
+                        showDialogAndLoading.stopLoaading();
+                        Toast.makeText(ReleaseMyActivityActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(ResultCode releaseResult) {
+                        showDialogAndLoading.stopLoaading();
+                        Log.i("gqf", "onNext" + releaseResult.toString());
+                        if (releaseResult.getCode()==ResultCode.SECCESS) {
+                            showDialogAndLoading.showAfterDialog(ReleaseMyActivityActivity.this, "修改成功", "可在猫舍中查看审核状态", "确定");
+                        } else {
+                            Toast.makeText(ReleaseMyActivityActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        compositeSubscription.add(subscription);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
 }
