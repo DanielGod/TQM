@@ -46,6 +46,8 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/mediumsp"/>
 
+
+
                 <TextView
                     android:id="@+id/InName_txt"
                     android:layout_width="0dp"
