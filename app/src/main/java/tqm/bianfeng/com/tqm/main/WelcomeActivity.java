@@ -3,6 +3,7 @@ package tqm.bianfeng.com.tqm.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.utils.ScreenUtils;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -20,9 +22,11 @@ import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.Util.NetUtils;
+import tqm.bianfeng.com.tqm.network.NetWork;
 
 public class WelcomeActivity extends Activity {
 
@@ -50,31 +54,31 @@ public class WelcomeActivity extends Activity {
             Picasso.with(WelcomeActivity.this).load(R.drawable.qidongye).into(startPageImg);
             countToEnter();
         }else{
-            countToEnter();
-//            Subscription subscription = NetWork.getUserService().getImages("01")
-//                    .subscribeOn(Schedulers.io())
-//                    .timeout(100,TimeUnit.SECONDS)
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Observer<List<String>>() {
-//                        @Override
-//                        public void onCompleted() {
-//
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            //Picasso.with(WelcomeActivity.this).load(R.drawable.qidongye).into(startPageImg);
-//                            countToEnter();
-//                        }
-//
-//                        @Override
-//                        public void onNext(List<String> strings) {
-//                            Log.e("gqf","onNext"+strings.toString());
-//                            //Picasso.with(WelcomeActivity.this).load(NetWork.LOAD+strings.get(0)).error(R.drawable.qidongye).into(startPageImg);
-//                            countToEnter();
-//                        }
-//                    });
-//            mCompositeSubscription.add(subscription);
+            //countToEnter();
+            Subscription subscription = NetWork.getUserService().getImages("01")
+                    .subscribeOn(Schedulers.io())
+                    .timeout(100,TimeUnit.SECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<List<String>>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            //Picasso.with(WelcomeActivity.this).load(R.drawable.qidongye).into(startPageImg);
+                            countToEnter();
+                        }
+
+                        @Override
+                        public void onNext(List<String> strings) {
+                            Log.e("gqf","onNext"+strings.toString());
+                            //Picasso.with(WelcomeActivity.this).load(NetWork.LOAD+strings.get(0)).error(R.drawable.qidongye).into(startPageImg);
+                            countToEnter();
+                        }
+                    });
+            mCompositeSubscription.add(subscription);
         }
     }
 

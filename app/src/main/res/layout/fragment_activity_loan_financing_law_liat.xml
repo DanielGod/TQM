@@ -20,5 +20,9 @@
         android:layout_marginTop="@dimen/hugehxxxxdp"
         android:textSize="@dimen/bigsp"
         android:visibility="visible"
+        android:clickable="false"
+        android:focusable="false"
+        android:enabled="false"
+        android:focusableInTouchMode="false"
         android:layout_centerHorizontal="true"/>
 </RelativeLayout>

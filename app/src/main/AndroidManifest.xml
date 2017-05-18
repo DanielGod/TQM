@@ -53,9 +53,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon, android:theme">
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="qpjb8N7jrtSbs8sCC9FRUWsxLYGXtowC"/>
+        <!--<meta-data-->
+            <!--android:name="com.baidu.lbsapi.API_KEY"-->
+            <!--android:value="qpjb8N7jrtSbs8sCC9FRUWsxLYGXtowC"/>-->
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="58d1e1b875ca353afd00167d">
@@ -63,9 +63,6 @@
         <!--<meta-data android:name="com.amap.api.v2.apikey" android:value="1e2b67102660de66dc51062c86588eeb">-->
         <!--</meta-data>-->
         <!--<service android:name="com.amap.api.location.APSService"></service>-->
-        <activity android:name=".baidumap.WebListActivity"></activity>
-
-
         <activity
             android:name=".demoActivity"
             android:launchMode="singleTask"

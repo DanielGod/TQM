@@ -66,30 +66,54 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
         if (BankActivityItems != null) {
 
             if(BankActivityItems.size()!=0){
+                setList(BankActivityItems.size());
                 initActivityList(BankActivityItems);
                 toastTxt.setVisibility(View.GONE);
             }
         } else if (BankLoanItems != null) {
 
             if(BankLoanItems.size()!=0){
+                setList(BankLoanItems.size());
                 initLoanList(BankLoanItems);
                 toastTxt.setVisibility(View.GONE);
             }
         } else if (BankFinancItems != null) {
 
             if(BankFinancItems.size()!=0){
+                setList(BankFinancItems.size());
                 initFinancList(BankFinancItems);
                 toastTxt.setVisibility(View.GONE);
             }
         } else if (LawyerItems != null) {
 
             if(LawyerItems.size()!=0){
+                setList(LawyerItems.size());
                 initLawList(LawyerItems);
                 toastTxt.setVisibility(View.GONE);
             }
+        }else{
+            setList(0);
         }
 
+
         return view;
+    }
+    public void setList(int i){
+//        if(i<=2){
+//            activityLoanFinancingLawList.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    return true;
+//                }
+//            });
+//        }else{
+//            activityLoanFinancingLawList.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    return false;
+//                }
+//            });
+//        }
     }
 
     List<BankActivityItem> BankActivityItems;
