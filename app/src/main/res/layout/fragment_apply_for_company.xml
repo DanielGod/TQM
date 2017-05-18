@@ -337,7 +337,7 @@
                         android:layout_height="@dimen/hugehdp"
                         android:layout_marginRight="@dimen/smallmdp"
                         android:visibility="gone"
-                        android:src="@drawable/ic_img_loading"
+                        android:src="@drawable/placeholder"
                         />
 
                     <ImageView
@@ -406,7 +406,7 @@
                         android:layout_width="@dimen/hugehdp"
                         android:layout_height="@dimen/hugehdp"
                         android:layout_marginRight="@dimen/smallmdp"
-                        android:src="@drawable/ic_img_loading"
+                        android:src="@drawable/placeholder"
                         android:visibility="gone"
                         />
 
@@ -415,7 +415,7 @@
                         android:layout_width="@dimen/hugehdp"
                         android:layout_height="@dimen/hugehdp"
                         android:layout_marginRight="@dimen/smallmdp"
-                        android:src="@drawable/ic_img_loading"
+                        android:src="@drawable/placeholder"
                         android:visibility="gone"
                         />
 
@@ -425,7 +425,7 @@
                         android:layout_height="@dimen/hugehdp"
                         android:layout_marginRight="@dimen/smallmdp"
                         android:visibility="gone"
-                        android:src="@drawable/ic_img_loading"/>
+                        android:src="@drawable/placeholder"/>
 
                     <ImageView
                         android:id="@+id/add_company_img_img"
@@ -495,7 +495,7 @@
                         android:layout_width="@dimen/hugehdp"
                         android:layout_height="@dimen/hugehdp"
                         android:layout_marginRight="@dimen/smallmdp"
-                        android:src="@drawable/ic_img_loading"
+                        android:src="@drawable/placeholder"
                         android:visibility="gone"
                         />
 
@@ -504,7 +504,7 @@
                         android:layout_width="@dimen/hugehdp"
                         android:layout_height="@dimen/hugehdp"
                         android:layout_marginRight="@dimen/smallmdp"
-                        android:src="@drawable/ic_img_loading"
+                        android:src="@drawable/placeholder"
                         android:visibility="gone"
                         />
                     <ImageView

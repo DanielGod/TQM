@@ -226,7 +226,7 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
 
             }
         });
-        Picasso.with(mContext).load(NetWork.LOAD + datas.get(p).getInstitutionIcon()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(mHolder.ininImg);
+        Picasso.with(mContext).load(NetWork.LOAD + datas.get(p).getInstitutionIcon()).placeholder(R.drawable.placeholder).error(R.drawable.placeholder).into(mHolder.ininImg);
 
         mHolder.callLin.setOnClickListener(new View.OnClickListener() {
             @Override

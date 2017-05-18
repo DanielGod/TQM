@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">TQM</string>
+    <string name="app_name">铜钱猫</string>
     <!--MainActivity-->
     <string name="home">首页</string>
     <string name="lawHelp">法律援助</string>
-    <string name="institutionsIn">入驻机构</string>
+    <string name="institutionsIn">机构中心</string>
     <string name="catHome">猫舍</string>
     <!--银行理财-->
     <string name="bankFinancing">银行理财</string>

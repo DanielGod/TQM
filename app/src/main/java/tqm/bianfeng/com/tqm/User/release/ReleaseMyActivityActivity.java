@@ -439,7 +439,7 @@ public class ReleaseMyActivityActivity extends BaseActivity {
                         addLogoImgImg.setEnabled(false);
                         if(ywBankActivity.getImageUrl()!=null){
                             if(ywBankActivity.getImageUrl().contains("/upload")){
-                                Picasso.with(ReleaseMyActivityActivity.this).load(NetWork.LOAD+ywBankActivity.getImageUrl()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(logoImg1);
+                                Picasso.with(ReleaseMyActivityActivity.this).load(NetWork.LOAD+ywBankActivity.getImageUrl()).placeholder(R.drawable.placeholder).error(R.drawable.placeholder).into(logoImg1);
                             }
                         }
                     }
@@ -522,7 +522,7 @@ public class ReleaseMyActivityActivity extends BaseActivity {
                         if(ywBankActivity.getImageUrl()!=null){
                             if(ywBankActivity.getImageUrl().contains("/upload")){
                                 logoImg1.setVisibility(View.VISIBLE);
-                                Picasso.with(ReleaseMyActivityActivity.this).load(NetWork.LOAD+ywBankActivity.getImageUrl()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(logoImg1);
+                                Picasso.with(ReleaseMyActivityActivity.this).load(NetWork.LOAD+ywBankActivity.getImageUrl()).placeholder(R.drawable.placeholder).error(R.drawable.placeholder).into(logoImg1);
                             }
                         }
 

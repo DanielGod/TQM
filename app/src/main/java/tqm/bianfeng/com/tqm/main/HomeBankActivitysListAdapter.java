@@ -84,7 +84,7 @@ public class HomeBankActivitysListAdapter extends RecyclerView.Adapter<RecyclerV
         mHolder.loanMoneyLinear.setVisibility(View.GONE);
         mHolder.riskGradeNameLinear.setVisibility(View.GONE);
         mHolder.investmentTermLinear.setVisibility(View.GONE);
-        Picasso.with(mContext).load(NetWork.LOAD + data.getImageUrl()).placeholder(R.drawable.ic_img_loading).into(mHolder.logoImg);
+        Picasso.with(mContext).load(NetWork.LOAD + data.getImageUrl()).placeholder(R.drawable.placeholder).into(mHolder.logoImg);
         mHolder.titleTv.setText(data.getActivityTitle());
         mHolder.activityViewsTv.setText(data.getActivityViews() + "");
         mHolder.institutionNameTv.setText(data.getInstitution());

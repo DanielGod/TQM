@@ -238,7 +238,7 @@ public class CompanyInfoActivity extends BaseActivity {
             phoneNumLin=(LinearLayout) headerView.findViewById(R.id.phone_num_lin);
             phoneNumLin.setVisibility(View.GONE);
         }
-        Picasso.with(this).load(NetWork.LOAD+data.getInstitutionIcon()).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_loading).into(infoHeaderImg);
+        Picasso.with(this).load(NetWork.LOAD+data.getInstitutionIcon()).placeholder(R.drawable.placeholder).error(R.drawable.placeholder).into(infoHeaderImg);
         titleTxt.setText(data.getInstitutionName());
         profileTxt.setText("简介："+data.getProfile());
         profileTxt.setVisibility(View.INVISIBLE);

@@ -269,6 +269,11 @@
 
 -keep class com.wang.avi.** { *; }
 -keep class com.wang.avi.indicators.** { *; }
+
+-dontwarn org.mockito.**
+-dontwarn sun.reflect.**
+-dontwarn android.test.**
+-dontwarn java.lang.management.**
 ####混淆保护自己项目的部分代码以及引用的第三方jar包library-end####
 
 #百度地图

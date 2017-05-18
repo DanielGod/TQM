@@ -538,11 +538,12 @@ public class HomeFragment extends BaseFragment {
                 });
         compositeSubscription.add(subscription);
     }
-    Integer[] mSlider = {R.drawable.home_top_slider1,R.drawable.home_top_slider2,R.drawable.home_top_slider3};
+    //Integer[] mSlider = {R.drawable.home_top_slider1,R.drawable.home_top_slider2,R.drawable.home_top_slider3};
     public void initImages(List<String> strings) {
         //加载首页轮播图
                 if (strings.size() > 0) {
                     for (String url : strings) {
+                        Log.i("gqf","strings"+url);
                         DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
                         textSliderView.image(NetWork.LOAD + url)
                                 .setScaleType(BaseSliderView.ScaleType.Fit);

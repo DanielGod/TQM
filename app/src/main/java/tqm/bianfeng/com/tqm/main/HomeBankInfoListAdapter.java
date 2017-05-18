@@ -88,8 +88,8 @@ public class HomeBankInfoListAdapter extends RecyclerView.Adapter<RecyclerView.V
         mHolder.bankInfoTimeTxt.setText(datas.get(p).getReleaseDate());
         mHolder.bankInfoTitleTxt.setText(datas.get(p).getInformTitle());
         Picasso.with(mContext).load(NetWork.LOAD + datas.get(p).getImageUrl())
-                .placeholder(R.drawable.ic_img_loading)
-                .error(R.drawable.ic_img_loading)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
                 .into(mHolder.bankInfoImg);
 
         mHolder.readNum.setText("" + datas.get(p).getInformViews());

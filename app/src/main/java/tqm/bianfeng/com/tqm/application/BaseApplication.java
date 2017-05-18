@@ -1,7 +1,6 @@
 package tqm.bianfeng.com.tqm.application;
 
 import android.app.Activity;
-import android.app.Application;
 import android.app.Service;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -9,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Vibrator;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.baidu.mapapi.CoordType;
@@ -29,7 +30,7 @@ import tqm.bianfeng.com.tqm.baidumap.service.LocationService;
  * Created by johe on 2017/1/5.
  */
 
-public class BaseApplication extends Application {
+public class BaseApplication extends MultiDexApplication {
     private static List<Activity> mList ;
     //各个平台的配置，建议放在全局Application或者程序入口
     {
@@ -48,6 +49,10 @@ public class BaseApplication extends Application {
         //PlatformConfig.setVKontakte("5764965","5My6SNliAaLxEm3Lyd9J");
         //PlatformConfig.setDropbox("oz8v5apet3arcdy","h7p2pjbzkkxt02a");
 
+    }
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
     //获取集合size
     public  int getListSize(){

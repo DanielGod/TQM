@@ -272,7 +272,6 @@
                             android:layout_margin="@dimen/mediummdp"
                             android:adjustViewBounds="true"
                             android:scaleType="centerInside"
-                            android:src="@drawable/home_bank_loan"
                             android:visibility="gone"
                             />
 
@@ -330,7 +329,6 @@
                             android:layout_margin="@dimen/mediummdp"
                             android:adjustViewBounds="true"
                             android:scaleType="centerInside"
-                            android:src="@drawable/home_bank_finaning"
                             android:visibility="gone"
                             />
 
@@ -389,7 +387,6 @@
                             android:layout_margin="@dimen/mediummdp"
                             android:adjustViewBounds="true"
                             android:scaleType="centerInside"
-                            android:src="@drawable/home_bank_activitys"
                             android:visibility="gone"
                             />
 

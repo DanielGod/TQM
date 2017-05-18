@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
         ndk {
             // 设置支持的SO库架构
             //abiFilters 'armeabi', 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64','mips','mips64'
@@ -93,7 +94,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-    compile 'junit:junit:4.12'
+    testCompile 'junit:junit:4.12'
     /*freeline*/
 
     //    compile project(':library')
@@ -207,5 +208,5 @@ dependencies {
     compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
     compile 'org.jsoup:jsoup:1.8.3'
     compile 'jp.wasabeef:richeditor-android:1.2.0@aar'
-
+    compile 'com.android.support:multidex:1.0.0' //根据版本支持来配置,目前支持1.0.1
 }
