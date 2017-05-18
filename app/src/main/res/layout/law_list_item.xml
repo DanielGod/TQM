@@ -43,7 +43,7 @@
                     android:layout_weight="1.5"
                     android:gravity="center_vertical"
                     android:text="张律师"
-                    android:textColor="@color/font_black_1"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/mediumsp"/>
 
                 <TextView

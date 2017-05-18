@@ -51,7 +51,7 @@
                    android:lines="1"
                    android:ellipsize="end"
                    android:paddingRight="@dimen/smallmdp"
-                   android:textColor="@color/font_black_1"
+                   android:textColor="@color/black"
                    android:textSize="@dimen/mediumsp"/>
                <ImageView
                    android:id="@+id/type_img"

@@ -19,8 +19,8 @@
             android:gravity="center"
             android:textColor="@color/red"
             android:lines="1"
-            android:layout_marginTop="@dimen/mediummdp"
-            android:layout_marginBottom="@dimen/tinymdp"
+            android:layout_marginTop="@dimen/mediummxdp"
+            android:layout_marginBottom="2dp"
             android:textSize="@dimen/tinysp"/>
         <TextView
             android:id="@+id/marquee_txt1"
@@ -35,7 +35,7 @@
             android:lines="1"
             android:paddingLeft="@dimen/smallmdp"
             android:textColor="@color/font_black_1"
-            android:layout_marginTop="@dimen/tinymdp"
+            android:layout_marginTop="@dimen/smallmdp"
             android:textSize="@dimen/smallsp"/>
     </LinearLayout>
     <LinearLayout
@@ -50,8 +50,8 @@
             android:text="热门"
             android:lines="1"
             android:gravity="center"
-            android:layout_marginTop="@dimen/tinymdp"
-            android:layout_marginBottom="@dimen/mediummdp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="@dimen/mediummxdp"
             android:textColor="@color/red"
             android:textSize="@dimen/tinysp"/>
         <TextView
@@ -66,7 +66,7 @@
             android:clickable="true"
             android:background="?android:selectableItemBackground"
             android:paddingLeft="@dimen/smallmdp"
-            android:layout_marginBottom="@dimen/tinymdp"
+            android:layout_marginBottom="@dimen/smallmdp"
             android:textColor="@color/font_black_1"
             android:textSize="@dimen/smallsp"/>
     </LinearLayout>
