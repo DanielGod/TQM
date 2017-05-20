@@ -134,9 +134,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:src="@drawable/institution1"
-                            android:scaleX="0.7"
-                            android:scaleY="0.7"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:paddingRight="5dp"
                             android:id="@+id/imageView"/>
 
@@ -160,9 +158,18 @@
                             android:paddingLeft="2dp"
                             android:scaleX="0.8"
                             android:scaleY="0.8"
+                            android:visibility="gone"
                             android:scaleType="centerInside"
                             android:adjustViewBounds="true"
                             android:paddingRight="5dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            style="@style/listitemLayout_tv"
+                            android:textSize="@dimen/tinysp"
+                            android:text="阅读"
+                            android:paddingRight="3dp"
                             />
                         <TextView
                             android:id="@+id/financViews_tv"
