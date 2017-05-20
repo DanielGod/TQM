@@ -65,7 +65,7 @@ public class BankFinancingAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         BankFinancItem data = getItem(position);
-        holder.financViewsLinear.setVisibility(View.VISIBLE);
+//        holder.financViewsLinear.setVisibility(View.VISIBLE);
         holder.institutionNameLinear.setVisibility(View.VISIBLE);
         holder.purchaseMoneyAndRiskGradeNameLinear.setVisibility(View.VISIBLE);
         holder.titleTv.setText(data.getProductName());
