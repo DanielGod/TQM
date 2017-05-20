@@ -228,6 +228,9 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         //mHolder.collectionLin.setVisibility(View.GONE);
         String[] specialFields;
+        mHolder.goodAt1.setVisibility(View.GONE);
+        mHolder.goodAt2.setVisibility(View.GONE);
+        mHolder.goodAt3.setVisibility(View.GONE);
         if (datas.get(p).getSpecialField() != null) {
             if (!datas.get(p).getSpecialField().equals("")) {
                 Log.i("gqf", "getSpecialField" + datas.get(p).getSpecialField());

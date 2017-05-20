@@ -20,6 +20,7 @@ import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithCompanyFile;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
+import tqm.bianfeng.com.tqm.pojo.UserActionNum;
 import tqm.bianfeng.com.tqm.pojo.YwApplyEnter;
 import tqm.bianfeng.com.tqm.pojo.YwBankActivity;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
@@ -303,6 +304,14 @@ public interface UserService {
      */
     @GET("activity/{activityId}/{userId}")
     Observable<YwBankActivity> getReleaseActivity(@Path("activityId") int activityId, @Path("userId") int userId);
+
+
+    /**
+     * 获取用户收藏关注等数量
+     */
+    @GET("getStatistics/{userId}")
+    Observable<List<UserActionNum>> getStatistics(@Path("userId") int userId);
+
 
 
 }

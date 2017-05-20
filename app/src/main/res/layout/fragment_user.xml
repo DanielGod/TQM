@@ -133,16 +133,37 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <ImageView
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginTop="@dimen/mediummdp"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:padding="@dimen/smallmdp"
-                        android:src="@drawable/ic_user_attestation"
+                        android:layout_marginTop="@dimen/tinymdp"
+                        >
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="@dimen/smallmdp"
+                            android:src="@drawable/ic_user_attestation"
 
-                        />
+                            />
+                        <TextView
+                            android:id="@+id/user_attestation_num"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/radio_red_bg_shap"
+                            android:text="12"
+                            android:textSize="@dimen/tinysp"
+                            android:textColor="@color/white"
+                            android:paddingLeft="@dimen/tinymdp"
+                            android:paddingRight="@dimen/tinymdp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/tinyxhdp"
+                            android:layout_marginTop="@dimen/tinymdp"
+                            android:gravity="center"/>
+
+                    </RelativeLayout>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -170,16 +191,38 @@
                     android:clickable="true"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginTop="@dimen/mediummdp"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:padding="@dimen/smallmdp"
-                        android:src="@drawable/ic_user_collection"
+                        android:layout_marginTop="@dimen/tinymdp"
+                        >
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="@dimen/smallmdp"
+                            android:src="@drawable/ic_user_fouces"
 
-                        />
+                            />
+                        <TextView
+                            android:id="@+id/user_collection_num"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/radio_red_bg_shap"
+                            android:text="12"
+                            android:textSize="@dimen/tinysp"
+                            android:textColor="@color/white"
+                            android:paddingLeft="@dimen/tinymdp"
+                            android:paddingRight="@dimen/tinymdp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/tinyxhdp"
+                            android:layout_marginTop="@dimen/tinymdp"
+                            android:gravity="center"/>
+
+                    </RelativeLayout>
+
 
                     <TextView
                         android:layout_width="match_parent"
@@ -207,15 +250,37 @@
                     android:clickable="true"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginTop="@dimen/mediummdp"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:padding="@dimen/smallmdp"
-                        android:src="@drawable/ic_user_fouces"
-                        />
+                        android:layout_marginTop="@dimen/tinymdp"
+                        >
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="@dimen/smallmdp"
+                            android:src="@drawable/ic_user_collection"
+
+                            />
+                        <TextView
+                            android:id="@+id/user_fouces_num"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/radio_red_bg_shap"
+                            android:text="12"
+                            android:textSize="@dimen/tinysp"
+                            android:textColor="@color/white"
+                            android:paddingLeft="@dimen/tinymdp"
+                            android:paddingRight="@dimen/tinymdp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/tinyxhdp"
+                            android:layout_marginTop="@dimen/tinymdp"
+                            android:gravity="center"/>
+
+                    </RelativeLayout>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -243,15 +308,37 @@
                     android:clickable="true"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginTop="@dimen/mediummdp"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:padding="@dimen/smallmdp"
-                        android:src="@drawable/ic_user_read"
-                        />
+                        android:layout_marginTop="@dimen/tinymdp"
+                        >
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="@dimen/smallmdp"
+                            android:src="@drawable/ic_user_read"
+
+                            />
+                        <TextView
+                            android:id="@+id/user_read_num"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/radio_red_bg_shap"
+                            android:text="12"
+                            android:textSize="@dimen/tinysp"
+                            android:textColor="@color/white"
+                            android:paddingLeft="@dimen/tinymdp"
+                            android:paddingRight="@dimen/tinymdp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/tinyxhdp"
+                            android:layout_marginTop="@dimen/tinymdp"
+                            android:gravity="center"/>
+
+                    </RelativeLayout>
 
                     <TextView
                         android:layout_width="match_parent"

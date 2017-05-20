@@ -86,7 +86,7 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
     }
 
     public void initData() {
-        url= NetWork.LOAD+"/app/"+type+"/"+releaseId+"/"+realm.where(User.class).findFirst().getUserId();
+        url= NetWork.LOAD+"/app/"+type+"/"+releaseId+"/"+realm.where(User.class).findFirst().getUserId()+"/"+realm.where(User.class).findFirst().getUserPhone();
         Log.i("gqf","url"+url);
         //url="http://www.baidu.com";
         initWebView();
@@ -131,6 +131,8 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
                 // TODO Auto-generated method stub
 
                 Log.i("gqf", "shouldOverrideUrlLoading..." + url);
+                onBackPressed();
+
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });

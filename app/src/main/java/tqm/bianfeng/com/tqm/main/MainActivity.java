@@ -329,12 +329,12 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 photoGet.beginCrop(data.getData());
             }
             if (requestCode == Crop.REQUEST_CROP) {
-                Log.i("gqf", "handleCrop");
-                photoGet.handleCrop(resultCode, data);
-                if (photoGet.getHeadFile() == null) {
-                    Log.i("gqf", "getHeadFile==null");
-                }
-                userFragemnt.setUserHeadImg(photoGet.getHeadFile());
+                    Log.i("gqf", "handleCrop");
+                    photoGet.handleCrop(resultCode, data);
+                    if (photoGet.getHeadFile() == null) {
+                        Log.i("gqf", "getHeadFile==null");
+                    }
+                    userFragemnt.setUserHeadImg(photoGet.getHeadFile());
             }
         }
         //        else if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {

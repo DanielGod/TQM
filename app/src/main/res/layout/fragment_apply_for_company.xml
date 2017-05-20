@@ -48,7 +48,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/mediummdp"
-                        android:text="民间资本"
+                        android:text="民间机构"
                         android:textColor="@color/font_black_1"
                         android:textSize="@dimen/mediumsp"
                         android:button="@drawable/choose_radio_btn"/>
@@ -309,13 +309,17 @@
                         android:textSize="@dimen/smallsp"
                         android:textColor="@color/font_black_2"/>
 
+                    <ImageView
+                        android:layout_width="@dimen/activity_horizontal_margin"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_upload"/>
                     <TextView
                         android:id="@+id/upload_logo_img_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="上传"
                         android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingLeft="@dimen/smallmdp"
                         android:paddingRight="@dimen/activity_horizontal_margin"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/mediumsp"
@@ -379,13 +383,17 @@
                         style="@style/apply_text"
                         android:textSize="@dimen/smallsp"
                         android:textColor="@color/font_black_2"/>
+                    <ImageView
+                        android:layout_width="@dimen/activity_horizontal_margin"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_upload"/>
                     <TextView
                         android:id="@+id/upload_company_img_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="上传"
                         android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingLeft="@dimen/smallmdp"
                         android:paddingRight="@dimen/activity_horizontal_margin"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/mediumsp"
@@ -468,13 +476,17 @@
                         style="@style/apply_text"
                         android:textSize="@dimen/smallsp"
                         android:textColor="@color/font_black_2"/>
+                    <ImageView
+                        android:layout_width="@dimen/activity_horizontal_margin"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_upload"/>
                     <TextView
                         android:id="@+id/upload_personal_img_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="上传"
                         android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingLeft="@dimen/smallmdp"
                         android:paddingRight="@dimen/activity_horizontal_margin"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/mediumsp"

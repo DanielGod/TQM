@@ -186,7 +186,7 @@
         <item name="android:clickable">true</item>
         <item name="android:background">?android:selectableItemBackground</item>
         <item name="android:textColor">@color/home_orange</item>
-        <item name="android:textSize">@dimen/mediumsp</item>
+        <item name="android:textSize">@dimen/smallsp</item>
     </style>
 
     <!--极速贷款-理财推荐-热门活动-->

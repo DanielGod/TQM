@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.google.gson.Gson;
+import com.soundcloud.android.crop.Crop;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,6 +89,12 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
                 applyForCompanyFragment.setImgInView(data);
+            }
+        }
+        if (requestCode == Crop.REQUEST_CROP) {
+            Log.i("gqf", "handleCrop");
+            if(applyForCompanyFragment!=null){
+                applyForCompanyFragment.setLogo(resultCode, data);
             }
         }
     }

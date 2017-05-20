@@ -125,6 +125,7 @@ public class ApplyForStatusActivity extends BaseActivity {
                     public void onNext(YwApplyEnter ywAppler) {
                         Log.i("gqf", "ywApplyEnter" + ywAppler.toString());
                         applyStatuScroll.setVisibility(View.VISIBLE);
+
                         ywApplyEnter = ywAppler;
                         if (ywApplyEnter.getApplyType().equals("1001") || ywApplyEnter.getApplyType().equals("1002")) {
                             //公司申请
@@ -156,14 +157,18 @@ public class ApplyForStatusActivity extends BaseActivity {
                             auditEndLin.setVisibility(View.VISIBLE);
                             noAuditView.setVisibility(View.VISIBLE);
                             if (ywApplyEnter.getAuditCode().equals("02")) {
-                                noAuditLin.setVisibility(View.VISIBLE);
-                                auditRemarkTxt.setText(ywApplyEnter.getAuditRemark());
 
+                                auditRemarkTxt.setText(ywApplyEnter.getAuditRemark());
+                                noAuditLin.setVisibility(View.VISIBLE);
+                                noAuditView.setBackgroundColor(getResources().getColor(R.color.font_black_5));
                                 auditEndTxt.setText("审核未通过");
 
-                            } else {
+                            } else if(ywApplyEnter.getAuditCode().equals("01")) {
                                 auditEndTxt.setText("审核通过");
+                                noAuditView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                                 auditEndImg.setImageResource(R.drawable.ic_apply_true);
+                            }else{
+
                             }
 
                         }

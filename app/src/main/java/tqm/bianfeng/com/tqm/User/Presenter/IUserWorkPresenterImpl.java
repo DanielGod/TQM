@@ -3,6 +3,7 @@ package tqm.bianfeng.com.tqm.User.Presenter;
 import android.util.Log;
 
 import java.io.File;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -19,6 +20,7 @@ import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.User;
+import tqm.bianfeng.com.tqm.pojo.UserActionNum;
 import tqm.bianfeng.com.tqm.pojo.result.ResultWithAuditCode;
 
 /**
@@ -163,6 +165,34 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                     }
                 });
         compositeSubscription.add(subscription);
+    }
+    public void getNum(int userId){
+        Subscription subscription = NetWork.getUserService().getStatistics(userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<UserActionNum>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.i("gqf","Throwable"+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(List<UserActionNum> userActionNa) {
+
+                        Log.i("gqf","userActionNa"+userActionNa.toString());
+                        iLoginAndRegistered.setNum((userActionNa.get(0).getNum()+userActionNa.get(1).getNum())
+                        ,userActionNa.get(2).getNum(),userActionNa.get(3).getNum(),userActionNa.get(4).getNum());
+
+                    }
+                });
+        compositeSubscription.add(subscription);
+
+
     }
     public void onClose(){
         super.onClose();

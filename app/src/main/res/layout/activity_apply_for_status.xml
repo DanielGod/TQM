@@ -335,11 +335,10 @@
                     android:layout_width="@dimen/tinymdp"
                     android:layout_height="@dimen/hugehdp"
                     android:layout_alignParentBottom="true"
-                    android:background="@color/colorPrimaryDark"
+                    android:background="@color/font_black_5"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:layout_marginLeft="@dimen/tinyxhdp"
-                    android:visibility="gone"
 
                     />
 
@@ -401,7 +400,6 @@
                     android:layout_height="@dimen/smallhdp"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/mediummdp"
-                    android:visibility="gone"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="@dimen/hugehdp">
 
@@ -411,7 +409,7 @@
                         android:layout_height="@dimen/smallhdp"
                         android:layout_marginLeft="@dimen/smallmdp"
                         android:padding="3dp"
-                        android:src="@drawable/ic_apply_false"/>
+                        android:src="@drawable/ic_apply_defaut"/>
 
                     <TextView
                         android:id="@+id/audit_end_txt"
@@ -420,7 +418,7 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:text="审核未通过"
+                        android:text="暂无结果"
                         android:textColor="@color/font_black_1"
                         android:textSize="@dimen/mediumsp"/>
                 </LinearLayout>

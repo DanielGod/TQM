@@ -22,6 +22,7 @@ import rx.Subscription;
 import rx.functions.Func4;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
+import tqm.bianfeng.com.tqm.pojo.User;
 import tqm.bianfeng.com.tqm.pojo.YwApplyEnter;
 
 /**
@@ -77,7 +78,7 @@ public class ApplyForPersonalFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_apply_for_personal, container, false);
         ButterKnife.bind(this, view);
-
+        phoneNumEdi.setText(realm.where(User.class).findFirst().getUserPhone());
         return view;
     }
 

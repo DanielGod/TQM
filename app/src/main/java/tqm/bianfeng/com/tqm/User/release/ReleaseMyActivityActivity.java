@@ -3,6 +3,7 @@ package tqm.bianfeng.com.tqm.User.release;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.soundcloud.android.crop.Crop;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -40,6 +42,7 @@ import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.CustomView.ShowDialogAndLoading;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.Fragment.MyReleaseFragment;
+import tqm.bianfeng.com.tqm.Util.PhotoGet;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
@@ -299,9 +302,10 @@ public class ReleaseMyActivityActivity extends BaseActivity {
                 mEditor.insertTodo();
                 break;
             case R.id.commit:
-                if (!ywBankActivity.getActivityContent().equals("")
+                Log.i("gqf","ywBankActivity"+ywBankActivity.toString());
+                if (ywBankActivity.getActivityContent()!=null
                         && !companyNameEdi.getText().toString().equals("")
-                        && mLogoSelectPath != null&&ywBankActivity.getImageUrl()!=null) {
+                        && (uploadLogoImgPath != null||ywBankActivity.getImageUrl()!=null)) {
                     ywBankActivity.setActivityTitle(companyNameEdi.getText().toString());
                     ywBankActivity.setCreateUser(1);
                     if (activityId != 0) {
@@ -367,8 +371,15 @@ public class ReleaseMyActivityActivity extends BaseActivity {
                 setImgInView(data);
             }
         }
+        if (requestCode == Crop.REQUEST_CROP) {
+            Log.i("gqf", "handleCrop");
+
+            uploadLogoImg(resultCode, data);
+
+        }
     }
 
+    PhotoGet photoGet;
     public void setImgInView(Intent data) {
         if (isAddTextImg) {
             mTxtSelectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
@@ -378,15 +389,34 @@ public class ReleaseMyActivityActivity extends BaseActivity {
             isAddTextImg = false;
         } else if (isAddLogo) {
             mLogoSelectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
-            logoImg1.setImageBitmap(null);
-            logoImg1.setVisibility(View.GONE);
-            for (int i = 0; i < mLogoSelectPath.size(); i++) {
-                logoImg1.setImageBitmap(BitmapFactory.decodeFile(mLogoSelectPath.get(i)));
-                logoImg1.setVisibility(View.VISIBLE);
-            }
-            uplodLogoImg(mLogoSelectPath);
+            photoGet=PhotoGet.getInstance();
+            photoGet.setContext(this);
+            photoGet.beginImgCrop(mLogoSelectPath.get(0));
+
+
+
+        }
+    }
+
+    List<String> uploadLogoImgPath;
+
+    public void uploadLogoImg(int resultCode, Intent result){
+
+        photoGet.handleCrop(resultCode, result);
+        if (photoGet.getHeadFile() == null) {
+            Log.i("gqf", "getHeadFile==null");
+        }else{
+            Bitmap bm = BitmapFactory.decodeFile(photoGet.getHeadFile().getAbsolutePath());
+            uploadLogoImgPath=new ArrayList<>();
+            uploadLogoImgPath.add(photoGet.getHeadFile().getAbsolutePath());
+
+            logoImg1.setImageBitmap(bm);
+            logoImg1.setVisibility(View.VISIBLE);
             isAddLogo = false;
         }
+        uplodLogoImg(uploadLogoImgPath);
+
+
     }
 
     public void uplodLogoImg(List<String> imgPaths) {

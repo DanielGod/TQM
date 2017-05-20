@@ -123,6 +123,9 @@ public class PhotoGet {
 
         dialog.show(avatorView);
     }
+    public void setContext(Context context){
+        this.context=context;
+    }
 
 
     class PhotoOnClickListener implements View.OnClickListener {
@@ -273,7 +276,12 @@ public class PhotoGet {
         Uri destination = Uri.fromFile(new File(context.getCacheDir(), "cropped"));
         Crop.of(source, destination).withAspect(2,1).asSquare().start((Activity) context);
     }
-
+    public void beginImgCrop(String path) {
+        Uri destination = Uri.fromFile(new File(context.getCacheDir(), "cropped"));
+        Uri source=Uri.fromFile(new File(path));
+        Crop.of(source, destination).withAspect(16,9).withMaxSize(320,180)
+        .start((Activity) context);
+    }
 
     public void handleCrop(int resultCode, Intent result) {
         if (resultCode == Activity.RESULT_OK) {

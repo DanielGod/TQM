@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import tqm.bianfeng.com.tqm.CustomView.LoadingIndicator;
 import tqm.bianfeng.com.tqm.CustomView.ObservableWebView;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.CorrectOrReportActivity;
@@ -81,6 +84,8 @@ public class DetailActivity extends BaseActivity {
     ImageView shareImg;
     @BindView(R.id.more_menu_img)
     ImageView moreMenuImg;
+    @BindView(R.id.loading_indeiator)
+    LoadingIndicator loadingIndeiator;
     private int toolBarHeight = 0;
     private int scrollHeight = 0;
 
@@ -117,6 +122,7 @@ public class DetailActivity extends BaseActivity {
         detailId = getIntent().getIntExtra("detailId", -1);
         detailTitle = getIntent().getStringExtra("detailTitle");
         toolbarTitle = "";
+        loadingIndeiator.showLoading();
         switch (detailType) {
             case "01":
                 toolbarTitle = "银行活动";
@@ -155,6 +161,7 @@ public class DetailActivity extends BaseActivity {
 
 
     String url;
+    String shareUrl;
 
     public void initWebView() {
         WebSettings settings = webView.getSettings();
@@ -180,7 +187,9 @@ public class DetailActivity extends BaseActivity {
         if (realm.where(User.class).findFirst() != null) {
             userId = realm.where(User.class).findFirst().getUserId() + "";
         }
-        url = NetWork.LOAD + "/app/getDetail/" + detailType + "/" + detailId + "/" + userId;
+        url = NetWork.LOAD + "/app/getDetail/" + detailType + "/" + detailId + "/" + userId+"/y";
+        shareUrl=NetWork.LOAD + "/app/getDetail/" + detailType + "/" + detailId + "/"+"0" + "/n";
+
         webView.loadUrl(url);
         webView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
             @Override
@@ -193,7 +202,22 @@ public class DetailActivity extends BaseActivity {
                 setToolBarBgAlpha();
             }
         });
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                loadingIndeiator.hideLoading();
 
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // TODO Auto-generated method stub
+
+                Log.i("gqf", "shouldOverrideUrlLoading..." + url);
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+        });
     }
 
     public void setToolBarBgAlpha() {
@@ -277,7 +301,7 @@ public class DetailActivity extends BaseActivity {
 
 
     public void share() {
-        UMWeb web = new UMWeb(url);
+        UMWeb web = new UMWeb(shareUrl);
         web.setTitle(detailTitle);//标题
         web.setDescription(detailTitle);
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
@@ -423,10 +447,10 @@ public class DetailActivity extends BaseActivity {
             case R.id.more_menu_img:
                 //跳报界面
 
-                Intent intent=new Intent(DetailActivity.this, CorrectOrReportActivity.class);
-                intent.putExtra(CorrectOrReportActivity.objectId,detailId);
-                intent.putExtra(CorrectOrReportActivity.objectModule,detailType);
-                intent.putExtra(CorrectOrReportActivity.objectTitle,detailTitle);
+                Intent intent = new Intent(DetailActivity.this, CorrectOrReportActivity.class);
+                intent.putExtra(CorrectOrReportActivity.objectId, detailId);
+                intent.putExtra(CorrectOrReportActivity.objectModule, detailType);
+                intent.putExtra(CorrectOrReportActivity.objectTitle, detailTitle);
                 startActivity(intent);
 
 

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,13 +43,15 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func3;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.Util.PhotoGet;
 import tqm.bianfeng.com.tqm.Util.ReadJson;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
+import tqm.bianfeng.com.tqm.pojo.User;
 import tqm.bianfeng.com.tqm.pojo.YwApplyEnter;
 import tqm.bianfeng.com.tqm.pojo.address.address_model;
 import tqm.bianfeng.com.tqm.pojo.result.ResultCodeWithImgPathList;
@@ -135,6 +138,7 @@ public class ApplyForCompanyFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_apply_for_company, container, false);
         ButterKnife.bind(this, view);
 
+        companyPhoneNumEdi.setText(realm.where(User.class).findFirst().getUserPhone());
 
         return view;
     }
@@ -149,6 +153,8 @@ public class ApplyForCompanyFragment extends BaseFragment {
         privateCapitalRadio.setChecked(true);
         iniEdi();
         initaddressModels();
+        photoGet=PhotoGet.getInstance();
+        photoGet.setContext(getActivity());
         mCompanyImgSelectPath=new ArrayList<>();
         mLogoSelectPath=new ArrayList<>();
         mPersonalImgSelectPath=new ArrayList<>();
@@ -201,7 +207,23 @@ public class ApplyForCompanyFragment extends BaseFragment {
     ArrayList<String> mCompanyImgSelectPath;
     ArrayList<String> mPersonalImgSelectPath;
     ArrayList<String> mLogoSelectPath;
+    PhotoGet photoGet;
+    List<String> uploadLogoImgPath;
 
+    public void setLogo(int resultCode, Intent result){
+        photoGet.handleCrop(resultCode, result);
+        if (photoGet.getHeadFile() == null) {
+            Log.i("gqf", "getHeadFile==null");
+        }else{
+            Bitmap bm = BitmapFactory.decodeFile(photoGet.getHeadFile().getAbsolutePath());
+            uploadLogoImgPath=new ArrayList<>();
+            uploadLogoImgPath.add(photoGet.getHeadFile().getAbsolutePath());
+            logoImg1.setImageBitmap(bm);
+            logoImg1.setVisibility(View.VISIBLE);
+            isAddLogo = false;
+        }
+
+    }
 
 
     public void setImgInView(Intent data) {
@@ -217,14 +239,22 @@ public class ApplyForCompanyFragment extends BaseFragment {
             }
             isAddCompanyImg = false;
         } else if (isAddLogo) {
+            Log.i("gqf","getData"+data.getData());
+            Log.i("gqf","getData"+data.toString());
+
+
+
             mLogoSelectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
-            logoImg1.setImageBitmap(null);
-            logoImg1.setVisibility(View.GONE);
-            for (int i = 0; i < mLogoSelectPath.size(); i++) {
-                logoImg1.setImageBitmap(BitmapFactory.decodeFile(mLogoSelectPath.get(i)));
-                logoImg1.setVisibility(View.VISIBLE);
-            }
-            isAddLogo = false;
+            photoGet.beginImgCrop(mLogoSelectPath.get(0));
+
+//            logoImg1.setImageBitmap(null);
+//            logoImg1.setVisibility(View.GONE);
+//            for (int i = 0; i < mLogoSelectPath.size(); i++) {
+//                logoImg1.setImageBitmap(BitmapFactory.decodeFile(mLogoSelectPath.get(i)));
+//                logoImg1.setVisibility(View.VISIBLE);
+//            }
+//            isAddLogo = false;
+
         } else if (isAddPersonalImg) {
             mPersonalImgSelectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
             for (int i = 0; i < personalImgsView.size(); i++) {
@@ -268,7 +298,7 @@ public class ApplyForCompanyFragment extends BaseFragment {
                 if(mLogoSelectPath.size()==0){
                     Toast.makeText(getActivity(),"请先添加图片再上传",Toast.LENGTH_SHORT).show();
                 }else{
-                    uploadImg(1,mLogoSelectPath);
+                    uploadImg(1,uploadLogoImgPath);
                 }
                 break;
             case R.id.add_logo_img_img:
@@ -294,16 +324,14 @@ public class ApplyForCompanyFragment extends BaseFragment {
     }
     public void iniEdi(){
         Observable<CharSequence> CharSequence1 = RxTextView.textChanges(companyNameEdi).skip(1);
-        Observable<CharSequence> CharSequence2 = RxTextView.textChanges(companyPhoneNumEdi).skip(1);
-        Observable<CharSequence> CharSequence3 = RxTextView.textChanges(companyUserNameEdi).skip(1);
+        Observable<CharSequence> CharSequence2 = RxTextView.textChanges(companyUserNameEdi).skip(1);
 
-        Subscription etSc = Observable.combineLatest(CharSequence1, CharSequence2, CharSequence3,  new Func3<CharSequence, CharSequence, CharSequence, Boolean>() {
+        Subscription etSc = Observable.combineLatest(CharSequence1, CharSequence2,  new Func2<CharSequence, CharSequence, Boolean>() {
             @Override
-            public Boolean call(CharSequence charSequence, CharSequence charSequence2, CharSequence charSequence3) {
+            public Boolean call(CharSequence charSequence, CharSequence charSequence2) {
                 boolean Bl = !TextUtils.isEmpty(charSequence);
                 boolean B2 = !TextUtils.isEmpty(charSequence2);
-                boolean B3 = !TextUtils.isEmpty(charSequence3);
-                return Bl && B2 && B3 ;
+                return Bl && B2  ;
             }
         }).subscribe(new Observer<Boolean>() {
             @Override

@@ -26,6 +26,11 @@
                     android:layout_marginBottom="@dimen/smallhdp"
                     />
 
+                <tqm.bianfeng.com.tqm.CustomView.LoadingIndicator
+                    android:id="@+id/loading_indeiator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/mediumhdp"
+                    android:layout_centerInParent="true"/>
                 <!--<android.support.v7.widget.Toolbar-->
                     <!--android:id="@+id/detail_toolbar"-->
                     <!--android:layout_width="match_parent"-->

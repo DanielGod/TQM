@@ -254,7 +254,7 @@
                         android:paddingRight="@dimen/tinymdp"
                         android:text="更多"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/mediumsp"/>
+                        android:textSize="@dimen/smallsp"/>
 
 
                 </LinearLayout>
@@ -467,7 +467,7 @@
                             android:paddingRight="@dimen/smallmdp"
                             android:text="更多"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/mediumsp"/>
+                            android:textSize="@dimen/smallsp"/>
 
 
                     </LinearLayout>

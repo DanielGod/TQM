@@ -94,6 +94,7 @@ public class ReleaseProgressActivity extends BaseActivity {
                 auditEndTxt.setText("审核未通过");
             } else {
                 auditEndTxt.setText("审核通过");
+                noAuditView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 auditEndImg.setImageResource(R.drawable.ic_apply_true);
             }
         }

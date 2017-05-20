@@ -87,6 +87,14 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     ImageView icCompanyImg;
     @BindView(R.id.ic_company_lin)
     LinearLayout icCompanyLin;
+    @BindView(R.id.user_attestation_num)
+    TextView userAttestationNum;
+    @BindView(R.id.user_fouces_num)
+    TextView userFoucesNum;
+    @BindView(R.id.user_collection_num)
+    TextView userCollectionNum;
+    @BindView(R.id.user_read_num)
+    TextView userReadNum;
 
     public static UserFragment newInstance(String param1) {
         UserFragment fragment = new UserFragment();
@@ -182,7 +190,8 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     public void onResume() {
         super.onResume();
         if (realm.where(User.class).findFirst() != null) {
-            iUserWorkPresenter.getAuditCode(realm.where(User.class).findFirst().getUserId());
+            iUserWorkPresenter.getAuditCode(mUser.getUserId());
+            iUserWorkPresenter.getNum(mUser.getUserId());
         }
 
     }
@@ -204,6 +213,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         initView();
     }
 
+
     //初始化显示数据
     public void initView() {
         if (realm.where(User.class).findFirst() != null) {
@@ -211,6 +221,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             Log.i("gqf", "mUser" + mUser.toString());
             //开起信息同步
             iUserWorkPresenter.getUserMsg(mUser.getUserPhone());
+            iUserWorkPresenter.getNum(mUser.getUserId());
             //显示账户信息
             userRegisterPhoneNumTxt.setVisibility(View.VISIBLE);
             userRegisterPhoneNumTxt.setText(mUser.getUserPhone());
@@ -354,5 +365,27 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     //提示是否打开网络设置
     public void shouNetWorkActivity() {
         mListener.shouNetWorkActivity();
+    }
+
+    public void setNum(int num1, int num2, int num3, int num4) {
+        if(num1>0){
+            userAttestationNum.setVisibility(View.VISIBLE);
+            userAttestationNum.setText(num1+"");
+
+        }
+        if(num2>0){
+            userCollectionNum.setVisibility(View.VISIBLE);
+            userCollectionNum.setText(num2+"");
+
+        }
+        if(num3>0){
+            userFoucesNum.setVisibility(View.VISIBLE);
+            userFoucesNum.setText(num3+"");
+
+        }
+        if(num4>0){
+            userReadNum.setVisibility(View.VISIBLE);
+            userReadNum.setText(num4+"");
+        }
     }
 }

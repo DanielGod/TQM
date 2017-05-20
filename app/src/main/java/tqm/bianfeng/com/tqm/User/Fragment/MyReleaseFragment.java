@@ -76,7 +76,7 @@ public class MyReleaseFragment extends BaseFragment{
         ButterKnife.bind(this, view);
         gson=new Gson();
         isRefresh=false;
-        if(index==0){
+        if(index==1){
             initActivityData();
         }else{
             initLoanData();
@@ -90,7 +90,7 @@ public class MyReleaseFragment extends BaseFragment{
         super.onResume();
         if(isRefresh){
             isRefresh=false;
-            if(index==0){
+            if(index==1){
                 initActivityData();
             }else{
                 initLoanData();

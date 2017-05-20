@@ -41,9 +41,9 @@ public class MyReleaseViewPagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position){
             case 0:
-                return "活动信息";
-            case 1:
                 return "贷款信息";
+            case 1:
+                return "活动信息";
         }
         return super.getPageTitle(position);
     }

@@ -11,4 +11,5 @@ public interface IUserWorkPresenter {
     public void uploadUserHeadImg(File img,int userId);
     public void getUserMsg(String phone);
     public void getAuditCode(int userId);
+    public void getNum(int userId);
 }
