@@ -38,6 +38,34 @@ android {
             proguardFiles 'proguard-rules.pro'
         }
     }
+    //渠道号
+    productFlavors {
+        vod01 {}
+        vod02 {}
+        vod03 {}
+        vod04 {}
+        vod05 {}
+        vod06 {}
+        vod07 {}
+        vod08 {}
+        vod09 {}
+        vod10 {}
+        vod11 {}
+        vod12 {}
+        vod13 {}
+        vod14 {}
+        vod15 {}
+        vod16 {}
+        vod17 {}
+        vod18 {}
+        vod19 {}
+        vod20 {}
+
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [WEIJY_CHANNEL_VALUE: name]
+        }
+
+    }
     sourceSets{
         main{
             jniLibs.srcDirs 'libs'
@@ -69,6 +97,7 @@ android {
 //            keyPassword "android"
 //        }
     }
+
     // apk name def
     android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
@@ -235,4 +264,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0' //根据版本支持来配置,目前支持1.0.1
 
     compile 'com.mcxiaoke.gradle:packer-helper:1.0.9'
+    compile 'com.afollestad.material-dialogs:core:0.9.0.2'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.8.0@aar'
 }

@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
+import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankDotItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
@@ -25,6 +26,16 @@ import tqm.bianfeng.com.tqm.pojo.bank.RiskGrade;
  */
 
 public interface BankService {
+
+    /**
+     * 保存渠道号
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("saveChannel")
+    Observable<ResultCode> saveChannel(@Field("channelNo") String channelNo,
+                                       @Field("deviceNo") String deviceNo);
 
 
     /**

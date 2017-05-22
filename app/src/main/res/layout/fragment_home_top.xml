@@ -135,7 +135,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="银行贷款"
+                        android:text="@string/bankloan"
                         android:textColor="@color/font_black_1"
                         android:textSize="@dimen/smallsp"/>
 

@@ -66,6 +66,8 @@
         <!--<meta-data android:name="com.amap.api.v2.apikey" android:value="1e2b67102660de66dc51062c86588eeb">-->
         <!--</meta-data>-->
         <!--<service android:name="com.amap.api.location.APSService"></service>-->
+
+
         <activity
             android:name=".demoActivity"
             android:launchMode="singleTask"
@@ -99,6 +101,9 @@
             </intent-filter>
 
         </activity>
+        <meta-data
+            android:name="WEIJY_CHANNEL"
+            android:value="${WEIJY_CHANNEL_VALUE}" />
 
         <!--我的关注界面-->
         <activity
