@@ -62,13 +62,13 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
         handler = new Handler(Looper.getMainLooper());
     }
     //验证并注册或登录
-    public void loginOrRegister(String phone,String code){
+    public void loginOrRegister(String phone,String code,String channel){
         if(oldCode.equals("")||!oldCode.equals(code)){
             //验证码错误
             iLoginAndRegistered.loginOrRegisteredResult(1,false,"验证码不正确");
         }else{
             //网络验证
-            Subscription subscription = NetWork.getUserService().register(phone)
+            Subscription subscription = NetWork.getUserService().register(phone,channel)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<ResultCodeWithUser>() {

@@ -576,7 +576,9 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 startActivity(new Intent(MainActivity.this, AllCityActivity.class));
                 break;
             case R.id.action_search_img:
-                startActivity(new Intent(MainActivity.this, SearchInstiutionsActivity.class));
+                Intent intent=new Intent(MainActivity.this, SearchInstiutionsActivity.class);
+                intent.putExtra(SearchInstiutionsActivity.get_search_type,SearchInstiutionsActivity.all_search);
+                startActivity(intent);
                 break;
         }
     }

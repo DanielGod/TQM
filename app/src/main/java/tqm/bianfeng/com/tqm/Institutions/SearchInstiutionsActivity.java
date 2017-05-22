@@ -43,6 +43,10 @@ import tqm.bianfeng.com.tqm.pojo.User;
 
 public class SearchInstiutionsActivity extends BaseActivity {
 
+    public static final String all_search="00";
+    public static final String capital_search="03";
+    public static final String get_search_type="get_search_type";
+    public String search_type;
 
     @BindView(R.id.toolbar)
     Toolbar searchToolbar;
@@ -70,6 +74,7 @@ public class SearchInstiutionsActivity extends BaseActivity {
         ButterKnife.bind(this);
         //setToolbar(searchToolbar, "搜索机构");
         //searchToolbar.
+        search_type=getIntent().getStringExtra(get_search_type);
         searchToolbar.setTitle("搜索机构");
         searchToolbar.setNavigationIcon(R.drawable.ic_back_arrow_dark);
         searchToolbar.setTitleTextColor(getResources().getColor(R.color.font_black_1));
@@ -106,7 +111,7 @@ public class SearchInstiutionsActivity extends BaseActivity {
         if(realm.where(User.class).findFirst()!=null){
             userId=realm.where(User.class).findFirst().getUserId();
         }
-        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().searchInstitutionItem(searchName,userId,page,10)
+        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().searchInstitutionItem(searchName,userId,search_type,page,10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<InstitutionItem>>() {

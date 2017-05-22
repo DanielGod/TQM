@@ -73,6 +73,7 @@ public interface InstitutionService {
     @POST("instit/search")
     Observable<List<InstitutionItem>> searchInstitutionItem(@Field("search") String search,
                                                             @Field("userId") int userId,
+                                                            @Field("institutionType") String institutionType,
                                                          @Field("pageNum") Integer pageNum,
                                                          @Field("pageSize") Integer pageSize);
 }

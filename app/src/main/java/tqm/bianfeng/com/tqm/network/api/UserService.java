@@ -92,7 +92,7 @@ public interface UserService {
      */
     @FormUrlEncoded
     @POST("register")
-    Observable<ResultCodeWithUser> register(@Field("userPhone") String userPhone);
+    Observable<ResultCodeWithUser> register(@Field("userPhone") String userPhone,@Field("channelNo") String channelNo);
 
     /**
      * 短信验证

@@ -197,6 +197,8 @@ public class PrivateCapitalActivity extends BaseActivity {
 
     @OnClick(R.id.action_search_img)
     public void onClick() {
-        startActivity(new Intent(PrivateCapitalActivity.this, SearchInstiutionsActivity.class));
+        Intent intent=new Intent(PrivateCapitalActivity.this, SearchInstiutionsActivity.class);
+        intent.putExtra(SearchInstiutionsActivity.get_search_type,SearchInstiutionsActivity.capital_search);
+        startActivity(intent);
     }
 }

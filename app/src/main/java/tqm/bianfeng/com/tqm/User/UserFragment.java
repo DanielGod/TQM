@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.utils.AppUtils;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -305,7 +306,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             @Override
             public void onOk(String ediTxt, String code) {
                 //验证并注册或登录
-                iLoginRegisterPresenter.loginOrRegister(ediTxt, code);
+                iLoginRegisterPresenter.loginOrRegister(ediTxt, code, AppUtils.getChanel(getApplicationContext()));
             }
 
             @Override
