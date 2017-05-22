@@ -9,7 +9,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -84,14 +83,14 @@ public class WelcomeActivity extends Activity {
                         @Override
                         public void onError(Throwable e) {
                             //Picasso.with(WelcomeActivity.this).load(R.drawable.qidongye).into(startPageImg);
-//                            countToEnter();
+                            countToEnter();
                         }
 
                         @Override
                         public void onNext(List<String> strings) {
                             Log.e("gqf","onNext"+strings.toString());
                             //Picasso.with(WelcomeActivity.this).load(NetWork.LOAD+strings.get(0)).error(R.drawable.qidongye).into(startPageImg);
-//                            countToEnter();
+                            countToEnter();
                         }
                     });
             mCompositeSubscription.add(subscription);
@@ -137,13 +136,13 @@ public class WelcomeActivity extends Activity {
 
                     @Override
                     public void onError(Throwable e) {
-                        countToEnter();
+//                        countToEnter();
                     }
                     @DebugLog
                     @Override
                     public void onNext(ResultCode resultCode) {
                         Log.e("Daniel","----getMsgv----"+resultCode.getMsg());
-                        countToEnter();
+//                        countToEnter();
 
                     }
                 });
