@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.Util.StringUtil;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 import tqm.bianfeng.com.tqm.pojo.bank.ListItemPositioin;
 
@@ -73,7 +74,11 @@ public class BankFinancingAdapter extends BaseAdapter {
         holder.annualReturnTv.setText(data.getAnnualReturn() + "%");
         holder.riskGradeNameTv.setText(data.getRiskGrade());
         holder.investmentTermTv.setText(data.getInvestmentTerm()+"天");
-        holder.purchaseMoneyTv.setText(data.getPurchaseMoney().setScale(0, BigDecimal.ROUND_DOWN)+"万");
+        if(!StringUtil.isBlank(data.getPurchaseMoney())){
+            holder.purchaseMoneyTv.setText(data.getPurchaseMoney().setScale(0, BigDecimal.ROUND_DOWN)+"万");
+        }else{
+            holder.purchaseMoneyTv.setText("0 元");
+        }
         holder.financViewsTv.setText("" + data.getFinancViews());
         holder.rateNameTv.setText("预期年化");
         if (!isFistPage) {
@@ -84,9 +89,9 @@ public class BankFinancingAdapter extends BaseAdapter {
                 }
             });
         }
-        if ("01".equals(data.getPresaleStatus()))
-            holder.presaleStatusImg.setImageResource(R.drawable.ys);
         if ("02".equals(data.getPresaleStatus()))
+            holder.presaleStatusImg.setImageResource(R.drawable.ys);
+        if ("01".equals(data.getPresaleStatus()))
             holder.presaleStatusImg.setImageResource(R.drawable.ks);
         if ("03".equals(data.getPresaleStatus()))
             holder.presaleStatusImg.setImageResource(R.drawable.ts);

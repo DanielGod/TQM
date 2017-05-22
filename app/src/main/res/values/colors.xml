@@ -18,7 +18,7 @@
     <color name="white">#ffffff</color>
     <color name="gray_light">#EBEDF0</color>
     <color name="red">#ee0000</color>
-
+    <color name="message_bg_red">#b4e72020</color>
     <color name="gary">#cecece</color> <!-- 灰色 -->
     <!-- 边框 -->
     <!-- 遮罩颜色 -->

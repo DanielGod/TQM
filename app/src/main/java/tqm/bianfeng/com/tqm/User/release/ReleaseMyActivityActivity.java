@@ -429,7 +429,8 @@ public class ReleaseMyActivityActivity extends BaseActivity {
                 Log.i("gqf", "File" + i);
                 if (f.exists()) {
                     RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/png"), f);
-                    builder.addFormDataPart("zichifile" + i, f.getName() + i, photoRequestBody);
+                    builder.addFormDataPart("zichifile" + i, f.getName(), photoRequestBody);
+
                 }
             }
         }
@@ -440,6 +441,7 @@ public class ReleaseMyActivityActivity extends BaseActivity {
         for (int i = 0; i < mb.size(); i++) {
             zichifile.add(mb.part(i));
         }
+
         //uploadLogoImgTxt.setText("上传中");
         //uploadLogoImgTxt.setEnabled(false);
         Subscription subscription = NetWork.getUserService().uploadImg(zichifile.get(0))
@@ -488,7 +490,7 @@ public class ReleaseMyActivityActivity extends BaseActivity {
                 Log.i("gqf", "File" + i);
                 if (f.exists()) {
                     RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/png"), f);
-                    builder.addFormDataPart("zichifile" + i, f.getName() + i, photoRequestBody);
+                    builder.addFormDataPart("zichifile" + i, f.getName(), photoRequestBody);
                 }
             }
         }

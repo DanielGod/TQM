@@ -19,7 +19,7 @@ import hugo.weaving.DebugLog;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
-import rx.functions.Func4;
+import rx.functions.Func3;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.pojo.User;
@@ -92,17 +92,15 @@ public class ApplyForPersonalFragment extends BaseFragment {
 
     public void iniEdi() {
         Observable<CharSequence> CharSequence1 = RxTextView.textChanges(userName).skip(1);
-        Observable<CharSequence> CharSequence2 = RxTextView.textChanges(phoneNumEdi).skip(1);
-        Observable<CharSequence> CharSequence3 = RxTextView.textChanges(idNumEdi).skip(1);
-        Observable<CharSequence> CharSequence4 = RxTextView.textChanges(userFirstName).skip(1);
-        Subscription etSc = Observable.combineLatest(CharSequence1, CharSequence2, CharSequence3,CharSequence4, new Func4<CharSequence, CharSequence, CharSequence,CharSequence, Boolean>() {
+        Observable<CharSequence> CharSequence2 = RxTextView.textChanges(idNumEdi).skip(1);
+        Observable<CharSequence> CharSequence3 = RxTextView.textChanges(userFirstName).skip(1);
+        Subscription etSc = Observable.combineLatest(CharSequence1, CharSequence2, CharSequence3, new Func3<CharSequence, CharSequence, CharSequence, Boolean>() {
             @Override
-            public Boolean call(CharSequence charSequence, CharSequence charSequence2, CharSequence charSequence3,CharSequence charSequence4) {
+            public Boolean call(CharSequence charSequence, CharSequence charSequence2, CharSequence charSequence3) {
                 boolean Bl = !TextUtils.isEmpty(charSequence);
                 boolean B2 = !TextUtils.isEmpty(charSequence2);
                 boolean B3 = !TextUtils.isEmpty(charSequence3);
-                boolean B4 = !TextUtils.isEmpty(charSequence4);
-                return Bl && B2 && B3 && B4;
+                return Bl && B2 && B3 ;
             }
         }).subscribe(new Observer<Boolean>() {
             @Override

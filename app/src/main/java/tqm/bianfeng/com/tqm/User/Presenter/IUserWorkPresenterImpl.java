@@ -13,6 +13,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.User.View.ILoginAndRegistered;
+import tqm.bianfeng.com.tqm.User.release.ReleaseActivity;
 import tqm.bianfeng.com.tqm.application.BasePresenterImpl;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.MyAttention;
@@ -185,8 +186,11 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                     public void onNext(List<UserActionNum> userActionNa) {
 
                         Log.i("gqf","userActionNa"+userActionNa.toString());
+                        ReleaseActivity.release_loan_num=userActionNa.get(1).getNum();
+
                         iLoginAndRegistered.setNum((userActionNa.get(0).getNum()+userActionNa.get(1).getNum())
                         ,userActionNa.get(2).getNum(),userActionNa.get(3).getNum(),userActionNa.get(4).getNum());
+
 
                     }
                 });

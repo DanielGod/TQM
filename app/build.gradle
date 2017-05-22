@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'realm-android'
 apply plugin: 'android-apt'
-
+apply plugin: 'packer'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -87,7 +87,31 @@ buildscript {
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
     }
 }
-
+//android {
+//    productFlavors {
+//        kuan {}
+//        xiaomi {}
+//        qh360 {}
+//        baidu {}
+//        wandoujia {}
+//    }
+//
+//    productFlavors.all {
+//        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+//    }
+//}
+android {
+    //...
+    signingConfigs {
+        release {
+            // 满足下面两个条件时需要此配置
+            // 1. Gradle版本 >= 2.14.1
+            // 2. Android Gradle Plugin 版本 >= 2.2.0
+            // 作用是只使用旧版签名，禁用V2版签名模式
+            v2SigningEnabled false
+        }
+    }
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -209,4 +233,6 @@ dependencies {
     compile 'org.jsoup:jsoup:1.8.3'
     compile 'jp.wasabeef:richeditor-android:1.2.0@aar'
     compile 'com.android.support:multidex:1.0.0' //根据版本支持来配置,目前支持1.0.1
+
+    compile 'com.mcxiaoke.gradle:packer-helper:1.0.9'
 }

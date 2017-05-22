@@ -3,6 +3,7 @@ package tqm.bianfeng.com.tqm.main;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -174,6 +175,7 @@ public class DetailActivity extends BaseActivity {
         settings.setUseWideViewPort(true);//设置webview推荐使用的窗口
         settings.setLoadWithOverviewMode(true);//设置webview加载的页面的模式
         settings.setTextZoom(100);//字体大小
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setJavaScriptEnabled(true);//支持js
         settings.setSupportZoom(true);//仅支持双击缩放r
         webView.setInitialScale(57);//最小缩放等级
@@ -190,7 +192,9 @@ public class DetailActivity extends BaseActivity {
         url = NetWork.LOAD + "/app/getDetail/" + detailType + "/" + detailId + "/" + userId+"/y";
         shareUrl=NetWork.LOAD + "/app/getDetail/" + detailType + "/" + detailId + "/"+"0" + "/n";
 
+        Log.i("gqf","getDetail"+detailTitle);
         webView.loadUrl(url);
+
         webView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
             @Override
             public void onScroll(int dx, int dy) {
@@ -212,14 +216,35 @@ public class DetailActivity extends BaseActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // TODO Auto-generated method stub
-
-                Log.i("gqf", "shouldOverrideUrlLoading..." + url);
-                return super.shouldOverrideUrlLoading(view, url);
+                if(url.startsWith("http:") || url.startsWith("https:") ) {
+                    view.loadUrl(url);
+                    return false;
+                }else{
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                    return true;
+                }
             }
         });
     }
+    public class Object2 extends Object{
+        //写一个js调android的方法
+        //Android 4.2以上系统，通过在Java的远程方法上面声明
+        // @JavascriptInterface可以解决WebView漏洞。如下面代码：
+        //@JavascriptInterface一定的加上
+        @android.webkit.JavascriptInterface
+        public void finishActivity(final String data){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(DetailActivity.this, "js调用了Native函数传递参数：" + data, Toast.LENGTH_SHORT).show();
+                    //String text = logTextView.getText() +  "\njs调用了Native函数传递参数：" + str;
+                    //logTextView.setText(text);
+                }
+            });
+        }
 
+    }
     public void setToolBarBgAlpha() {
         if (toolBarHeight == 0) {
             toolBarHeight = (int) getResources().getDimension(R.dimen.smallhdp);

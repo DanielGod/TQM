@@ -91,9 +91,10 @@ public class MyReleaseActivityAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder mHolder = (ViewHolder) holder;
         ReleaseActivityItem data = getDataItem(position);
-        Picasso.with(mContext).load(NetWork.LOAD + data.getImageUrl()).placeholder(R.drawable.banklogo).into(mHolder.logoImg);
+        Picasso.with(mContext).load(NetWork.LOAD + data.getImageUrl()).placeholder(R.drawable.placeholder).into(mHolder.logoImg);
         mHolder.activityTitleTv.setText(data.getActivityTitle());
 
+        Log.i("gqf","imgUrl"+NetWork.LOAD + data.getImageUrl());
         mHolder.institutionNameTv.setText(data.getInstitution());
         mHolder.activityViewsTv.setText(data.getActivityViews() + "");
         mHolder.linearlayout.setOnClickListener(new View.OnClickListener() {

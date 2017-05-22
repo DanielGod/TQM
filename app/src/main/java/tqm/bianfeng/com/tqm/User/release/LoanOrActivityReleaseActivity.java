@@ -27,9 +27,16 @@ import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import hugo.weaving.DebugLog;
+import rx.Observable;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import tqm.bianfeng.com.tqm.CustomView.LoadingIndicator;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.Fragment.MyReleaseFragment;
@@ -62,6 +69,7 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
     LoadingIndicator indicator;
 
     String type;
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,32 +77,32 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
         setContentView(R.layout.activity_loan_activity_release);
         ButterKnife.bind(this);
         String title = "";
-        MyReleaseFragment.isRefresh=true;
+        MyReleaseFragment.isRefresh = true;
         if (RELEASE_TYPE == RELEASE_LOAN_TYPE) {
             title = "贷款信息发布";
-            type="loan";
+            type = "loan";
         } else {
             title = "活动信息发布";
-            type="activity";
+            type = "activity";
         }
         releaseId = getIntent().getIntExtra(RELEASE_ID, 0);
 
 
-        setToolbar(activityReleaseToolbar,title);
+        setToolbar(activityReleaseToolbar, title);
         indicator.showLoading();
         initData();
     }
 
     public void initData() {
-        url= NetWork.LOAD+"/app/"+type+"/"+releaseId+"/"+realm.where(User.class).findFirst().getUserId()+"/"+realm.where(User.class).findFirst().getUserPhone();
-        Log.i("gqf","url"+url);
+        url = NetWork.LOAD + "/app/" + type + "/" + releaseId + "/" + realm.where(User.class).findFirst().getUserId() + "/" + realm.where(User.class).findFirst().getUserPhone();
+        Log.i("gqf", "url" + url);
         //url="http://www.baidu.com";
         initWebView();
     }
-//    public void  initWebView(){
-//        webView.load(url,null);
-//
-//    }
+    //    public void  initWebView(){
+    //        webView.load(url,null);
+    //
+    //    }
 
     public void initWebView() {
         WebSettings settings = webView.getSettings();
@@ -119,35 +127,78 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
         webView.loadUrl(url);
         //webView.loadDataWithBaseURL(url,getNewContent(IMAGE3),"text/html", "UTF-8", null);
         //webView.setWebChromeClient(mWebChromeClient);
-        webView.setWebViewClient(new WebViewClient(){
+
+
+
+
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 indicator.hideLoading();
 
             }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // TODO Auto-generated method stub
 
                 Log.i("gqf", "shouldOverrideUrlLoading..." + url);
-                onBackPressed();
+                countToEnter();
 
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });
 
     }
-    private String getNewContent(String htmltext){
+    private void countToEnter() {
+        Subscription subscriptionCount = Observable.interval(0, 1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .limit(6)
+                .map(new Func1<Long, Long>() {
+                    @DebugLog
+                    @Override
+                    public Long call(Long aLong) {
+                        return 6 - aLong;
+                    }
+                })
+                .subscribe(new Observer<Long>() {
+                    @Override
+                    public void onCompleted() {
+                        LoanOrActivityReleaseActivity.this.finish();
+                    }
 
-        Document doc= Jsoup.parse(htmltext);
-        Elements elements=doc.getElementsByTag("img");
+                    @DebugLog
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @DebugLog
+                    @Override
+                    public void onNext(Long aLong) {
+                        //                        activityTimeTv.setText(aLong + "秒");
+                    }
+                });
+        compositeSubscription.add(subscriptionCount);
+
+    }
+
+
+
+
+    private String getNewContent(String htmltext) {
+
+        Document doc = Jsoup.parse(htmltext);
+        Elements elements = doc.getElementsByTag("img");
         for (Element element : elements) {
-            element.attr("width","100%").attr("height","auto");
+            element.attr("width", "100%").attr("height", "auto");
         }
 
         return doc.toString();
     }
+
     public static final int INPUT_FILE_REQUEST_CODE = 1;
     private ValueCallback<Uri> mUploadMessage;
     private final static int FILECHOOSER_RESULTCODE = 2;
@@ -160,10 +211,9 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
     @SuppressLint("SdCardPath")
     private File createImageFile() {
         //mCameraPhotoPath="/mnt/sdcard/tmp.png";  
-        File file=new File(Environment.getExternalStorageDirectory()+"/","tmp.png");
-        mCameraPhotoPath=file.getAbsolutePath();
-        if(!file.exists())
-        {
+        File file = new File(Environment.getExternalStorageDirectory() + "/", "tmp.png");
+        mCameraPhotoPath = file.getAbsolutePath();
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -172,7 +222,8 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
         }
         return file;
     }
-    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE=1234;
+
+    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1234;
     private WebChromeClient mWebChromeClient = new WebChromeClient() {
 
 
@@ -248,8 +299,7 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
         }
 
 
-
-        //The undocumented magic method override  
+        //The undocumented magic method override
         //Eclipse will swear at you if you try to put @Override here  
         // For Android 3.0+  
         public void openFileChooser(ValueCallback<Uri> uploadMsg) {
@@ -310,7 +360,8 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
         Log.d("gqf", "onActivityResult");
 
         if (requestCode == FILECHOOSER_RESULTCODE) {
-            if (null == mUploadMessage) return;
+            if (null == mUploadMessage)
+                return;
             Uri result = data == null || resultCode != RESULT_OK ? null
                     : data.getData();
             if (result != null) {

@@ -372,20 +372,28 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             userAttestationNum.setVisibility(View.VISIBLE);
             userAttestationNum.setText(num1+"");
 
+        }else{
+            userAttestationNum.setVisibility(View.GONE);
         }
         if(num2>0){
-            userCollectionNum.setVisibility(View.VISIBLE);
-            userCollectionNum.setText(num2+"");
+            userFoucesNum.setVisibility(View.VISIBLE);
+            userFoucesNum.setText(num2+"");
 
+        }else{
+            userFoucesNum.setVisibility(View.GONE);
         }
         if(num3>0){
-            userFoucesNum.setVisibility(View.VISIBLE);
-            userFoucesNum.setText(num3+"");
+            userCollectionNum.setVisibility(View.VISIBLE);
+            userCollectionNum.setText(num3+"");
 
+        }else{
+            userCollectionNum.setVisibility(View.GONE);
         }
         if(num4>0){
             userReadNum.setVisibility(View.VISIBLE);
             userReadNum.setText(num4+"");
+        }else{
+            userReadNum.setVisibility(View.GONE);
         }
     }
 }

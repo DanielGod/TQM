@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_right_arrow"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/smallmdp"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
                     />
             </LinearLayout>
 

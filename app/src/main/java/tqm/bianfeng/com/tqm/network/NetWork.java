@@ -27,7 +27,7 @@ public class NetWork {
 //    public static final String LOAD="http://211.149.235.17:8080/tqm-web";
       public static final String LOAD="http://139.224.17.235:8080/tqm-web";
 
-//    public static final String LOAD="http://tqmadmin.dijiaapp.com";
+    //public static final String LOAD="http://tqmadmin.dijiaapp.com";
 
     private static UserService userService;
     private static BankService bankService;

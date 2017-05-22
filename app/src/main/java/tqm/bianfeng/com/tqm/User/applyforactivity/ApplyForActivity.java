@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.soundcloud.android.crop.Crop;
@@ -91,11 +92,16 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
                 applyForCompanyFragment.setImgInView(data);
             }
         }
+
         if (requestCode == Crop.REQUEST_CROP) {
             Log.i("gqf", "handleCrop");
             if(applyForCompanyFragment!=null){
                 applyForCompanyFragment.setLogo(resultCode, data);
             }
+        }else if(requestCode == Crop.RESULT_ERROR){
+            Log.i("gqf", "RESULT_ERROR");
+        }else if(requestCode == Crop.REQUEST_PICK){
+            Log.i("gqf", "REQUEST_PICK");
         }
     }
     public void setCommitBtn(boolean is){
@@ -109,7 +115,8 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
             ywApplyEnter=applyForPersonalFragment.getYwApplyEnter();
         }
 
-        if(ywApplyEnter==null){
+        if(ywApplyEnter==null||ywApplyEnter.getContact().equals("")){
+            Toast.makeText(this, "联系电话不能为空", Toast.LENGTH_SHORT).show();
 
         }else{
             //提交

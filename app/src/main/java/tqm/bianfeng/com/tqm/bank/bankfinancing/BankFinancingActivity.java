@@ -285,6 +285,8 @@ public class BankFinancingActivity extends AppCompatActivity {
             Intent intent = new Intent(BankFinancingActivity.this, DetailActivity.class);
             intent.putExtra("detailType", "02");
             intent.putExtra("detailId", bankFinancingAdapter.getItem(position).getFinancId());
+            intent.putExtra("detailTitle", bankFinancingAdapter.getItem(position).getProductName());
+
             startActivity(intent);
         }
 

@@ -273,11 +273,11 @@ public class PhotoGet {
     }
 
     public void beginCrop(Uri source) {
-        Uri destination = Uri.fromFile(new File(context.getCacheDir(), "cropped"));
+        Uri destination = Uri.fromFile(new File(context.getCacheDir(), "cropped.jpg"));
         Crop.of(source, destination).withAspect(2,1).asSquare().start((Activity) context);
     }
     public void beginImgCrop(String path) {
-        Uri destination = Uri.fromFile(new File(context.getCacheDir(), "cropped"));
+        Uri destination = Uri.fromFile(new File(context.getCacheDir(), "cropped.jpg"));
         Uri source=Uri.fromFile(new File(path));
         Crop.of(source, destination).withAspect(16,9).withMaxSize(320,180)
         .start((Activity) context);

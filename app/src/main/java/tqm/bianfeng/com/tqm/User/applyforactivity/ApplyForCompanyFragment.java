@@ -212,8 +212,10 @@ public class ApplyForCompanyFragment extends BaseFragment {
 
     public void setLogo(int resultCode, Intent result){
         photoGet.handleCrop(resultCode, result);
+        mLogoSelectPath.remove(0);
         if (photoGet.getHeadFile() == null) {
             Log.i("gqf", "getHeadFile==null");
+
         }else{
             Bitmap bm = BitmapFactory.decodeFile(photoGet.getHeadFile().getAbsolutePath());
             uploadLogoImgPath=new ArrayList<>();
@@ -295,7 +297,7 @@ public class ApplyForCompanyFragment extends BaseFragment {
                 break;
             case R.id.upload_logo_img_txt:
                 //上传logo图片，上传后改为已上传，上传中
-                if(mLogoSelectPath.size()==0){
+                if(uploadLogoImgPath.size()==0){
                     Toast.makeText(getActivity(),"请先添加图片再上传",Toast.LENGTH_SHORT).show();
                 }else{
                     uploadImg(1,uploadLogoImgPath);
@@ -370,7 +372,7 @@ public class ApplyForCompanyFragment extends BaseFragment {
                 Log.i("gqf", "File" + i);
                 if (f.exists()) {
                     RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/png"), f);
-                    builder.addFormDataPart("zichifile"+i, f.getName()+i, photoRequestBody);
+                    builder.addFormDataPart("zichifile"+i, f.getName(), photoRequestBody);
                 }
             }
         }

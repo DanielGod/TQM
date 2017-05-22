@@ -140,9 +140,11 @@
                         android:layout_marginTop="@dimen/tinymdp"
                         >
                         <ImageView
-                            android:layout_width="match_parent"
+                            android:id="@+id/release_img"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
+                            android:layout_centerHorizontal="true"
                             android:padding="@dimen/smallmdp"
                             android:src="@drawable/ic_user_attestation"
 
@@ -158,9 +160,8 @@
                             android:textColor="@color/white"
                             android:paddingLeft="@dimen/tinymdp"
                             android:paddingRight="@dimen/tinymdp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/tinyxhdp"
                             android:layout_marginTop="@dimen/tinymdp"
+                            android:layout_alignRight="@+id/release_img"
                             android:gravity="center"/>
 
                     </RelativeLayout>
@@ -198,9 +199,11 @@
                         android:layout_marginTop="@dimen/tinymdp"
                         >
                         <ImageView
-                            android:layout_width="match_parent"
+                            android:id="@+id/collection_img"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
+                            android:layout_centerHorizontal="true"
                             android:padding="@dimen/smallmdp"
                             android:src="@drawable/ic_user_fouces"
 
@@ -216,9 +219,8 @@
                             android:textColor="@color/white"
                             android:paddingLeft="@dimen/tinymdp"
                             android:paddingRight="@dimen/tinymdp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/tinyxhdp"
                             android:layout_marginTop="@dimen/tinymdp"
+                            android:layout_alignRight="@+id/collection_img"
                             android:gravity="center"/>
 
                     </RelativeLayout>
@@ -257,9 +259,11 @@
                         android:layout_marginTop="@dimen/tinymdp"
                         >
                         <ImageView
-                            android:layout_width="match_parent"
+                            android:id="@+id/focuse_img"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
+                            android:layout_centerHorizontal="true"
                             android:padding="@dimen/smallmdp"
                             android:src="@drawable/ic_user_collection"
 
@@ -275,9 +279,8 @@
                             android:textColor="@color/white"
                             android:paddingLeft="@dimen/tinymdp"
                             android:paddingRight="@dimen/tinymdp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/tinyxhdp"
                             android:layout_marginTop="@dimen/tinymdp"
+                            android:layout_alignRight="@+id/focuse_img"
                             android:gravity="center"/>
 
                     </RelativeLayout>
@@ -315,9 +318,11 @@
                         android:layout_marginTop="@dimen/tinymdp"
                         >
                         <ImageView
-                            android:layout_width="match_parent"
+                            android:id="@+id/read_img"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
+                            android:layout_centerHorizontal="true"
                             android:padding="@dimen/smallmdp"
                             android:src="@drawable/ic_user_read"
 
@@ -333,10 +338,10 @@
                             android:textColor="@color/white"
                             android:paddingLeft="@dimen/tinymdp"
                             android:paddingRight="@dimen/tinymdp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/tinyxhdp"
                             android:layout_marginTop="@dimen/tinymdp"
+                            android:layout_alignRight="@+id/read_img"
                             android:gravity="center"/>
+
 
                     </RelativeLayout>
 
