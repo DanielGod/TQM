@@ -48,8 +48,6 @@ import tqm.bianfeng.com.tqm.pojo.bank.ProductType;
 import tqm.bianfeng.com.tqm.pojo.bank.RiskGrade;
 import tqm.bianfeng.com.tqm.pojo.bank.buttonViewEven;
 
-import static tqm.bianfeng.com.tqm.R.id.iv_back;
-
 public class TestFilterFragment extends Fragment {
 
     private static final String SARG_PARAM1 = "param1";
@@ -57,17 +55,40 @@ public class TestFilterFragment extends Fragment {
     private static final String SLOANTYPE = "贷款类型";
     private static final String SPRODUCTTYPE = "产品类型";
     private static final String SRISKGRADE = "风险等级";
+    private static final int FINSTITUIONBANKINSTITUTIONQUERY = 6; //理财-银行adapter标识
+    private static final int LOANBANKINSTITUTIONQUERY = 7; //贷款-银行adapter标识
+    private static final int ACTIVITYINSTITUTIONQUERY = 8; //活动-机构adapter标识
+    private static final int ACTIVITYBANKINSTITUTIONQUERY = 9; //活动-银行adapter标识
     private static final int IINSTITUTIONQUERY = 10; //贷款机构adapter标识
     private static final int IFINSTITUTIONQUERY = 11; //理财机构adapter标识
     private static final int ILOANTYPE = 12;//贷款类型adapter标识
     private static final int IPRODUCTTYPE = 13;//产品类型adapter标识
     private static final int IRISKGRADE = 14;//风险等级adapter标识
-    @BindView(iv_back)
+
+    @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.titleBar_relative)
     RelativeLayout titleBarRelative;
+    @BindView(R.id.filterTitle_activityBankInstitution_cb)
+    CheckBox filterTitleActivityBankInstitutionCb;
+    @BindView(R.id.filter_activityBankInstitution_recyclerView)
+    RecyclerView filterActivityBankInstitutionRecyclerView;
+    @BindView(R.id.filterTitle_activityInstitution_cb)
+    CheckBox filterTitleActivityInstitutionCb;
+    @BindView(R.id.filter_activityInstitution_recyclerView)
+    RecyclerView filterActivityInstitutionRecyclerView;
+    @BindView(R.id.filter_activity_linear)
+    LinearLayout filterActivityLinear;
+    @BindView(R.id.filterTitle_loanBankInstitution_cb)
+    CheckBox filterTitleLoanBankInstitutionCb;
+    @BindView(R.id.filter_loanBankInstitution_recyclerView)
+    RecyclerView filterLoanBankInstitutionRecyclerView;
+    @BindView(R.id.filterTitle_institution_cb)
+    CheckBox filterTitleInstitutionCb;
     @BindView(R.id.filter_institution_recyclerView)
     RecyclerView filterInstitutionRecyclerView;
+    @BindView(R.id.filterTitle_loanType_cb)
+    CheckBox filterTitleLoanTypeCb;
     @BindView(R.id.filter_loanType_recyclerView)
     RecyclerView filterLoanTypeRecyclerView;
     @BindView(R.id.filter_crowd_et)
@@ -88,12 +109,22 @@ public class TestFilterFragment extends Fragment {
     EditText filterLoanPeriodMaxEt;
     @BindView(R.id.filter_loan_linear)
     LinearLayout filterLoanLinear;
+    @BindView(R.id.filterTitle_financingBankInstitution_cb)
+    CheckBox filterTitleFinancingBankInstitutionCb;
+    @BindView(R.id.filter_financingBankInstitution_recyclerView)
+    RecyclerView filterFinancingBankInstitutionRecyclerView;
+    @BindView(R.id.filterTitle_fInstitution_cb)
+    CheckBox filterTitleFInstitutionCb;
     @BindView(R.id.filter_fInstitution_recyclerView)
     RecyclerView filterFInstitutionRecyclerView;
+    @BindView(R.id.filterTitle_productType_cb)
+    CheckBox filterTitleProductTypeCb;
     @BindView(R.id.textView6)
     TextView textView6;
     @BindView(R.id.filter_productType_recyclerView)
     RecyclerView filterProductTypeRecyclerView;
+    @BindView(R.id.filterTitle_riskGrade_cb)
+    CheckBox filterTitleRiskGradeCb;
     @BindView(R.id.filter_riskGrade_recyclerView)
     RecyclerView filterRiskGradeRecyclerView;
     @BindView(R.id.filter_redeemable_cBox)
@@ -112,19 +143,9 @@ public class TestFilterFragment extends Fragment {
     Button btnReset;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
-    @BindView(R.id.filterTitle_institution_cb)
-    CheckBox filterTitleInstitutionCb;
-    @BindView(R.id.filterTitle_loanType_cb)
-    CheckBox filterTitleLoanTypeCb;
-    @BindView(R.id.filterTitle_fInstitution_cb)
-    CheckBox filterTitleFInstitutionCb;
-    @BindView(R.id.filterTitle_productType_cb)
-    CheckBox filterTitleProductTypeCb;
-    @BindView(R.id.filterTitle_riskGrade_cb)
-    CheckBox filterTitleRiskGradeCb;
     private DrawerLayout mDrawerLayout;
     private FrameLayout mDrawerContent;
-    private int mFilterType;//1:贷款 2 理财
+    private int mFilterType;//1:贷款 2 理财 3:活动
     private Map<String, Object> mapFilterInfo;
     public List<String> filter_value_RiskGrade;//风险等级集合
     public List<String> filter_value_Institution;//机构筛选集合
@@ -147,21 +168,68 @@ public class TestFilterFragment extends Fragment {
     @DebugLog
     public void onEventMainThread(buttonViewEven event) {
         String value = event.getButtonView();
-        Log.i("Daniel", "---value---" +value);
-        Log.i("Daniel", "---mFilterType---" +mFilterType);
+        Log.i("Daniel", "---value---" + value);
+        Log.i("Daniel", "---mFilterType---" + mFilterType);
+        // 接受贷款筛选条件点击处理
         if (event.isFlag()) {
-            if (mFilterType == 1)//1 贷款
-                // 接受贷款筛选条件点击处理
-                getLoanType(value);
-            else
-                getFinancingType(value);
+            //添加筛选条件
+            switch (mFilterType) {
+                case 1:
+
+                    getLoanType(value, event.isFlag());
+                    break;
+                case 2:
+                    getFinancingType(value, event.isFlag());
+                    break;
+                case 3:
+                    setActivityType(value, event.isFlag());
+                    break;
+            }
 
         } else {
-            if (mFilterType == 1)//1 贷款
-                removeLoanType(value);
-            else
-                removeFinancingType(value);
+            //移除筛选条件
+            switch (mFilterType) {
+                case 1:
+                    getLoanType(value, event.isFlag());
+                    break;
+                case 2:
+                    getFinancingType(value, event.isFlag());
+                    break;
+                case 3:
+                    setActivityType(value, event.isFlag());
+                    break;
+            }
+
         }
+    }
+
+    /**
+     * 添加活动筛选条件
+     *
+     * @param value
+     * @param flag
+     * @return
+     */
+    private boolean setActivityType(String value, boolean flag) {
+        Log.i("Daniel", "---getActivityType---");
+        boolean bStop = false;
+        if (!bStop) {
+            List<Institution> lInstitution = (List<Institution>) mapFilterInfo.get(SINSTITUTIONQUERY);
+            if (filter_value_Institution == null) {
+                filter_value_Institution = new ArrayList<>();
+            }
+            for (int i = 0; i < lInstitution.size(); i++) {
+                if (value.equals(lInstitution.get(i).getInstitutionName())) {
+                    if (flag) {
+                        filter_value_Institution.add(lInstitution.get(i).getInstitutionName());
+                    } else {
+                        filter_value_Institution.remove(lInstitution.get(i).getInstitutionName());
+                    }
+                    return bStop = true;
+                }
+            }
+        }
+        return bStop = true;
     }
 
     /**
@@ -216,49 +284,50 @@ public class TestFilterFragment extends Fragment {
         et.setText("");
     }
 
+    //    /**
+    //     * 移除贷款筛选条件
+    //     *
+    //     * @param value
+    //     * @return
+    //     */
+    //    private boolean removeLoanType(String value) {
+    //        boolean bStop = false;
+    //        if (!bStop) {
+    //            List<Institution> lInstitution = (List<Institution>) mapFilterInfo.get(SINSTITUTIONQUERY);
+    //            if (filter_value_Institution == null) {
+    //                filter_value_Institution = new ArrayList<>();
+    //            }
+    //            for (int i = 0; i < lInstitution.size(); i++) {
+    //                if (value.equals(lInstitution.get(i).getInstitutionName())) {
+    //                    filter_value_Institution.remove(lInstitution.get(i).getInstitutionName());
+    //                    return bStop = true;
+    //                }
+    //            }
+    //        }
+    //        if (!bStop) {
+    //            List<LoanType> loanType = (List<LoanType>) mapFilterInfo.get(SLOANTYPE);
+    //            if (filter_value_loanType == null) {
+    //                filter_value_loanType = new ArrayList<>();
+    //            }
+    //            for (int i = 0; i < loanType.size(); i++) {
+    //                if (value.equals(loanType.get(i).getLoanTypeName())) {
+    //                    filter_value_loanType.remove(loanType.get(i).getLoanTypeName());
+    //                    return bStop = true;
+    //                }
+    //            }
+    //        }
+    //        return bStop = true;
+    //
+    //    }
+
     /**
-     * 移除贷款筛选条件
+     * 添加或移除贷款筛选条件
      *
      * @param value
+     * @param flag
      * @return
      */
-    private boolean removeLoanType(String value) {
-        boolean bStop = false;
-        if (!bStop) {
-            List<Institution> lInstitution = (List<Institution>) mapFilterInfo.get(SINSTITUTIONQUERY);
-            if (filter_value_Institution == null) {
-                filter_value_Institution = new ArrayList<>();
-            }
-            for (int i = 0; i < lInstitution.size(); i++) {
-                if (value.equals(lInstitution.get(i).getInstitutionName())) {
-                    filter_value_Institution.remove(lInstitution.get(i).getInstitutionName());
-                    return bStop = true;
-                }
-            }
-        }
-        if (!bStop) {
-            List<LoanType> loanType = (List<LoanType>) mapFilterInfo.get(SLOANTYPE);
-            if (filter_value_loanType == null) {
-                filter_value_loanType = new ArrayList<>();
-            }
-            for (int i = 0; i < loanType.size(); i++) {
-                if (value.equals(loanType.get(i).getLoanTypeName())) {
-                    filter_value_loanType.remove(loanType.get(i).getLoanTypeName());
-                    return bStop = true;
-                }
-            }
-        }
-        return bStop = true;
-
-    }
-
-    /**
-     * 添加贷款筛选条件
-     *
-     * @param value
-     * @return
-     */
-    private boolean getLoanType(String value) {
+    private boolean getLoanType(String value, boolean flag) {
         Log.i("Daniel", "---getLoanType---");
         boolean bStop = false;
         if (!bStop) {
@@ -268,7 +337,10 @@ public class TestFilterFragment extends Fragment {
             }
             for (int i = 0; i < lInstitution.size(); i++) {
                 if (value.equals(lInstitution.get(i).getInstitutionName())) {
-                    filter_value_Institution.add(lInstitution.get(i).getInstitutionName());
+                    if (flag)
+                        filter_value_Institution.add(lInstitution.get(i).getInstitutionName());
+                    else
+                        filter_value_Institution.remove(lInstitution.get(i).getInstitutionName());
                     return bStop = true;
                 }
             }
@@ -280,7 +352,10 @@ public class TestFilterFragment extends Fragment {
             }
             for (int i = 0; i < loanType.size(); i++) {
                 if (value.equals(loanType.get(i).getLoanTypeName())) {
-                    filter_value_loanType.add(loanType.get(i).getLoanTypeName());
+                    if (flag)
+                        filter_value_loanType.add(loanType.get(i).getLoanTypeName());
+                    else
+                        filter_value_loanType.remove(loanType.get(i).getLoanTypeName());
                     return bStop = true;
                 }
             }
@@ -319,12 +394,13 @@ public class TestFilterFragment extends Fragment {
     }
 
     /**
-     * 添加理财筛选条件
+     * 添加或移除理财筛选条件
      *
      * @param value
+     * @param flag
      * @return
      */
-    public boolean getFinancingType(String value) {
+    public boolean getFinancingType(String value, boolean flag) {
         Log.i("Daniel", "---getFinancingType---");
         boolean bStop = false;
         if (!bStop) {
@@ -334,7 +410,10 @@ public class TestFilterFragment extends Fragment {
             }
             for (int i = 0; i < lRiskGrades.size(); i++) {
                 if (value.equals(lRiskGrades.get(i).getRiskGradeName())) {
-                    filter_value_RiskGrade.add(lRiskGrades.get(i).getRiskGradeName());
+                    if (flag)
+                        filter_value_RiskGrade.add(lRiskGrades.get(i).getRiskGradeName());
+                    else
+                        filter_value_RiskGrade.remove(lRiskGrades.get(i).getRiskGradeName());
                     return bStop = true;
                 }
             }
@@ -346,7 +425,10 @@ public class TestFilterFragment extends Fragment {
             }
             for (int i = 0; i < lInstitution.size(); i++) {
                 if (value.equals(lInstitution.get(i).getInstitutionName())) {
-                    filter_value_Institution.add(lInstitution.get(i).getInstitutionName());
+                    if (flag)
+                        filter_value_Institution.add(lInstitution.get(i).getInstitutionName());
+                    else
+                        filter_value_Institution.remove(lInstitution.get(i).getInstitutionName());
                     return bStop = true;
                 }
             }
@@ -358,7 +440,10 @@ public class TestFilterFragment extends Fragment {
             }
             for (int i = 0; i < lProductType.size(); i++) {
                 if (value.equals(lProductType.get(i).getProductTypeName())) {
-                    filter_value_ProductType.add(lProductType.get(i).getProductTypeName());
+                    if (flag)
+                        filter_value_ProductType.add(lProductType.get(i).getProductTypeName());
+                    else
+                        filter_value_ProductType.remove(lProductType.get(i).getProductTypeName());
                     return bStop = true;
                 }
             }
@@ -366,54 +451,54 @@ public class TestFilterFragment extends Fragment {
         return bStop = true;
 
     }
-
-    /**
-     * 移除筛选条件
-     *
-     * @param value
-     * @return
-     */
-    public boolean removeFinancingType(String value) {
-        boolean bStop = false;
-        if (!bStop) {
-            List<RiskGrade> lRiskGrades = (List<RiskGrade>) mapFilterInfo.get(SRISKGRADE);
-            if (filter_value_RiskGrade == null) {
-                filter_value_RiskGrade = new ArrayList<>();
-            }
-            for (int i = 0; i < lRiskGrades.size(); i++) {
-                if (value.equals(lRiskGrades.get(i).getRiskGradeName())) {
-                    filter_value_RiskGrade.remove(lRiskGrades.get(i).getRiskGradeName());
-                    return bStop = true;
-                }
-            }
-        }
-        if (!bStop) {
-            List<Institution> lInstitution = (List<Institution>) mapFilterInfo.get(SINSTITUTIONQUERY);
-            if (filter_value_Institution == null) {
-                filter_value_Institution = new ArrayList<>();
-            }
-            for (int i = 0; i < lInstitution.size(); i++) {
-                if (value.equals(lInstitution.get(i).getInstitutionName())) {
-                    filter_value_Institution.remove(lInstitution.get(i).getInstitutionName());
-                    return bStop = true;
-                }
-            }
-        }
-        if (!bStop) {
-            List<ProductType> lProductType = (List<ProductType>) mapFilterInfo.get(SPRODUCTTYPE);
-            if (filter_value_ProductType == null) {
-                filter_value_ProductType = new ArrayList<>();
-            }
-            for (int i = 0; i < lProductType.size(); i++) {
-                if (value.equals(lProductType.get(i).getProductTypeName())) {
-                    filter_value_ProductType.remove(lProductType.get(i).getProductTypeName());
-                    return bStop = true;
-                }
-            }
-        }
-        return bStop = true;
-
-    }
+    //
+    //    /**
+    //     * 移除筛选条件
+    //     *
+    //     * @param value
+    //     * @return
+    //     */
+    //    public boolean removeFinancingType(String value) {
+    //        boolean bStop = false;
+    //        if (!bStop) {
+    //            List<RiskGrade> lRiskGrades = (List<RiskGrade>) mapFilterInfo.get(SRISKGRADE);
+    //            if (filter_value_RiskGrade == null) {
+    //                filter_value_RiskGrade = new ArrayList<>();
+    //            }
+    //            for (int i = 0; i < lRiskGrades.size(); i++) {
+    //                if (value.equals(lRiskGrades.get(i).getRiskGradeName())) {
+    //                    filter_value_RiskGrade.remove(lRiskGrades.get(i).getRiskGradeName());
+    //                    return bStop = true;
+    //                }
+    //            }
+    //        }
+    //        if (!bStop) {
+    //            List<Institution> lInstitution = (List<Institution>) mapFilterInfo.get(SINSTITUTIONQUERY);
+    //            if (filter_value_Institution == null) {
+    //                filter_value_Institution = new ArrayList<>();
+    //            }
+    //            for (int i = 0; i < lInstitution.size(); i++) {
+    //                if (value.equals(lInstitution.get(i).getInstitutionName())) {
+    //                    filter_value_Institution.remove(lInstitution.get(i).getInstitutionName());
+    //                    return bStop = true;
+    //                }
+    //            }
+    //        }
+    //        if (!bStop) {
+    //            List<ProductType> lProductType = (List<ProductType>) mapFilterInfo.get(SPRODUCTTYPE);
+    //            if (filter_value_ProductType == null) {
+    //                filter_value_ProductType = new ArrayList<>();
+    //            }
+    //            for (int i = 0; i < lProductType.size(); i++) {
+    //                if (value.equals(lProductType.get(i).getProductTypeName())) {
+    //                    filter_value_ProductType.remove(lProductType.get(i).getProductTypeName());
+    //                    return bStop = true;
+    //                }
+    //            }
+    //        }
+    //        return bStop = true;
+    //
+    //    }
 
     /**
      * 获取贷款类型
@@ -471,12 +556,19 @@ public class TestFilterFragment extends Fragment {
             case 1:
                 filterLoanLinear.setVisibility(View.VISIBLE);
                 filterFinancingLinear.setVisibility(View.GONE);
+                filterActivityLinear.setVisibility(View.GONE);
                 initLoanData();
                 break;
             case 2:
                 filterLoanLinear.setVisibility(View.GONE);
                 filterFinancingLinear.setVisibility(View.VISIBLE);
+                filterActivityLinear.setVisibility(View.GONE);
                 initFinancingData();
+                break;
+            case 3:
+                filterLoanLinear.setVisibility(View.GONE);
+                filterFinancingLinear.setVisibility(View.GONE);
+                filterActivityLinear.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -503,14 +595,29 @@ public class TestFilterFragment extends Fragment {
                     @Override
                     public void onNext(List<Institution> institutions) {
                         List<String> datas = new ArrayList<>();
+                        List<String> datas_bankInstitution = new ArrayList<>();
                         for (Institution institution : institutions) {
-                            datas.add(institution.getInstitutionName());
+                            if (!"02".equals(institution.getInstitutionType())) //02:银行，03：机构
+                                datas.add(institution.getInstitutionName());
+                            else
+                                datas_bankInstitution.add(institution.getInstitutionName());
                         }
                         mapFilterInfo.put(SINSTITUTIONQUERY, institutions);
-                        if (mFilterType == 1) {
-                            setRecyclerViewAdapter(datas, filterInstitutionRecyclerView, IINSTITUTIONQUERY);
-                        } else {
-                            setRecyclerViewAdapter(datas, filterFInstitutionRecyclerView, IFINSTITUTIONQUERY);
+                        switch (mFilterType) {
+                            case 1:
+                                //机构查询列表
+                                setRecyclerViewAdapter(datas, filterInstitutionRecyclerView, IINSTITUTIONQUERY);
+                                //银行查询列表
+                                setRecyclerViewAdapter(datas_bankInstitution, filterLoanBankInstitutionRecyclerView, LOANBANKINSTITUTIONQUERY);
+                                break;
+                            case 2:
+                                setRecyclerViewAdapter(datas, filterFInstitutionRecyclerView, IFINSTITUTIONQUERY);
+                                setRecyclerViewAdapter(datas_bankInstitution, filterFinancingBankInstitutionRecyclerView, FINSTITUIONBANKINSTITUTIONQUERY);
+                                break;
+                            case 3:
+                                setRecyclerViewAdapter(datas, filterActivityInstitutionRecyclerView, ACTIVITYINSTITUTIONQUERY);
+                                setRecyclerViewAdapter(datas_bankInstitution, filterActivityBankInstitutionRecyclerView, ACTIVITYBANKINSTITUTIONQUERY);
+                                break;
                         }
                     }
                 });
@@ -577,6 +684,10 @@ public class TestFilterFragment extends Fragment {
     GridViewAdapter gridViewAdapterIRISKGRADE;//风险等级adapter
     GridViewAdapter gridViewAdapterIPRODUCTTYPE;//产品类型adapter
     GridViewAdapter gridViewAdapterILOANTYPE;//贷款类型adapter
+    GridViewAdapter gridViewAdapterACTIVITYINSTITUTIONQUERY;//活动-机构adapter
+    GridViewAdapter gridViewAdapterACTIVITYBANKINSTITUTIONQUERY;//活动-银行机构adapter
+    GridViewAdapter gridViewAdapterFINSTITUIONBANKINSTITUTIONQUERY;//理财-银行机构adapter
+    GridViewAdapter gridViewAdapterLOANBANKINSTITUTIONQUERY;//贷款-银行机构adapter
 
     /**
      * 适配器
@@ -607,6 +718,18 @@ public class TestFilterFragment extends Fragment {
             case IRISKGRADE:
                 gridViewAdapterIRISKGRADE = (GridViewAdapter) recyclerView.getAdapter();
                 break;
+            case ACTIVITYBANKINSTITUTIONQUERY:
+                gridViewAdapterACTIVITYBANKINSTITUTIONQUERY = (GridViewAdapter) recyclerView.getAdapter();
+                break;
+            case ACTIVITYINSTITUTIONQUERY:
+                gridViewAdapterACTIVITYINSTITUTIONQUERY = (GridViewAdapter) recyclerView.getAdapter();
+                break;
+            case LOANBANKINSTITUTIONQUERY:
+                gridViewAdapterLOANBANKINSTITUTIONQUERY = (GridViewAdapter) recyclerView.getAdapter();
+                break;
+            case FINSTITUIONBANKINSTITUTIONQUERY:
+                gridViewAdapterFINSTITUIONBANKINSTITUTIONQUERY = (GridViewAdapter) recyclerView.getAdapter();
+                break;
         }
 
 
@@ -619,10 +742,23 @@ public class TestFilterFragment extends Fragment {
         switch (view.getId()) {
             case R.id.btn_reset:
                 filter_item = true; // true:点击了重置按钮
-                if (mFilterType == 1)
-                    notifyLoanAdapter();
-                else
-                    notifyFinancingAdapter();
+                switch (mFilterType) {
+                    case 1:
+                        notifyAdapter(gridViewAdapterINSTITUTIONQUERY);
+                        notifyAdapter(gridViewAdapterILOANTYPE);
+                        notifyAdapter(gridViewAdapterLOANBANKINSTITUTIONQUERY);
+                        break;
+                    case 2:
+                        notifyAdapter(gridViewAdapterFINSTITUTIONQUERY);
+                        notifyAdapter(gridViewAdapterIRISKGRADE);
+                        notifyAdapter(gridViewAdapterIPRODUCTTYPE);
+                        notifyAdapter(gridViewAdapterFINSTITUIONBANKINSTITUTIONQUERY);
+                        break;
+                    case 3:
+                        notifyAdapter(gridViewAdapterACTIVITYBANKINSTITUTIONQUERY);
+                        notifyAdapter(gridViewAdapterACTIVITYINSTITUTIONQUERY);
+                        break;
+                }
                 break;
             case R.id.btn_confirm:
                 sendFilter();
@@ -655,12 +791,20 @@ public class TestFilterFragment extends Fragment {
         }
     }
 
+    private void notifyAdapter(GridViewAdapter adapter) {
+        if (adapter == null) {
+            adapter = new GridViewAdapter();
+        }
+        adapter.notifyDataSetChanged();
+    }
+
     /**
      * 设置列表的显示与隐藏
+     *
      * @param filterTitle_institution_cb
      */
     private void setFilterTitle(int filterTitle_institution_cb) {
-        switch (filterTitle_institution_cb){
+        switch (filterTitle_institution_cb) {
             case R.id.filterTitle_loanType_cb:
                 if (filterTitleLoanTypeCb.isChecked())
                     filterLoanTypeRecyclerView.setVisibility(View.GONE);
@@ -811,5 +955,5 @@ public class TestFilterFragment extends Fragment {
         return strInstitution.toString();
     }
 
-   
+
 }

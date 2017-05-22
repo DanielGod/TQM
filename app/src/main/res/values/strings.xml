@@ -47,6 +47,7 @@
     <string name="previousPage">上一页</string>
     <!--筛选-理财-->
     <string name="filter_institution">机构查询</string>
+    <string name="filter_bankQuery">银行查询</string>
     <string name="filter_productType">产品类型</string>
     <string name="filter_riskGrade">风险等级</string>
     <string name="filter_investmentModel">投资模式</string>

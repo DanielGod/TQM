@@ -328,7 +328,7 @@ public class BankFinancingActivity extends AppCompatActivity {
     }
 
     private void initDrawLayout() {
-        Fragment fragment = TestFilterFragment.newInstance(2);//1:贷款 2：；理财
+        Fragment fragment = TestFilterFragment.newInstance(2);//1:贷款 2：；理财 3：活动
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.drawer_content, fragment).commit();
 

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,11 +14,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,13 +43,14 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
-import tqm.bianfeng.com.tqm.bank.spinner.NiceSpinner;
+import tqm.bianfeng.com.tqm.bank.fragment.TestFilterFragment;
 import tqm.bianfeng.com.tqm.main.DetailActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.AQueryParams;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankListItems;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
+import tqm.bianfeng.com.tqm.pojo.bank.FilterEvens;
 import tqm.bianfeng.com.tqm.pojo.bank.Institution;
 import tqm.bianfeng.com.tqm.pojo.bank.ListItemPositioin;
 
@@ -73,18 +74,9 @@ public class BankActivitonsActivity extends AppCompatActivity {
     TextView YBJLodingTxt;
     @BindView(R.id.ivDeleteText)
     ImageView ivDeleteText;
-    @BindView(R.id.bankActivity_pageView_linear)
-    LinearLayout bankActivityPageViewLinear;
-    @BindView(R.id.bankActivity_focus_linear)
-    LinearLayout bankActivityFocusLinear;
-    @BindView(R.id.bankActivity_pageView_tv)
-    TextView bankActivityPageViewTv;
-    @BindView(R.id.bankActivity_pageView_img)
-    ImageView bankActivityPageViewImg;
-    @BindView(R.id.bankActivity_focus_tv)
-    TextView bankActivityFocusTv;
-    @BindView(R.id.niceSpinner)
-    NiceSpinner niceSpinner;
+
+
+
 
     private CompositeSubscription mCompositeSubscription;
     private Unbinder unbinder;
@@ -105,22 +97,22 @@ public class BankActivitonsActivity extends AppCompatActivity {
         unbinder = ButterKnife.bind(this);
         mCompositeSubscription = new CompositeSubscription();
         EventBus.getDefault().register(this);
-        //        initDrawLayout();
-        getBankInstitution();
-        niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //                Toast.makeText(BankActivitonsActivity.this, ""+position, Toast.LENGTH_SHORT).show();
-                String queryParams = setQuerParams(null, null, mDataset.get(position));//筛选条件 “机构”字段
-                Log.i("Daniel", "---queryParams---" + queryParams);
-                initDate(0, Constan.NOTPULLUP, null, queryParams);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        initDrawLayout();
+//        getBankInstitution();
+//        niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                //                Toast.makeText(BankActivitonsActivity.this, ""+position, Toast.LENGTH_SHORT).show();
+//                String queryParams = setQuerParams(null, null, mDataset.get(position));//筛选条件 “机构”字段
+//                Log.i("Daniel", "---queryParams---" + queryParams);
+//                initDate(0, Constan.NOTPULLUP, null, queryParams);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
         setToolBar(getResources().getString(bankActivity));
         initRefreshlv();
         lodingIsFailOrSucess(1);
@@ -163,7 +155,7 @@ public class BankActivitonsActivity extends AppCompatActivity {
                         for (Institution institution1 : institutions) {
                             mDataset.add(institution1.getInstitutionName());
                         }
-                        niceSpinner.attachDataSource(mDataset);
+//                        niceSpinner.attachDataSource(mDataset);
 
                     }
                 });
@@ -277,7 +269,12 @@ public class BankActivitonsActivity extends AppCompatActivity {
         });
 
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(FilterEvens event) {
+        Log.i("Daniel", "---onEventMainThread---" + event.getFilterValue());
+        initDate(pagNum, Constan.NOTPULLUP,null,event.getFilterValue());
 
+    }
     private void initDate(int pagNum, final boolean pullUp, String search, String gson) {
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
                 .getBankActivityItem(search, gson, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE)
@@ -380,12 +377,9 @@ public class BankActivitonsActivity extends AppCompatActivity {
 
     //
     private void initDrawLayout() {
-//        Fragment fragment = TestFilterFragment.newInstance("01");
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("departmentName", "");
-//        fragment.setArguments(bundle);
-//        fragmentManager.beginTransaction().replace(R.id.drawer_content, fragment).commit();
+        Fragment fragment = TestFilterFragment.newInstance(3);//1:贷款 2：；理财 3：活动
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.drawer_content, fragment).commit();
 
     }
 
@@ -407,6 +401,7 @@ public class BankActivitonsActivity extends AppCompatActivity {
             case R.id.etSearch:
                 break;
             case R.id.ll_filter:
+                drawerLayout.openDrawer(drawerContent);//筛选页
                 break;
             case R.id.ivDeleteText:
                 etSearch.setText("");
@@ -414,34 +409,34 @@ public class BankActivitonsActivity extends AppCompatActivity {
                 etSearch.setFocusableInTouchMode(false);
                 break;
             case R.id.bankActivity_pageView_linear:  //浏览量
-                if (!isClickPageView) {
-                    bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.colorPrimary));
-                    bankActivityPageViewImg.setImageResource(R.drawable.asc_light);
-                    isClickPageView = true;
-                    bankActivityFocusTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
-                    isClickFocus = false;
-                    String queryParams = setQuerParams("activityViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
-                    Log.i("Daniel", "---queryParams---" + queryParams);
-                    initDate(0, Constan.NOTPULLUP, null, queryParams);
-                } else {
-                    bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
-                    bankActivityPageViewImg.setImageResource(R.drawable.asc_dark);
-                    isClickPageView = false;
-                    initDate(0, Constan.NOTPULLUP, null, null);
-                }
+//                if (!isClickPageView) {
+//                    bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.colorPrimary));
+//                    bankActivityPageViewImg.setImageResource(R.drawable.asc_light);
+//                    isClickPageView = true;
+//                    bankActivityFocusTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
+//                    isClickFocus = false;
+//                    String queryParams = setQuerParams("activityViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
+//                    Log.i("Daniel", "---queryParams---" + queryParams);
+//                    initDate(0, Constan.NOTPULLUP, null, queryParams);
+//                } else {
+//                    bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
+//                    bankActivityPageViewImg.setImageResource(R.drawable.asc_dark);
+//                    isClickPageView = false;
+//                    initDate(0, Constan.NOTPULLUP, null, null);
+//                }
                 break;
             case R.id.bankActivity_focus_linear:
-                if (!isClickFocus) {
-                    bankActivityFocusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
-                    isClickFocus = true;
-                    String queryParams = setQuerParams("atttenNum", Constan.DESC, "");//筛选条件 “关注”字段，降序
-                    Log.i("Daniel", "---queryParams---" + queryParams);
-                    initDate(0, Constan.NOTPULLUP, null, queryParams);
-                } else {
-                    bankActivityFocusTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
-                    isClickFocus = false;
-                    initDate(0, Constan.NOTPULLUP, null, null);
-                }
+//                if (!isClickFocus) {
+//                    bankActivityFocusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
+//                    isClickFocus = true;
+//                    String queryParams = setQuerParams("atttenNum", Constan.DESC, "");//筛选条件 “关注”字段，降序
+//                    Log.i("Daniel", "---queryParams---" + queryParams);
+//                    initDate(0, Constan.NOTPULLUP, null, queryParams);
+//                } else {
+//                    bankActivityFocusTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
+//                    isClickFocus = false;
+//                    initDate(0, Constan.NOTPULLUP, null, null);
+//                }
                 break;
 
         }

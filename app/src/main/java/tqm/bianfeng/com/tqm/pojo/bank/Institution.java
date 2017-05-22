@@ -7,13 +7,15 @@ package tqm.bianfeng.com.tqm.pojo.bank;
 public class Institution {
     private Integer institutionId;
     private String institutionName;
+    private String institutionType;
 
-    @Override
-    public String toString() {
-        return "Institution{" +
-                "institutionId=" + institutionId +
-                ", institutionName='" + institutionName + '\'' +
-                '}';
+
+    public String getInstitutionType() {
+        return institutionType;
+    }
+
+    public void setInstitutionType(String institutionType) {
+        this.institutionType = institutionType;
     }
 
     public Integer getInstitutionId() {
@@ -30,5 +32,14 @@ public class Institution {
 
     public void setInstitutionName(String institutionName) {
         this.institutionName = institutionName;
+    }
+
+    @Override
+    public String toString() {
+        return "Institution{" +
+                "institutionId=" + institutionId +
+                ", institutionName='" + institutionName + '\'' +
+                ", institutionType='" + institutionType + '\'' +
+                '}';
     }
 }
