@@ -18,7 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blankj.utilcode.utils.AppUtils;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -38,6 +37,7 @@ import tqm.bianfeng.com.tqm.User.applyforactivity.ApplyForChooseActivity;
 import tqm.bianfeng.com.tqm.User.applyforactivity.ApplyForStatusActivity;
 import tqm.bianfeng.com.tqm.User.release.MyReleaseActivity;
 import tqm.bianfeng.com.tqm.User.release.ReleaseActivity;
+import tqm.bianfeng.com.tqm.Util.AppUtils;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.pojo.User;
 
@@ -221,7 +221,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             mUser = realm.where(User.class).findFirst();
             Log.i("gqf", "mUser" + mUser.toString());
             //开起信息同步
-            iUserWorkPresenter.getUserMsg(mUser.getUserPhone());
+            iUserWorkPresenter.getUserMsg(mUser.getUserPhone(),AppUtils.getChanel(getActivity()));
             iUserWorkPresenter.getNum(mUser.getUserId());
             //显示账户信息
             userRegisterPhoneNumTxt.setVisibility(View.VISIBLE);
@@ -306,7 +306,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             @Override
             public void onOk(String ediTxt, String code) {
                 //验证并注册或登录
-                iLoginRegisterPresenter.loginOrRegister(ediTxt, code, AppUtils.getChanel(getApplicationContext()));
+                iLoginRegisterPresenter.loginOrRegister(ediTxt, code, AppUtils.getChanel(getActivity()));
             }
 
             @Override

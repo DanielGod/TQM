@@ -107,8 +107,8 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                 });
         compositeSubscription.add(subscription);
     }
-    public void getUserMsg(String phone){
-        Subscription subscription = NetWork.getUserService().register(phone)
+    public void getUserMsg(String phone,String c){
+        Subscription subscription = NetWork.getUserService().register(phone,c)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResultCodeWithUser>() {
