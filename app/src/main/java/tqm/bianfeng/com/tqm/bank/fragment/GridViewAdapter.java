@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.pojo.bank.buttonViewEven;
 
 import static tqm.bianfeng.com.tqm.bank.fragment.TestFilterFragment.filter_all;
@@ -119,10 +120,15 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        if (!filter_all)
-            return datas != null ? 3 : 0;
-        else
-            return datas != null ? datas.size() : 0;
+        if (datas.size()<= Constan.GRIDLAYOUTSIZE){
+                return datas != null ? datas.size() : 0;
+        }else {
+            if (!filter_all)
+                return datas != null ? Constan.GRIDLAYOUTSIZE : 0;
+            else
+                return datas != null ? datas.size() : 0;
+        }
+
     }
 
     public void refreshAdapter() {
