@@ -88,7 +88,7 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
                Log.e("Daniel", "---position----" + position);
                Log.e("Daniel", "---datas.size()----" + datas.size());
             if (position==datas.size()-1){
-                filter_item=false;
+//                filter_item=false;
                 EventBus.getDefault().post(new ClearFilter(true));//清除筛选集合
             }
         }
@@ -118,7 +118,7 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        //        Log.i("Daniel","---datas.size()---"+datas.size());
+        Log.e("Daniel", "---datas.size()----" + datas.size());
         return datas != null ? datas.size() : 0;
     }
 

@@ -120,7 +120,7 @@ public class BankLoanActivity extends AppCompatActivity {
         super.onStart();
         initRefreshlv();//刷新初始化加载
         lodingIsFailOrSucess(1);//动画
-        initDate(pagNum, Constan.NOTPULLUP,null,null);
+        initDate(0 , Constan.NOTPULLUP,null,null);
     }
 
     /**
@@ -344,16 +344,17 @@ public class BankLoanActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                ivDeleteText.setVisibility(View.VISIBLE);
             }
 
             @DebugLog
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!editable.toString().equals("")) {
-                    Log.i("Daniel", "---editable.toString()---" + editable.toString());
-                    initDate(0, Constan.NOTPULLUP, editable.toString(), null);
+                if ("".equals(etSearch.getText().toString())){
+                    ivDeleteText.setVisibility(View.GONE);
+                }else {
+                    ivDeleteText.setVisibility(View.VISIBLE);
                 }
+                initDate(0, Constan.NOTPULLUP, editable.toString(), null);
 
             }
         });

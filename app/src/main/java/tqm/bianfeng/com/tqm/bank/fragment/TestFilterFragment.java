@@ -154,6 +154,7 @@ public class TestFilterFragment extends Fragment {
 
     public static boolean filter_item = false;
     FilterAdapter filterAdapter;
+    List<String> mClearFilter;
 
     public TestFilterFragment() {
         // Required empty public constructor
@@ -596,7 +597,11 @@ public class TestFilterFragment extends Fragment {
                     public void onNext(List<Institution> institutions) {
                         List<String> datas = new ArrayList<>();
                         List<String> datas_bankInstitution = new ArrayList<>();
+                        if (mClearFilter == null) {
+                            mClearFilter = new ArrayList<String>();
+                        }
                         for (Institution institution : institutions) {
+                            mClearFilter.add(institution.getInstitutionName());
                             if (!"02".equals(institution.getInstitutionType())) //02:银行，03：机构
                                 datas.add(institution.getInstitutionName());
                             else
@@ -605,10 +610,10 @@ public class TestFilterFragment extends Fragment {
                         mapFilterInfo.put(SINSTITUTIONQUERY, institutions);
                         switch (mFilterType) {
                             case 1:
-                                //机构查询列表
-                                setRecyclerViewAdapter(datas, filterInstitutionRecyclerView, IINSTITUTIONQUERY);
                                 //银行查询列表
                                 setRecyclerViewAdapter(datas_bankInstitution, filterLoanBankInstitutionRecyclerView, LOANBANKINSTITUTIONQUERY);
+                                //机构查询列表
+                                setRecyclerViewAdapter(datas, filterInstitutionRecyclerView, IINSTITUTIONQUERY);
                                 break;
                             case 2:
                                 setRecyclerViewAdapter(datas, filterFInstitutionRecyclerView, IFINSTITUTIONQUERY);
@@ -703,7 +708,7 @@ public class TestFilterFragment extends Fragment {
         GridViewAdapter gridViewAdapter = new GridViewAdapter(getActivity(), datas);
         recyclerView.setAdapter(gridViewAdapter);
         switch (i) {
-            case IINSTITUTIONQUERY:
+            case IINSTITUTIONQUERY://贷款机构adapter标识
                 gridViewAdapterINSTITUTIONQUERY = (GridViewAdapter) recyclerView.getAdapter();
                 break;
             case IFINSTITUTIONQUERY:
@@ -725,6 +730,7 @@ public class TestFilterFragment extends Fragment {
                 gridViewAdapterACTIVITYINSTITUTIONQUERY = (GridViewAdapter) recyclerView.getAdapter();
                 break;
             case LOANBANKINSTITUTIONQUERY:
+
                 gridViewAdapterLOANBANKINSTITUTIONQUERY = (GridViewAdapter) recyclerView.getAdapter();
                 break;
             case FINSTITUIONBANKINSTITUTIONQUERY:
@@ -737,11 +743,14 @@ public class TestFilterFragment extends Fragment {
 
     @DebugLog
     @OnClick({R.id.btn_reset, R.id.btn_confirm, R.id.filter_redeemable_cBox, R.id.filter_notRedeemable_cBox,
-            R.id.filterTitle_institution_cb, R.id.filterTitle_loanType_cb, R.id.filterTitle_fInstitution_cb, R.id.filterTitle_productType_cb, R.id.filterTitle_riskGrade_cb})
+            R.id.filterTitle_institution_cb, R.id.filterTitle_loanType_cb, R.id.filterTitle_fInstitution_cb, R.id.filterTitle_loanBankInstitution_cb,
+            R.id.filterTitle_activityBankInstitution_cb, R.id.filterTitle_activityInstitution_cb, R.id.filterTitle_financingBankInstitution_cb,
+            R.id.filterTitle_productType_cb, R.id.filterTitle_riskGrade_cb})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_reset:
                 filter_item = true; // true:点击了重置按钮
+                Log.e("Daniel", "---btn_reset---");
                 switch (mFilterType) {
                     case 1:
                         notifyAdapter(gridViewAdapterINSTITUTIONQUERY);
@@ -774,100 +783,54 @@ public class TestFilterFragment extends Fragment {
                 filterRedeemableCBox.setChecked(false);
                 break;
             case R.id.filterTitle_institution_cb:
-                setFilterTitle(R.id.filterTitle_institution_cb);
+                setFilterTitle(filterTitleInstitutionCb,filterInstitutionRecyclerView);
                 break;
             case R.id.filterTitle_loanType_cb:
-                setFilterTitle(R.id.filterTitle_loanType_cb);
+                setFilterTitle(filterTitleLoanTypeCb,filterLoanTypeRecyclerView);
                 break;
             case R.id.filterTitle_fInstitution_cb:
-                setFilterTitle(R.id.filterTitle_fInstitution_cb);
+                setFilterTitle(filterTitleFInstitutionCb,filterFInstitutionRecyclerView);
                 break;
             case R.id.filterTitle_productType_cb:
-                setFilterTitle(R.id.filterTitle_productType_cb);
+                setFilterTitle(filterTitleProductTypeCb,filterProductTypeRecyclerView);
                 break;
             case R.id.filterTitle_riskGrade_cb:
-                setFilterTitle(R.id.filterTitle_riskGrade_cb);
+                setFilterTitle(filterTitleRiskGradeCb,filterRiskGradeRecyclerView);
+                break;
+            case R.id.filterTitle_activityBankInstitution_cb:
+                setFilterTitle(filterTitleActivityBankInstitutionCb,filterActivityBankInstitutionRecyclerView);
+                break;
+            case R.id.filterTitle_activityInstitution_cb:
+                setFilterTitle(filterTitleActivityInstitutionCb,filterActivityInstitutionRecyclerView);
+                break;
+            case R.id.filterTitle_loanBankInstitution_cb:
+                setFilterTitle(filterTitleLoanBankInstitutionCb,filterLoanBankInstitutionRecyclerView);
+                break;
+            case R.id.filterTitle_financingBankInstitution_cb:
+                setFilterTitle(filterTitleFinancingBankInstitutionCb,filterFinancingBankInstitutionRecyclerView);
                 break;
         }
     }
 
+    /**
+     * 重置刷新adapter
+     * @param adapter
+     */
     private void notifyAdapter(GridViewAdapter adapter) {
-        if (adapter == null) {
-            adapter = new GridViewAdapter();
-        }
         adapter.notifyDataSetChanged();
     }
 
     /**
      * 设置列表的显示与隐藏
      *
-     * @param filterTitle_institution_cb
+     * @param
      */
-    private void setFilterTitle(int filterTitle_institution_cb) {
-        switch (filterTitle_institution_cb) {
-            case R.id.filterTitle_loanType_cb:
-                if (filterTitleLoanTypeCb.isChecked())
-                    filterLoanTypeRecyclerView.setVisibility(View.GONE);
-                else
-                    filterLoanTypeRecyclerView.setVisibility(View.VISIBLE);
-                break;
-            case R.id.filterTitle_fInstitution_cb:
-                if (filterTitleFInstitutionCb.isChecked())
-                    filterFInstitutionRecyclerView.setVisibility(View.GONE);
-                else
-                    filterFInstitutionRecyclerView.setVisibility(View.VISIBLE);
-                break;
-            case R.id.filterTitle_productType_cb:
-                if (filterTitleProductTypeCb.isChecked())
-                    filterProductTypeRecyclerView.setVisibility(View.GONE);
-                else
-                    filterProductTypeRecyclerView.setVisibility(View.VISIBLE);
-                break;
-            case R.id.filterTitle_riskGrade_cb:
-                if (filterTitleRiskGradeCb.isChecked())
-                    filterRiskGradeRecyclerView.setVisibility(View.GONE);
-                else
-                    filterRiskGradeRecyclerView.setVisibility(View.VISIBLE);
-                break;
-            case R.id.filterTitle_institution_cb:
-                if (filterTitleInstitutionCb.isChecked())
-                    filterInstitutionRecyclerView.setVisibility(View.GONE);
-                else
-                    filterInstitutionRecyclerView.setVisibility(View.VISIBLE);
-                break;
-        }
+    private void setFilterTitle(CheckBox cb,RecyclerView recyclerView) {
+        if (cb.isChecked())
+            recyclerView.setVisibility(View.GONE);
+        else
+            recyclerView.setVisibility(View.VISIBLE);
     }
-
-    private void notifyLoanAdapter() {
-        if (gridViewAdapterINSTITUTIONQUERY == null) {
-            gridViewAdapterINSTITUTIONQUERY = new GridViewAdapter();
-        }
-        gridViewAdapterINSTITUTIONQUERY.notifyDataSetChanged();
-        if (gridViewAdapterILOANTYPE == null) {
-            gridViewAdapterILOANTYPE = new GridViewAdapter();
-        }
-        gridViewAdapterILOANTYPE.notifyDataSetChanged();
-    }
-
-    /**
-     * 重置筛选
-     */
-    private void notifyFinancingAdapter() {
-        if (gridViewAdapterFINSTITUTIONQUERY == null) {
-            gridViewAdapterFINSTITUTIONQUERY = new GridViewAdapter();
-        }
-        gridViewAdapterFINSTITUTIONQUERY.notifyDataSetChanged();
-        if (gridViewAdapterIRISKGRADE == null) {
-            gridViewAdapterIRISKGRADE = new GridViewAdapter();
-        }
-        gridViewAdapterIRISKGRADE.notifyDataSetChanged();
-        if (gridViewAdapterIPRODUCTTYPE == null) {
-            gridViewAdapterIPRODUCTTYPE = new GridViewAdapter();
-        }
-        gridViewAdapterIPRODUCTTYPE.notifyDataSetChanged();
-
-    }
-
     /**
      * 提交筛选
      */

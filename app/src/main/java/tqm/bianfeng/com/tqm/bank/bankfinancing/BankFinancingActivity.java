@@ -104,7 +104,7 @@ public class BankFinancingActivity extends AppCompatActivity {
         lodingIsFailOrSucess(1);
         mCompositeSubscription = new CompositeSubscription();
         initDrawLayout();
-        initDate(pagNum, Constan.NOTPULLUP,null,null);
+        initDate(0, Constan.NOTPULLUP,null,null);
         etSearch.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -312,16 +312,18 @@ public class BankFinancingActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                ivDeleteText.setVisibility(View.VISIBLE);
+
             }
 
             @DebugLog
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!editable.toString().equals("")) {
-                    Log.i("Daniel", "---editable.toString()---" + editable.toString());
-                    initDate(0, Constan.NOTPULLUP, editable.toString(), null);
+                if ("".equals(etSearch.getText().toString())){
+                    ivDeleteText.setVisibility(View.GONE);
+                }else {
+                    ivDeleteText.setVisibility(View.VISIBLE);
                 }
+                initDate(0, Constan.NOTPULLUP, editable.toString(), null);
 
             }
         });
@@ -349,6 +351,7 @@ public class BankFinancingActivity extends AppCompatActivity {
                 etSearch.setText("");
                 ivDeleteText.setVisibility(View.GONE);
                 etSearch.setFocusableInTouchMode(false);
+                initDate(0, Constan.NOTPULLUP, null, null);
                 break;
             case R.id.bankActivity_pageView_linear:  //浏览量
                 pageViewOnClick();
