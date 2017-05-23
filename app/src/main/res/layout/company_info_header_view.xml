@@ -3,7 +3,6 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:background="@color/whitesmoke"
               android:id="@+id/root_lin"
               android:visibility="visible"
 
@@ -133,6 +132,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/mediummdp"
+        android:layout_marginLeft="@dimen/bottomBarMargin"
+        android:layout_marginRight="@dimen/bottomBarMargin"
         android:background="@color/whitesmoke"/>
 
     <LinearLayout
@@ -205,6 +206,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/mediummdp"
+            android:layout_marginLeft="@dimen/bottomBarMargin"
+            android:layout_marginRight="@dimen/bottomBarMargin"
             android:background="@color/whitesmoke"/>
 
         <LinearLayout
