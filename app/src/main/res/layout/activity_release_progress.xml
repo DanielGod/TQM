@@ -55,7 +55,7 @@
                 >
                 <View
                     android:layout_width="@dimen/tinymdp"
-                    android:layout_height="@dimen/hugehdp"
+                    android:layout_height="@dimen/hugehxxdp"
                     android:layout_alignParentTop="true"
                     android:background="@color/colorPrimaryDark"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
@@ -113,8 +113,8 @@
                         android:layout_width="@dimen/tinyhdp"
                         android:layout_height="@dimen/tinyhdp"
                         android:layout_marginLeft="@dimen/smallmdp"
-                        android:layout_marginTop="@dimen/tinymdp"
                         android:padding="3dp"
+                        android:layout_marginTop="@dimen/tinymdp"
                         android:src="@drawable/ic_apply_true"/>
 
                     <TextView
@@ -140,7 +140,7 @@
                     <ImageView
                         android:id="@+id/audit_end_img"
                         android:layout_width="@dimen/tinyhdp"
-                        android:layout_height="@dimen/hugehxxdp"
+                        android:layout_height="@dimen/tinyhdp"
                         android:layout_marginLeft="@dimen/smallmdp"
                         android:layout_marginTop="@dimen/tinymdp"
                         android:padding="3dp"
