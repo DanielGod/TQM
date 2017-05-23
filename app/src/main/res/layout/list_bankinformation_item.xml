@@ -5,7 +5,7 @@
               android:layout_height="@dimen/hugehxxxdp"
               android:layout_marginLeft="@dimen/smallmdp"
               android:layout_marginRight="@dimen/smallmdp"
-              android:layout_marginBottom="@dimen/smallmdp"
+              android:layout_marginBottom="@dimen/tinymdp"
               android:background="?android:selectableItemBackground"
               android:clickable="true"
 
