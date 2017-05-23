@@ -33,7 +33,7 @@ public class ViewpagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return "热点资讯";
             case 2:
-                return "财富资讯";
+                return "金融课堂";
         }
         return super.getPageTitle(position);
     }
