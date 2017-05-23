@@ -323,7 +323,7 @@
                 >
                 <View
                     android:layout_width="@dimen/tinymdp"
-                    android:layout_height="@dimen/hugehdp"
+                    android:layout_height="@dimen/hugehxxdp"
                     android:layout_alignParentTop="true"
                     android:background="@color/colorPrimaryDark"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"

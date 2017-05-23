@@ -140,7 +140,7 @@
                     <ImageView
                         android:id="@+id/audit_end_img"
                         android:layout_width="@dimen/tinyhdp"
-                        android:layout_height="@dimen/tinyhdp"
+                        android:layout_height="@dimen/hugehxxdp"
                         android:layout_marginLeft="@dimen/smallmdp"
                         android:layout_marginTop="@dimen/tinymdp"
                         android:padding="3dp"
