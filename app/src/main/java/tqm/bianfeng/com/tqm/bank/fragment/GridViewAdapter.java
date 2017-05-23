@@ -21,6 +21,7 @@ import hugo.weaving.DebugLog;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.pojo.bank.buttonViewEven;
 
+import static tqm.bianfeng.com.tqm.bank.fragment.TestFilterFragment.filter_all;
 import static tqm.bianfeng.com.tqm.bank.fragment.TestFilterFragment.filter_item;
 
 /**
@@ -50,7 +51,7 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
         this.datas = mList;
     }
 
-    public GridViewAdapter(Context mContext,List<String> datas) {
+    public GridViewAdapter(Context mContext, List<String> datas) {
         this.mContext = mContext;
         this.datas = datas;
         mLayoutInflater = LayoutInflater.from(mContext);
@@ -83,12 +84,12 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
         data = datas.get(position);
         holder.text.setText(data);
 
-        if (filter_item){
+        if (filter_item) {
             holder.text.setChecked(false);
-               Log.e("Daniel", "---position----" + position);
-               Log.e("Daniel", "---datas.size()----" + datas.size());
-            if (position==datas.size()-1){
-//                filter_item=false;
+            Log.e("Daniel", "---position----" + position);
+            Log.e("Daniel", "---datas.size()----" + datas.size());
+            if (position == datas.size() - 1) {
+                //                filter_item=false;
                 EventBus.getDefault().post(new ClearFilter(true));//清除筛选集合
             }
         }
@@ -101,12 +102,12 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 String str_buttonView = buttonView.getText().toString();
 
-                Log.i("Daniel","----str_buttonView-----"+str_buttonView);
-                if (!isChecked){
-                    EventBus.getDefault().post(new buttonViewEven(buttonView.getText().toString(),false));
+                Log.i("Daniel", "----str_buttonView-----" + str_buttonView);
+                if (!isChecked) {
+                    EventBus.getDefault().post(new buttonViewEven(buttonView.getText().toString(), false));
                     holder.text.setTextColor(mContext.getResources().getColor(R.color.black));
-                }else {
-                    EventBus.getDefault().post(new buttonViewEven(buttonView.getText().toString(),true));
+                } else {
+                    EventBus.getDefault().post(new buttonViewEven(buttonView.getText().toString(), true));
                     holder.text.setTextColor(mContext.getResources().getColor(R.color.white));
 
                 }
@@ -118,8 +119,10 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        Log.e("Daniel", "---datas.size()----" + datas.size());
-        return datas != null ? datas.size() : 0;
+        if (!filter_all)
+            return datas != null ? 3 : 0;
+        else
+            return datas != null ? datas.size() : 0;
     }
 
     public void refreshAdapter() {

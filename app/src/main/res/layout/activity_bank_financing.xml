@@ -53,7 +53,7 @@
                                       android:focusableInTouchMode="false"
                                       android:textColor="@color/black"
                                       android:textColorHint="@color/home_hotActivity_gray9"
-                                      android:hint="输入名称查询"/>
+                                      android:hint="@string/filter_content"/>
 
                             <ImageView android:id="@+id/ivDeleteText"
                                        android:layout_width="wrap_content"

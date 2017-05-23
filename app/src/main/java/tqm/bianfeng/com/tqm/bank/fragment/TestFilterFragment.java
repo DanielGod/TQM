@@ -153,6 +153,7 @@ public class TestFilterFragment extends Fragment {
     public List<String> filter_value_ProductType;//产品类型集合
 
     public static boolean filter_item = false;
+    public static boolean filter_all = false;
     FilterAdapter filterAdapter;
     List<String> mClearFilter;
 
@@ -783,37 +784,57 @@ public class TestFilterFragment extends Fragment {
                 filterRedeemableCBox.setChecked(false);
                 break;
             case R.id.filterTitle_institution_cb:
-                setFilterTitle(filterTitleInstitutionCb,filterInstitutionRecyclerView);
+                setFilterAll(filterTitleInstitutionCb, gridViewAdapterINSTITUTIONQUERY);
+                //                setFilterTitle(filterTitleInstitutionCb,filterInstitutionRecyclerView);
                 break;
             case R.id.filterTitle_loanType_cb:
-                setFilterTitle(filterTitleLoanTypeCb,filterLoanTypeRecyclerView);
+                setFilterAll(filterTitleLoanTypeCb, gridViewAdapterILOANTYPE);
+                //                setFilterTitle(filterTitleLoanTypeCb,filterLoanTypeRecyclerView);
                 break;
             case R.id.filterTitle_fInstitution_cb:
-                setFilterTitle(filterTitleFInstitutionCb,filterFInstitutionRecyclerView);
+                setFilterAll(filterTitleFInstitutionCb, gridViewAdapterFINSTITUTIONQUERY);
+                //                setFilterTitle(filterTitleFInstitutionCb,filterFInstitutionRecyclerView);
                 break;
             case R.id.filterTitle_productType_cb:
-                setFilterTitle(filterTitleProductTypeCb,filterProductTypeRecyclerView);
+                setFilterAll(filterTitleProductTypeCb, gridViewAdapterIPRODUCTTYPE);
+                //                setFilterTitle(filterTitleProductTypeCb,filterProductTypeRecyclerView);
                 break;
             case R.id.filterTitle_riskGrade_cb:
-                setFilterTitle(filterTitleRiskGradeCb,filterRiskGradeRecyclerView);
+                setFilterAll(filterTitleRiskGradeCb, gridViewAdapterIRISKGRADE);
+                //                setFilterTitle(filterTitleRiskGradeCb,filterRiskGradeRecyclerView);
                 break;
             case R.id.filterTitle_activityBankInstitution_cb:
-                setFilterTitle(filterTitleActivityBankInstitutionCb,filterActivityBankInstitutionRecyclerView);
+                setFilterAll(filterTitleActivityBankInstitutionCb, gridViewAdapterACTIVITYBANKINSTITUTIONQUERY);
+                //                setFilterTitle(filterTitleActivityBankInstitutionCb,filterActivityBankInstitutionRecyclerView);
                 break;
             case R.id.filterTitle_activityInstitution_cb:
-                setFilterTitle(filterTitleActivityInstitutionCb,filterActivityInstitutionRecyclerView);
+                setFilterAll(filterTitleActivityInstitutionCb, gridViewAdapterACTIVITYINSTITUTIONQUERY);
+                //                setFilterTitle(filterTitleActivityInstitutionCb,filterActivityInstitutionRecyclerView);
                 break;
             case R.id.filterTitle_loanBankInstitution_cb:
-                setFilterTitle(filterTitleLoanBankInstitutionCb,filterLoanBankInstitutionRecyclerView);
+                setFilterAll(filterTitleLoanBankInstitutionCb, gridViewAdapterLOANBANKINSTITUTIONQUERY);
+                //                setFilterTitle(filterTitleLoanBankInstitutionCb,filterLoanBankInstitutionRecyclerView);
                 break;
             case R.id.filterTitle_financingBankInstitution_cb:
-                setFilterTitle(filterTitleFinancingBankInstitutionCb,filterFinancingBankInstitutionRecyclerView);
+                setFilterAll(filterTitleFinancingBankInstitutionCb, gridViewAdapterFINSTITUIONBANKINSTITUTIONQUERY);
+                //                setFilterTitle(filterTitleFinancingBankInstitutionCb,filterFinancingBankInstitutionRecyclerView);
                 break;
         }
     }
 
+    private void setFilterAll(CheckBox cb, GridViewAdapter adapter) {
+        if (cb.isChecked()) {
+            filter_all = true;
+        } else {
+            filter_all = false;
+        }
+        notifyAdapter(adapter);
+
+    }
+
     /**
      * 重置刷新adapter
+     *
      * @param adapter
      */
     private void notifyAdapter(GridViewAdapter adapter) {
@@ -825,12 +846,13 @@ public class TestFilterFragment extends Fragment {
      *
      * @param
      */
-    private void setFilterTitle(CheckBox cb,RecyclerView recyclerView) {
+    private void setFilterTitle(CheckBox cb, RecyclerView recyclerView) {
         if (cb.isChecked())
             recyclerView.setVisibility(View.GONE);
         else
             recyclerView.setVisibility(View.VISIBLE);
     }
+
     /**
      * 提交筛选
      */
@@ -917,6 +939,5 @@ public class TestFilterFragment extends Fragment {
         Log.i("Daniel", "---strProductType.toString()---" + strInstitution.toString());
         return strInstitution.toString();
     }
-
 
 }
