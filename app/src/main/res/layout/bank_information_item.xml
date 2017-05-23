@@ -72,7 +72,7 @@
                     android:gravity="center"
                     android:text="10000"
                     android:paddingLeft="@dimen/tinymdp"
-                    android:textSize="@dimen/mediumsp"/>
+                    android:textSize="@dimen/smallsp"/>
 
                 <TextView
                     android:id="@+id/company_name_txt"

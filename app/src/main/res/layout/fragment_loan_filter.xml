@@ -56,19 +56,17 @@
                 >
                 <!--银行机构-->
                 <RelativeLayout
+                    android:id="@+id/filterTitle_activityBankInstitution_relative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     >
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/class_arrow"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textColor="@color/gray_text"/>
+                        style="@style/filterAll_tv"
+                        android:layout_toLeftOf="@+id/filterTitle_activityBankInstitution_cb"
+                        android:text="@string/all"
+                        />
 
                     <CheckBox
                         android:id="@+id/filterTitle_activityBankInstitution_cb"
@@ -102,6 +100,7 @@
                 </android.support.v7.widget.RecyclerView>
                 <!--机构查询-->
                 <RelativeLayout
+                    android:id="@+id/filterTitle_activityInstitution_relative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
@@ -118,13 +117,9 @@
                         />
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textColor="@color/gray_text"
+                        style="@style/filterAll_tv"
+                        android:layout_toLeftOf="@+id/filterTitle_activityInstitution_cb"
+                        android:text="@string/all"
                         />
 
                     <CheckBox
@@ -157,19 +152,15 @@
                 >
                 <!--银行机构-->
                 <RelativeLayout
+                    android:id="@+id/filterTitle_loanBankInstitution_relative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/class_arrow"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textColor="@color/gray_text"/>
+                        style="@style/filterAll_tv"
+                        android:layout_toLeftOf="@+id/filterTitle_loanBankInstitution_cb"
+                        android:text="@string/all"/>
 
                     <CheckBox
                         android:id="@+id/filterTitle_loanBankInstitution_cb"
@@ -203,6 +194,7 @@
                 </android.support.v7.widget.RecyclerView>
                 <!--机构查询-->
                 <RelativeLayout
+                    android:id="@+id/filterTitle_institution_relative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
@@ -219,13 +211,9 @@
                         />
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textColor="@color/gray_text"
+                        style="@style/filterAll_tv"
+                        android:layout_toLeftOf="@+id/filterTitle_institution_cb"
+                        android:text="@string/all"/>
                         />
 
                     <CheckBox
@@ -248,19 +236,15 @@
                 </android.support.v7.widget.RecyclerView>
                 <!--贷款类型-->
                 <RelativeLayout
+                    android:id="@+id/filterTitle_loanType_relative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/class_arrow"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textColor="@color/gray_text"/>
+                        style="@style/filterAll_tv"
+                        android:layout_toLeftOf="@+id/filterTitle_loanType_cb"
+                        android:text="@string/all"/>
 
                     <CheckBox
                         android:id="@+id/filterTitle_loanType_cb"
@@ -532,19 +516,15 @@
                 >
                 <!--银行机构-->
                 <RelativeLayout
+                    android:id="@+id/filterTitle_financingBankInstitution_relative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/class_arrow"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textColor="@color/gray_text"/>
+                        style="@style/filterAll_tv"
+                        android:layout_toLeftOf="@+id/filterTitle_financingBankInstitution_cb"
+                        android:text="@string/all"/>
 
                     <CheckBox
                         android:id="@+id/filterTitle_financingBankInstitution_cb"
@@ -578,10 +558,14 @@
                 </android.support.v7.widget.RecyclerView>
                 <!--机构查询-->
                 <RelativeLayout
+                    android:id="@+id/filterTitle_fInstitution_relative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
-
+                    <TextView
+                        style="@style/filterAll_tv"
+                        android:layout_toLeftOf="@+id/filterTitle_fInstitution_cb"
+                        android:text="@string/all"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -613,10 +597,14 @@
                 </android.support.v7.widget.RecyclerView>
                 <!--产品类型-->
                 <RelativeLayout
+                    android:id="@+id/filterTitle_productType_relative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
-
+                    <TextView
+                        style="@style/filterAll_tv"
+                        android:layout_toLeftOf="@+id/filterTitle_productType_cb"
+                        android:text="@string/all"/>
                     <CheckBox
                         android:id="@+id/filterTitle_productType_cb"
                         android:layout_width="wrap_content"
@@ -650,10 +638,14 @@
                 </android.support.v7.widget.RecyclerView>
                 <!--风险等级-->
                 <RelativeLayout
+                    android:id="@+id/filterTitle_riskGrade_relative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
-
+                    <TextView
+                        style="@style/filterAll_tv"
+                        android:layout_toLeftOf="@+id/filterTitle_riskGrade_cb"
+                        android:text="@string/all"/>
                     <CheckBox
                         android:id="@+id/filterTitle_riskGrade_cb"
                         android:layout_width="wrap_content"
