@@ -446,7 +446,7 @@ public void initLoanList(List<BankLoanItem> datas) {
 
                 @Override
                 public void CallClick(int position) {
-                    Intent intentPhone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "15670702651"));
+                    Intent intentPhone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + lawListAdapter.getDataItem(position)));
                     intentPhone.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intentPhone);
                 }
