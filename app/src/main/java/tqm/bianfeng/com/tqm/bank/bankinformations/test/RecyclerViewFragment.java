@@ -32,6 +32,8 @@ import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.BankInformItem;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 
+import static tqm.bianfeng.com.tqm.main.DetailActivity.BANK_INFO_TYPE;
+
 /**
  * Created by florentchampigny on 24/04/15.
  */
@@ -137,6 +139,8 @@ public class RecyclerViewFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("detailType", "04");
                 intent.putExtra("detailId", recyclerViewAdapter.getItem(position).getInformId());
+                Log.e("Daniel","----position---"+position);
+                intent.putExtra(BANK_INFO_TYPE, position);
                 intent.putExtra("detailTitle",recyclerViewAdapter.getItem(position).getInformTitle());
                 mListener.detailActivity(intent);
             }
