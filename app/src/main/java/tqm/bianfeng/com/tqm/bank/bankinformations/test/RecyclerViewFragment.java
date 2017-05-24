@@ -44,7 +44,7 @@ public class RecyclerViewFragment extends Fragment {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    private int position = 0;//1：银行咨询 2：热点资讯 3：财富资讯
+    private int type = 0;//1：银行咨询 2：热点资讯 3：财富资讯
     private int pagNum = 1;//咨询从1开始
     private int mPagItemSize = 0;
     private CompositeSubscription mCompositeSubscription;
@@ -62,7 +62,7 @@ public class RecyclerViewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            position = getArguments().getInt("position");
+            type = getArguments().getInt("position");
         }
     }
 
@@ -139,8 +139,7 @@ public class RecyclerViewFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("detailType", "04");
                 intent.putExtra("detailId", recyclerViewAdapter.getItem(position).getInformId());
-                Log.e("Daniel","----position---"+position);
-                intent.putExtra(BANK_INFO_TYPE, recyclerViewAdapter.getItem(position).getInformType());
+                intent.putExtra(BANK_INFO_TYPE, type+1);
                 intent.putExtra("detailTitle",recyclerViewAdapter.getItem(position).getInformTitle());
                 mListener.detailActivity(intent);
             }
@@ -152,7 +151,7 @@ public class RecyclerViewFragment extends Fragment {
         ButterKnife.bind(this, view);
         mCompositeSubscription = new CompositeSubscription();
         //        initRefreshlv();
-        initDate(position + 1, pagNum);
+        initDate(type + 1, pagNum);
 
     }
 }
