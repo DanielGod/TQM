@@ -127,6 +127,8 @@ public class DetailActivity extends BaseActivity {
         //            }
         //        });
 
+
+
         detailType = getIntent().getStringExtra("detailType");
         detailId = getIntent().getIntExtra("detailId", -1);
         detailTitle = getIntent().getStringExtra("detailTitle");
