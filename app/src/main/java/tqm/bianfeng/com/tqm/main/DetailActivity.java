@@ -1,10 +1,14 @@
 package tqm.bianfeng.com.tqm.main;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -294,7 +298,7 @@ public class DetailActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //社会化分享
         if (item.getItemId() == R.id.collection_false) {
-            share();
+            shareWithPermission();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -324,6 +328,17 @@ public class DetailActivity extends BaseActivity {
         }
     };
 
+    public void shareWithPermission(){
+
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(DetailActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+        } else {
+            share();
+        }
+    }
 
     public void share() {
         UMWeb web = new UMWeb(shareUrl);
@@ -467,7 +482,7 @@ public class DetailActivity extends BaseActivity {
                 actionAFocuse();
                 break;
             case R.id.share_img:
-                share();
+                shareWithPermission();
                 break;
             case R.id.more_menu_img:
                 //跳报界面

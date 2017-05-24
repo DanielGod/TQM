@@ -1,8 +1,6 @@
 package tqm.bianfeng.com.tqm.application;
 
 import android.app.Activity;
-import android.app.Application;
-import android.app.Service;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -38,7 +36,8 @@ public class BaseApplication extends MultiDexApplication {
         //豆瓣RENREN平台目前只能在服务器端配置
         PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");
         //PlatformConfig.setYixin("yxc0614e80c9304c11b0391514d09f13bf");
-        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        //PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        PlatformConfig.setQQZone("1106062218", "KEYc0rPU1GeCIJSh8ki");
         //PlatformConfig.setTwitter("3aIN7fuF685MuZ7jtXkQxalyi", "MK6FEYG63eWcpDFgRYw4w9puJhzDl0tyuqWjZ3M7XJuuG7mMbO");
         //PlatformConfig.setAlipay("2017032406383358");
         //PlatformConfig.setLaiwang("laiwangd497e70d4", "d497e70d4c3e4efeab1381476bac4c5e");
