@@ -140,7 +140,7 @@ public class RecyclerViewFragment extends Fragment {
                 intent.putExtra("detailType", "04");
                 intent.putExtra("detailId", recyclerViewAdapter.getItem(position).getInformId());
                 Log.e("Daniel","----position---"+position);
-                intent.putExtra(BANK_INFO_TYPE, position);
+                intent.putExtra(BANK_INFO_TYPE, position+1);
                 intent.putExtra("detailTitle",recyclerViewAdapter.getItem(position).getInformTitle());
                 mListener.detailActivity(intent);
             }
