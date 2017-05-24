@@ -57,6 +57,8 @@ public class DetailActivity extends BaseActivity {
     public static final String INFOR_TYPE = "04";
     public static final String LAWYER_TYPE = "05";
 
+    public static final String BANK_INFO_TYPE="BANK_INFO_TYPE";
+
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1234;
     @BindView(R.id.detail_toolbar)
     RelativeLayout detailToolbar;
@@ -66,6 +68,8 @@ public class DetailActivity extends BaseActivity {
     public String detailType;
 
     public String detailTitle = "my";
+
+    public int bankType=0;
 
     boolean isCollection = false;
     boolean isInCollection = false;
@@ -126,20 +130,31 @@ public class DetailActivity extends BaseActivity {
         detailType = getIntent().getStringExtra("detailType");
         detailId = getIntent().getIntExtra("detailId", -1);
         detailTitle = getIntent().getStringExtra("detailTitle");
+
+        bankType=getIntent().getIntExtra(BANK_INFO_TYPE, -1);
+
         toolbarTitle = "";
         loadingIndeiator.showLoading();
         switch (detailType) {
             case "01":
-                toolbarTitle = "银行活动";
+                toolbarTitle = "金融活动";
                 break;
             case "02":
                 toolbarTitle = "银行理财";
                 break;
             case "03":
-                toolbarTitle = "银行贷款";
+                toolbarTitle = "金融贷款";
                 break;
             case "04":
-                toolbarTitle = "银行资讯";
+                if(bankType==1){
+                    toolbarTitle = "银行资讯";
+                }else if(bankType==2){
+                    toolbarTitle = "热点资讯";
+                }else if(bankType==3){
+                    toolbarTitle = "金融课堂";
+                }else{
+                    toolbarTitle = "银行资讯";
+                }
                 break;
             case "05":
                 toolbarTitle = "律师资料";
