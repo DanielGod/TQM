@@ -122,6 +122,7 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
 
                     }
 
+
                     @Override
                     public void onNext(ResultCodeWithUser resultCodeWithUser) {
                         Log.i("gqf","resultCodeWithUser"+resultCodeWithUser.toString());
