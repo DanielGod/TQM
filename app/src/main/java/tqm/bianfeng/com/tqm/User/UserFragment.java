@@ -190,8 +190,10 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     public void onResume() {
         super.onResume();
         if (realm.where(User.class).findFirst() != null) {
+            //iUserWorkPresenter.getUserMsg(mUser.getUserPhone(),AppUtils.getChanel(getActivity()));
             iUserWorkPresenter.getAuditCode(mUser.getUserId());
             iUserWorkPresenter.getNum(mUser.getUserId());
+            resetUserHeadImg(true);
         }
 
     }
@@ -237,30 +239,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             userTopRel.setLayoutParams(linlp);
             //显示头像
             resetUserHeadImg(true);
-            if (mUser.getUserType() != null) {
-                if (mUser.getUserType().equals("1001") || mUser.getUserType().equals("1002") || mUser.getUserType().equals("2001") || mUser.getUserType().equals("2002")) {
-                    userReleaseLin.setVisibility(View.VISIBLE);
-                    myReleaseLin.setVisibility(View.VISIBLE);
-                    icCompanyLin.setVisibility(View.VISIBLE);
-                    if (mUser.getUserType().equals("1001")) {
-                        icCompanyImg.setImageResource(R.drawable.ic_company1001);
 
-                    } else if (mUser.getUserType().equals("1002")) {
-                        icCompanyImg.setImageResource(R.drawable.ic_company1002);
-                    } else if (mUser.getUserType().equals("2001")) {
-                        icCompanyImg.setImageResource(R.drawable.ic_company2001);
-                    } else if (mUser.getUserType().equals("2002")) {
-                        icCompanyImg.setImageResource(R.drawable.ic_company2002);
-                    }
-                } else {
-                    icCompanyLin.setVisibility(View.GONE);
-                    userReleaseLin.setVisibility(View.GONE);
-                    myReleaseLin.setVisibility(View.GONE);
-                }
-            } else {
-                userReleaseLin.setVisibility(View.GONE);
-                myReleaseLin.setVisibility(View.GONE);
-            }
 
         }
     }
@@ -279,6 +258,31 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             }
         } else {
             Toast.makeText(getActivity(), "上传头像失败", Toast.LENGTH_SHORT).show();
+        }
+
+        if (mUser.getUserType() != null) {
+            if (mUser.getUserType().equals("1001") || mUser.getUserType().equals("1002") || mUser.getUserType().equals("2001") || mUser.getUserType().equals("2002")) {
+                userReleaseLin.setVisibility(View.VISIBLE);
+                myReleaseLin.setVisibility(View.VISIBLE);
+                icCompanyLin.setVisibility(View.VISIBLE);
+                if (mUser.getUserType().equals("1001")) {
+                    icCompanyImg.setImageResource(R.drawable.ic_company1001);
+
+                } else if (mUser.getUserType().equals("1002")) {
+                    icCompanyImg.setImageResource(R.drawable.ic_company1002);
+                } else if (mUser.getUserType().equals("2001")) {
+                    icCompanyImg.setImageResource(R.drawable.ic_company2001);
+                } else if (mUser.getUserType().equals("2002")) {
+                    icCompanyImg.setImageResource(R.drawable.ic_company2002);
+                }
+            } else {
+                icCompanyLin.setVisibility(View.GONE);
+                userReleaseLin.setVisibility(View.GONE);
+                myReleaseLin.setVisibility(View.GONE);
+            }
+        } else {
+            userReleaseLin.setVisibility(View.GONE);
+            myReleaseLin.setVisibility(View.GONE);
         }
     }
 

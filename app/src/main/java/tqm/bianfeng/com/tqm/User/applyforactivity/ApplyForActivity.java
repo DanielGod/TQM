@@ -152,9 +152,12 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
                         showDialogAndLoading.stopLoaading();
                         if(resultCode.getCode()==ResultCode.SECCESS){
                             showDialogAndLoading.showAfterDialog(ApplyForActivity.this,"提交成功","我们将于两个工作日内与您联系，请保持电话畅通","确定");
+                            User user = realm.where(User.class).findFirst();
+                            realm.beginTransaction();
+                            user.setUserType(ywApplyEnter.getApplyType());
+                            realm.copyToRealmOrUpdate(user);
+                            realm.commitTransaction();
                         }
-
-
                     }
                 });
         compositeSubscription.add(subscription);
