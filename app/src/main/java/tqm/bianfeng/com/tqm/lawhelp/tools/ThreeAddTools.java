@@ -17,7 +17,7 @@ import tqm.bianfeng.com.tqm.pojo.cityInfo;
 /**
  * Created by johe on 2017/3/31.
  */
-
+//解析省市区
 public class ThreeAddTools {
 
     List<cityInfo> cityInfoList;

@@ -48,7 +48,7 @@ import tqm.bianfeng.com.tqm.pojo.User;
 /**
  * Created by johe on 2017/5/10.
  */
-
+//发布贷款
 public class LoanOrActivityReleaseActivity extends BaseActivity {
 
     public static final String RELEASE_ID = "release_id";

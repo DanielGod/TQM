@@ -14,7 +14,7 @@ import tqm.bianfeng.com.tqm.application.BaseActivity;
 /**
  * Created by johe on 2017/5/10.
  */
-
+//我的发布
 public class MyReleaseActivity extends BaseActivity {
 
     @BindView(R.id.my_release_toolbar)

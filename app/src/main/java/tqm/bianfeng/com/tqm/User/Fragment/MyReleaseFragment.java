@@ -35,7 +35,7 @@ import tqm.bianfeng.com.tqm.pojo.User;
 /**
  * Created by johe on 2017/5/10.
  */
-
+//我的发布
 public class MyReleaseFragment extends BaseFragment{
     public int index = 0;
     public static String ARG_TYPE = "arg_type";

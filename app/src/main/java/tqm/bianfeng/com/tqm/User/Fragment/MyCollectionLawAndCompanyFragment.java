@@ -32,7 +32,7 @@ import tqm.bianfeng.com.tqm.pojo.User;
 /**
  * Created by johe on 2017/4/10.
  */
-
+//我的收藏
 public class MyCollectionLawAndCompanyFragment extends BaseFragment {
 
     public int index = 0;

@@ -15,7 +15,7 @@ import tqm.bianfeng.com.tqm.application.BaseActivity;
 /**
  * Created by johe on 2017/5/10.
  */
-
+//申请选择页面
 public class ApplyForChooseActivity extends BaseActivity {
 
     @BindView(R.id.apply_for_choose_toolbar)
@@ -42,12 +42,14 @@ public class ApplyForChooseActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.choose_company_apply_lin:
+                //公司申请
                 ApplyForActivity.APPLYFORTYPE=ApplyForActivity.APPLYFORCOMPANYTYPE;
 
                 startActivity(new Intent(ApplyForChooseActivity.this, ApplyForActivity.class));
                 finish();
                 break;
             case R.id.choose_personal_apply_lin:
+                //个人申请
                 ApplyForActivity.APPLYFORTYPE=ApplyForActivity.APPLYFORPERSONALTYPE;
                 startActivity(new Intent(ApplyForChooseActivity.this, ApplyForActivity.class));
                 finish();

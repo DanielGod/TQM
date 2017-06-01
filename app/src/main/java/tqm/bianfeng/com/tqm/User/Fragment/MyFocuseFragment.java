@@ -42,7 +42,7 @@ import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 /**
  * Created by johe on 2017/4/28.
  */
-
+//我的关注
 public class MyFocuseFragment extends BaseFragment {
     public int index = 0;
     public static String ARG_TYPE = "arg_type";
@@ -104,67 +104,6 @@ public class MyFocuseFragment extends BaseFragment {
     List<BankFinancItem> BankFinancItems;
     List<LawyerItem> LawyerItems;
     List<BankInformItem> BankInformItems;
-
-//    public void initData() {
-//        gson = new Gson();
-//        Subscription subscription = NetWork.getUserService().getMyAttentionItem(TYPE,"0" + (index + 1), realm.where(User.class).findFirst().getUserId())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<List<Object>>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.i("gqf","onError"+e.toString());
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<Object> strings) {
-//                        Log.i("gqf",strings.toString());
-//                        if (index == 0) {
-//                            //活动
-//                            BankListItems = new ArrayList<>();
-//                            for (Object json : strings) {
-//                                BankListItems.add(gson.fromJson(json.toString(), BankActivityItem.class));
-//                            }
-//                            initActivityList(BankListItems);
-//                        } else if (index == 1) {
-//                            //理财
-//                            BankFinancItems = new ArrayList<>();
-//                            for (Object json : strings) {
-//                                BankFinancItems.add(gson.fromJson(json.toString(), BankFinancItem.class));
-//                            }
-//                            initFinancList(BankFinancItems);
-//                        } else if (index == 2) {
-//                            //贷款
-//                            BankLoanItems = new ArrayList<>();
-//                            for (Object json : strings) {
-//                                BankLoanItems.add(gson.fromJson(json.toString(), BankLoanItem.class));
-//                            }
-//                            initLoanList(BankLoanItems);
-//                        } else if (index == 3) {
-//                            //资讯
-//                            BankInformItems = new ArrayList<>();
-//                            for (Object json : strings) {
-//                                BankInformItems.add(gson.fromJson(json.toString(), BankInformItem.class));
-//                            }
-//                            initInfoList(BankInformItems);
-//                        } else if (index == 4) {
-//                            //律师
-//                            LawyerItems = new ArrayList<>();
-//                            for (Object json : strings) {
-//                                LawyerItems.add(gson.fromJson(json.toString(), LawyerItem.class));
-//                            }
-//                            initLawList(LawyerItems);
-//                        }
-//                        toastTxt.setVisibility(View.GONE);
-//                    }
-//                });
-//        compositeSubscription.add(subscription);
-//    }
 
     public void initFinancData() {
         Subscription subscription = NetWork.getUserService().getMyAttentionItem02(TYPE,realm.where(User.class).findFirst().getUserId())

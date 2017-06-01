@@ -2,7 +2,6 @@ package tqm.bianfeng.com.tqm.User.applyforactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Button;
@@ -15,7 +14,6 @@ import com.soundcloud.android.crop.Crop;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -124,9 +122,6 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
         }
 
     }
-    int i = 6;//apk加载进度
-    SweetAlertDialog pDialog;
-    CountDownTimer countDownTimer;
     public void save(){
         showDialogAndLoading.showLoading("正在提交。。",this);
         Gson gson=new Gson();

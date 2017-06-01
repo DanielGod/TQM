@@ -40,26 +40,26 @@ android {
     }
     //渠道号
     productFlavors {
-        vod01 {}
-        vod02 {}
-        vod03 {}
-        vod04 {}
-        vod05 {}
-        vod06 {}
-        vod07 {}
-        vod08 {}
-        vod09 {}
-        vod10 {}
-        vod11 {}
-        vod12 {}
-        vod13 {}
-        vod14 {}
-        vod15 {}
-        vod16 {}
-        vod17 {}
-        vod18 {}
-        vod19 {}
-        vod20 {}
+        tqm01 {}
+        tqm02 {}
+        tqm03 {}
+        tqm04 {}
+        tqm05 {}
+        tqm06 {}
+        tqm07 {}
+        tqm08 {}
+        tqm09 {}
+        tqm10 {}
+        tqm11 {}
+        tqm12 {}
+        tqm13 {}
+        tqm14 {}
+        tqm15 {}
+        tqm16 {}
+        tqm17 {}
+        tqm18 {}
+        tqm19 {}
+        tqm20 {}
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [WEIJY_CHANNEL_VALUE: name]
@@ -101,11 +101,16 @@ android {
     // apk name def
     android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
-            output.outputFile = new File(output.outputFile.parent, "TQM" + "-" + buildType.name + "-v" +
-                    defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk");
+//            output.outputFile = new File(output.outputFile.parent, "TQM" + "-" + buildType.name + "-v" +
+//                    defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk");
+            output.outputFile = new File(output.outputFile.parent, "TQM_${buildType.name}_${defaultConfig.versionName}_${defaultConfig.versionCode}_${variant.productFlavors[0].name}.apk");
         }
     }
 }
+
+//def fileName = "myApk_${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
+//output.outputFile = new File(outputFile.parent, fileName)
+
 buildscript {
     repositories {
         mavenCentral()

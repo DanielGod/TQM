@@ -21,7 +21,7 @@ import tqm.bianfeng.com.tqm.pojo.ReleaseLoanItem;
 /**
  * Created by johe on 2017/5/16.
  */
-
+//发布进度
 public class ReleaseProgressActivity extends BaseActivity {
 
 

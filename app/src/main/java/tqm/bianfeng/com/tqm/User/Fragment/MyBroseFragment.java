@@ -40,7 +40,7 @@ import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 /**
  * Created by johe on 2017/4/28.
  */
-
+//浏览记录
 public class MyBroseFragment extends BaseFragment {
     public int index = 0;
     public static String ARG_TYPE = "arg_type";

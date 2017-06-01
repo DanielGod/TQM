@@ -28,7 +28,7 @@ import tqm.bianfeng.com.tqm.pojo.User;
 /**
  * Created by johe on 2017/5/9.
  */
-
+//举报纠错
 public class CorrectOrReportActivity extends BaseActivity {
 
     public static final String objectId = "objectId";

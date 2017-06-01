@@ -16,7 +16,7 @@ import tqm.bianfeng.com.tqm.application.BaseActivity;
 /**
  * Created by johe on 2017/5/10.
  */
-
+//发布选择界面
 public class ReleaseActivity extends BaseActivity {
     @BindView(R.id.release_toolbar)
     Toolbar releaseToolbar;

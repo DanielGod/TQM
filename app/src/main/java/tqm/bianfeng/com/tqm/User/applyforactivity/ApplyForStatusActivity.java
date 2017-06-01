@@ -106,6 +106,7 @@ public class ApplyForStatusActivity extends BaseActivity {
         compositeSubscription.add(subscription);
     }
 
+    //获取进度
     public void getOne(int userId) {
         Subscription subscription = NetWork.getUserService().getOne(userId)
                 .subscribeOn(Schedulers.io())

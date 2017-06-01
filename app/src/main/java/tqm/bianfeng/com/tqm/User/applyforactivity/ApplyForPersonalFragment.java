@@ -28,7 +28,7 @@ import tqm.bianfeng.com.tqm.pojo.YwApplyEnter;
 /**
  * Created by johe on 2017/5/12.
  */
-
+//个人申请
 public class ApplyForPersonalFragment extends BaseFragment {
 
     YwApplyEnter ywApplyEnter;

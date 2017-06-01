@@ -23,7 +23,7 @@ import tqm.bianfeng.com.tqm.Util.Phone;
 /**
  * Created by johe on 2017/3/13.
  */
-
+//验证码登录
 public class LoginRegisteredDialogFragment extends DialogFragment {
 
 

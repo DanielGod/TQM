@@ -20,7 +20,7 @@ import tqm.bianfeng.com.tqm.pojo.ReleaseLoanItem;
 /**
  * Created by johe on 2017/5/16.
  */
-
+//发布贷款进度顶部
 public class ReleaseLoanFragment extends BaseFragment {
 
 

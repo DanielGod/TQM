@@ -109,11 +109,13 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         switch (view.getId()) {
             case R.id.my_release_lin:
 
+                //跳转我的发布
                 mListener.changeActivity(MyReleaseActivity.class);
 
                 break;
             case R.id.user_release_lin:
 
+                //跳转发布选择界面
                 mListener.changeActivity(ReleaseActivity.class);
 
                 break;
@@ -123,35 +125,42 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
                         //查看审核状态
                         mListener.changeActivity(ApplyForStatusActivity.class);
                     } else {
+                        //跳转入驻选择界面
                         mListener.changeActivity(ApplyForChooseActivity.class);
                     }
                 }
                 break;
             case R.id.user_feedback_lin:
+                //用户反馈
                 mListener.changeActivity(UserFeedbackActivity.class);
                 break;
             case R.id.user_login_registered_btn:
+                //显示验证码登录
                 showDialog();
                 break;
             case R.id.user_circle_img:
                 Log.i("gqf", "user_circle_img");
                 if (isLogin()) {
+                    //修改头像
                     mListener.changeUserHeadImg();
                 }
 
                 break;
             case R.id.bank_collection_lin:
                 if (isLogin()) {
+                    //我的收藏
                     mListener.changeActivity(MyCollectionActivity.class);
                 }
                 break;
             case R.id.bank_focuse_lin:
                 if (isLogin()) {
+                    //我的关注
                     mListener.changeActivity(MyFocusActivity.class);
                 }
                 break;
             case R.id.bank_browse_lin:
                 if (isLogin()) {
+                    //浏览记录
                     mListener.changeActivity(MyBrowseActivity.class);
                 }
                 break;
@@ -191,7 +200,9 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         super.onResume();
         if (realm.where(User.class).findFirst() != null) {
             //iUserWorkPresenter.getUserMsg(mUser.getUserPhone(),AppUtils.getChanel(getActivity()));
+            //刷新用户入驻标识
             iUserWorkPresenter.getAuditCode(mUser.getUserId());
+            //刷新数量标识
             iUserWorkPresenter.getNum(mUser.getUserId());
             resetUserHeadImg(true);
         }
@@ -371,6 +382,7 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
         mListener.shouNetWorkActivity();
     }
 
+    //数量标识
     public void setNum(int num1, int num2, int num3, int num4) {
         if(num1>0){
             userAttestationNum.setVisibility(View.VISIBLE);

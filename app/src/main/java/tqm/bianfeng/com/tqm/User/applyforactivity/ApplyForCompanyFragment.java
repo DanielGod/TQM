@@ -59,7 +59,7 @@ import tqm.bianfeng.com.tqm.pojo.result.ResultCodeWithImgPathList;
 /**
  * Created by johe on 2017/5/12.
  */
-
+//公司申请
 public class ApplyForCompanyFragment extends BaseFragment {
 
 

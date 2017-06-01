@@ -53,7 +53,7 @@ import tqm.bianfeng.com.tqm.pojo.result.ResultWithLink;
 /**
  * Created by johe on 2017/5/17.
  */
-
+//发布活动，富文本界面
 public class ReleaseMyActivityActivity extends BaseActivity {
 
     @BindView(R.id.release_myactivity_toolbar)
