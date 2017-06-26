@@ -72,7 +72,12 @@ public class HomeBankLoanListAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder mHolder = (ViewHolder) holder;
         BankLoanItem data = datas.get(position);
-        mHolder.tv1.setText(data.getRateMin() + "%"+"-"+data.getRateMax() + "%");
+        if ((data.getRateMin()-data.getRateMax())==0){
+            mHolder.tv1.setText(data.getRateMin() + "%");
+        }else {
+
+            mHolder.tv1.setText(data.getRateMin() + "%"+"-"+data.getRateMax() + "%");
+        }
         mHolder.tv2.setText(data.getLoanName());
         mHolder.tv3.setText(data.getLoanPeriodMin() +"-"+data.getLoanPeriodMax()+ "个月");
         mHolder.tv4.setText(data.getLoanMoneyMin()+"-"+data.getLoanMoneyMax()+ "万");

@@ -103,7 +103,9 @@ public interface BankService {
                                                                 @Field("queryParams") String queryParams,
                                                                 @Field("homeShow") String homeShow,
                                                                 @Field("pageNum") Integer pageNum,
-                                                                @Field("pageSize") Integer pageSize);
+                                                                @Field("pageSize") Integer pageSize,
+                                                                @Field("city") String city
+    );
 
 
     /**
@@ -117,7 +119,8 @@ public interface BankService {
                                                             @Field("queryParams") String queryParams,
                                                             @Field("homeShow") String homeShow,
                                                             @Field("pageNum") Integer pageNum,
-                                                            @Field("pageSize") Integer pageSize);
+                                                            @Field("pageSize") Integer pageSize,
+                                                            @Field("city") String city);
 
 
     /**
@@ -131,7 +134,10 @@ public interface BankService {
                                                                     @Field("queryParams") String queryParams,
                                                                     @Field("homeShow") String homeShow,
                                                                     @Field("pageNum") Integer pageNum,
-                                                                    @Field("pageSize") Integer pageSize);
+                                                                    @Field("pageSize") Integer pageSize,
+                                                                    @Field("city") String city,
+                                                                    @Field("activityType") Integer activityType);
+
 
     /**
      * 获取网点列表

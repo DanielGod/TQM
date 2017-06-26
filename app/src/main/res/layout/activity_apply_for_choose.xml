@@ -39,7 +39,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="公司业务员申请"
+            android:text="信贷经理申请"
             android:textSize="@dimen/bigsp"
             android:textColor="@color/white"/>
     </LinearLayout>
@@ -69,5 +69,29 @@
             android:textSize="@dimen/bigsp"
             android:textColor="@color/colorPrimary"/>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/choose_creditManager_apply_lin"
+        android:layout_width="@dimen/hugehxxxxxxxxxdp"
+        android:layout_height="@dimen/hugehxxxxxdp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/radio_orangetran_bg_shap"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/smallhdp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_choose_to_company_apply"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="信贷经理认证"
+            android:textSize="@dimen/bigsp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 </LinearLayout>

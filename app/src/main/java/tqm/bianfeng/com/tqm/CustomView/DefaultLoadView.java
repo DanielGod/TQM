@@ -34,6 +34,12 @@ public class DefaultLoadView extends LinearLayout {
         View view= LayoutInflater.from(context).inflate( R.layout.loading_layout, null, false);
         indicator=(LoadingIndicator) view.findViewById(R.id.indicator);
         LodingTxt=(TextView) view.findViewById(R.id.loding_txt);
+        LodingTxt.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("Daniel","点击刷新");
+            }
+        });
         addView(view);
 
     }
@@ -43,7 +49,7 @@ public class DefaultLoadView extends LinearLayout {
             if (i == 1) {
                 //加载中
                 LodingTxt.setVisibility(View.VISIBLE);
-                LodingTxt.setText("加载中...");
+                LodingTxt.setText("");
                 indicator.showLoading();
             } else if (i == 2) {
                 //加载成功

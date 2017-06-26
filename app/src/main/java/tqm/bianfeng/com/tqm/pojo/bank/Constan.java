@@ -17,5 +17,8 @@ public class Constan {
     public static int SEARCHRADIUS= 5000; //poi 搜索半径
     public static int PAGECAPACITY= 10; //poi 搜索条目
     public static int GRIDLAYOUTSIZE= 3; //gridlayout 列数
+    public static String LOCATION = "上海";
+    public static String IMGURL = "?imageView/s/300x230";
+    public static String localVersion = "";
 
 }

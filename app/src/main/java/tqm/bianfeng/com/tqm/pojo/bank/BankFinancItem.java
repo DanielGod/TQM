@@ -17,21 +17,14 @@ public class BankFinancItem {
     private BigDecimal purchaseMoney;
     private Integer financViews;
     private String presaleStatus;
+    private String institutionIcon;
 
-    @Override
-    public String toString() {
-        return "BankFinancItem{" +
-                "financId=" + financId +
-                ", productName='" + productName + '\'' +
-                ", institution='" + institution + '\'' +
-                ", issuingCity='" + issuingCity + '\'' +
-                ", riskGrade='" + riskGrade + '\'' +
-                ", investmentTerm='" + investmentTerm + '\'' +
-                ", annualReturn=" + annualReturn +
-                ", purchaseMoney=" + purchaseMoney +
-                ", financViews=" + financViews +
-                ", presaleStatus='" + presaleStatus + '\'' +
-                '}';
+    public String getInstitutionIcon() {
+        return institutionIcon;
+    }
+
+    public void setInstitutionIcon(String institutionIcon) {
+        this.institutionIcon = institutionIcon;
     }
 
     public String getPresaleStatus() {

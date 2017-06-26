@@ -16,14 +16,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.network.NetWork;
-import tqm.bianfeng.com.tqm.pojo.bank.BankInformItem;
+import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 
 /**
  * Created by florentchampigny on 24/04/15.
  */
 public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerViewAdapter.ViewHolder> {
     BankInformItemClickListener mItemClickListener;
-    List<BankInformItem> datas;
+    List<BankActivityItem> datas;
     Context mContext;
 
     static final int TYPE_HEADER = 0;
@@ -31,7 +31,7 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
 
 
 
-    public TestRecyclerViewAdapter(Context mContext, List<BankInformItem> datas) {
+    public TestRecyclerViewAdapter(Context mContext, List<BankActivityItem> datas) {
         this.datas = datas;
         this.mContext = mContext;
     }
@@ -46,8 +46,12 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
         }
     }
 
-    public BankInformItem getItem(int position) {
+    public BankActivityItem getItem(int position) {
         return datas.get(position);
+    }
+    public void update(List<BankActivityItem> mDatas) {
+        this.datas = mDatas;
+        this.notifyDataSetChanged();
     }
 
 
@@ -58,6 +62,7 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
 
     public interface BankInformItemClickListener {
         public void OnClickListener(int position);
+        public void changePosition(int position);
     }
 
     /**
@@ -101,12 +106,11 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<TestRecyclerVi
         //        }
         ViewHolder viewHolder = (ViewHolder) holder;
 
-        BankInformItem data = datas.get(position);
-        viewHolder.TitleTv.setText(data.getInformTitle());
-        viewHolder.institutionNameTv.setText(data.getInstitutionName());
+        BankActivityItem data = datas.get(position);
+        viewHolder.TitleTv.setText(data.getActivityTitle());
+        viewHolder.institutionNameTv.setText(data.getInstitution());
         Picasso.with(mContext).load(NetWork.LOAD+data.getImageUrl()).placeholder(R.drawable.hotactivity_2).into( viewHolder.bankinformationImg);
-
-        viewHolder.ViewsTv.setText(data.getInformViews() + "");
+        viewHolder.ViewsTv.setText(data.getActivityViews() + "");
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

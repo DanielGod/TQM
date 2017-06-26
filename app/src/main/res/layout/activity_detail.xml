@@ -57,11 +57,12 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/bigsp"
                         />
+
                     <ImageView
                         android:id="@+id/more_menu_img"
                         android:layout_width="@dimen/smallxhdp"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_edi_correct_report"
+                        android:src="@drawable/img_edit_light"
                         android:padding="@dimen/mediummxdp"
                         android:layout_alignParentRight="true"
                         android:background="?android:selectableItemBackground"

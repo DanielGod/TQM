@@ -37,6 +37,7 @@ public class InstitutionsInFragment extends Fragment {
         InstitutionsViewPagerAdapter institutionsViewPagerAdapter=new InstitutionsViewPagerAdapter(getChildFragmentManager());
         viewpager.setAdapter(institutionsViewPagerAdapter);
         tablayout.setupWithViewPager(viewpager);
+
         return view;
     }
 

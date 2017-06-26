@@ -162,8 +162,8 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
 
                     @Override
                     public void onNext(ResultWithAuditCode resultWithAuditCode) {
-                        Log.i("gqf","resultWithAuditCode"+resultWithAuditCode.toString());
-                        iLoginAndRegistered.showStatus(resultWithAuditCode.getAuditCode());
+                        Log.i("Daniel","审核状态："+resultWithAuditCode.getShzt());
+                        iLoginAndRegistered.showStatus(resultWithAuditCode.getShzt());
                     }
                 });
         compositeSubscription.add(subscription);

@@ -1,6 +1,8 @@
 package tqm.bianfeng.com.tqm.lawhelp.adapter;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +40,6 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     boolean isInMyFocuse = false;
-
     private Context mContext;
     private List<LawyerItem> datas;
     private final LayoutInflater mLayoutInflater;
@@ -149,6 +150,7 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mItemClickListener = listener;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int p) {
         final ViewHolder mHolder = (ViewHolder) holder;
@@ -163,7 +165,7 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 mHolder.isAuthorizeTxt.setText("未认证");
             }
         }
-        if(datas.get(p).getInstitutionName()!=null){
+        if (datas.get(p).getInstitutionName() != null) {
             mHolder.InNameTxt.setText(datas.get(p).getInstitutionName());
         }
 
@@ -174,9 +176,12 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (datas.get(p).getIsAttention().equals("02")) {
                 //未关注
                 mHolder.isCollectTxt.setText("关注");
+                mHolder.isCollectImg.setImageDrawable(mContext.getResources().getDrawable(R.drawable.img_star_light));
+//                mHolder.isCollectImg.setImageDrawable((R.drawable.img_star_light));
             } else {
                 //已关注
                 mHolder.isCollectTxt.setText("已关注");
+                mHolder.isCollectImg.setImageDrawable(mContext.getResources().getDrawable(R.drawable.img_star_dark));
             }
         }
         for (int i = 0; i < inCollectItem.size(); i++) {
@@ -293,6 +298,9 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         LinearLayout collectionLin;
         @BindView(R.id.layer_info_lin)
         LinearLayout layerInfoLin;
+
+        @BindView(R.id.is_collect_img)
+        ImageView isCollectImg;
 
         ViewHolder(View view) {
             super(view);

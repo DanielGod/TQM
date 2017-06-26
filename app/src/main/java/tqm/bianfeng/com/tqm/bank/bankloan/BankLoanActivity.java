@@ -1,7 +1,6 @@
 package tqm.bianfeng.com.tqm.bank.bankloan;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -43,9 +42,11 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+import tqm.bianfeng.com.tqm.CustomView.DefaultLoadView;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.bank.fragment.TestFilterFragment;
 import tqm.bianfeng.com.tqm.main.DetailActivity;
+import tqm.bianfeng.com.tqm.main.MainActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.AQueryParams;
 import tqm.bianfeng.com.tqm.pojo.bank.BankListItems;
@@ -53,6 +54,8 @@ import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.pojo.bank.FilterEvens;
 import tqm.bianfeng.com.tqm.pojo.bank.ListItemPositioin;
+
+import static tqm.bianfeng.com.tqm.R.id.ivDeleteText;
 
 public class BankLoanActivity extends AppCompatActivity {
 
@@ -66,12 +69,8 @@ public class BankLoanActivity extends AppCompatActivity {
     PullToRefreshListView mainPullRefreshLv;
     @BindView(R.id.etSearch)
     EditText etSearch;
-    @BindView(R.id.ivDeleteText)
-    ImageView ivDeleteText;
-    @BindView(R.id.YBJ_loding)
-    ImageView YBJLoding;
-    @BindView(R.id.YBJ_loding_txt)
-    TextView YBJLodingTxt;
+    @BindView(R.id.default_loadview)
+    DefaultLoadView defaultLoadview;
     @BindView(R.id.bankActivity_pageView_linear)
     LinearLayout bankActivityPageViewLinear;
     @BindView(R.id.bankActivity_focus_linear)
@@ -119,42 +118,11 @@ public class BankLoanActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         initRefreshlv();//刷新初始化加载
-        lodingIsFailOrSucess(1);//动画
+        defaultLoadview.lodingIsFailOrSucess(1);;//动画
         initDate(0 , Constan.NOTPULLUP,null,null);
     }
 
-    /**
-     * 初始化资源加载动画
-     *
-     * @param i
-     */
-    public void lodingIsFailOrSucess(int i) {
-        if (i == 1) {
-            //加载中
-            YBJLoding.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setText("加载中...");
-            YBJLoding.setBackgroundResource(R.drawable.loding_anim_lists);
-            AnimationDrawable anim = (AnimationDrawable) YBJLoding.getBackground();
-            anim.start();
-        } else if (i == 2) {
-            //加载成功
-            YBJLoding.setBackground(null);
-            YBJLoding.setVisibility(View.GONE);
-            YBJLodingTxt.setVisibility(View.GONE);
-        } else {
-            //加载失败
-            YBJLoding.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setVisibility(View.VISIBLE);
-            YBJLoding.setBackground(null);
-            YBJLodingTxt.setText("加载失败，请检查网络连接");
-            YBJLoding.setImageResource(R.drawable.ic_loding_fail);
-        }
-    }
-
     private void initRefreshlv() {
-
-
         //设置刷新时显示的文本
         mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);//设置模式在设置字体之前
         ILoadingLayout startLayout = mainPullRefreshLv.getLoadingLayoutProxy(true, false);
@@ -268,9 +236,9 @@ public class BankLoanActivity extends AppCompatActivity {
      * @param gson
      */
     private void initDate(int pagNum, final boolean pullUp, String search, String gson) {
-        Log.i("Daniel", "---pagNum---" + pagNum);
+        Log.i("Daniel", "---MainActivity.locationStr---" + MainActivity.locationStr);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
-                .getBankLoanItem(search,gson, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE)
+                .getBankLoanItem(search,gson, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE,MainActivity.locationStr)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BankListItems<BankLoanItem>>() {
@@ -288,7 +256,7 @@ public class BankLoanActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        lodingIsFailOrSucess(3);
+                        defaultLoadview.lodingIsFailOrSucess(3);
                         mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
                     }
 
@@ -297,7 +265,7 @@ public class BankLoanActivity extends AppCompatActivity {
                         mPagItemSize = bankLoanItemBankListItems.getItem().size();
                         Log.e("Daniel", "---mPagItemSize---" + mPagItemSize);
                         Log.e("Daniel", "---pullUp---" + pullUp);
-                        lodingIsFailOrSucess(2);
+                        defaultLoadview.lodingIsFailOrSucess(2);
                         if (mAllBankLoanItems == null) {
                             mAllBankLoanItems = new ArrayList<>();
                         }
@@ -349,11 +317,7 @@ public class BankLoanActivity extends AppCompatActivity {
             @DebugLog
             @Override
             public void afterTextChanged(Editable editable) {
-                if ("".equals(etSearch.getText().toString())){
-                    ivDeleteText.setVisibility(View.GONE);
-                }else {
-                    ivDeleteText.setVisibility(View.VISIBLE);
-                }
+
                 initDate(0, Constan.NOTPULLUP, editable.toString(), null);
 
             }
@@ -366,7 +330,7 @@ public class BankLoanActivity extends AppCompatActivity {
      * 点击事件
      * @param view
      */
-    @OnClick({R.id.etSearch, R.id.ll_filter, R.id.ivDeleteText, R.id.bankActivity_pageView_linear,
+    @OnClick({R.id.etSearch, R.id.ll_filter, ivDeleteText, R.id.bankActivity_pageView_linear,
             R.id.bankActivity_focus_linear})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -376,9 +340,8 @@ public class BankLoanActivity extends AppCompatActivity {
             case R.id.ll_filter:
                 drawerLayout.openDrawer(drawerContent);//筛选页
                 break;
-            case R.id.ivDeleteText:
+            case ivDeleteText:
                 etSearch.setText("");
-                ivDeleteText.setVisibility(View.GONE);
                 etSearch.setFocusableInTouchMode(false);
                 break;
             case R.id.bankActivity_pageView_linear:  //浏览量

@@ -53,6 +53,7 @@ import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.User;
 import tqm.bianfeng.com.tqm.pojo.YwApplyEnter;
+import tqm.bianfeng.com.tqm.pojo.YwRzsq;
 import tqm.bianfeng.com.tqm.pojo.address.address_model;
 import tqm.bianfeng.com.tqm.pojo.result.ResultCodeWithImgPathList;
 
@@ -97,14 +98,6 @@ public class ApplyForCompanyFragment extends BaseFragment {
     TextView uploadCompanyImgTxt;
     @BindView(R.id.add_company_img_img)
     ImageView addCompanyImgImg;
-    @BindView(R.id.upload_personal_img_txt)
-    TextView uploadPersonalImgTxt;
-    @BindView(R.id.personal_img1)
-    ImageView personalImg1;
-    @BindView(R.id.personal_img2)
-    ImageView personalImg2;
-    @BindView(R.id.add_personal_img_img)
-    ImageView addPersonalImgImg;
     List<address_model> addressModels;
     String selectProvinces = "";
     String selectCity = "";
@@ -117,7 +110,7 @@ public class ApplyForCompanyFragment extends BaseFragment {
     @BindView(R.id.select_address_County)
     AutoCompleteTextView selectAddressCounty;
 
-    YwApplyEnter ywApplyEnter;
+    YwRzsq ywApplyEnter;
     YwApplyEnter oldYwApplyEnter;
     List<TextView> uploadTxts;
     public interface mListener {
@@ -157,20 +150,18 @@ public class ApplyForCompanyFragment extends BaseFragment {
         photoGet.setContext(getActivity());
         mCompanyImgSelectPath=new ArrayList<>();
         mLogoSelectPath=new ArrayList<>();
+        uploadLogoImgPath=new ArrayList<>();
         mPersonalImgSelectPath=new ArrayList<>();
-        ywApplyEnter=new YwApplyEnter();
+        ywApplyEnter=new YwRzsq();
         companyImgsView = new ArrayList<>();
         companyImgsView.add(companyImg1);
         companyImgsView.add(companyImg2);
         companyImgsView.add(companyImg3);
-        personalImgsView = new ArrayList<>();
-        personalImgsView.add(personalImg1);
-        personalImgsView.add(personalImg2);
+
 
         uploadTxts=new ArrayList<>();
         uploadTxts.add(uploadLogoImgTxt);
         uploadTxts.add(uploadCompanyImgTxt);
-        uploadTxts.add(uploadPersonalImgTxt);
     }
 
 
@@ -218,7 +209,6 @@ public class ApplyForCompanyFragment extends BaseFragment {
 
         }else{
             Bitmap bm = BitmapFactory.decodeFile(photoGet.getHeadFile().getAbsolutePath());
-            uploadLogoImgPath=new ArrayList<>();
             uploadLogoImgPath.add(photoGet.getHeadFile().getAbsolutePath());
             logoImg1.setImageBitmap(bm);
             logoImg1.setVisibility(View.VISIBLE);
@@ -271,29 +261,14 @@ public class ApplyForCompanyFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.private_capital_radio,R.id.mediation_radio,R.id.add_personal_img_img, R.id.upload_personal_img_txt, R.id.upload_logo_img_txt, R.id.add_logo_img_img, R.id.upload_company_img_txt, R.id.add_company_img_img})
+    @OnClick({R.id.private_capital_radio,R.id.mediation_radio, R.id.upload_logo_img_txt, R.id.add_logo_img_img, R.id.upload_company_img_txt, R.id.add_company_img_img})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.upload_personal_img_txt:
-                //上传个人图片，上传后改为已上传，上传中
-
-                if(mPersonalImgSelectPath.size()==0){
-                    Toast.makeText(getActivity(),"请先添加图片再上传",Toast.LENGTH_SHORT).show();
-                }else{
-                    uploadImg(3,mPersonalImgSelectPath);
-                }
-
-                break;
             case R.id.private_capital_radio:
                 selectRadio=0;
                 break;
             case R.id.mediation_radio:
                 selectRadio=1;
-                break;
-            case R.id.add_personal_img_img:
-                //添加个人图片
-                isAddPersonalImg = true;
-                addImg();
                 break;
             case R.id.upload_logo_img_txt:
                 //上传logo图片，上传后改为已上传，上传中
@@ -419,17 +394,17 @@ public class ApplyForCompanyFragment extends BaseFragment {
                                 paths=paths+strings.getFiles().get(i);
                             }
                             if(index==1){
-                                ywApplyEnter.setCompanyLogo(paths);
+                                ywApplyEnter.setGslogo(paths);
                                 uploadLogoImgTxt.setEnabled(false);
                                 addLogoImgImg.setEnabled(false);
                             }else if(index==2){
-                                ywApplyEnter.setCompanyImage(paths);
+                                ywApplyEnter.setGsimage(paths);
                                 uploadCompanyImgTxt.setEnabled(false);
                                 addCompanyImgImg.setEnabled(false);
                             }else{
-                                ywApplyEnter.setCompanyImageOther(paths);
-                                uploadPersonalImgTxt.setEnabled(false);
-                                addPersonalImgImg.setEnabled(false);
+//                                ywApplyEnter.setCompanyImageOther(paths);
+//                                uploadPersonalImgTxt.setEnabled(false);
+//                                addPersonalImgImg.setEnabled(false);
                             }
                             Log.i("gqf","paths"+paths);
                         }else{
@@ -535,42 +510,47 @@ public class ApplyForCompanyFragment extends BaseFragment {
 
     }
 
-    public YwApplyEnter getYwApplyEnter() {
+    public YwRzsq getYwApplyEnter() {
         if(selectProvinces.equals("")||selectCity.equals("")||selectCounty.equals("")){
             Toast.makeText(getActivity(),"请选择公司所在地址",Toast.LENGTH_SHORT).show();
             return null;
-        }else if(ywApplyEnter.getCompanyLogo()==null||ywApplyEnter.getCompanyLogo().equals("")){
+        }else if(ywApplyEnter.getGslogo()==null||ywApplyEnter.getGslogo().equals("")){
             Toast.makeText(getActivity(),"请上传logo",Toast.LENGTH_SHORT).show();
             return null;
         }else{
-            ywApplyEnter.setAddress(selectProvinces+selectCity+selectCounty);
-            ywApplyEnter.setApplyName(companyNameEdi.getText().toString());
-            ywApplyEnter.setProposer(companyUserNameEdi.getText().toString());
-            ywApplyEnter.setContact(companyPhoneNumEdi.getText().toString());
+            ywApplyEnter.setProvince(selectProvinces);
+            ywApplyEnter.setCity(selectCity);
+            ywApplyEnter.setCounty(selectCounty);
+//            ywApplyEnter.setAddress(selectProvinces+selectCity+selectCounty);
+            ywApplyEnter.setGsmc(companyNameEdi.getText().toString());
+            ywApplyEnter.setLxr(companyUserNameEdi.getText().toString());
+            ywApplyEnter.setLxdh(companyPhoneNumEdi.getText().toString());
+            ywApplyEnter.setSqlx("01");//01-企业
             if(selectRadio==0){
-                ywApplyEnter.setApplyType("1001");
+                ywApplyEnter.setLxbq("1001");
             }else{
-                ywApplyEnter.setApplyType("1002");
+                ywApplyEnter.setLxbq("1002");
             }
             return ywApplyEnter;
         }
 
     }
-    public void setYwApplyEnter(YwApplyEnter data){
+    public void setYwApplyEnter(YwRzsq data){
         ywApplyEnter=data;
-        if(ywApplyEnter.getApplyType().equals("1001")){
+        if(ywApplyEnter.getLxbq().equals("1001")){
             privateCapitalRadio.setChecked(true);
         }else{
             mediationRadio.setChecked(true);
         }
-        ywApplyEnter.setAuditCode("00");
-        companyNameEdi.setText(ywApplyEnter.getApplyName());
-        companyPhoneNumEdi.setText(ywApplyEnter.getContact());
-        companyUserNameEdi.setText(ywApplyEnter.getProposer());
-        ywApplyEnter.setCompanyLogo("");
-        ywApplyEnter.setCompanyImage("");
-        ywApplyEnter.setCompanyImageOther("");
-        ywApplyEnter.setAddress("");
+        ywApplyEnter.setShzt("00");
+        companyNameEdi.setText(ywApplyEnter.getGsmc());
+        companyPhoneNumEdi.setText(ywApplyEnter.getLxdh());
+        companyUserNameEdi.setText(ywApplyEnter.getLxr());
+        ywApplyEnter.setGslogo("");
+        ywApplyEnter.setGsimage("");
+
+//        ywApplyEnter.setCompanyImageOther("");
+//        ywApplyEnter.setAddress("");
 
     }
 }

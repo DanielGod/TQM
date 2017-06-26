@@ -128,7 +128,7 @@
     <!--title字体样式-text-->
     <style name="sty_title_tv">
         <item name="android:textSize">@dimen/mediumsp</item>
-        <item name="android:lines">1</item>
+        <item name="android:lines">2</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textColor">@color/home_hotActivity_gray3</item>
     </style>
@@ -170,11 +170,14 @@
     <style name="home_bar_linear">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/smallhdp</item>
-        <item name="android:layout_marginRight">@dimen/smallmdp</item>
-        <item name="android:layout_marginLeft">@dimen/smallmdp</item>
-        <item name="android:layout_marginTop">@dimen/smallmdp</item>
         <item name="android:background">@android:color/white</item>
         <item name="android:orientation">horizontal</item>
+    </style>
+    <!--点击效果-->
+    <style name="itemClick">
+        <item name="android:clickable">true</item>
+        <item name="android:background">?selectableItemBackground</item>
+
     </style>
     <!--热门活动-->
     <style name="hotActivity_title_tv">
@@ -187,9 +190,9 @@
     <style name="sty_home_lookmore_tv">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
-       <item name="android:gravity">center_vertical|right</item>
+        <item name="android:gravity">center_vertical|right</item>
         <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:layout_marginRight">@dimen/tinymdp</item>
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
         <item name="android:text">@string/lookMore</item>
         <item name="android:clickable">true</item>
         <item name="android:background">?android:selectableItemBackground</item>
@@ -204,7 +207,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textColor">@color/home_hotActivity_gray3</item>
-        <item name="android:textSize">@dimen/mediumsp</item>
+        <item name="android:textSize">@dimen/smallsp</item>
     </style>
     <!--筛选-文本Edit-->
     <style name="sty_filter_Edit_et">
@@ -233,7 +236,7 @@
     <style name="sty_home_title_line_tv">
         <item name="android:layout_width">2dp</item>
         <item name="android:layout_height">match_parent</item>
-       <item name="android:background">@color/home_orange</item>
+        <item name="android:background">@color/home_orange</item>
         <item name="android:layout_marginRight">@dimen/tinymdp</item>
         <item name="android:layout_marginLeft">@dimen/tinymdp</item>
         <item name="android:layout_marginTop">@dimen/mediummxdp</item>
@@ -243,13 +246,16 @@
     <style name="toolbar_style" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:maxHeight">@dimen/mediumhdp</item>
     </style>
+
     <style name="toolbar_dark_style" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:layout_height">@dimen/hugehdp</item>
     </style>
+
     <style name="menu_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
     <style name="apply_text">
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">@dimen/smallmdp</item>
@@ -257,6 +263,7 @@
         <item name="android:textSize">@dimen/mediumsp</item>
         <item name="android:lines">1</item>
     </style>
+
     <style name="apply_edi">
         <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
         <item name="android:background">@null</item>

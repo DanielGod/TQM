@@ -14,6 +14,7 @@ import com.soundcloud.android.crop.Crop;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import hugo.weaving.DebugLog;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -24,16 +25,19 @@ import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.User;
-import tqm.bianfeng.com.tqm.pojo.YwApplyEnter;
+import tqm.bianfeng.com.tqm.pojo.YwRzsq;
 
 /**
  * Created by johe on 2017/5/12.
  */
 
-public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFragment.mListener,ApplyForPersonalFragment.mListener{
+public class ApplyForActivity extends BaseActivity implements ApplyForCreditFragment.mListener, ApplyForCompanyFragment.mListener,ApplyForPersonalFragment.mListener{
     private static final int REQUEST_IMAGE = 2;
-    public static int APPLYFORCOMPANYTYPE = 1;
-    public static int APPLYFORPERSONALTYPE = 2;
+    private static final int REQUEST_PERSION_IMAGE = 3;
+    private static final int REQUEST_CREDIT_IMAGE = 4;
+    public static int APPLYFORCOMPANYTYPE = 1;//公司
+    public static int APPLYFORPERSONALTYPE = 2;//个人
+    public static int APPLYFORCREDITTYPE = 3;//信贷
     public static int APPLYFORTYPE = 0;
     @BindView(R.id.apply_for_company_toolbar)
     Toolbar applyForCompanyToolbar;
@@ -42,12 +46,13 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
     @BindView(R.id.commit)
     Button commit;
 
-    YwApplyEnter ywApplyEnter;
+    YwRzsq ywApplyEnter;
     ApplyForCompanyFragment applyForCompanyFragment;
     ApplyForPersonalFragment applyForPersonalFragment;
+    ApplyForCreditFragment applyForCreditFragment;
 
     ShowDialogAndLoading showDialogAndLoading;
-    int applyForId=0;
+    String applyForId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +65,16 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.continar, applyForCompanyFragment).commit();
             title="公司申请";
-        }else{
+        }else if(APPLYFORTYPE==APPLYFORPERSONALTYPE){
             applyForPersonalFragment=new ApplyForPersonalFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.continar, applyForPersonalFragment).commit();
             title="个人申请";
+        }else {
+            applyForCreditFragment=new ApplyForCreditFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.continar, applyForCreditFragment).commit();
+            title="信贷经理认证";
         }
         setToolbar(applyForCompanyToolbar, title);
         getUserApplyMsg();
@@ -82,12 +92,27 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
             }
         });
     }
+
+    @DebugLog
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.e("Daniel","多图选择返回："+requestCode);
+        Log.e("Daniel","多图选择返回data："+data.toString());
+        Log.e("Daniel","多图选择返回resultCode："+resultCode);
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
                 applyForCompanyFragment.setImgInView(data);
+            }
+        }
+        if (requestCode == REQUEST_PERSION_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                applyForPersonalFragment.setImgInView(data);
+            }
+        }
+        if (requestCode == REQUEST_CREDIT_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                applyForCreditFragment.setImgInView(data);
             }
         }
 
@@ -109,11 +134,13 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
     public void onClick() {
         if(APPLYFORTYPE==APPLYFORCOMPANYTYPE){
             ywApplyEnter=applyForCompanyFragment.getYwApplyEnter();
-        }else{
+        }else if(APPLYFORTYPE==APPLYFORPERSONALTYPE){
             ywApplyEnter=applyForPersonalFragment.getYwApplyEnter();
+        }else {
+            ywApplyEnter=applyForCreditFragment.getYwApplyEnter();
         }
 
-        if(ywApplyEnter==null||ywApplyEnter.getContact().equals("")){
+        if(ywApplyEnter==null||ywApplyEnter.getLxdh().equals("")){
             Toast.makeText(this, "联系电话不能为空", Toast.LENGTH_SHORT).show();
 
         }else{
@@ -123,10 +150,11 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
 
     }
     public void save(){
-        showDialogAndLoading.showLoading("正在提交。。",this);
+        showDialogAndLoading.showLoading("正在提交",this);
         Gson gson=new Gson();
-        ywApplyEnter.setApplyId(applyForId);
-        ywApplyEnter.setApplyUser(realm.where(User.class).findFirst().getUserId());
+        ywApplyEnter.setId(applyForId);
+        ywApplyEnter.setSqr(realm.where(User.class).findFirst().getUserId());
+        Log.e("Daniel","最后提交申请人信息："+ywApplyEnter.toString());
         Subscription subscription = NetWork.getUserService().save(gson.toJson(ywApplyEnter))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -139,6 +167,7 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
                     @Override
                     public void onError(Throwable e) {
                         Log.i("gqf","onError"+e.toString());
+                        showDialogAndLoading.stopLoaading();
                     }
 
                     @Override
@@ -149,7 +178,9 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
                             showDialogAndLoading.showAfterDialog(ApplyForActivity.this,"提交成功","我们将于两个工作日内与您联系，请保持电话畅通","确定");
                             User user = realm.where(User.class).findFirst();
                             realm.beginTransaction();
-                            user.setUserType(ywApplyEnter.getApplyType());
+                            user.setUserType(ywApplyEnter.getLxbq());
+                            user.setApplyForStatu(ywApplyEnter.getShzt());
+                            Log.i("Daniel","审核状态："+ywApplyEnter.getShzt());
                             realm.copyToRealmOrUpdate(user);
                             realm.commitTransaction();
                         }
@@ -162,7 +193,7 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
         Subscription subscription = NetWork.getUserService().getOne(realm.where(User.class).findFirst().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<YwApplyEnter>() {
+                .subscribe(new Observer<YwRzsq>() {
                     @Override
                     public void onCompleted() {
 
@@ -174,13 +205,15 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCompanyFra
                     }
 
                     @Override
-                    public void onNext(YwApplyEnter ywApr) {
-                        Log.i("gqf","YwApplyEnter"+ywApr.toString());
-                        applyForId=ywApr.getApplyId();
+                    public void onNext(YwRzsq ywApr) {
+                        Log.i("Daniel","获取入驻信息："+ywApr.toString());
+                        applyForId=ywApr.getId();
                         if(APPLYFORTYPE==APPLYFORCOMPANYTYPE){
                             applyForCompanyFragment.setYwApplyEnter(ywApr);
-                        }else{
+                        }else if(APPLYFORTYPE==APPLYFORPERSONALTYPE){
                             applyForPersonalFragment.setYwApplyEnter(ywApr);
+                        }else {
+                            applyForCreditFragment.setYwApplyEnter(ywApr);
                         }
                     }
                 });

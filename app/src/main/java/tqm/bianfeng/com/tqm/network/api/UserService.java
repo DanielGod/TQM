@@ -21,8 +21,8 @@ import tqm.bianfeng.com.tqm.pojo.ResultCodeWithCompanyFile;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.UserActionNum;
-import tqm.bianfeng.com.tqm.pojo.YwApplyEnter;
 import tqm.bianfeng.com.tqm.pojo.YwBankActivity;
+import tqm.bianfeng.com.tqm.pojo.YwRzsq;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankListItems;
@@ -207,27 +207,27 @@ public interface UserService {
      * 上传公司三张图片
      */
     @Multipart
-    @POST("enter/uploadCompanyFile")
+    @POST("rzsq/upload")
     Observable<ResultCodeWithImgPathList> uploadCompanyFile(@Part List<MultipartBody.Part> zichifile);
 
     /**
      * 提交信息 applyEnter
      */
     @FormUrlEncoded
-    @POST("enter/")
-    Observable<ResultCode> save(@Field("applyEnter") String applyEnter);
+    @POST("rzsq/")
+    Observable<ResultCode> save(@Field("rzsq") String rzsq);
 
 
     /**
      * 获取入驻申请信息
      */
-    @GET("enter/{userId}")
-    Observable<YwApplyEnter> getOne(@Path("userId") int userId);
+    @GET("rzsq/{userId}")
+    Observable<YwRzsq> getOne(@Path("userId") int userId);
 
     /**
      * 查看入驻申请当前状态
      */
-    @GET("enter/auditCode/{userId}")
+    @GET("rzsq/shzt/{userId}")
     Observable<ResultWithAuditCode> getStatus(@Path("userId") int userId);
 
     /**

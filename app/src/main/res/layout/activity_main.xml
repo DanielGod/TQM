@@ -41,7 +41,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/hugehdp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/img_toolbar_bg"
         android:gravity="center_vertical"
         android:minHeight="@dimen/mediumhdp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -65,9 +65,10 @@
                 android:paddingLeft="@dimen/smallmdp"
                 android:paddingRight="@dimen/smallmdp"
                 android:text="定位"
+                android:drawablePadding="@dimen/tinymdp"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/mediumxsp"
+                android:textSize="@dimen/mediumsp"
                 android:drawableLeft="@drawable/ic_location"
                 android:background="?android:selectableItemBackground"
                 android:clickable="true"
@@ -92,6 +93,23 @@
                 android:padding="@dimen/smallmdp"
                 android:background="?android:selectableItemBackground"
                 android:clickable="true"
+                />
+            <TextView
+                android:id="@+id/home_login_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/smallmdp"
+                android:paddingRight="@dimen/smallmdp"
+                android:text="登录"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mediumsp"
+                android:drawablePadding="@dimen/tinymdp"
+                android:drawableLeft="@drawable/img_user"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true"
+                android:layout_alignParentRight="true"
+
                 />
 
         </RelativeLayout>

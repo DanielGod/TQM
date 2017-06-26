@@ -119,33 +119,19 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/YBJ_loding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        />
-    <TextView
-        android:id="@+id/YBJ_loding_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="加载中..."
-        android:layout_below="@+id/YBJ_loding"
-        android:paddingTop="@dimen/activity_horizontal_margin"
-        android:textSize="@dimen/bigsp"
-        android:visibility="gone"
-        android:layout_centerHorizontal="true"/>
-
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/smallmdp"
         android:layout_marginRight="@dimen/smallmdp"
         android:id="@+id/main_pull_refresh_lv"
+        android:divider="@color/whitesmoke"
         app:ptrAnimationStyle="rotate"
         app:ptrHeaderBackground="@android:color/transparent"
         app:ptrHeaderTextColor="@color/home_hotActivity_gray9"
         android:layout_below="@+id/ll_head_layout"
        />
+
+    <include layout="@layout/fragment_loding"/>
+
 </RelativeLayout>

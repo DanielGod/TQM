@@ -38,19 +38,24 @@ public class ApplyForChooseActivity extends BaseActivity {
 
 
 
-    @OnClick({R.id.choose_company_apply_lin, R.id.choose_personal_apply_lin})
+    @OnClick({R.id.choose_company_apply_lin, R.id.choose_personal_apply_lin,R.id.choose_creditManager_apply_lin})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.choose_company_apply_lin:
                 //公司申请
                 ApplyForActivity.APPLYFORTYPE=ApplyForActivity.APPLYFORCOMPANYTYPE;
-
                 startActivity(new Intent(ApplyForChooseActivity.this, ApplyForActivity.class));
                 finish();
                 break;
             case R.id.choose_personal_apply_lin:
                 //个人申请
                 ApplyForActivity.APPLYFORTYPE=ApplyForActivity.APPLYFORPERSONALTYPE;
+                startActivity(new Intent(ApplyForChooseActivity.this, ApplyForActivity.class));
+                finish();
+                break;
+            case R.id.choose_creditManager_apply_lin:
+                //经理申请
+                ApplyForActivity.APPLYFORTYPE=ApplyForActivity.APPLYFORCREDITTYPE;
                 startActivity(new Intent(ApplyForChooseActivity.this, ApplyForActivity.class));
                 finish();
                 break;

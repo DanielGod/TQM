@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-
+              android:fitsSystemWindows="false"
               android:orientation="vertical">
     <!--我的界面-->
 
-    <ScrollView
+    <tqm.bianfeng.com.tqm.CustomView.MyScrollview
+        android:id="@+id/my_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
         >
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -22,8 +23,8 @@
                 android:id="@+id/user_top_rel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/user_bg"
-                android:minHeight="@dimen/hugehxxxxdp"
+                android:background="@drawable/img_personalcenter_bg_"
+                android:minHeight="@dimen/hugehxxxxxxxdp"
                 >
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -564,5 +565,5 @@
                 android:layout_height="1dp"
                 android:background="@color/whitesmoke"/>
         </LinearLayout>
-    </ScrollView>
+    </tqm.bianfeng.com.tqm.CustomView.MyScrollview>
 </LinearLayout>

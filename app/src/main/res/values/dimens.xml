@@ -45,4 +45,5 @@
     <dimen name="three_grid_unit">24dp</dimen>
     <dimen name="one_and_a_half_grid_unit">12dp</dimen>
     <dimen name="homeFragmentTop_spinner">-26dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

@@ -27,6 +27,7 @@ import tqm.bianfeng.com.tqm.CustomView.LoadMoreView;
 import tqm.bianfeng.com.tqm.Institutions.adapter.LawFirmOrInstitutionListAdapter;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
+import tqm.bianfeng.com.tqm.main.MainActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.InstitutionItem;
 import tqm.bianfeng.com.tqm.pojo.User;
@@ -92,7 +93,7 @@ public class LawAndCompanyFragment extends BaseFragment {
         if(realm.where(User.class).findFirst()!=null){
             userId=realm.where(User.class).findFirst().getUserId();
         }
-        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getInstitutionItem("0" + (index + 1),userId, page + 1, 10)
+        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getInstitutionItem("0" + (index + 1),userId, page + 1, 10, MainActivity.locationStr)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<InstitutionItem>>() {
@@ -115,12 +116,13 @@ public class LawAndCompanyFragment extends BaseFragment {
                         for (InstitutionItem institutionItem : institutionItems) {
                             datas.add(institutionItem);
                         }
-
+                        Log.i("gqf", "datas" + datas.size());
                         Log.i("gqf", "institutionItems" + institutionItems.toString());
                         page++;
                         initList(datas);
                         defaultLoadview.lodingIsFailOrSucess(2);
-
+                        Log.i("gqf", "datas" + datas.size());
+                        Log.i("gqf", "institutionItems" + institutionItems.size());
                         //加载更多判断
                         loadMoreTxt.doLoad(datas.size(),institutionItems.size());
                     }

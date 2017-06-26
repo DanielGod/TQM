@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#fe772d</color>
+    <color name="colorPrimary">#FF842B</color>
     <color name="colorPrimaryDark">#ff6f20</color>
     <color name="colorAccent">#FF4081</color>
 
@@ -19,7 +19,7 @@
     <color name="gray_light">#EBEDF0</color>
     <color name="red">#ee0000</color>
     <color name="message_bg_red">#b4e72020</color>
-    <color name="gary">#cecece</color> <!-- 灰色 -->
+        <color name="gary">#cecece</color> <!-- 灰色 -->
     <!-- 边框 -->
     <!-- 遮罩颜色 -->
 
@@ -67,4 +67,7 @@
     <color name="information_headColor1">#35CBF6</color>
     <color name="information_headColor3">#FFE07D</color>
     <color name="information_headColor2">#E3F8F6</color>
+    <!--机构中心-->
+    <!--<color name="InstitutionalCenter_tab">#0xff111111</color>-->
+
 </resources>

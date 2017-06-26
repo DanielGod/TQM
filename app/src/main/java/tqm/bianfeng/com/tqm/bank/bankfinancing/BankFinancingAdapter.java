@@ -1,13 +1,17 @@
 package tqm.bianfeng.com.tqm.bank.bankfinancing;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.blankj.utilcode.utils.StringUtils;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -19,7 +23,9 @@ import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.Util.StringUtil;
+import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
+import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.pojo.bank.ListItemPositioin;
 
 /**
@@ -59,42 +65,45 @@ public class BankFinancingAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.listitem, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.activity_financing_listitem, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         BankFinancItem data = getItem(position);
-//        holder.financViewsLinear.setVisibility(View.VISIBLE);
-        holder.institutionNameLinear.setVisibility(View.VISIBLE);
-        holder.purchaseMoneyAndRiskGradeNameLinear.setVisibility(View.VISIBLE);
+
         holder.titleTv.setText(data.getProductName());
         holder.institutionNameTv.setText(data.getInstitution());
         holder.annualReturnTv.setText(data.getAnnualReturn() + "%");
-        holder.riskGradeNameTv.setText(data.getRiskGrade());
-        holder.investmentTermTv.setText(data.getInvestmentTerm()+"天");
-        if(!StringUtil.isBlank(data.getPurchaseMoney())){
-            holder.purchaseMoneyTv.setText(data.getPurchaseMoney().setScale(0, BigDecimal.ROUND_DOWN)+"万");
-        }else{
+        //如果期限值为空或为“无限期” 不显示单位天
+        if (StringUtils.isEmpty(data.getInvestmentTerm()) || "无限期".equals(data.getInvestmentTerm())){
+            holder.investmentTermDayUnitTv.setVisibility(View.GONE);
+        }
+        holder.investmentTermTv.setText(data.getInvestmentTerm());
+        Log.e("Daniel", "理财机构icon：" + NetWork.LOAD + data.getInstitutionIcon());
+        Picasso.with(mContext).load(NetWork.LOAD + data.getInstitutionIcon() + Constan.IMGURL)
+                .placeholder(R.drawable.logo).into(holder.institutionIconImg);
+        if (!StringUtil.isBlank(data.getPurchaseMoney())) {
+            holder.purchaseMoneyTv.setText(data.getPurchaseMoney().setScale(0, BigDecimal.ROUND_DOWN) + "");
+        } else {
             holder.purchaseMoneyTv.setText("0 元");
         }
-        holder.financViewsTv.setText("" + data.getFinancViews());
-        holder.rateNameTv.setText("预期年化");
+
         if (!isFistPage) {
-            holder.linearlayout.setOnClickListener(new View.OnClickListener() {
+            holder.loanListitemCardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new ListItemPositioin("02",position));
+                    EventBus.getDefault().post(new ListItemPositioin("02", position));
                 }
             });
         }
         if ("02".equals(data.getPresaleStatus()))
-            holder.presaleStatusImg.setImageResource(R.drawable.ys);
+            holder.presaleStatusImg.setImageResource(R.drawable.img_financ_ys);
         if ("01".equals(data.getPresaleStatus()))
-            holder.presaleStatusImg.setImageResource(R.drawable.ks);
+            holder.presaleStatusImg.setImageResource(R.drawable.img_financ_ks);
         if ("03".equals(data.getPresaleStatus()))
-            holder.presaleStatusImg.setImageResource(R.drawable.ts);
+            holder.presaleStatusImg.setImageResource(R.drawable.img_financ_ts);
 
 
         return convertView;
@@ -107,46 +116,28 @@ public class BankFinancingAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @BindView(R.id.annualReturn_tv)
-        TextView annualReturnTv;
-        @BindView(R.id.rateName_tv)
-        TextView rateNameTv;
-        @BindView(R.id.title_tv)
-        TextView titleTv;
-        @BindView(R.id.loanTypeName_tv)
-        TextView loanTypeNameTv;
-        @BindView(R.id.loanTypeName_linear)
-        LinearLayout loanTypeNameLinear;
-        @BindView(R.id.riskGradeName_tv)
-        TextView riskGradeNameTv;
-        @BindView(R.id.riskGradeName_linear)
-        LinearLayout riskGradeNameLinear;
-        @BindView(R.id.loanMoney_tv)
-        TextView loanMoneyTv;
-        @BindView(R.id.loanMoney_linear)
-        LinearLayout loanMoneyLinear;
-        @BindView(R.id.purchaseMoney_tv)
-        TextView purchaseMoneyTv;
-        @BindView(R.id.purchaseMoney_linear)
-        LinearLayout purchaseMoneyLinear;
-        @BindView(R.id.investmentTerm_tv)
-        TextView investmentTermTv;
-
-        @BindView(R.id.institutionName_tv)
-        TextView institutionNameTv;
-        @BindView(R.id.institutionName_linear)
-        LinearLayout institutionNameLinear;
-        @BindView(R.id.financViews_tv)
-        TextView financViewsTv;
-        @BindView(R.id.financViews_linear)
-        LinearLayout financViewsLinear;
-        @BindView(R.id.linearlayout)
-        LinearLayout linearlayout;
-        @BindView(R.id.purchaseMoneyAndRiskGradeName_linear)
-        LinearLayout purchaseMoneyAndRiskGradeNameLinear;
         @BindView(R.id.presaleStatus_img)
         ImageView presaleStatusImg;
-
+        @BindView(R.id.title_tv)
+        TextView titleTv;
+        @BindView(R.id.purchaseMoney_lab)
+        TextView purchaseMoneyLab;
+        @BindView(R.id.purchaseMoney_tv)
+        TextView purchaseMoneyTv;
+        @BindView(R.id.investmentTerm_lab)
+        TextView investmentTermLab;
+        @BindView(R.id.investmentTerm_tv)
+        TextView investmentTermTv;
+        @BindView(R.id.annualReturn_tv)
+        TextView annualReturnTv;
+        @BindView(R.id.institutionName_tv)
+        TextView institutionNameTv;
+        @BindView(R.id.loan_listitem_cardview)
+        CardView loanListitemCardview;
+        @BindView(R.id.institutionIcon_img)
+        ImageView institutionIconImg;
+        @BindView(R.id.investmentTerm_day_unit_tv)
+        TextView investmentTermDayUnitTv;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -154,3 +145,4 @@ public class BankFinancingAdapter extends BaseAdapter {
     }
 
 }
+

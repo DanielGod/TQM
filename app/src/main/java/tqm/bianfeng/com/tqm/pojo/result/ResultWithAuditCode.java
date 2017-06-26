@@ -8,20 +8,20 @@ import tqm.bianfeng.com.tqm.pojo.ResultCode;
 
 public class ResultWithAuditCode extends ResultCode{
 
-    String auditCode;
-
-    public String getAuditCode() {
-        return auditCode;
-    }
-
-    public void setAuditCode(String auditCode) {
-        this.auditCode = auditCode;
-    }
+    String shzt;
 
     @Override
     public String toString() {
         return "ResultWithAuditCode{" +
-                "auditCode='" + auditCode + '\'' +
+                "shzt='" + shzt + '\'' +
                 '}';
+    }
+
+    public String getShzt() {
+        return shzt;
+    }
+
+    public void setShzt(String shzt) {
+        this.shzt = shzt;
     }
 }

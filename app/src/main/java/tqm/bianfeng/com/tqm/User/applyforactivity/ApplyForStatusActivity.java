@@ -17,6 +17,7 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import hugo.weaving.DebugLog;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,7 +26,7 @@ import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.User;
-import tqm.bianfeng.com.tqm.pojo.YwApplyEnter;
+import tqm.bianfeng.com.tqm.pojo.YwRzsq;
 import tqm.bianfeng.com.tqm.pojo.result.ResultWithAuditCode;
 
 /**
@@ -37,7 +38,7 @@ public class ApplyForStatusActivity extends BaseActivity {
     @BindView(R.id.apply_for_status_toolbar)
     Toolbar applyForStatusToolbar;
 
-    YwApplyEnter ywApplyEnter;
+    YwRzsq ywApplyEnter;
     @BindView(R.id.no_audit_view)
     View noAuditView;
     @BindView(R.id.commit)
@@ -79,7 +80,7 @@ public class ApplyForStatusActivity extends BaseActivity {
         setContentView(R.layout.activity_apply_for_status);
         ButterKnife.bind(this);
         setToolbar(applyForStatusToolbar, "申请进度");
-        //getAuditCode(realm.where(User.class).findFirst().getUserId());
+//        getAuditCode(realm.where(User.class).findFirst().getUserId());
         getOne(realm.where(User.class).findFirst().getUserId());
     }
 
@@ -92,15 +93,15 @@ public class ApplyForStatusActivity extends BaseActivity {
                     public void onCompleted() {
 
                     }
-
+                    @DebugLog
                     @Override
                     public void onError(Throwable e) {
 
                     }
-
+                    @DebugLog
                     @Override
                     public void onNext(ResultWithAuditCode resultWithAuditCode) {
-                        Log.i("gqf", "onNext" + resultWithAuditCode.getCode());
+                        Log.i("Daniel", "onNext" + resultWithAuditCode.getCode());
                     }
                 });
         compositeSubscription.add(subscription);
@@ -111,7 +112,7 @@ public class ApplyForStatusActivity extends BaseActivity {
         Subscription subscription = NetWork.getUserService().getOne(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<YwApplyEnter>() {
+                .subscribe(new Observer<YwRzsq>() {
                     @Override
                     public void onCompleted() {
 
@@ -123,17 +124,18 @@ public class ApplyForStatusActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onNext(YwApplyEnter ywAppler) {
+                    public void onNext(YwRzsq ywAppler) {
                         Log.i("gqf", "ywApplyEnter" + ywAppler.toString());
                         applyStatuScroll.setVisibility(View.VISIBLE);
 
                         ywApplyEnter = ywAppler;
-                        if (ywApplyEnter.getApplyType().equals("1001") || ywApplyEnter.getApplyType().equals("1002")) {
+                        if (ywApplyEnter.getLxbq().equals("1001") || ywApplyEnter.getLxbq().equals("1002")) {
                             //公司申请
                             applyForCompanyMsgLin.setVisibility(View.VISIBLE);
-                            companyNameEdi.setText(ywApplyEnter.getApplyName());
-                            companyUserEdi.setText(ywApplyEnter.getProposer());
-                            if (ywApplyEnter.getApplyType().equals("1001")) {
+
+                            companyNameEdi.setText(ywApplyEnter.getGsmc());
+                            companyUserEdi.setText(ywApplyEnter.getLxr());
+                            if (ywApplyEnter.getLxbq().equals("1001")) {
                                 companyApplyEdi.setText("民间资本");
                             } else {
                                 companyApplyEdi.setText("中介公司");
@@ -144,8 +146,8 @@ public class ApplyForStatusActivity extends BaseActivity {
                         } else {
                             //个人申请
                             applyForPersonalMsgLin.setVisibility(View.VISIBLE);
-                            personalUserEdi.setText(ywApplyEnter.getProposer());
-                            if (ywApplyEnter.getApplyType().equals("2001")) {
+                            personalUserEdi.setText(ywApplyEnter.getLxr());
+                            if (ywApplyEnter.getLxbq().equals("2001")) {
                                 personalApplyEdi.setText("资方");
                             } else {
                                 personalApplyEdi.setText("个人中介");
@@ -154,17 +156,17 @@ public class ApplyForStatusActivity extends BaseActivity {
 
                         }
 
-                        if (ywApplyEnter.getAuditCode().equals("02") || ywApplyEnter.getAuditCode().equals("01")) {
+                        if (ywApplyEnter.getShzt().equals("02") || ywApplyEnter.getShzt().equals("01")) {
                             auditEndLin.setVisibility(View.VISIBLE);
                             noAuditView.setVisibility(View.VISIBLE);
-                            if (ywApplyEnter.getAuditCode().equals("02")) {
+                            if (ywApplyEnter.getShzt().equals("02")) {
 
-                                auditRemarkTxt.setText(ywApplyEnter.getAuditRemark());
+                                auditRemarkTxt.setText(ywApplyEnter.getShbz());
                                 noAuditLin.setVisibility(View.VISIBLE);
                                 noAuditView.setBackgroundColor(getResources().getColor(R.color.font_black_5));
                                 auditEndTxt.setText("审核未通过");
 
-                            } else if(ywApplyEnter.getAuditCode().equals("01")) {
+                            } else if(ywApplyEnter.getShzt().equals("01")) {
                                 auditEndTxt.setText("审核通过");
                                 noAuditView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                                 auditEndImg.setImageResource(R.drawable.ic_apply_true);
@@ -194,7 +196,7 @@ public class ApplyForStatusActivity extends BaseActivity {
     @OnClick(R.id.commit)
     public void onClick() {
 
-        if (ywApplyEnter.getApplyType().equals("1001") || ywApplyEnter.getApplyType().equals("1002")) {
+        if (ywApplyEnter.getLxbq().equals("1001") || ywApplyEnter.getLxbq().equals("1002")) {
             ApplyForActivity.APPLYFORTYPE = ApplyForActivity.APPLYFORCOMPANYTYPE;
         } else {
             ApplyForActivity.APPLYFORTYPE = ApplyForActivity.APPLYFORPERSONALTYPE;

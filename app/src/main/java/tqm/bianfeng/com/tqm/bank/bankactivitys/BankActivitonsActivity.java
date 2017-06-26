@@ -47,6 +47,7 @@ import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.bank.fragment.TestFilterFragment;
 import tqm.bianfeng.com.tqm.main.DetailActivity;
+import tqm.bianfeng.com.tqm.main.MainActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.AQueryParams;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
@@ -279,7 +280,7 @@ public class BankActivitonsActivity extends AppCompatActivity {
 
     private void initDate(int pagNum, final boolean pullUp, String search, String gson) {
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
-                .getBankActivityItem(search, gson, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE)
+                .getBankActivityItem(search, gson, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE, MainActivity.locationStr,4)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BankListItems<BankActivityItem>>() {
@@ -332,6 +333,7 @@ public class BankActivitonsActivity extends AppCompatActivity {
             intent.putExtra("detailType", "01");
             intent.putExtra("detailId", bankActivitionsAdapter.getItem(position).getActivityId());
             intent.putExtra("detailTitle", bankActivitionsAdapter.getItem(position).getActivityTitle());
+            intent.putExtra("articlePath", bankActivitionsAdapter.getItem(position).getArticlePath());
             startActivity(intent);
         }
 

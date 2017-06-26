@@ -30,7 +30,8 @@ public interface InstitutionService {
     Observable<List<InstitutionItem>> getInstitutionItem(@Field("institutionType") String institutionType,
                                                          @Field("userId") int userId,
                                                          @Field("pageNum") Integer pageNum,
-                                                         @Field("pageSize") Integer pageSize);
+                                                         @Field("pageSize") Integer pageSize,
+                                                         @Field("city") String city);
 
     /**
      * 获取律师事务所详情
@@ -75,5 +76,6 @@ public interface InstitutionService {
                                                             @Field("userId") int userId,
                                                             @Field("institutionType") String institutionType,
                                                          @Field("pageNum") Integer pageNum,
-                                                         @Field("pageSize") Integer pageSize);
+                                                         @Field("pageSize") Integer pageSize,
+                                                            @Field("city") String city);
 }

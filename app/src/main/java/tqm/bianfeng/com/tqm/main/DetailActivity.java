@@ -74,6 +74,7 @@ public class DetailActivity extends BaseActivity {
     boolean isCollection = false;
     boolean isInCollection = false;
     public int detailId = -1;
+    public String articlePath;
     @BindView(R.id.detail_back)
     ImageView detailBack;
     @BindView(R.id.comments_rel)
@@ -132,7 +133,7 @@ public class DetailActivity extends BaseActivity {
         detailType = getIntent().getStringExtra("detailType");
         detailId = getIntent().getIntExtra("detailId", -1);
         detailTitle = getIntent().getStringExtra("detailTitle");
-
+        articlePath = getIntent().getStringExtra("articlePath");
         bankType=getIntent().getIntExtra(BANK_INFO_TYPE, -1);
 
         toolbarTitle = "";
@@ -212,8 +213,16 @@ public class DetailActivity extends BaseActivity {
         }
         url = NetWork.LOAD + "/app/getDetail/" + detailType + "/" + detailId + "/" + userId+"/y";
         shareUrl=NetWork.LOAD + "/app/getDetail/" + detailType + "/" + detailId + "/"+"0" + "/n";
+        Log.e("Daniel","------articlePath---"+articlePath);
+        if(detailType.equals("01")){
+            url = NetWork.LOAD+articlePath+"?module="+detailType+"&objId="+detailId+"&userId="+userId;
+            shareUrl = NetWork.LOAD+articlePath;
+        }
+
 
         Log.i("gqf","getDetail"+detailTitle);
+        Log.e("Daniel","------shareUrl---"+shareUrl);
+        Log.e("Daniel","------url---"+url);
         webView.loadUrl(url);
 
         webView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
@@ -223,6 +232,7 @@ public class DetailActivity extends BaseActivity {
                 scrollHeight = dy / 2;
                 if (scrollHeight > toolBarHeight) {
                     scrollHeight = toolBarHeight;
+                    moreMenuImg.setImageDrawable(getResources().getDrawable(R.drawable.img_edit_dark));
                 }
                 setToolBarBgAlpha();
             }

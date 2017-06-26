@@ -36,6 +36,7 @@ import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.InstitutionItem;
 import tqm.bianfeng.com.tqm.pojo.User;
+import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 
 /**
  * Created by johe on 2017/5/10.
@@ -111,7 +112,8 @@ public class SearchInstiutionsActivity extends BaseActivity {
         if(realm.where(User.class).findFirst()!=null){
             userId=realm.where(User.class).findFirst().getUserId();
         }
-        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().searchInstitutionItem(searchName,userId,search_type,page,10)
+        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService()
+                .searchInstitutionItem(searchName,userId,search_type,page,10, Constan.LOCATION)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<InstitutionItem>>() {

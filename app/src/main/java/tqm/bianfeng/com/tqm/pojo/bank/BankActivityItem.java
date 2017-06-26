@@ -20,6 +20,15 @@ public class BankActivityItem {
     private int activityViews;
     private String imageUrl;
     private int atttenNum;
+    private String articlePath;
+
+    public String getArticlePath() {
+        return articlePath;
+    }
+
+    public void setArticlePath(String articlePath) {
+        this.articlePath = articlePath;
+    }
 
     public int getActivityId() {
         return activityId;
@@ -67,5 +76,17 @@ public class BankActivityItem {
 
     public void setAtttenNum(int atttenNum) {
         this.atttenNum = atttenNum;
+    }
+
+    @Override
+    public String toString() {
+        return "BankActivityItem{" +
+                "activityId=" + activityId +
+                ", activityTitle='" + activityTitle + '\'' +
+                ", institution='" + institution + '\'' +
+                ", activityViews=" + activityViews +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", atttenNum=" + atttenNum +
+                '}';
     }
 }

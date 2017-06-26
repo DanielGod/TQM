@@ -1,8 +1,10 @@
 package tqm.bianfeng.com.tqm.main;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.blankj.utilcode.utils.StringUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.soundcloud.android.crop.Crop;
 
@@ -50,18 +53,20 @@ import tqm.bianfeng.com.tqm.Util.DisplayUtil;
 import tqm.bianfeng.com.tqm.Util.NetUtils;
 import tqm.bianfeng.com.tqm.Util.PermissionsHelper;
 import tqm.bianfeng.com.tqm.Util.PhotoGet;
+import tqm.bianfeng.com.tqm.Util.SystemBarTintManager;
 import tqm.bianfeng.com.tqm.application.BaseApplication;
 import tqm.bianfeng.com.tqm.lawhelp.AllCityActivity;
 import tqm.bianfeng.com.tqm.lawhelp.LawHelpFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.LawAdd;
-import tqm.bianfeng.com.tqm.update.UpdateInformation;
+import tqm.bianfeng.com.tqm.pojo.User;
+import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.update.UpdateMsg;
 import tqm.bianfeng.com.tqm.update.UpdateService;
 
 import static tqm.bianfeng.com.tqm.Util.PhotoGet.REQUEST_IMAGE_CAPTURE;
 
-public class MainActivity extends AppCompatActivity implements UserFragment.mListener, HomeFragment.mListener, LawHelpFragment.mListener {
+public class MainActivity extends AppCompatActivity implements UserFragment.mListener, HomeFragment3.mListener, LawHelpFragment.mListener {
     private static final String HOME_TAG = "home_flag";
     private static final String LAWHELP_TAG = "lawhelp_flag";
     private static final String INSTITUTIONSIN_TAG = "institutionsin_flag";
@@ -75,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     private static final int GALLERY = 2; // 从相册中选择
     private static final int PHOTO_REQUEST_CUT = 3; // 结果
     private static boolean ISUPDATEAPP = true;//本程序是否在此次开起后更新
+    public static String locationStr = Constan.LOCATION;
+    private String mLocationVersion;
+    SharedPreferences sharedPreferences;
     CompositeSubscription compositeSubscription;
     PhotoGet photoGet;
     @BindView(R.id.bottomBar)
@@ -97,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     Realm realm;
     @BindView(R.id.action_search_img)
     ImageView actionSearchImg;
+    @BindView(R.id.home_login_txt)
+    TextView homeLoginTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,12 +115,22 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
         compositeSubscription = new CompositeSubscription();
-        try {
-            initSystemBar();
-        } catch (Exception e) {
-
+        Window window = getWindow();
+        //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        //设置状态栏颜色
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
-
+        //        try {
+//            initSystemBar();
+//        } catch (Exception e) {
+//
+//        }
+//        //设置状态栏
+//        setSystemBarColor(R.color.black);
         //设置底部栏
         initBottomBar();
         //版本更新
@@ -119,6 +139,8 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         initNetWork(true);
         EventBus.getDefault().register(this);
         setBelow(0);
+
+
     }
 
     @Override
@@ -126,14 +148,20 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         super.onResume();
         setToolBarColorBg(tooleBarNowAlpha);
         //定位按钮信息更新
+        Log.e("Daniel", "----LawAdd---" + realm.where(LawAdd.class).findFirst());
         if (realm.where(LawAdd.class).findFirst() != null) {
+            Log.e("Daniel", "----LawAdd---" + realm.where(LawAdd.class).findFirst());
             if (!realm.where(LawAdd.class).findFirst().getCity().equals("")) {
+                Log.e("Daniel", "----LawAdd---" + realm.where(LawAdd.class).findFirst());
                 homeLocationTxt.setText(realm.where(LawAdd.class).findFirst().getCity());
+                locationStr = realm.where(LawAdd.class).findFirst().getCity();
             } else {
-                homeLocationTxt.setText("定位");
+                homeLocationTxt.setText(Constan.LOCATION);
+                locationStr = Constan.LOCATION;
             }
         } else {
-            homeLocationTxt.setText("定位");
+            homeLocationTxt.setText(Constan.LOCATION);
+            locationStr = Constan.LOCATION;
         }
     }
 
@@ -190,20 +218,20 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
      *
      * @param contentHome
      */
-    HomeFragment homeFragment;
+    HomeFragment3 homeFragment;
     LawHelpFragment lawHelpFragment;
     InstitutionsInFragment institutionsInFragment;
     UserFragment userFragemnt;
 
-    public void setContent(int contentHome) {
+    public void  setContent(int contentHome) {
         switch (contentHome) {
             case CONTENT_HOME:
                 String home_str = getResources().getString(R.string.home);
                 toolbarTitle.setText(home_str);
-                homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(HOME_TAG);
+                homeFragment = (HomeFragment3) getSupportFragmentManager().findFragmentByTag(HOME_TAG);
                 hideFragment(HOME_TAG);
                 if (homeFragment == null) {
-                    homeFragment = HomeFragment.newInstance();
+                    homeFragment = HomeFragment3.newInstance();
                     getSupportFragmentManager().beginTransaction()
                             .add(R.id.container, homeFragment, HOME_TAG).commit();
                 } else {
@@ -278,12 +306,27 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
             params.removeRule(RelativeLayout.BELOW);
             //toolbarTitle.setVisibility(View.GONE);
             homeLocationTxt.setVisibility(View.VISIBLE);
+            Log.i("Daniel", "用户信息是否空：" + realm.where(User.class).findFirst());
+            if (realm.where(User.class).findFirst() == null) {
+                Log.i("Daniel", "测试登录显示" );
+                homeLoginTxt.setVisibility(View.VISIBLE);
+            }else {
+                Log.i("Daniel", "测试登录隐藏0" );
+                homeLoginTxt.setVisibility(View.INVISIBLE);
+            }
         } else {
-
             params.addRule(RelativeLayout.BELOW, R.id.toolbar);
-            setToolBarColorBg(255);
+            if (index!=3){
+                setToolBarColorBg(255);
+            }else {
+                setToolBarColorBg(0);
+                params.removeRule(RelativeLayout.BELOW);
+            }
             //toolbarTitle.setVisibility(View.VISIBLE);
             homeLocationTxt.setVisibility(View.INVISIBLE);
+            Log.i("Daniel", "测试登录隐藏非零" );
+            homeLoginTxt.setVisibility(View.INVISIBLE);
+//            Log.i("Daniel", "测试登录" );
 
         }
 
@@ -329,12 +372,12 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 photoGet.beginCrop(data.getData());
             }
             if (requestCode == Crop.REQUEST_CROP) {
-                    Log.i("gqf", "handleCrop");
-                    photoGet.handleCrop(resultCode, data);
-                    if (photoGet.getHeadFile() == null) {
-                        Log.i("gqf", "getHeadFile==null");
-                    }
-                    userFragemnt.setUserHeadImg(photoGet.getHeadFile());
+                Log.i("gqf", "handleCrop");
+                photoGet.handleCrop(resultCode, data);
+                if (photoGet.getHeadFile() == null) {
+                    Log.i("gqf", "getHeadFile==null");
+                }
+                userFragemnt.setUserHeadImg(photoGet.getHeadFile());
             }
         }
         //        else if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
@@ -367,9 +410,22 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
 
         @Override
         public void onNext(UpdateMsg updateMsg) {
-            //Log.e("gqf", "updateMsg" + updateMsg.toString());
+            Log.e("gqf", "更新信息" + updateMsg.toString());
+            sharedPreferences= getSharedPreferences("version",
+                    Activity.MODE_PRIVATE);
+//            mLocationVersion=sharedPreferences.getString("version","");
+            if (StringUtils.isEmpty(sharedPreferences.getString("version",""))){
+                Log.e("gqf", "本地版本为空" );
+                //实例化SharedPreferences.Editor对象
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                //用putString的方法保存数据
+                editor.putString("version","0.0.1");
+                //提交当前数据
+                editor.apply();
+            }
             //与本地版本号对比
-            if (BaseApplication.isUpdateForVersion(updateMsg.getVersionCode(), UpdateInformation.localVersion)) {
+            Log.e("gqf", "本地版本号" +sharedPreferences.getString("version",""));
+            if (BaseApplication.isUpdateForVersion(updateMsg.getVersionCode(), sharedPreferences.getString("version",""))) {
                 //Log.i("gqf",UpdateInformation.localVersion+"updateMsg"+updateMsg.toString());
                 mUpdateMsg = updateMsg;
                 if (alert == null) {
@@ -406,6 +462,16 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
 
     //开起后台更新服务
     public void startUpdateService(UpdateMsg updateMsg) {
+//        Constan.localVersion  = mUpdateMsg.getVersionCode();
+        if (!StringUtils.isEmpty(mUpdateMsg.getVersionCode())){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            //用putString的方法保存数据
+            editor.putString("version",mUpdateMsg.getVersionCode());
+            //提交当前数据
+            editor.apply();
+        }
+        Log.e("gqf", "更新版本："+ mUpdateMsg.getVersionCode());
+        Log.e("gqf", "本地版本："+sharedPreferences.getString("version",""));
         Intent updateIntent = new Intent(MainActivity.this, UpdateService.class);
         updateIntent.putExtra("getUpdateContent", updateMsg.getUpdateContent());
         updateIntent.putExtra("getVersionCode", updateMsg.getVersionCode());
@@ -454,6 +520,12 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         //        params.addRule(RelativeLayout.BELOW, R.id.toolbar);
         //        containerLin.setLayoutParams(params);
         //        toolbar.setAlpha(1);
+    }
+
+    @Override
+    public void toLogin() {
+        bottomBar.selectTab(3,false);
+        setContent(CONTENT_CATHOME);
     }
 
     //检测网络
@@ -529,17 +601,17 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
-        setSystemBarColor(R.color.colorPrimaryDark);
+        setSystemBarColor(R.color.black);
 
     }
 
     public void setSystemBarColor(int id) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            //tintManager.setStatusBarTintEnabled(false);
-            //此处可以重新指定状态栏颜色
-            //tintManager.setStatusBarTintResource(id);
-            StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(false);
+//            此处可以重新指定状态栏颜色
+            tintManager.setStatusBarTintResource(id);
+            StatusBarUtil.setColor(this, getResources().getColor(R.color.black));
             StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 100, null);
         } else {
             RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) toolbar.getLayoutParams();
@@ -565,19 +637,23 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     protected void onPause() {
         super.onPause();
         //启动其他页面时修改toolbar颜色
-        toolbar.getBackground().setAlpha(255);
-        toolbarTitle.setAlpha(1);
+//        toolbar.getBackground().setAlpha(255);
+//        toolbarTitle.setAlpha(1);
     }
 
-    @OnClick({R.id.home_location_txt, R.id.action_search_img})
+    @OnClick({R.id.home_location_txt, R.id.action_search_img,R.id.home_login_txt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home_location_txt:
                 startActivity(new Intent(MainActivity.this, AllCityActivity.class));
                 break;
+            case R.id.home_login_txt:
+                bottomBar.selectTab(3,false);
+                setContent(CONTENT_CATHOME);
+                break;
             case R.id.action_search_img:
-                Intent intent=new Intent(MainActivity.this, SearchInstiutionsActivity.class);
-                intent.putExtra(SearchInstiutionsActivity.get_search_type,SearchInstiutionsActivity.all_search);
+                Intent intent = new Intent(MainActivity.this, SearchInstiutionsActivity.class);
+                intent.putExtra(SearchInstiutionsActivity.get_search_type, SearchInstiutionsActivity.all_search);
                 startActivity(intent);
                 break;
         }

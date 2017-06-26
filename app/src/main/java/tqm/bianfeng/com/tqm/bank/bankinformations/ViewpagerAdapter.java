@@ -22,17 +22,15 @@ public class ViewpagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position){
             case 0:
-                return "银行资讯";
+                return "金融资讯";
             case 1:
-                return "热点资讯";
-            case 2:
                 return "金融课堂";
         }
         return super.getPageTitle(position);

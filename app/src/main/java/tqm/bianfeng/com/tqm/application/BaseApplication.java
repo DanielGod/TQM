@@ -11,6 +11,8 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -106,6 +108,7 @@ public class BaseApplication extends MultiDexApplication {
         Realm.setDefaultConfiguration(realmConfig);
         Config.DEBUG = true;
         UMShareAPI.get(this);
+        Logger.addLogAdapter(new AndroidLogAdapter());
         /***
          * 初始化定位sdk，建议在Application中创建
          */

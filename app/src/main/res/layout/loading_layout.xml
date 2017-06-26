@@ -19,7 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="加载中..."
         android:layout_below="@+id/indicator"
         android:drawablePadding="@dimen/smallmdp"
         android:paddingTop="@dimen/mediumhdp"

@@ -2,6 +2,7 @@ package tqm.bianfeng.com.tqm.bank.bankinformations.test;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
+import com.orhanobut.logger.Logger;
 
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.bank.bankinformations.ViewpagerAdapter;
@@ -25,6 +27,16 @@ public class NewBankInformationActivity extends AppCompatActivity implements Rec
         final TextView logo = (TextView) findViewById(R.id.logo_white);
         setTitle("");
         final Toolbar toolbar = mViewPager.getToolbar();
+
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayUseLogoEnabled(false);
+            actionBar.setHomeButtonEnabled(true);
+        }
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -37,30 +49,33 @@ public class NewBankInformationActivity extends AppCompatActivity implements Rec
         }
         ViewpagerAdapter viewpagerAdapter = new ViewpagerAdapter(getSupportFragmentManager());
         mViewPager.getViewPager().setAdapter(viewpagerAdapter);
-        if ("02".equals(getIntent().getStringExtra("02"))){
-            mViewPager.onPageSelected(2);
+        if ("financialClass".equals(getIntent().getStringExtra("financialClass"))){
+            Logger.d(getIntent().getStringExtra("financialClass"));
+            mViewPager.getViewPager().setCurrentItem(1);
+
+//            mViewPager.onPageSelected(1);
         }
         mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
             public HeaderDesign getHeaderDesign(int page) {
                 switch (page) {
-                    case 0:
-//                        logo.setText(getResources().getString(R.string.bankInfromations));
-                       return  HeaderDesign.fromColorAndDrawable(getResources().getColor(R.color.information_headColor1),
-                               getResources().getDrawable(R.drawable.information_top_slider1));
+//                    case 0:
+////                        logo.setText(getResources().getString(R.string.bankInfromations));
+//                       return  HeaderDesign.fromColorAndDrawable(getResources().getColor(R.color.information_headColor1),
+//                               getResources().getDrawable(R.drawable.information_top_slider1));
 //                        return HeaderDesign.fromColorResAndUrl(
 //                                R.color.blue1,
 //                                "http://chenqiongimg.oss-cn-shanghai.aliyuncs.com/tqm/img/1.jpg");
-                    case 1:
+                    case 0:
 //                        logo.setText(getResources().getString(R.string.hotInfromations));
-                        return  HeaderDesign.fromColorAndDrawable(getResources().getColor(R.color.information_headColor2),
+                        return  HeaderDesign.fromColorAndDrawable(getResources().getColor(R.color.colorPrimary),
                                 getResources().getDrawable(R.drawable.information_top_slider2));
 //                        return HeaderDesign.fromColorResAndUrl(
 //                                R.color.information_headColor2,
 //                                "http://chenqiongimg.oss-cn-shanghai.aliyuncs.com/tqm/img/2.jpg");
-                    case 2:
+                    case 1:
 //                        logo.setText(getResources().getString(R.string.moneyInfromations));
-                        return  HeaderDesign.fromColorAndDrawable(getResources().getColor(R.color.information_headColor3),
+                        return  HeaderDesign.fromColorAndDrawable(getResources().getColor(R.color.colorPrimary),
                                 getResources().getDrawable(R.drawable.information_top_slider3));
 //                        return HeaderDesign.fromColorResAndUrl(
 //                                R.color.orange1,
@@ -89,5 +104,10 @@ public class NewBankInformationActivity extends AppCompatActivity implements Rec
     @Override
     public void detailActivity(Intent intent) {
         startActivity(intent);
+    }
+
+    @Override
+    public void initEdi() {
+
     }
 }

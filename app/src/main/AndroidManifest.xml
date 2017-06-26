@@ -12,33 +12,30 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
-
     <uses-permission android:name="android.permission.CAMERA"/>
-    <!--<uses-sdk-->
-    <!--tools:overrideLibrary="com.umeng.socialize.evernote,com.umeng.socialize.pinterest"-->
-    <!--/>-->
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        />
+    <!-- <uses-sdk -->
+    <!-- tools:overrideLibrary="com.umeng.socialize.evernote,com.umeng.socialize.pinterest" -->
+    <!-- /> -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
-    <!--用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-    <!--用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <!--获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <!--这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <!--用于读取手机当前的状态-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-    <!--用于申请调用A-GPS模块-->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
-    <!--用于申请获取蓝牙信息进行室内定位-->
-    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+    <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <application
         android:name=".application.BaseApplication"
@@ -49,20 +46,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon, android:theme">
-        <!--<meta-data-->
-            <!--android:name="com.baidu.lbsapi.API_KEY"-->
-            <!--android:value="qpjb8N7jrtSbs8sCC9FRUWsxLYGXtowC"/>-->
-        <!--<meta-data-->
-            <!--android:name="UMENG_CHANNEL"-->
-            <!--android:value="${UMENG_CHANNEL_VALUE}" />-->
+
+        <!-- <meta-data -->
+        <!-- android:name="com.baidu.lbsapi.API_KEY" -->
+        <!-- android:value="qpjb8N7jrtSbs8sCC9FRUWsxLYGXtowC"/> -->
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_CHANNEL" -->
+        <!-- android:value="${UMENG_CHANNEL_VALUE}" /> -->
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="58d1e1b875ca353afd00167d">
         </meta-data>
-        <!--<meta-data android:name="com.amap.api.v2.apikey" android:value="1e2b67102660de66dc51062c86588eeb">-->
-        <!--</meta-data>-->
-        <!--<service android:name="com.amap.api.location.APSService"></service>-->
-
+        <!-- <meta-data android:name="com.amap.api.v2.apikey" android:value="1e2b67102660de66dc51062c86588eeb"> -->
+        <!-- </meta-data> -->
+        <!-- <service android:name="com.amap.api.location.APSService"></service> -->
 
         <activity
             android:name=".demoActivity"
@@ -70,20 +67,17 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
-
         <activity
             android:name=".Main2Activity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
-
         </activity>
         <activity
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
-
         </activity>
         <activity
             android:name=".main.WelcomeActivity"
@@ -92,29 +86,31 @@
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
-
             </intent-filter>
-
         </activity>
+        <activity
+            android:name=".featureguide.global.WelcomeGuideActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"/>
+
         <meta-data
             android:name="WEIJY_CHANNEL"
-            android:value="${WEIJY_CHANNEL_VALUE}" />
+            android:value="${WEIJY_CHANNEL_VALUE}"/>
 
-        <!--我的关注界面-->
+        <!-- 我的关注界面 -->
         <activity
             android:name=".User.MyFocusActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden">
         </activity>
-        <!--我的收藏界面-->
+        <!-- 我的收藏界面 -->
         <activity
             android:name=".User.MyCollectionActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden">
         </activity>
-        <!--我的浏览记录界面-->
+        <!-- 我的浏览记录界面 -->
         <activity
             android:name=".User.MyBrowseActivity"
             android:launchMode="singleTask"
@@ -142,132 +138,119 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden">
         </activity>
-        <!--选择城市-->
+        <!-- 选择城市 -->
         <activity
             android:name=".lawhelp.AllCityActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
         </activity>
-        <!--民间资本-->
+        <!-- 民间资本 -->
         <activity
             android:name=".capital.PrivateCapitalActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
         </activity>
-        <!--入驻机构-->
+        <!-- 入驻机构 -->
         <activity
             android:name=".User.CompanyApplyForActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
         </activity>
-        <!--机构信息详情-->
+        <!-- 机构信息详情 -->
         <activity
             android:name=".Institutions.CompanyInfoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
         </activity>
-        <!--简介-->
+        <!-- 简介 -->
         <activity
             android:name=".Institutions.MoreProfileActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
-
         </activity>
-        <!--机构搜索界面-->
+        <!-- 机构搜索界面 -->
         <activity
             android:name=".Institutions.SearchInstiutionsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
-
         </activity>
-        <!--申请选择界面-->
+        <!-- 申请选择界面 -->
         <activity
             android:name=".User.applyforactivity.ApplyForChooseActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
         </activity>
-        <!--申请界面-->
+        <!-- 申请界面 -->
         <activity
             android:name=".User.applyforactivity.ApplyForActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
         </activity>
-        <!--申请状态-->
+        <!-- 申请状态 -->
         <activity
             android:name=".User.applyforactivity.ApplyForStatusActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
         </activity>
-        <!--发布状态-->
+        <!-- 发布状态 -->
         <activity
             android:name=".User.release.ReleaseProgressActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
         </activity>
-        <!--发布活动信息-->
+        <!-- 发布活动信息 -->
         <activity
             android:name=".User.release.ReleaseMyActivityActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
         </activity>
-        <!--举报纠错-->
+        <!-- 举报纠错 -->
         <activity
             android:name=".User.CorrectOrReportActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
         </activity>
 
-        <!--我发布的信息-->
+        <!-- 我发布的信息 -->
         <activity
             android:name=".User.release.MyReleaseActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
         </activity>
-        <!--发布信息选择-->
+        <!-- 发布信息选择 -->
         <activity
             android:name=".User.release.ReleaseActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
         </activity>
-        <!--发布贷款或活动信息-->
+        <!-- 发布贷款或活动信息 -->
         <activity
             android:name=".User.release.LoanOrActivityReleaseActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
         </activity>
-        <!--多图选择界面-->
+        <!-- 多图选择界面 -->
         <activity
-            android:configChanges="orientation|screenSize"
-            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
-        <!--裁剪-->
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
+            android:configChanges="orientation|screenSize"/>
+        <!-- 裁剪 -->
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
-        <!--自定义URI 需要 provider -->
+        <!-- 自定义URI 需要 provider -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="tqm.bianfeng.com.tqm"
@@ -279,7 +262,6 @@
                 android:resource="@xml/file_paths">
             </meta-data>
         </provider>
-
 
         <activity
             android:name=".User.MyBankActivityActivity"
@@ -326,7 +308,7 @@
             android:theme="@style/AppTheme">
         </activity>
 
-        <!--分享activity-->
+        <!-- 分享activity -->
 
         <activity
             android:name=".WBShareActivity"
@@ -334,6 +316,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
@@ -349,12 +332,10 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-
         <activity
             android:name="com.umeng.qq.tencent.AuthActivity"
             android:launchMode="singleTask"
             android:noHistory="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -364,18 +345,21 @@
                 <data android:scheme="tencent100424468"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.umeng.qq.tencent.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-
         <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
             android:excludeFromRecents="true"
-            android:theme="@style/Theme.UMDefault"
-            />
+            android:theme="@style/Theme.UMDefault"/>
+        <activity android:name=".bank.bankinformations.BankInformationActivity3">
+        </activity>
+        <activity android:name=".bank.bankinformations.BankInformationActivity4">
+        </activity>
+        <activity android:name=".bank.quickloan.QuickLoanActivity">
+        </activity>
     </application>
 
 </manifest>

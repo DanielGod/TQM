@@ -31,8 +31,17 @@ public class BankLoanItem {
         private String institution;
         private int loanViews;
         private int atttenNum;
+    private String institutionIcon;
 
-        public int getLoanId() {
+    public String getInstitutionIcon() {
+        return institutionIcon;
+    }
+
+    public void setInstitutionIcon(String institutionIcon) {
+        this.institutionIcon = institutionIcon;
+    }
+
+    public int getLoanId() {
             return loanId;
         }
 
@@ -143,6 +152,7 @@ public class BankLoanItem {
                 ", institution='" + institution + '\'' +
                 ", loanViews=" + loanViews +
                 ", atttenNum=" + atttenNum +
+                ", institutionIcon='" + institutionIcon + '\'' +
                 '}';
     }
 }

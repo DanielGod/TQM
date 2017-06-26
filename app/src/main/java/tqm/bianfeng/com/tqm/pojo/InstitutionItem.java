@@ -23,6 +23,15 @@ public class InstitutionItem {
     private String isAuthorize;
     private String institutionTypeLabel;
     private String isCollect;
+    private String business;
+
+    public String getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(String business) {
+        this.business = business;
+    }
 
     public String getIsCollect() {
         return isCollect;
@@ -87,9 +96,10 @@ public class InstitutionItem {
                 ", institutionName='" + institutionName + '\'' +
                 ", institutionIcon='" + institutionIcon + '\'' +
                 ", contact='" + contact + '\'' +
-                ", isAuthorize=" + isAuthorize +
-                ", institutionTypeLabel=" + institutionTypeLabel +
+                ", isAuthorize='" + isAuthorize + '\'' +
+                ", institutionTypeLabel='" + institutionTypeLabel + '\'' +
                 ", isCollect='" + isCollect + '\'' +
+                ", business='" + business + '\'' +
                 '}';
     }
 }

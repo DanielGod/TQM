@@ -25,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import tqm.bianfeng.com.tqm.CustomView.MyScrollview;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.Fragment.LoginRegisteredDialogFragment;
 import tqm.bianfeng.com.tqm.User.Presenter.ILoginRegisterPresenter;
@@ -95,6 +96,8 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     TextView userCollectionNum;
     @BindView(R.id.user_read_num)
     TextView userReadNum;
+    @BindView(R.id.my_scrollview)
+    MyScrollview myScrollview;
 
     public static UserFragment newInstance(String param1) {
         UserFragment fragment = new UserFragment();
@@ -223,12 +226,35 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+//        initScroll();
         initView();
     }
+    int scrollHeight = 0;
+    int sliderHeight = 1;
+    boolean isNetWork = true;
+//    public void initScroll() {
+//        myScrollview.setOnScollChangedListener(new MyScrollview.OnScollChangedListener() {
+//            @Override
+//            public void onScrollChanged(MyScrollview scrollView, int x, int y, int oldx, int oldy) {
+//                Log.i("gqf", "x" + x + "y" + y + "oldx" + oldx + "oldy" + oldy);
+//                scrollHeight = y;
+//                if (sliderHeight != 1) {
+//                    if (isNetWork) {
+//                        try {
+//                            mListener.setToolBarColorBg(getAlph(scrollHeight, sliderHeight));
+//                        } catch (Exception e) {
+//                        }
+//
+//                    }
+//                }
+//            }
+//        });
+//    }
 
 
     //初始化显示数据
     public void initView() {
+        Log.i("Daniel", "用户信息是否空：：" + realm.where(User.class).findFirst());
         if (realm.where(User.class).findFirst() != null) {
             mUser = realm.where(User.class).findFirst();
             Log.i("gqf", "mUser" + mUser.toString());
@@ -246,11 +272,10 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             lp.addRule(RelativeLayout.CENTER_VERTICAL);
             userCircleImg.setLayoutParams(lp);
             LinearLayout.LayoutParams linlp = (LinearLayout.LayoutParams) userTopRel.getLayoutParams();
-            linlp.height = (int) getResources().getDimension(R.dimen.hugehxxxxxxdp);
+            linlp.height = (int) getResources().getDimension(R.dimen.hugehxxxxxxxdp);
             userTopRel.setLayoutParams(linlp);
             //显示头像
             resetUserHeadImg(true);
-
 
         }
     }

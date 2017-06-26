@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?><!--android:background="#ffffff"-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/cotainer"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ffffff"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+    <!-- 第一部分:CoordinatorLayout -->
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        >
+        <!-- 第二部分:缩放控件-->
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/id_appbarlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:theme="@style/ToolbarTheme"
+                app:popupTheme="@style/ToolbarPopupTheme"
+                >
+                <RelativeLayout android:id="@+id/top"
+                                android:layout_width="fill_parent"
+                                android:gravity="center"
+                                android:layout_marginRight="@dimen/tinyhdp"
+                                android:layout_height="?actionBarSize">
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        >
+
+
+
+                        <EditText android:id="@+id/etSearch"
+                                  android:layout_width="fill_parent"
+                                  android:layout_height="wrap_content"
+                                  android:singleLine="true"
+                                  android:background="@drawable/search_frame"
+                                  android:layout_marginRight="@dimen/smallmdp"
+                                  android:paddingLeft="32dp"
+                                  android:textSize="@dimen/smallsp"
+                                  android:focusableInTouchMode="false"
+                                  android:textColor="@color/black"
+                                  android:textColorHint="@color/home_hotActivity_gray9"
+                                  android:hint="@string/filter_content"/>
+
+                        <ImageView android:id="@+id/ivDeleteText"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:layout_alignParentRight="true"
+                                   android:src="@drawable/search_delete"
+                                   android:layout_centerInParent="true"
+                                   android:paddingRight="@dimen/bigmdp"
+                                   android:visibility="gone"/>
+
+                    </RelativeLayout>
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_tool_bar_test_ctl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:background="@color/white"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll">
+
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/home_slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/hugehxxxxxxxdp"
+                    app:auto_cycle="false"
+                    />
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/main_bankInformation_tablayout"
+                    app:tabSelectedTextColor="@color/colorPrimary"
+                    app:tabIndicatorColor="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </android.support.design.widget.TabLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <!-- 第三部分:Your Scroll View-->
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/myMainScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="always"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <!--- app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/main_bankInformation_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            </android.support.v4.view.ViewPager>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

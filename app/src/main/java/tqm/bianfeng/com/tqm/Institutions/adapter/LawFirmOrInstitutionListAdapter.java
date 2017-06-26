@@ -3,6 +3,8 @@ package tqm.bianfeng.com.tqm.Institutions.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.utils.StringUtils;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -40,8 +43,6 @@ import static tqm.bianfeng.com.tqm.Institutions.CompanyInfoActivity.index;
  */
 
 public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-
 
     private Context mContext;
     private List<InstitutionItem> datas;
@@ -162,6 +163,7 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         mItemClickListener = listener;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int p) {
         final ViewHolder mHolder = (ViewHolder) holder;
@@ -173,8 +175,22 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         });
         mHolder.ininNameTxt.setText(datas.get(p).getInstitutionName());
         mHolder.contactTxt.setText("电话：" + datas.get(p).getContact());
-        //mHolder.profileTxt.setText("简介：" + datas.get(p).getProfile());
-        mHolder.profileTxt.setVisibility(View.GONE);
+        if (StringUtils.isEmpty(datas.get(p).getBusiness())){
+            mHolder.lawBusinessLinear.setVisibility(View.INVISIBLE);
+        }else {
+            mHolder.lawBusinessLinear.setVisibility(View.VISIBLE);
+        }
+
+        mHolder.profileTxt.setText("" + datas.get(p).getBusiness());
+        Log.i("Daniel","机构中心："+ datas.get(p).getInstitutionTypeLabel());
+        if (datas.get(p).getInstitutionTypeLabel() != null) {
+            if (datas.get(p).getInstitutionTypeLabel().equals("律师事务所")) {
+                Log.i("Daniel","业务显示");
+            } else {
+                Log.i("Daniel","业务隐藏");
+            }
+        }
+
 
         if (datas.get(p).getInstitutionTypeLabel() != null) {
             Log.i("gqf", "" + datas.get(p).getInstitutionTypeLabel());
@@ -184,16 +200,18 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
             } else {
                 mHolder.typeImg.setImageResource(R.drawable.ic_company1002);
             }
-        }else{
+        } else {
             mHolder.typeImg.setVisibility(View.GONE);
         }
         if (datas.get(p).getIsCollect() != null) {
             if (datas.get(p).getIsCollect().equals("02")) {
                 //未收藏
                 mHolder.isCollectTxt.setText("收藏");
+                mHolder.isCollectImg.setImageDrawable(mContext.getResources().getDrawable(R.drawable.img_heard_light));
             } else {
                 //已收藏
                 mHolder.isCollectTxt.setText("已收藏");
+                mHolder.isCollectImg.setImageDrawable(mContext.getResources().getDrawable(R.drawable.img_heard_dark));
             }
         }
         for (int i = 0; i < inCollectItem.size(); i++) {
@@ -276,6 +294,11 @@ public class LawFirmOrInstitutionListAdapter extends RecyclerView.Adapter<Recycl
         LinearLayout collectionLin;
         @BindView(R.id.inin_lin)
         LinearLayout ininLin;
+        @BindView(R.id.is_collect_img)
+        ImageView isCollectImg;
+
+        @BindView(R.id.law_business_linear)
+        LinearLayout lawBusinessLinear;
 
         ViewHolder(View view) {
             super(view);

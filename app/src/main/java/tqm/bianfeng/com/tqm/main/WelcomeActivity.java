@@ -32,8 +32,11 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.Util.AppConstants;
 import tqm.bianfeng.com.tqm.Util.AppUtils;
 import tqm.bianfeng.com.tqm.Util.NetUtils;
+import tqm.bianfeng.com.tqm.Util.SpUtils;
+import tqm.bianfeng.com.tqm.featureguide.global.WelcomeGuideActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
 
@@ -56,6 +59,15 @@ public class WelcomeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 判断是否是第一次开启应用
+        boolean isFirstOpen = SpUtils.getBoolean(this, AppConstants.FIRST_OPEN);
+        // 如果是第一次启动，则先进入功能引导页
+        if (!isFirstOpen) {
+            Intent intent = new Intent(this, WelcomeGuideActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         ScreenUtils.hideStatusBar(this);
         setContentView(R.layout.activity_welcome);
         mCompositeSubscription = new CompositeSubscription();

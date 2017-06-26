@@ -11,17 +11,7 @@
         android:layout_weight="1"
         android:orientation="horizontal"
         >
-        <TextView
-            android:layout_width="@dimen/tinyhdp"
-            android:layout_height="match_parent"
-            android:background="@drawable/hot_msg_bg"
-            android:text="热门"
-            android:gravity="center"
-            android:textColor="@color/red"
-            android:lines="1"
-            android:layout_marginTop="@dimen/mediummxdp"
-            android:layout_marginBottom="2dp"
-            android:textSize="@dimen/tinysp"/>
+
         <TextView
             android:id="@+id/marquee_txt1"
             android:layout_width="0dp"
@@ -35,7 +25,7 @@
             android:lines="1"
             android:paddingLeft="@dimen/smallmdp"
             android:textColor="@color/font_black_1"
-            android:layout_marginTop="@dimen/smallmdp"
+            android:layout_marginTop="@dimen/mediummxdp"
             android:textSize="@dimen/smallsp"/>
     </LinearLayout>
     <LinearLayout
@@ -43,17 +33,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="@dimen/tinyhdp"
-            android:layout_height="match_parent"
-            android:background="@drawable/hot_msg_bg"
-            android:text="热门"
-            android:lines="1"
-            android:gravity="center"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="@dimen/mediummxdp"
-            android:textColor="@color/red"
-            android:textSize="@dimen/tinysp"/>
         <TextView
             android:id="@+id/marquee_txt2"
             android:layout_width="0dp"
@@ -66,7 +45,7 @@
             android:clickable="true"
             android:background="?android:selectableItemBackground"
             android:paddingLeft="@dimen/smallmdp"
-            android:layout_marginBottom="@dimen/smallmdp"
+            android:layout_marginBottom="@dimen/mediummxdp"
             android:textColor="@color/font_black_1"
             android:textSize="@dimen/smallsp"/>
     </LinearLayout>

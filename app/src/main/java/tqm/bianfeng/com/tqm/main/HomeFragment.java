@@ -40,6 +40,7 @@ import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.bank.bankactivitys.BankActivitonsActivity;
 import tqm.bianfeng.com.tqm.bank.bankfinancing.BankFinancingActivity;
+import tqm.bianfeng.com.tqm.bank.bankinformations.BankInformationActivity;
 import tqm.bianfeng.com.tqm.bank.bankinformations.test.NewBankInformationActivity;
 import tqm.bianfeng.com.tqm.bank.bankloan.BankLoanActivity;
 import tqm.bianfeng.com.tqm.capital.PrivateCapitalActivity;
@@ -77,11 +78,8 @@ public class HomeFragment extends BaseFragment {
     HomeBankInfoListAdapter homeBankInfoListAdapter;
     @BindView(R.id.bank_info_list)
     RecyclerView bankInfoList;
-
     @BindView(R.id.bank_activitys_list)
     RecyclerView bankActivitysList;
-
-
     @BindView(R.id.bank_finaning_list)
     RecyclerView bankFinaningList;
     @BindView(R.id.bank_loan_list)
@@ -223,7 +221,7 @@ public class HomeFragment extends BaseFragment {
     private void getBankLoanServiceItem() {
         homeBankLoanTitleLin.setVisibility(View.VISIBLE);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
-                .getBankLoanItem(null,null, Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE)
+                .getBankLoanItem(null,null, Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE,MainActivity.locationStr)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BankListItems<BankLoanItem>>() {
@@ -244,7 +242,7 @@ public class HomeFragment extends BaseFragment {
                         Log.e("Daniel", "---BankLoanItem---");
                         isLoan = true;
                         setBankLoanListAdapter(bankLoanItemBankListItems.getItem());
-                        getBankActivitys();
+//                        getBankActivitys();
                     }
                 });
         mCompositeSubscription.add(getBankFinancItem_subscription);
@@ -282,7 +280,7 @@ public class HomeFragment extends BaseFragment {
     private void getBankActivitys() {
         homeBankActivityTitleLin.setVisibility(View.VISIBLE);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
-                .getBankActivityItem(null,null,Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE)
+                .getBankActivityItem(null,null,Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE,MainActivity.locationStr,4)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BankListItems<BankActivityItem>>() {
@@ -359,7 +357,7 @@ public class HomeFragment extends BaseFragment {
     private void getBankFinaningItem() {
         homeBankMakeMoneyTitleLin.setVisibility(View.VISIBLE);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
-                .getBankFinancItem(null,null, Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE)
+                .getBankFinancItem(null,null, Constan.HOMESHOW_TRUE, Constan.FIRSTPAGENUM, Constan.FIRSTPAGESIZE,MainActivity.locationStr)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BankListItems<BankFinancItem>>() {
@@ -585,7 +583,8 @@ public class HomeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), NewBankInformationActivity.class).putExtra("01", "01"));//01-银行资讯
                 break;
             case R.id.select_more_hot_information_txt:
-                startActivity(new Intent(getActivity(), NewBankInformationActivity.class).putExtra("02", "02"));//02-热点资讯
+                startActivity(new Intent(getActivity(), BankInformationActivity.class));
+//                startActivity(new Intent(getActivity(), NewBankInformationActivity.class).putExtra("02", "02"));//02-热点资讯
                 break;
 //            case R.id.home_select_branches_lin:
 //                startActivity(new Intent(getActivity(), WebListActivity.class));

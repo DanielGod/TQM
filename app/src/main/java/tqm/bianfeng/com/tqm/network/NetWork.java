@@ -24,11 +24,10 @@ public class NetWork {
 
 //    public static final String LOAD="http://tqmadmin.dijiaapp.com/tqm-web";
 //    public static final String LOAD="http://139.224.17.235:8080/tqm-web";
-//    public static final String LOAD="http://211.149.235.17:8083/tqm-web";//测试
+    public static final String LOAD="http://211.149.235.17:8083/tqm-web";//测试
 //     public static final String LOAD="http://139.224.17.235:8080/tqm-web";//生产
-        public static final String LOAD="http://api.tongqianmao.cn";
-
-    //public static final String LOAD="http://tqmadmin.dijiaapp.com";
+//        public static final String LOAD="http://api.tongqianmao.cn";//正式环境
+//    public static final String LOAD="http://tqmadmin.dijiaapp.com";//测试环境
 
     private static UserService userService;
     private static BankService bankService;

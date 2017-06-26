@@ -1,9 +1,10 @@
 package tqm.bianfeng.com.tqm.bank.bankfinancing;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -43,9 +44,12 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+import tqm.bianfeng.com.tqm.CustomView.DefaultLoadView;
+import tqm.bianfeng.com.tqm.CustomView.LoadMoreView;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.bank.fragment.TestFilterFragment;
 import tqm.bianfeng.com.tqm.main.DetailActivity;
+import tqm.bianfeng.com.tqm.main.MainActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.AQueryParams;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
@@ -53,6 +57,8 @@ import tqm.bianfeng.com.tqm.pojo.bank.BankListItems;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.pojo.bank.FilterEvens;
 import tqm.bianfeng.com.tqm.pojo.bank.ListItemPositioin;
+
+import static tqm.bianfeng.com.tqm.R.id.ivDeleteText;
 
 public class BankFinancingActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
@@ -65,13 +71,9 @@ public class BankFinancingActivity extends AppCompatActivity {
     PullToRefreshListView mainPullRefreshLv;
     @BindView(R.id.etSearch)
     EditText etSearch;
-    @BindView(R.id.ivDeleteText)
-    ImageView ivDeleteText;
-    @BindView(R.id.YBJ_loding)
-    ImageView YBJLoding;
-    @BindView(R.id.YBJ_loding_txt)
-    TextView YBJLodingTxt;
 
+    @BindView(R.id.default_loadview)
+    DefaultLoadView defaultLoadview;
     @BindView(R.id.bankActivity_pageView_linear)
     LinearLayout bankActivityPageViewLinear;
     @BindView(R.id.bankActivity_focus_linear)
@@ -91,8 +93,10 @@ public class BankFinancingActivity extends AppCompatActivity {
     private BankFinancingAdapter bankFinancingAdapter;
     private List<BankFinancItem> mAllBankLoanItems;
     private boolean PullDown = false; //是否下拉
+    private List<BankFinancItem> datas;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,9 +105,10 @@ public class BankFinancingActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         setToolBar(getResources().getString(R.string.bankFinancing));
         initRefreshlv();
-        lodingIsFailOrSucess(1);
+//        mainPullRefreshLv.setDividerDrawable(getResources().getDrawable(R.drawable.img_heard_dark));
         mCompositeSubscription = new CompositeSubscription();
         initDrawLayout();
+        defaultLoadview.lodingIsFailOrSucess(1);
         initDate(0, Constan.NOTPULLUP,null,null);
         etSearch.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -114,32 +119,6 @@ public class BankFinancingActivity extends AppCompatActivity {
         });
 
     }
-
-    public void lodingIsFailOrSucess(int i) {
-        if (i == 1) {
-            //加载中
-            YBJLoding.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setText("加载中...");
-            YBJLoding.setBackgroundResource(R.drawable.loding_anim_lists);
-            AnimationDrawable anim = (AnimationDrawable) YBJLoding.getBackground();
-            anim.start();
-
-        } else if (i == 2) {
-            //加载成功
-            YBJLoding.setBackground(null);
-            YBJLoding.setVisibility(View.GONE);
-            YBJLodingTxt.setVisibility(View.GONE);
-        } else {
-            //加载失败
-            YBJLoding.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setVisibility(View.VISIBLE);
-            YBJLoding.setBackground(null);
-            YBJLodingTxt.setText("加载失败，请检查网络连接");
-            YBJLoding.setImageResource(R.drawable.ic_loding_fail);
-        }
-    }
-
     private void initRefreshlv() {
         //设置刷新时显示的文本
         mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);//设置模式在设置字体之前
@@ -215,11 +194,11 @@ public class BankFinancingActivity extends AppCompatActivity {
         });
 
     }
-
+    LoadMoreView loadMoreTxt;
     private void initDate(int pagNum, final boolean pullUp,String search,String json) {
         Log.e("Daniel", "---pagNum---" + pagNum);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
-                .getBankFinancItem(search,json, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE)
+                .getBankFinancItem(search,json, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE, MainActivity.locationStr)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BankListItems<BankFinancItem>>() {
@@ -241,17 +220,17 @@ public class BankFinancingActivity extends AppCompatActivity {
                     public void onError(Throwable e) {
                         mainPullRefreshLv.setRefreshing(false);
                         mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
-                        lodingIsFailOrSucess(3);
+                        defaultLoadview.lodingIsFailOrSucess(3);
 
                     }
 
                     @DebugLog
                     @Override
                     public void onNext(BankListItems<BankFinancItem> bankLoanItemBankListItems) {
+                        defaultLoadview.lodingIsFailOrSucess(2);
                         mPagItemSize = bankLoanItemBankListItems.getItem().size();
                         Log.e("Daniel", "---mPagItemSize---" + mPagItemSize);
                         Log.e("Daniel", "---pullUp---" + pullUp);
-                        lodingIsFailOrSucess(2);
                         if (mAllBankLoanItems == null) {
                             mAllBankLoanItems = new ArrayList<>();
                         }
@@ -318,11 +297,7 @@ public class BankFinancingActivity extends AppCompatActivity {
             @DebugLog
             @Override
             public void afterTextChanged(Editable editable) {
-                if ("".equals(etSearch.getText().toString())){
-                    ivDeleteText.setVisibility(View.GONE);
-                }else {
-                    ivDeleteText.setVisibility(View.VISIBLE);
-                }
+
                 initDate(0, Constan.NOTPULLUP, editable.toString(), null);
 
             }
@@ -338,7 +313,7 @@ public class BankFinancingActivity extends AppCompatActivity {
 
     boolean isClickPageView = false;//点击浏览量
     boolean isClickFocus = false;//关注
-    @OnClick({R.id.etSearch, R.id.ll_filter, R.id.ivDeleteText, R.id.bankActivity_pageView_linear,
+    @OnClick({R.id.etSearch, R.id.ll_filter, ivDeleteText, R.id.bankActivity_pageView_linear,
             R.id.bankActivity_focus_linear})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -347,9 +322,9 @@ public class BankFinancingActivity extends AppCompatActivity {
             case R.id.ll_filter:
                 drawerLayout.openDrawer(drawerContent);//筛选页
                 break;
-            case R.id.ivDeleteText:
+            case ivDeleteText:
                 etSearch.setText("");
-                ivDeleteText.setVisibility(View.GONE);
+
                 etSearch.setFocusableInTouchMode(false);
                 initDate(0, Constan.NOTPULLUP, null, null);
                 break;
