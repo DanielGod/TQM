@@ -16,6 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.lawhelp.adapter.LawListAdapter;
 import tqm.bianfeng.com.tqm.main.DetailActivity;
@@ -150,7 +151,7 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
     }
 
     HomeBankActivitysListAdapter bankActivitionsAdapter;
-    tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter bankLoanAdapter;
+    BankLoanAdapter bankLoanAdapter;
     HomeBankFinancingListAdapter bankFinancingAdapter;
     LawListAdapter lawListAdapter;
 
@@ -162,9 +163,10 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
             @Override
             public void OnClickListener(int position) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("detailType", DetailActivity.ACTIVITY_TYPE);
+                intent.putExtra("detailType", "01");
                 intent.putExtra("detailId", bankActivitionsAdapter.getDataItem(position).getActivityId());
                 intent.putExtra("detailTitle", bankActivitionsAdapter.getDataItem(position).getActivityTitle());
+                intent.putExtra("articlePath", bankActivitionsAdapter.getDataItem(position).getArticlePath());
                 startActivity(intent);
             }
         });
@@ -173,9 +175,9 @@ public class ActivityLoaninancingLawListFragment extends BaseFragment {
     }
 
     public void initLoanList(List<BankLoanItem> datas) {
-        bankLoanAdapter = new tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter(getActivity(), datas);
+        bankLoanAdapter = new BankLoanAdapter(getActivity(), datas);
        // bankLoanAdapter.setBgNull();
-        bankLoanAdapter.setOnItemClickListener(new tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter.BankLoanItemClickListener() {
+        bankLoanAdapter.setOnItemClickListener(new BankLoanAdapter.BankLoanItemClickListener() {
             @Override
             public void onItemClick(View view,int position) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);

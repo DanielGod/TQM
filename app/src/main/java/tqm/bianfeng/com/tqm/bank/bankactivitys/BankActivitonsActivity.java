@@ -1,9 +1,7 @@
 package tqm.bianfeng.com.tqm.bank.bankactivitys;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -17,15 +15,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.handmark.pulltorefresh.library.ILoadingLayout;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -69,30 +61,11 @@ public class BankActivitonsActivity extends AppCompatActivity {
     @BindView(R.id.etSearch)
     EditText etSearch;
 
-    @BindView(R.id.main_pull_refresh_lv)
-    PullToRefreshListView mainPullRefreshLv;
-    @BindView(R.id.YBJ_loding)
-    ImageView YBJLoding;
-    @BindView(R.id.YBJ_loding_txt)
-    TextView YBJLodingTxt;
     @BindView(R.id.ivDeleteText)
     ImageView ivDeleteText;
     @BindView(R.id.top)
     RelativeLayout top;
-    @BindView(R.id.bankActivity_pageView_tv)
-    TextView bankActivityPageViewTv;
-    @BindView(R.id.bankActivity_pageView_img)
-    ImageView bankActivityPageViewImg;
-    @BindView(R.id.bankActivity_pageView_linear)
-    LinearLayout bankActivityPageViewLinear;
-    @BindView(R.id.bankActivity_focus_tv)
-    TextView bankActivityFocusTv;
-    @BindView(R.id.bankActivity_focus_linear)
-    LinearLayout bankActivityFocusLinear;
-    @BindView(R.id.ll_filter)
-    LinearLayout llFilter;
-    @BindView(R.id.ll_head_layout)
-    LinearLayout llHeadLayout;
+
 
 
     private CompositeSubscription mCompositeSubscription;
@@ -116,8 +89,6 @@ public class BankActivitonsActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         initDrawLayout();
         setToolBar(getResources().getString(bankActivity));
-        initRefreshlv();
-        lodingIsFailOrSucess(1);
         initDate(0, Constan.NOTPULLUP, null, null);
 
         etSearch.setOnTouchListener(new View.OnTouchListener() {
@@ -164,99 +135,9 @@ public class BankActivitonsActivity extends AppCompatActivity {
 
     }
 
-    public void lodingIsFailOrSucess(int i) {
-        if (i == 1) {
-            //加载中
-            YBJLoding.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setText("加载中...");
-            YBJLoding.setBackgroundResource(R.drawable.loding_anim_lists);
-            AnimationDrawable anim = (AnimationDrawable) YBJLoding.getBackground();
-            anim.start();
-
-        } else if (i == 2) {
-            //加载成功
-            YBJLoding.setBackground(null);
-            YBJLoding.setVisibility(View.GONE);
-            YBJLodingTxt.setVisibility(View.GONE);
-        } else {
-            //加载失败
-            YBJLoding.setVisibility(View.VISIBLE);
-            YBJLodingTxt.setVisibility(View.VISIBLE);
-            YBJLoding.setBackground(null);
-            YBJLodingTxt.setText("加载失败，请检查网络连接");
-            YBJLoding.setImageResource(R.drawable.ic_loding_fail);
-        }
-    }
-
-    /**
-     * 初始化下拉刷新，上拉加载
-     */
-    private void initRefreshlv() {
-        //设置刷新时显示的文本
-        mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);//设置模式在设置字体之前
-        ILoadingLayout endLayout = mainPullRefreshLv.getLoadingLayoutProxy(false, true);
-        endLayout.setPullLabel(getResources().getString(R.string.PullLoading));
-        endLayout.setRefreshingLabel(getResources().getString(R.string.loading));
-        endLayout.setReleaseLabel(getResources().getString(R.string.releaseLoading));
-
-        ILoadingLayout startLayout = mainPullRefreshLv.getLoadingLayoutProxy(true, false);
-        startLayout.setPullLabel(getResources().getString(R.string.pullRefresh));
-        startLayout.setRefreshingLabel(getResources().getString(R.string.loading));
-        startLayout.setReleaseLabel(getResources().getString(R.string.releaseRefresh));
 
 
-        mainPullRefreshLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
-            @DebugLog
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                Log.i("Daniel", "---onPullDownToRefresh---");
-                pagNum = 0;
-                if (mAllBankLoanItems != null) {
-                    mAllBankLoanItems.clear();
-                }
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SystemClock.sleep(1000);
-                        if (isClickPageView) {
-                            String queryParams = setQuerParams("activityViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
-                            Log.i("Daniel", "---queryParams---" + queryParams);
-                            initDate(pagNum, Constan.NOTPULLUP, null, queryParams);
-                        }
-                        if (isClickFocus) {
-                            String queryParams = setQuerParams("atttenNum", Constan.DESC, "");//筛选条件 “关注”字段，降序
-                            Log.i("Daniel", "---queryParams---" + queryParams);
-                            initDate(pagNum, Constan.NOTPULLUP, null, queryParams);
-                        }
-                        if (!isClickPageView && !isClickFocus) {
-                            initDate(pagNum, Constan.NOTPULLUP, null, null);
-                        }
 
-
-                    }
-                }).start();
-
-
-            }
-
-            @DebugLog
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                Log.i("Daniel", "---onPullUpToRefresh---");
-
-                pagNum = pagNum + Constan.PAGESIZE;
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SystemClock.sleep(1000);
-                        initDate(pagNum, Constan.PULLUP, null, null);
-                    }
-                }).start();
-            }
-        });
-
-    }
 
     private void setToolBar(String s) {
         toolbar.setTitle(s);
@@ -286,28 +167,18 @@ public class BankActivitonsActivity extends AppCompatActivity {
                 .subscribe(new Observer<BankListItems<BankActivityItem>>() {
                     @Override
                     public void onCompleted() {
-                        //设置可上拉刷新和下拉刷新
-                        Log.e("Daniel", "---mPagItemSize---" + mPagItemSize);
-                        if (mPagItemSize == 0) {
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
-                        } else if (mPagItemSize > 0 && mPagItemSize < Constan.PAGESIZE) {
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-                            mIsbottom = true;
-                        } else {
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
-                        }
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
-                        lodingIsFailOrSucess(3);
+
                     }
 
                     @Override
                     public void onNext(BankListItems<BankActivityItem> bankActivityItemBankListItems) {
                         mPagItemSize = bankActivityItemBankListItems.getItem().size();
-                        lodingIsFailOrSucess(2);
+
                         if (mAllBankLoanItems == null) {
                             mAllBankLoanItems = new ArrayList<BankActivityItem>();
                         }
@@ -342,11 +213,10 @@ public class BankActivitonsActivity extends AppCompatActivity {
     private void setAdapter(List<BankActivityItem> bankActivityItems) {
         if (bankActivitionsAdapter == null) {
             bankActivitionsAdapter = new BankActivitionsAdapter(bankActivityItems, BankActivitonsActivity.this, false);
-            mainPullRefreshLv.setAdapter(bankActivitionsAdapter);
+
         } else {
             bankActivitionsAdapter.setdatas(bankActivityItems);
         }
-        mainPullRefreshLv.onRefreshComplete();
         initEdi(bankActivitionsAdapter, bankActivityItems);
 
 
@@ -400,67 +270,22 @@ public class BankActivitonsActivity extends AppCompatActivity {
     boolean isClickPageView = false;//点击浏览量
     boolean isClickFocus = false;//关注
 
-    @OnClick({R.id.etSearch, R.id.ll_filter, R.id.ivDeleteText, R.id.bankActivity_pageView_linear,
-            R.id.bankActivity_focus_linear})
+    @OnClick({ R.id.ivDeleteText})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.etSearch:
                 break;
-            case R.id.ll_filter:
-                drawerLayout.openDrawer(drawerContent);//筛选页
-                break;
+
             case R.id.ivDeleteText:
                 etSearch.setText("");
                 ivDeleteText.setVisibility(View.GONE);
                 etSearch.setFocusableInTouchMode(false);
                 initDate(0, Constan.NOTPULLUP, null, null);
                 break;
-            case R.id.bankActivity_pageView_linear:  //浏览量
-                pageViewOnClick();
-
-                break;
-            case R.id.bankActivity_focus_linear:
-                focusOnClick();
-
-                break;
 
         }
     }
 
-    private void focusOnClick() {
-        if (!isClickFocus) {
-            bankActivityFocusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
-            isClickFocus = true;
-            bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
-            bankActivityPageViewImg.setImageResource(R.drawable.asc_dark);
-            isClickPageView = false;
-            String queryParams = setQuerParams("atttenNum", Constan.DESC, "");//筛选条件 “关注”字段，降序
-            Log.i("Daniel", "---queryParams---" + queryParams);
-            initDate(0, Constan.NOTPULLUP, null, queryParams);
-        } else {
-            bankActivityFocusTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
-            isClickFocus = false;
-            initDate(0, Constan.NOTPULLUP, null, null);
-        }
-    }
-
-    private void pageViewOnClick() {
-        if (!isClickPageView) {
-            bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.colorPrimary));
-            bankActivityPageViewImg.setImageResource(R.drawable.asc_light);
-            isClickPageView = true;
-            bankActivityFocusTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
-            isClickFocus = false;
-            String queryParams = setQuerParams("activityViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
-            Log.i("Daniel", "---queryParams---" + queryParams);
-            initDate(0, Constan.NOTPULLUP, null, queryParams);
-        } else {
-            bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
-            bankActivityPageViewImg.setImageResource(R.drawable.asc_dark);
-            isClickPageView = false;
-            initDate(0, Constan.NOTPULLUP, null, null);
-        }
-    }
 
     private String setQuerParams(String pOrder, String pSort, String pInstitution) {
         order = pOrder;

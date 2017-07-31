@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.utils.StringUtils;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.io.File;
@@ -84,8 +85,7 @@ public class ApplyForCreditFragment extends BaseFragment {
     YwApplyEnter oldYwApplyEnter;
     @BindView(R.id.company_user_name_edi)
     EditText companyUserNameEdi;
-    @BindView(R.id.company_phone_num_atv)
-    AutoCompleteTextView companyPhoneNumAtv;
+
     @BindView(R.id.company_phone_num_edi)
     EditText companyPhoneNumEdi;
     @BindView(R.id.select_address_provinces)
@@ -102,6 +102,10 @@ public class ApplyForCreditFragment extends BaseFragment {
     ImageView personalImg2;
     @BindView(R.id.add_personal_img_img)
     ImageView addPersonalImgImg;
+    @BindView(R.id.company_institution_atv)
+    AutoCompleteTextView companyInstitutionAtv;
+
+
 
     public interface mListener {
         public void setCommitBtn(boolean is);
@@ -116,8 +120,7 @@ public class ApplyForCreditFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_apply_for_credit, container, false);
         ButterKnife.bind(this, view);
@@ -128,34 +131,32 @@ public class ApplyForCreditFragment extends BaseFragment {
 
         return view;
     }
+
     List<String> mInstitutionStrings;
     List<Institution> mInstitutions;
+
     private void initData() {
-        NetWork.getBankService().getInstitutions()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Institution>>() {
-                    @Override
-                    public void onCompleted() {
+        NetWork.getBankService().getInstitutions().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<Institution>>() {
+            @Override
+            public void onCompleted() {
+            }
 
+            @Override
+            public void onError(Throwable e) {
+                Log.e("Daniel", "机构异常" + e);
+            }
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Daniel","机构异常"+e);
-                    }
-                    @DebugLog
-                    @Override
-                    public void onNext(List<Institution> institutions) {
-                        Log.e("Daniel","机构"+institutions.toString());
-                        mInstitutions = institutions;
-                        for (Institution institution : institutions ){
-                            mInstitutionStrings.add(institution.getInstitutionName());
-                        }
-                        initIEdi();
-                    }
-                });
+            @DebugLog
+            @Override
+            public void onNext(List<Institution> institutions) {
+                Log.e("Daniel", "机构" + institutions.toString());
+                mInstitutions = institutions;
+                for (Institution institution : institutions) {
+                    mInstitutionStrings.add(institution.getInstitutionName());
+                }
+                initIEdi();
+            }
+        });
 
     }
 
@@ -167,8 +168,6 @@ public class ApplyForCreditFragment extends BaseFragment {
 
     public void init() {
         iniEdi();
-
-
         initaddressModels();
         photoGet = PhotoGet.getInstance();
         photoGet.setContext(getActivity());
@@ -187,20 +186,20 @@ public class ApplyForCreditFragment extends BaseFragment {
      */
     private void initIEdi() {
         ArrayAdapter<String> autoadapter = new ArrayAdapter<String>(getActivity(), R.layout.simple_dropdown_item, mInstitutionStrings);
-        companyPhoneNumAtv.setAdapter(autoadapter);
-        companyPhoneNumAtv.setOnClickListener(new View.OnClickListener() {
+        companyInstitutionAtv.setAdapter(autoadapter);
+        companyInstitutionAtv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //点击显示
-                companyPhoneNumAtv.showDropDown();
+                companyInstitutionAtv.showDropDown();
             }
         });
-        companyPhoneNumAtv.setInputType(InputType.TYPE_NULL);
-        companyPhoneNumAtv.setKeyListener(null);
-        companyPhoneNumAtv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        companyInstitutionAtv.setInputType(InputType.TYPE_NULL);
+        companyInstitutionAtv.setKeyListener(null);
+        companyInstitutionAtv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getActivity(), mInstitutionStrings.get(position)+"", Toast.LENGTH_SHORT).show();
+                //                Toast.makeText(getActivity(), mInstitutionStrings.get(position)+"", Toast.LENGTH_SHORT).show();
                 ywApplyEnter.setInstitutionId(mInstitutions.get(position).getInstitutionId());
             }
         });
@@ -208,22 +207,17 @@ public class ApplyForCreditFragment extends BaseFragment {
 
 
     public void addImg() {
-
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             //申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
         } else {
 
-            MultiImageSelector multiImageSelector = MultiImageSelector.create(getActivity())
-                    .showCamera(true) // show camera or not. true by default
+            MultiImageSelector multiImageSelector = MultiImageSelector.create(getActivity()).showCamera(true) // show camera or not. true by default
                     // max select image size, 9 by default. used width #.multi()
                     .single() // single mode
                     .multi(); // original select data set, used width #.multi()
-
-                multiImageSelector.origin(mPersonalImgSelectPath);
-                multiImageSelector.count(2);
+            multiImageSelector.origin(mPersonalImgSelectPath);
+            multiImageSelector.count(2);
 
             multiImageSelector.start(getActivity(), REQUEST_CREDIT_IMAGE);
         }
@@ -237,24 +231,23 @@ public class ApplyForCreditFragment extends BaseFragment {
 
     public void setImgInView(Intent data) {
 
-            mPersonalImgSelectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
-            for (int i = 0; i < personalImgsView.size(); i++) {
-                personalImgsView.get(i).setImageBitmap(null);
-                personalImgsView.get(i).setVisibility(View.GONE);
-            }
-            for (int i = 0; i < mPersonalImgSelectPath.size(); i++) {
-                personalImgsView.get(i).setImageBitmap(BitmapFactory.decodeFile(mPersonalImgSelectPath.get(i)));
-                personalImgsView.get(i).setVisibility(View.VISIBLE);
-            }
+        mPersonalImgSelectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
+        for (int i = 0; i < personalImgsView.size(); i++) {
+            personalImgsView.get(i).setImageBitmap(null);
+            personalImgsView.get(i).setVisibility(View.GONE);
+        }
+        for (int i = 0; i < mPersonalImgSelectPath.size(); i++) {
+            personalImgsView.get(i).setImageBitmap(BitmapFactory.decodeFile(mPersonalImgSelectPath.get(i)));
+            personalImgsView.get(i).setVisibility(View.VISIBLE);
+        }
 
     }
 
-    @OnClick({ R.id.add_personal_img_img, R.id.upload_personal_img_txt})
+    @OnClick({R.id.add_personal_img_img, R.id.upload_personal_img_txt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.upload_personal_img_txt:
                 //上传个人图片，上传后改为已上传，上传中
-
                 if (mPersonalImgSelectPath.size() == 0) {
                     Toast.makeText(getActivity(), "请先添加图片再上传", Toast.LENGTH_SHORT).show();
                 } else {
@@ -271,7 +264,7 @@ public class ApplyForCreditFragment extends BaseFragment {
     }
 
     public void iniEdi() {
-        Observable<CharSequence> CharSequence1 = RxTextView.textChanges(companyPhoneNumAtv).skip(1);
+        Observable<CharSequence> CharSequence1 = RxTextView.textChanges(companyInstitutionAtv).skip(1);
         Observable<CharSequence> CharSequence2 = RxTextView.textChanges(companyUserNameEdi).skip(1);
         Subscription etSc = Observable.combineLatest(CharSequence1, CharSequence2, new Func2<CharSequence, CharSequence, Boolean>() {
             @Override
@@ -310,9 +303,10 @@ public class ApplyForCreditFragment extends BaseFragment {
 
     /**
      * 上传图片
+     *
      * @param imgPaths
      */
-    public void uploadImg( List<String> imgPaths) {
+    public void uploadImg(List<String> imgPaths) {
         MultipartBody.Builder builder = new MultipartBody.Builder();
         for (int i = 0; i < imgPaths.size(); i++) {
             File f = new File(imgPaths.get(i));
@@ -336,47 +330,44 @@ public class ApplyForCreditFragment extends BaseFragment {
         }
 
 
-        Subscription subscription = NetWork.getUserService().uploadCompanyFile(zichifile)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResultCodeWithImgPathList>() {
-                    @Override
-                    public void onCompleted() {
+        Subscription subscription = NetWork.getUserService().uploadCompanyFile(zichifile).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultCodeWithImgPathList>() {
+            @Override
+            public void onCompleted() {
 
-                    }
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        uploadPersonalImgTxt.setText("上传");
-                        uploadPersonalImgTxt.setEnabled(true);
-                        Log.i("gqf", "Throwable" + e.toString());
-                        Toast.makeText(getActivity(), "图片尺寸过大", Toast.LENGTH_SHORT).show();
-                    }
+            @Override
+            public void onError(Throwable e) {
+                uploadPersonalImgTxt.setText("上传");
+                uploadPersonalImgTxt.setEnabled(true);
+                Log.i("gqf", "Throwable" + e.toString());
+                Toast.makeText(getActivity(), "图片尺寸过大", Toast.LENGTH_SHORT).show();
+            }
 
-                    @Override
-                    public void onNext(ResultCodeWithImgPathList strings) {
-                        Log.i("gqf", "onNext" + strings.toString());
-                        if (strings.getCode() == ResultCode.SECCESS) {
-                            uploadPersonalImgTxt.setText("已上传");
-                            String paths = "";
-                            for (int i = 0; i < strings.getFiles().size(); i++) {
-                                if (i > 0) {
-                                    paths = paths + ",";
-                                }
-                                paths = paths + strings.getFiles().get(i);
-                            }
-                                ywApplyEnter.setGrmp(paths);
-                                uploadPersonalImgTxt.setEnabled(false);
-                                addPersonalImgImg.setEnabled(false);
-
-                            Log.i("gqf", "paths" + paths);
-                        } else {
-                            Toast.makeText(getActivity(), "上传失败", Toast.LENGTH_SHORT).show();
-                            uploadPersonalImgTxt.setText("上传");
-                            uploadPersonalImgTxt.setEnabled(true);
+            @Override
+            public void onNext(ResultCodeWithImgPathList strings) {
+                Log.i("gqf", "onNext" + strings.toString());
+                if (strings.getCode() == ResultCode.SECCESS) {
+                    uploadPersonalImgTxt.setText("已上传");
+                    String paths = "";
+                    for (int i = 0; i < strings.getFiles().size(); i++) {
+                        if (i > 0) {
+                            paths = paths + ",";
                         }
+                        paths = paths + strings.getFiles().get(i);
                     }
-                });
+                    ywApplyEnter.setGrmp(paths);
+                    uploadPersonalImgTxt.setEnabled(false);
+                    addPersonalImgImg.setEnabled(false);
+
+                    Log.i("gqf", "paths" + paths);
+                } else {
+                    Toast.makeText(getActivity(), "上传失败", Toast.LENGTH_SHORT).show();
+                    uploadPersonalImgTxt.setText("上传");
+                    uploadPersonalImgTxt.setEnabled(true);
+                }
+            }
+        });
         compositeSubscription.add(subscription);
 
     }
@@ -414,7 +405,8 @@ public class ApplyForCreditFragment extends BaseFragment {
     }
 
     /**
-     * 初始化县
+     * 初始化市
+     *
      * @param am
      */
     public void initCEdi(final address_model am) {
@@ -451,6 +443,7 @@ public class ApplyForCreditFragment extends BaseFragment {
      * 初始化区
      */
     String[] countys;
+
     public void initCoEdi(ArrayList<String> areas) {
         countys = new String[areas.size()];
         for (int i = 0; i < areas.size(); i++) {
@@ -479,14 +472,21 @@ public class ApplyForCreditFragment extends BaseFragment {
 
     /**
      * 提交申请返回对象
+     *
      * @return
      */
     public YwRzsq getYwApplyEnter() {
-        if (selectProvinces.equals("") || selectCity.equals("") || selectCounty.equals("")) {
-            Toast.makeText(getActivity(), "请选择公司所在地址", Toast.LENGTH_SHORT).show();
+        if (StringUtils.isEmpty(companyUserNameEdi.getText().toString())) {
+            Toast.makeText(getActivity(), "请填写姓名！", Toast.LENGTH_SHORT).show();
+            return null;
+        } else if (StringUtils.isEmpty(companyPhoneNumEdi.getText().toString())) {
+            Toast.makeText(getActivity(), "请填写联系电话！", Toast.LENGTH_SHORT).show();
+            return null;
+        }else if(selectProvinces.equals("")||selectCity.equals("")){
+            Toast.makeText(getActivity(),"请选择公司所在地址！",Toast.LENGTH_SHORT).show();
             return null;
         } else if (ywApplyEnter.getGrmp() == null || ywApplyEnter.getGrmp().equals("")) {
-            Toast.makeText(getActivity(), "请上传logo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "请上传logo!", Toast.LENGTH_SHORT).show();
             return null;
         } else {
             ywApplyEnter.setProvince(selectProvinces);
@@ -497,9 +497,9 @@ public class ApplyForCreditFragment extends BaseFragment {
             ywApplyEnter.setLxdh(companyPhoneNumEdi.getText().toString());
             ywApplyEnter.setSqlx("03");//03-信贷经理
             ywApplyEnter.setLxbq("3001");
-            Log.e("Daniel","联系人："+ywApplyEnter.getLxr());
-            Log.e("Daniel","联系电话："+ywApplyEnter.getLxdh());
-            Log.e("Daniel","所在机构："+ywApplyEnter.getInstitutionId());
+            Log.e("Daniel", "联系人：" + ywApplyEnter.getLxr());
+            Log.e("Daniel", "联系电话：" + ywApplyEnter.getLxdh());
+            Log.e("Daniel", "所在机构：" + ywApplyEnter.getInstitutionId());
             return ywApplyEnter;
         }
 
@@ -509,7 +509,7 @@ public class ApplyForCreditFragment extends BaseFragment {
         ywApplyEnter = data;
         ywApplyEnter.setShzt("00");
         companyPhoneNumEdi.setText(ywApplyEnter.getLxdh());
-        Log.e("Daniel","信贷联系人："+ywApplyEnter.getLxr());
+        Log.e("Daniel", "信贷联系人：" + ywApplyEnter.getLxr());
         companyUserNameEdi.setText(ywApplyEnter.getLxr());
         ywApplyEnter.setGrmp("");
 

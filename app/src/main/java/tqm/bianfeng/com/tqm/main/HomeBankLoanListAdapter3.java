@@ -80,7 +80,7 @@ public class HomeBankLoanListAdapter3 extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder mHolder = (ViewHolder) holder;
         BankLoanItem data = getItem(position);
-        if ((data.getRateMin()-data.getRateMax())==0){
+        if ((data.getRateMin().equals(data.getRateMax()))){
             mHolder.annualReturnTv.setText(data.getRateMin() + "%");
         }else {
 

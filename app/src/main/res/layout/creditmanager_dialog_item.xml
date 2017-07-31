@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/creditManagerAddress_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/smallmdp"
+        android:paddingLeft="@dimen/smallmdp"
+        android:text="上海市浦东区信贷经理："
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/smallhdp"
+        android:layout_marginLeft="@dimen/smallmdp"
+        android:layout_marginRight="@dimen/smallmdp"
+        android:background="@drawable/write_radius_bg_shap"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/creditManager_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="王先生"
+            android:gravity="center"
+            style="@style/apply_text"
+            />
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/mediummxdp"
+            android:layout_marginBottom="@dimen/mediummxdp"
+            android:layout_marginRight="@dimen/smallmdp"
+            android:background="@color/gray_light"/>
+        <TextView
+            android:id="@+id/phone_num_tv"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            />
+        <Button
+            android:id="@+id/call_btn"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/apply_for_selector"
+            android:layout_margin="@dimen/mediummdp"
+            android:text="呼叫"
+            android:textSize="@dimen/mediumsp"
+            android:textColor="@drawable/apply_for_text_color_selector"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/mediummdp"
+        android:layout_marginRight="@dimen/mediummdp"
+        android:background="@color/grid_divider_line"/>
+
+</LinearLayout>

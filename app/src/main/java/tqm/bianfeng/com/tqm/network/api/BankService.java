@@ -9,6 +9,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
+import tqm.bianfeng.com.tqm.pojo.YwDksq;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankDotItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
@@ -99,13 +100,7 @@ public interface BankService {
      */
     @FormUrlEncoded
     @POST("getBankFinancItem")
-    Observable<BankListItems<BankFinancItem>> getBankFinancItem(@Field("search") String search,
-                                                                @Field("queryParams") String queryParams,
-                                                                @Field("homeShow") String homeShow,
-                                                                @Field("pageNum") Integer pageNum,
-                                                                @Field("pageSize") Integer pageSize,
-                                                                @Field("city") String city
-    );
+    Observable<BankListItems<BankFinancItem>> getBankFinancItem(@Field("queryParams") String queryParams);
 
 
     /**
@@ -115,12 +110,7 @@ public interface BankService {
      */
     @FormUrlEncoded
     @POST("getBankLoanItem")
-    Observable<BankListItems<BankLoanItem>> getBankLoanItem(@Field("search") String search,
-                                                            @Field("queryParams") String queryParams,
-                                                            @Field("homeShow") String homeShow,
-                                                            @Field("pageNum") Integer pageNum,
-                                                            @Field("pageSize") Integer pageSize,
-                                                            @Field("city") String city);
+    Observable<BankListItems<BankLoanItem>> getBankLoanItem(@Field("queryParams") String queryParams);
 
 
     /**
@@ -147,6 +137,24 @@ public interface BankService {
     @FormUrlEncoded
     @POST("dot/getBankDotItem")
     Observable<List<BankDotItem>> getBankDotItem(@Field("uids") String uids);
+
+    /**
+     * 贷款申请保存
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("dksq/")
+    Observable<ResultCode> saveOrUpdate(@Field("dksqInfo") String dksqInfo);
+
+    /**
+     * 获取单条贷款申请信息
+     *
+     * @return
+     */
+    @GET("dksq/{sqrId}")
+    Observable<YwDksq> getOne(@Path("sqrId") Integer sqrId);
+
 
 
 }

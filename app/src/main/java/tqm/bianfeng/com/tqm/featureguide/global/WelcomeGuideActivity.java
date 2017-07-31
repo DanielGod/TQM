@@ -29,7 +29,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.Util.AppConstants;
-import tqm.bianfeng.com.tqm.Util.AppUtils;
+import tqm.bianfeng.com.tqm.Util.AppUtilsBd;
 import tqm.bianfeng.com.tqm.Util.SpUtils;
 import tqm.bianfeng.com.tqm.main.MainActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
@@ -66,7 +66,7 @@ public class WelcomeGuideActivity extends Activity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
-        channel = AppUtils.getChanel(getApplicationContext());
+        channel = AppUtilsBd.getChanel(getApplicationContext());
 
         views = new ArrayList<View>();
 
@@ -96,7 +96,7 @@ public class WelcomeGuideActivity extends Activity implements View.OnClickListen
 
     private void requestPhone() {
         Log.e("Daniel","requestPhone");
-        RxPermissions.getInstance(this)
+        new RxPermissions(this)
                 .request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE)
                 .subscribe(new Action1<Boolean>() {
                     @DebugLog
@@ -227,7 +227,8 @@ public class WelcomeGuideActivity extends Activity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getTag().equals("enter")) {
-            requestPhone();
+            enterMainActivity();
+//            requestPhone();
 
             return;
         }

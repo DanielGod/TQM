@@ -56,7 +56,6 @@ public class DefaultLoadView extends LinearLayout {
                 //借书动画
                 LodingTxt.setVisibility(View.GONE);
                 indicator.hideLoading();
-                Log.i("gqf", "onClose2");
             } else if (i == 3) {
                 //没有数据
                 LodingTxt.setVisibility(View.VISIBLE);
@@ -64,8 +63,15 @@ public class DefaultLoadView extends LinearLayout {
                 //YBJLoding.setImageResource(R.drawable.ic_no_city);
                 indicator.hideLoading();
                 LodingTxt.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_no_city), null, null);
-                Log.i("gqf", "onClose3");
-            } else {
+
+            } else if (i==4){
+                //没有网络
+                LodingTxt.setVisibility(View.VISIBLE);
+                LodingTxt.setText("网络不给力");
+                //YBJLoding.setImageResource(R.drawable.ic_no_city);
+                indicator.hideLoading();
+                LodingTxt.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.loadfailed), null, null);
+
 
             }
         }

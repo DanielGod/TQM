@@ -21,6 +21,24 @@ public class User extends RealmObject{
     String userAvatar="";
     String userType;
     String applyForStatu="-1";
+    String applyForType="-1";//入驻申请类别
+    String loanStatu="-1";
+
+    public String getApplyForType() {
+        return applyForType;
+    }
+
+    public void setApplyForType(String applyForType) {
+        this.applyForType = applyForType;
+    }
+
+    public String getLoanStatu() {
+        return loanStatu;
+    }
+
+    public void setLoanStatu(String loanStatu) {
+        this.loanStatu = loanStatu;
+    }
 
     public String getApplyForStatu() {
         return applyForStatu;
@@ -78,6 +96,9 @@ public class User extends RealmObject{
                 ", userNickname='" + userNickname + '\'' +
                 ", userAvatar='" + userAvatar + '\'' +
                 ", userType='" + userType + '\'' +
+                ", applyForStatu='" + applyForStatu + '\'' +
+                ", applyForType='" + applyForType + '\'' +
+                ", loanStatu='" + loanStatu + '\'' +
                 '}';
     }
 }

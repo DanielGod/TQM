@@ -1,29 +1,22 @@
-<resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-
-
-    <!--sp-->
-    <dimen name="tinysp">24.75sp</dimen>
+<resources>    <!--sp-->    <dimen name="tinysp">24.75sp</dimen>
     <dimen name="smallsp">29.25sp</dimen>
     <dimen name="mediumsp">33.75sp</dimen>
     <dimen name="mediumxsp">40.5sp</dimen>
     <dimen name="bigsp">45.0sp</dimen>
     <dimen name="hugesp">56.25sp</dimen>
     <dimen name="super_big">112.5sp</dimen>
-    <!--mdp-->
-
-    <dimen name="tinymdp">11.25dp</dimen>
+    <!--mdp-->    <dimen name="tinymdp">11.25dp</dimen>
     <dimen name="smallmdp">18.0dp</dimen>
     <dimen name="mediummdp">22.5dp</dimen>
     <dimen name="mediummxdp">29.25dp</dimen>
     <dimen name="bigmdp">45.0dp</dimen>
     <dimen name="bigxmdp">56.25dp</dimen>
-    <!--hdp-->
-    <dimen name="tinyhdp">67.5dp</dimen>
+    <!--hdp-->    <dimen name="tinyhdp">67.5dp</dimen>
     <dimen name="tinyxhdp">78.75dp</dimen>
     <dimen name="smallhdp">90.0dp</dimen>
     <dimen name="smallxhdp">101.25dp</dimen>
     <dimen name="mediumhdp">112.5dp</dimen>
+    <dimen name="mediumxhdp">135.0dp</dimen>
     <dimen name="hugehdp">157.5dp</dimen>
     <dimen name="hugehxxdp">180.0dp</dimen>
     <dimen name="hugehxxxdp">202.5dp</dimen>
@@ -32,9 +25,15 @@
     <dimen name="hugehxxxxxxdp">315.0dp</dimen>
     <dimen name="hugehxxxxxxxdp">360.0dp</dimen>
     <dimen name="hugehxxxxxxxxxdp">450.0dp</dimen>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">36.0dp</dimen>
+    <dimen name="dp_240">540.0dp</dimen>
+    <dimen name="dp_300">675.0dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->    <dimen name="activity_horizontal_margin">36.0dp</dimen>
     <dimen name="activity_vertical_margin">36.0dp</dimen>
     <dimen name="fab_margin">36.0dp</dimen>
+    <dimen name="bottomBarMargin">-11.25dp</dimen>
+    <dimen name="homeFragmentTop">-56.25dp</dimen>
+    <!-- spinner -->    <dimen name="three_grid_unit">54.0dp</dimen>
+    <dimen name="one_and_a_half_grid_unit">27.0dp</dimen>
+    <dimen name="homeFragmentTop_spinner">-58.5dp</dimen>
+    <dimen name="text_margin">36.0dp</dimen>
 </resources>
-

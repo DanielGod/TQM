@@ -1,8 +1,4 @@
-<resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-
-
-    <!--sp-->
+<resources>    <!--sp-->
     <dimen name="tinysp">16.5sp</dimen>
     <dimen name="smallsp">19.5sp</dimen>
     <dimen name="mediumsp">22.5sp</dimen>
@@ -11,7 +7,6 @@
     <dimen name="hugesp">37.5sp</dimen>
     <dimen name="super_big">75.0sp</dimen>
     <!--mdp-->
-
     <dimen name="tinymdp">7.5dp</dimen>
     <dimen name="smallmdp">12.0dp</dimen>
     <dimen name="mediummdp">15.0dp</dimen>
@@ -24,6 +19,7 @@
     <dimen name="smallhdp">60.0dp</dimen>
     <dimen name="smallxhdp">67.5dp</dimen>
     <dimen name="mediumhdp">75.0dp</dimen>
+    <dimen name="mediumxhdp">90.0dp</dimen>
     <dimen name="hugehdp">105.0dp</dimen>
     <dimen name="hugehxxdp">120.0dp</dimen>
     <dimen name="hugehxxxdp">135.0dp</dimen>
@@ -32,9 +28,17 @@
     <dimen name="hugehxxxxxxdp">210.0dp</dimen>
     <dimen name="hugehxxxxxxxdp">240.0dp</dimen>
     <dimen name="hugehxxxxxxxxxdp">300.0dp</dimen>
+    <dimen name="dp_240">360.0dp</dimen>
+    <dimen name="dp_300">450.0dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">24.0dp</dimen>
     <dimen name="activity_vertical_margin">24.0dp</dimen>
     <dimen name="fab_margin">24.0dp</dimen>
+    <dimen name="bottomBarMargin">-7.5dp</dimen>
+    <dimen name="homeFragmentTop">-37.5dp</dimen>
+    <!-- spinner -->
+    <dimen name="three_grid_unit">36.0dp</dimen>
+    <dimen name="one_and_a_half_grid_unit">18.0dp</dimen>
+    <dimen name="homeFragmentTop_spinner">-39.0dp</dimen>
+    <dimen name="text_margin">24.0dp</dimen>
 </resources>
-

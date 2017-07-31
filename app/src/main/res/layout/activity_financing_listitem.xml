@@ -90,7 +90,7 @@
                 </LinearLayout>
             </RelativeLayout>
             <TextView
-                android:layout_width="0.5dp"
+                android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/orange_light"
                 android:layout_marginRight="@dimen/tinymdp"
@@ -112,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="期限"
+                    android:text="期限(天)"
                     style="@style/sty_listLab_tv"
                     />
                 <LinearLayout
@@ -130,17 +130,10 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/bigsp"
                         />
-                    <TextView
-                        android:id="@+id/investmentTerm_day_unit_tv"
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content"
-                        android:text="天"
-                        android:textSize="@dimen/bigsp"
-                        />
                 </LinearLayout>
             </RelativeLayout>
             <TextView
-                android:layout_width="0.5dp"
+                android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/orange_light"
                 android:layout_marginRight="@dimen/tinymdp"

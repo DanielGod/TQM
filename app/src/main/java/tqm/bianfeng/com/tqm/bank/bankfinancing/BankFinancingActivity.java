@@ -3,7 +3,6 @@ package tqm.bianfeng.com.tqm.bank.bankfinancing;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,15 +16,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.handmark.pulltorefresh.library.ILoadingLayout;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,7 +42,6 @@ import tqm.bianfeng.com.tqm.CustomView.LoadMoreView;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.bank.fragment.TestFilterFragment;
 import tqm.bianfeng.com.tqm.main.DetailActivity;
-import tqm.bianfeng.com.tqm.main.MainActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.bank.AQueryParams;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
@@ -67,22 +59,13 @@ public class BankFinancingActivity extends AppCompatActivity {
     FrameLayout drawerContent;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    @BindView(R.id.main_pull_refresh_lv)
-    PullToRefreshListView mainPullRefreshLv;
+
     @BindView(R.id.etSearch)
     EditText etSearch;
 
     @BindView(R.id.default_loadview)
     DefaultLoadView defaultLoadview;
-    @BindView(R.id.bankActivity_pageView_linear)
-    LinearLayout bankActivityPageViewLinear;
-    @BindView(R.id.bankActivity_focus_linear)
-    LinearLayout bankActivityFocusLinear;
-    @BindView(R.id.bankActivity_pageView_tv)
-    TextView bankActivityPageViewTv;
-    @BindView(R.id.bankActivity_pageView_img)
-    ImageView bankActivityPageViewImg;
-    @BindView(R.id.bankActivity_focus_tv)
+
     TextView bankActivityFocusTv;
 
 
@@ -104,7 +87,6 @@ public class BankFinancingActivity extends AppCompatActivity {
         unbinder = ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         setToolBar(getResources().getString(R.string.bankFinancing));
-        initRefreshlv();
 //        mainPullRefreshLv.setDividerDrawable(getResources().getDrawable(R.drawable.img_heard_dark));
         mCompositeSubscription = new CompositeSubscription();
         initDrawLayout();
@@ -119,69 +101,6 @@ public class BankFinancingActivity extends AppCompatActivity {
         });
 
     }
-    private void initRefreshlv() {
-        //设置刷新时显示的文本
-        mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);//设置模式在设置字体之前
-        ILoadingLayout startLayout = mainPullRefreshLv.getLoadingLayoutProxy(true, false);
-        startLayout.setPullLabel(getResources().getString(R.string.pullRefresh));
-        startLayout.setRefreshingLabel(getResources().getString(R.string.loading));
-        startLayout.setReleaseLabel(getResources().getString(R.string.releaseRefresh));
-
-        ILoadingLayout endLayout = mainPullRefreshLv.getLoadingLayoutProxy(false, true);
-        endLayout.setPullLabel(getResources().getString(R.string.PullLoading));
-        endLayout.setRefreshingLabel(getResources().getString(R.string.loading));
-        endLayout.setReleaseLabel(getResources().getString(R.string.releaseLoading));
-
-        mainPullRefreshLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                Log.i("Daniel", "---onPullDownToRefresh---");
-                pagNum = 0;
-                if (mAllBankLoanItems != null) {
-
-                    mAllBankLoanItems.clear();
-                }
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SystemClock.sleep(1000);
-                        if (isClickPageView) {
-                            String queryParams = setQuerParams("financViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
-                            Log.i("Daniel", "---queryParams---" + queryParams);
-                            initDate(pagNum, Constan.NOTPULLUP, null, queryParams);
-                        }
-                        if (isClickFocus) {
-                            String queryParams = setQuerParams("atttenNum", Constan.DESC, "");//筛选条件 “关注”字段，降序
-                            Log.i("Daniel", "---queryParams---" + queryParams);
-                            initDate(pagNum, Constan.NOTPULLUP, null, queryParams);
-                        }
-                        if (!isClickPageView && !isClickFocus) {
-                            initDate(pagNum, Constan.NOTPULLUP, null, null);
-                        }
-                    }
-                }).start();
-
-
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                Log.i("Daniel", "---onPullUpToRefresh---");
-                pagNum = pagNum + Constan.PAGESIZE;
-                Log.i("Daniel", "---onPullUpToRefresh---" + pagNum);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SystemClock.sleep(1000);
-                        initDate(pagNum, Constan.PULLUP, null, null);
-                    }
-                }).start();
-
-            }
-        });
-
-    }
-
     private void setToolBar(String s) {
         toolbar.setTitle(s);
         setSupportActionBar(toolbar);
@@ -198,28 +117,17 @@ public class BankFinancingActivity extends AppCompatActivity {
     private void initDate(int pagNum, final boolean pullUp,String search,String json) {
         Log.e("Daniel", "---pagNum---" + pagNum);
         Subscription getBankFinancItem_subscription = NetWork.getBankService()
-                .getBankFinancItem(search,json, Constan.HOMESHOW_FALSE, pagNum, Constan.PAGESIZE, MainActivity.locationStr)
+                .getBankFinancItem(search)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BankListItems<BankFinancItem>>() {
                     @Override
                     public void onCompleted() {
-                        //设置可上拉刷新和下拉刷新
-                        if (mPagItemSize == 0) {
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
-                        } else if (mPagItemSize > 0 && mPagItemSize < Constan.PAGESIZE) {
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-                        } else {
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
-                        }
-
                     }
 
                     @DebugLog
                     @Override
                     public void onError(Throwable e) {
-                        mainPullRefreshLv.setRefreshing(false);
-                        mainPullRefreshLv.setMode(PullToRefreshBase.Mode.DISABLED);
                         defaultLoadview.lodingIsFailOrSucess(3);
 
                     }
@@ -265,7 +173,6 @@ public class BankFinancingActivity extends AppCompatActivity {
             intent.putExtra("detailType", "02");
             intent.putExtra("detailId", bankFinancingAdapter.getItem(position).getFinancId());
             intent.putExtra("detailTitle", bankFinancingAdapter.getItem(position).getProductName());
-
             startActivity(intent);
         }
 
@@ -274,11 +181,10 @@ public class BankFinancingActivity extends AppCompatActivity {
     private void setAdapter(List<BankFinancItem> bankFinancItems) {
         if (bankFinancingAdapter == null) {
             bankFinancingAdapter = new BankFinancingAdapter(BankFinancingActivity.this, bankFinancItems, false);
-            mainPullRefreshLv.setAdapter(bankFinancingAdapter);
+
         } else {
             bankFinancingAdapter.setdatas(bankFinancItems);
         }
-        mainPullRefreshLv.onRefreshComplete();
         initEdi(bankFinancingAdapter, bankFinancItems);
     }
 
@@ -313,71 +219,24 @@ public class BankFinancingActivity extends AppCompatActivity {
 
     boolean isClickPageView = false;//点击浏览量
     boolean isClickFocus = false;//关注
-    @OnClick({R.id.etSearch, R.id.ll_filter, ivDeleteText, R.id.bankActivity_pageView_linear,
-            R.id.bankActivity_focus_linear})
+    @OnClick({R.id.etSearch,  ivDeleteText}
+         )
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.etSearch:
                 break;
-            case R.id.ll_filter:
-                drawerLayout.openDrawer(drawerContent);//筛选页
-                break;
+
             case ivDeleteText:
                 etSearch.setText("");
 
                 etSearch.setFocusableInTouchMode(false);
                 initDate(0, Constan.NOTPULLUP, null, null);
                 break;
-            case R.id.bankActivity_pageView_linear:  //浏览量
-                pageViewOnClick();
-                break;
-            case R.id.bankActivity_focus_linear:
-                focusOnClick();
-                break;
-
         }
     }
 
-    /**
-     * 点击关注
-     */
-    private void focusOnClick() {
-        if (!isClickFocus) {
-            bankActivityFocusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
-            isClickFocus = true;
-            bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
-            bankActivityPageViewImg.setImageResource(R.drawable.asc_dark);
-            isClickPageView = false;
-            String queryParams = setQuerParams("atttenNum", Constan.DESC, "");//筛选条件 “关注”字段，降序
-            Log.i("Daniel", "---queryParams---" + queryParams);
-            initDate(0, Constan.NOTPULLUP, null, queryParams);
-        } else {
-            bankActivityFocusTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
-            isClickFocus = false;
-            initDate(0, Constan.NOTPULLUP, null, null);
-        }
-    }
 
-    /**
-     * 点击浏览量
-     */
-    private void pageViewOnClick() {
-        if (!isClickPageView) {
-            bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.colorPrimary));
-            bankActivityPageViewImg.setImageResource(R.drawable.asc_light);
-            isClickPageView = true;
-            bankActivityFocusTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
-            isClickFocus = false;
-            String queryParams = setQuerParams("financViews", Constan.DESC, "");//筛选条件 “浏览量”字段，降序
-            Log.i("Daniel", "---queryParams---" + queryParams);
-            initDate(0, Constan.NOTPULLUP, null, queryParams);
-        } else {
-            bankActivityPageViewTv.setTextColor(getResources().getColor(R.color.home_hotActivity_gray9));
-            bankActivityPageViewImg.setImageResource(R.drawable.asc_dark);
-            isClickPageView = false;
-            initDate(0, Constan.NOTPULLUP, null, null);
-        }
-    }
+
 
     public  String order = null;  //查询字段
     public  String sort = null;   //asc:升序 desc：降序

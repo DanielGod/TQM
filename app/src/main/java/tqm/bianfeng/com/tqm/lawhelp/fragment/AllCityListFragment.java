@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.StringUtils;
 import com.zhy.adapter.recyclerview.wrapper.HeaderAndFooterWrapper;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import tqm.bianfeng.com.tqm.lawhelp.adapter.allCityListAdapter;
 import tqm.bianfeng.com.tqm.lawhelp.tools.InternetImpl;
 import tqm.bianfeng.com.tqm.lawhelp.tools.ThreeAddTools;
 import tqm.bianfeng.com.tqm.pojo.LawAdd;
+import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.pojo.cityInfo;
 
 /**
@@ -71,6 +73,7 @@ public class AllCityListFragment extends BaseFragment {
         threeAddTools = ThreeAddTools.getTools();
         internet = InternetImpl.createInternetImpl();
         ButterKnife.bind(this, view);
+        lawAdd=realm.where(LawAdd.class).findFirst();
         initData();
         return view;
     }
@@ -95,12 +98,22 @@ public class AllCityListFragment extends BaseFragment {
 
     }
     //更新lawAdd本地数据
-    public void updateLawAdd(String city,String province){
-        LawAdd lawAdd=realm.where(LawAdd.class).findFirst();
+    public void updateLawAdd(final String city, final String province){
+
+        Log.e(Constan.LOGTAGNAME,"更新lawAdd本地数据---city"+city);
+        Log.e(Constan.LOGTAGNAME,"更新lawAdd本地数据---province"+province);
+        Log.e(Constan.LOGTAGNAME,"更新lawAdd本地数据---lawAdd"+lawAdd);
         realm.beginTransaction();
-        lawAdd.setCity(city);
-        lawAdd.setProvince(province);
-        realm.copyToRealmOrUpdate(lawAdd);
+        if (lawAdd!=null) {
+            lawAdd.setCity(city);
+            lawAdd.setProvince(province);
+            realm.copyToRealmOrUpdate(lawAdd);
+        }else {
+            LawAdd lawAdd = realm.createObject(LawAdd.class);
+            lawAdd.setCity(city);
+            lawAdd.setProvince(province);
+            realm.copyToRealmOrUpdate(lawAdd);
+        }
         realm.commitTransaction();
         mListener.CloseActivity();
     }
@@ -207,7 +220,7 @@ public class AllCityListFragment extends BaseFragment {
         cancel_location_btn=(Button)headerViewl.findViewById(R.id.cancel_location_btn);
         if(realm.where(LawAdd.class).findFirst()!=null) {
             lawAdd=realm.where(LawAdd.class).findFirst();
-            if (!lawAdd.getCity().equals("")) {
+            if (!StringUtils.isEmpty(lawAdd.getCity())) {
                 location_lin.setVisibility(View.VISIBLE);
                 location_btn.setText(lawAdd.getCity());
             } else {
@@ -294,6 +307,4 @@ public class AllCityListFragment extends BaseFragment {
         }
 
     }
-
-
 }

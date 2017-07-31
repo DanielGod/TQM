@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tqm.bianfeng.com.tqm.Institutions.LawAndCompanyFragment;
+import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 
 /**
  * Created by wjy on 16/8/15.
@@ -23,8 +24,8 @@ public class InstitutionsViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        Constan.log("测试position："+position);
         Fragment fragment= LawAndCompanyFragment.newInstance(position);
-
         return fragment;
     }
 

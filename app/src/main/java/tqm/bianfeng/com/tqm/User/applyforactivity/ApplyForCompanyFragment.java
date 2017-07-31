@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -25,7 +26,11 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.blankj.utilcode.utils.StringUtils;
 import com.jakewharton.rxbinding.widget.RxTextView;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -43,6 +48,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.R;
@@ -52,9 +58,9 @@ import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.User;
-import tqm.bianfeng.com.tqm.pojo.YwApplyEnter;
 import tqm.bianfeng.com.tqm.pojo.YwRzsq;
 import tqm.bianfeng.com.tqm.pojo.address.address_model;
+import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.pojo.result.ResultCodeWithImgPathList;
 
 /**
@@ -63,14 +69,13 @@ import tqm.bianfeng.com.tqm.pojo.result.ResultCodeWithImgPathList;
 //公司申请
 public class ApplyForCompanyFragment extends BaseFragment {
 
-
     private static final int REQUEST_IMAGE = 2;
-    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE=1234;
+    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1234;
     @BindView(R.id.private_capital_radio)
     RadioButton privateCapitalRadio;
     @BindView(R.id.mediation_radio)
     RadioButton mediationRadio;
-    int selectRadio=0;
+    int selectRadio = 0;
 
     @BindView(R.id.company_name_edi)
     EditText companyNameEdi;
@@ -111,8 +116,8 @@ public class ApplyForCompanyFragment extends BaseFragment {
     AutoCompleteTextView selectAddressCounty;
 
     YwRzsq ywApplyEnter;
-    YwApplyEnter oldYwApplyEnter;
     List<TextView> uploadTxts;
+
     public interface mListener {
         public void setCommitBtn(boolean is);
     }
@@ -124,15 +129,15 @@ public class ApplyForCompanyFragment extends BaseFragment {
         mListener = (mListener) activity;
 
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_apply_for_company, container, false);
         ButterKnife.bind(this, view);
-
         companyPhoneNumEdi.setText(realm.where(User.class).findFirst().getUserPhone());
-
+        rxPermissions = new RxPermissions(getActivity()); // where this is an Activity instance
+        rxPermissions.setLogging(true);
         return view;
     }
 
@@ -142,57 +147,91 @@ public class ApplyForCompanyFragment extends BaseFragment {
         init();
     }
 
-    public void init(){
+    // TODO: 2017/7/1  
+    public void init() {
         privateCapitalRadio.setChecked(true);
         iniEdi();
         initaddressModels();
-        photoGet=PhotoGet.getInstance();
+        photoGet = PhotoGet.getInstance();
         photoGet.setContext(getActivity());
-        mCompanyImgSelectPath=new ArrayList<>();
-        mLogoSelectPath=new ArrayList<>();
-        uploadLogoImgPath=new ArrayList<>();
-        mPersonalImgSelectPath=new ArrayList<>();
-        ywApplyEnter=new YwRzsq();
+        mCompanyImgSelectPath = new ArrayList<>();
+        mLogoSelectPath = new ArrayList<>();
+        uploadLogoImgPath = new ArrayList<>();
+        mPersonalImgSelectPath = new ArrayList<>();
+        if (ywApplyEnter == null) {
+            ywApplyEnter = new YwRzsq();
+        }
         companyImgsView = new ArrayList<>();
         companyImgsView.add(companyImg1);
         companyImgsView.add(companyImg2);
         companyImgsView.add(companyImg3);
 
 
-        uploadTxts=new ArrayList<>();
+        uploadTxts = new ArrayList<>();
         uploadTxts.add(uploadLogoImgTxt);
         uploadTxts.add(uploadCompanyImgTxt);
     }
 
+    RxPermissions rxPermissions;
 
     public void addImg() {
-
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+    Log.e(Constan.LOGTAGNAME,"addImg() ");
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             //申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
-        } else {
-
-            MultiImageSelector multiImageSelector = MultiImageSelector.create(getActivity())
-                    .showCamera(true) // show camera or not. true by default
-                    // max select image size, 9 by default. used width #.multi()
-                    .single() // single mode
-                    .multi(); // original select data set, used width #.multi()
-            if (isAddCompanyImg) {
-                multiImageSelector.origin(mCompanyImgSelectPath);
-                multiImageSelector.count(3);
-            } else if (isAddLogo) {
-                multiImageSelector.origin(mLogoSelectPath);
-                multiImageSelector.count(1);
-            } else if (isAddPersonalImg) {
-                multiImageSelector.origin(mPersonalImgSelectPath);
-                multiImageSelector.count(2);
-            }
-            multiImageSelector.start(getActivity(), REQUEST_IMAGE);
+            Log.e(Constan.LOGTAGNAME,"申请WRITE_EXTERNAL_STORAGE权限");
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+        }else if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            //申请CAMERA权限
+            Log.e(Constan.LOGTAGNAME,"申请CAMERA权限");
+           new RxPermissions(getActivity())
+                   .request(Manifest.permission.CAMERA)
+                   .subscribe(new Action1<Boolean>() {
+                       @Override
+                       public void call(Boolean aBoolean) {
+                           Log.e(Constan.LOGTAGNAME,"aBoolean");
+                           if (aBoolean) {
+                              setMultiImageSelector();
+                           } else {
+                               requestPermissionInfo();
+                           }
+                       }
+                   });
+        }else {
+            Log.e(Constan.LOGTAGNAME,"添加图片");
+            setMultiImageSelector();
         }
     }
 
+    private void setMultiImageSelector() {
+        MultiImageSelector multiImageSelector = MultiImageSelector.create(getActivity()).showCamera(true) // show camera or not. true by default
+                // max select image size, 9 by default. used width #.multi()
+                .single() // single mode
+                .multi(); // original select data set, used width #.multi()
+        if (isAddCompanyImg) {
+            multiImageSelector.origin(mCompanyImgSelectPath);
+            multiImageSelector.count(3);
+        } else if (isAddLogo) {
+            multiImageSelector.origin(mLogoSelectPath);
+            multiImageSelector.count(1);
+        } else if (isAddPersonalImg) {
+            multiImageSelector.origin(mPersonalImgSelectPath);
+            multiImageSelector.count(2);
+        }
+        multiImageSelector.start(getActivity(), REQUEST_IMAGE);
+    }
+
+    private void requestPermissionInfo() {
+        new MaterialDialog.Builder(getActivity())
+                .title("请给予相关权限")
+                .content("谢谢")
+                .positiveText("确定")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        getActivity().finish();
+                    }
+                }).show();
+    }
     List<ImageView> companyImgsView;
     List<ImageView> personalImgsView;
     ArrayList<String> mCompanyImgSelectPath;
@@ -201,13 +240,13 @@ public class ApplyForCompanyFragment extends BaseFragment {
     PhotoGet photoGet;
     List<String> uploadLogoImgPath;
 
-    public void setLogo(int resultCode, Intent result){
+    public void setLogo(int resultCode, Intent result) {
         photoGet.handleCrop(resultCode, result);
         mLogoSelectPath.remove(0);
         if (photoGet.getHeadFile() == null) {
             Log.i("gqf", "getHeadFile==null");
 
-        }else{
+        } else {
             Bitmap bm = BitmapFactory.decodeFile(photoGet.getHeadFile().getAbsolutePath());
             uploadLogoImgPath.add(photoGet.getHeadFile().getAbsolutePath());
             logoImg1.setImageBitmap(bm);
@@ -231,21 +270,20 @@ public class ApplyForCompanyFragment extends BaseFragment {
             }
             isAddCompanyImg = false;
         } else if (isAddLogo) {
-            Log.i("gqf","getData"+data.getData());
-            Log.i("gqf","getData"+data.toString());
-
+            Log.i("gqf", "getData" + data.getData());
+            Log.i("gqf", "getData" + data.toString());
 
 
             mLogoSelectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
             photoGet.beginImgCrop(mLogoSelectPath.get(0));
 
-//            logoImg1.setImageBitmap(null);
-//            logoImg1.setVisibility(View.GONE);
-//            for (int i = 0; i < mLogoSelectPath.size(); i++) {
-//                logoImg1.setImageBitmap(BitmapFactory.decodeFile(mLogoSelectPath.get(i)));
-//                logoImg1.setVisibility(View.VISIBLE);
-//            }
-//            isAddLogo = false;
+            //            logoImg1.setImageBitmap(null);
+            //            logoImg1.setVisibility(View.GONE);
+            //            for (int i = 0; i < mLogoSelectPath.size(); i++) {
+            //                logoImg1.setImageBitmap(BitmapFactory.decodeFile(mLogoSelectPath.get(i)));
+            //                logoImg1.setVisibility(View.VISIBLE);
+            //            }
+            //            isAddLogo = false;
 
         } else if (isAddPersonalImg) {
             mPersonalImgSelectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
@@ -261,21 +299,21 @@ public class ApplyForCompanyFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.private_capital_radio,R.id.mediation_radio, R.id.upload_logo_img_txt, R.id.add_logo_img_img, R.id.upload_company_img_txt, R.id.add_company_img_img})
+    @OnClick({R.id.private_capital_radio, R.id.mediation_radio, R.id.upload_logo_img_txt, R.id.add_logo_img_img, R.id.upload_company_img_txt, R.id.add_company_img_img})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.private_capital_radio:
-                selectRadio=0;
+                selectRadio = 0;
                 break;
             case R.id.mediation_radio:
-                selectRadio=1;
+                selectRadio = 1;
                 break;
             case R.id.upload_logo_img_txt:
                 //上传logo图片，上传后改为已上传，上传中
-                if(uploadLogoImgPath.size()==0){
-                    Toast.makeText(getActivity(),"请先添加图片再上传",Toast.LENGTH_SHORT).show();
-                }else{
-                    uploadImg(1,uploadLogoImgPath);
+                if (uploadLogoImgPath.size() == 0) {
+                    Toast.makeText(getActivity(), "请先添加图片再上传", Toast.LENGTH_SHORT).show();
+                } else {
+                    uploadImg(1, uploadLogoImgPath);
                 }
                 break;
             case R.id.add_logo_img_img:
@@ -285,10 +323,10 @@ public class ApplyForCompanyFragment extends BaseFragment {
                 break;
             case R.id.upload_company_img_txt:
                 //上传公司图片，上传后改为已上传，上传中
-                if(mCompanyImgSelectPath.size()==0){
-                    Toast.makeText(getActivity(),"请先添加图片再上传",Toast.LENGTH_SHORT).show();
-                }else{
-                    uploadImg(2,mCompanyImgSelectPath);
+                if (mCompanyImgSelectPath.size() == 0) {
+                    Toast.makeText(getActivity(), "请先添加图片再上传", Toast.LENGTH_SHORT).show();
+                } else {
+                    uploadImg(2, mCompanyImgSelectPath);
                 }
                 break;
             case R.id.add_company_img_img:
@@ -299,16 +337,17 @@ public class ApplyForCompanyFragment extends BaseFragment {
 
         }
     }
-    public void iniEdi(){
+
+    public void iniEdi() {
         Observable<CharSequence> CharSequence1 = RxTextView.textChanges(companyNameEdi).skip(1);
         Observable<CharSequence> CharSequence2 = RxTextView.textChanges(companyUserNameEdi).skip(1);
 
-        Subscription etSc = Observable.combineLatest(CharSequence1, CharSequence2,  new Func2<CharSequence, CharSequence, Boolean>() {
+        Subscription etSc = Observable.combineLatest(CharSequence1, CharSequence2, new Func2<CharSequence, CharSequence, Boolean>() {
             @Override
             public Boolean call(CharSequence charSequence, CharSequence charSequence2) {
                 boolean Bl = !TextUtils.isEmpty(charSequence);
                 boolean B2 = !TextUtils.isEmpty(charSequence2);
-                return Bl && B2  ;
+                return Bl && B2;
             }
         }).subscribe(new Observer<Boolean>() {
             @Override
@@ -339,7 +378,7 @@ public class ApplyForCompanyFragment extends BaseFragment {
     }
 
     //上传图片1.logo 2.公司 3.个人
-    public void uploadImg(final int index,List<String> imgPaths){
+    public void uploadImg(final int index, List<String> imgPaths) {
         MultipartBody.Builder builder = new MultipartBody.Builder();
         for (int i = 0; i < imgPaths.size(); i++) {
             File f = new File(imgPaths.get(i));
@@ -347,15 +386,15 @@ public class ApplyForCompanyFragment extends BaseFragment {
                 Log.i("gqf", "File" + i);
                 if (f.exists()) {
                     RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/png"), f);
-                    builder.addFormDataPart("zichifile"+i, f.getName(), photoRequestBody);
+                    builder.addFormDataPart("zichifile" + i, f.getName(), photoRequestBody);
                 }
             }
         }
         builder.setType(MultipartBody.FORM);
         MultipartBody mb = builder.build();
 
-        uploadTxts.get(index-1).setText("上传中");
-        uploadTxts.get(index-1).setEnabled(false);
+        uploadTxts.get(index - 1).setText("上传中");
+        uploadTxts.get(index - 1).setEnabled(false);
 
         List<MultipartBody.Part> zichifile = new ArrayList<>();
         for (int i = 0; i < mb.size(); i++) {
@@ -363,58 +402,54 @@ public class ApplyForCompanyFragment extends BaseFragment {
         }
 
 
+        Subscription subscription = NetWork.getUserService().uploadCompanyFile(zichifile).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultCodeWithImgPathList>() {
+            @Override
+            public void onCompleted() {
 
-        Subscription subscription = NetWork.getUserService().uploadCompanyFile(zichifile)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResultCodeWithImgPathList>() {
-                    @Override
-                    public void onCompleted() {
+            }
 
-                    }
+            @Override
+            public void onError(Throwable e) {
+                uploadTxts.get(index - 1).setText("上传");
+                uploadTxts.get(index - 1).setEnabled(true);
+                Log.i("gqf", "Throwable" + e.toString());
+                Toast.makeText(getActivity(), "图片尺寸过大", Toast.LENGTH_SHORT).show();
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        uploadTxts.get(index-1).setText("上传");
-                        uploadTxts.get(index-1).setEnabled(true);
-                        Log.i("gqf","Throwable"+e.toString());
-                        Toast.makeText(getActivity(),"图片尺寸过大",Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNext(ResultCodeWithImgPathList strings) {
-                        Log.i("gqf","onNext"+strings.toString());
-                        if(strings.getCode()== ResultCode.SECCESS){
-                            uploadTxts.get(index-1).setText("已上传");
-                            String paths="";
-                            for(int i=0;i<strings.getFiles().size();i++){
-                                if(i>0){
-                                    paths=paths+",";
-                                }
-                                paths=paths+strings.getFiles().get(i);
-                            }
-                            if(index==1){
-                                ywApplyEnter.setGslogo(paths);
-                                uploadLogoImgTxt.setEnabled(false);
-                                addLogoImgImg.setEnabled(false);
-                            }else if(index==2){
-                                ywApplyEnter.setGsimage(paths);
-                                uploadCompanyImgTxt.setEnabled(false);
-                                addCompanyImgImg.setEnabled(false);
-                            }else{
-//                                ywApplyEnter.setCompanyImageOther(paths);
-//                                uploadPersonalImgTxt.setEnabled(false);
-//                                addPersonalImgImg.setEnabled(false);
-                            }
-                            Log.i("gqf","paths"+paths);
-                        }else{
-                            Toast.makeText(getActivity(),"上传失败",Toast.LENGTH_SHORT).show();
-                            uploadTxts.get(index-1).setText("上传");
-                            uploadTxts.get(index-1).setEnabled(true);
+            @Override
+            public void onNext(ResultCodeWithImgPathList strings) {
+                Log.i("gqf", "onNext" + strings.toString());
+                if (strings.getCode() == ResultCode.SECCESS) {
+                    uploadTxts.get(index - 1).setText("已上传");
+                    String paths = "";
+                    for (int i = 0; i < strings.getFiles().size(); i++) {
+                        if (i > 0) {
+                            paths = paths + ",";
                         }
-
+                        paths = paths + strings.getFiles().get(i);
                     }
-                });
+                    if (index == 1) {
+                        ywApplyEnter.setGslogo(paths);
+                        uploadLogoImgTxt.setEnabled(false);
+                        addLogoImgImg.setEnabled(false);
+                    } else if (index == 2) {
+                        ywApplyEnter.setGsimage(paths);
+                        uploadCompanyImgTxt.setEnabled(false);
+                        addCompanyImgImg.setEnabled(false);
+                    } else {
+                        //                                ywApplyEnter.setCompanyImageOther(paths);
+                        //                                uploadPersonalImgTxt.setEnabled(false);
+                        //                                addPersonalImgImg.setEnabled(false);
+                    }
+                    Log.i("gqf", "paths" + paths);
+                } else {
+                    Toast.makeText(getActivity(), "上传失败", Toast.LENGTH_SHORT).show();
+                    uploadTxts.get(index - 1).setText("上传");
+                    uploadTxts.get(index - 1).setEnabled(true);
+                }
+
+            }
+        });
         compositeSubscription.add(subscription);
 
     }
@@ -511,35 +546,42 @@ public class ApplyForCompanyFragment extends BaseFragment {
     }
 
     public YwRzsq getYwApplyEnter() {
-        if(selectProvinces.equals("")||selectCity.equals("")||selectCounty.equals("")){
-            Toast.makeText(getActivity(),"请选择公司所在地址",Toast.LENGTH_SHORT).show();
+        if (selectProvinces.equals("") || selectCity.equals("")) {
+            Toast.makeText(getActivity(), "请选择公司所在地址！", Toast.LENGTH_SHORT).show();
             return null;
-        }else if(ywApplyEnter.getGslogo()==null||ywApplyEnter.getGslogo().equals("")){
-            Toast.makeText(getActivity(),"请上传logo",Toast.LENGTH_SHORT).show();
+        } else if (StringUtils.isEmpty(companyPhoneNumEdi.getText().toString())) {
+            Toast.makeText(getActivity(), "请填写联系电话！", Toast.LENGTH_SHORT).show();
             return null;
-        }else{
+        } else if (StringUtils.isEmpty(ywApplyEnter.getGslogo())) {
+            Toast.makeText(getActivity(), "请上传公司logo！", Toast.LENGTH_SHORT).show();
+            return null;
+        } else if (StringUtils.isEmpty(ywApplyEnter.getGsimage())) {
+            Toast.makeText(getActivity(), "请上传公司相关图片！", Toast.LENGTH_SHORT).show();
+            return null;
+        } else {
             ywApplyEnter.setProvince(selectProvinces);
             ywApplyEnter.setCity(selectCity);
             ywApplyEnter.setCounty(selectCounty);
-//            ywApplyEnter.setAddress(selectProvinces+selectCity+selectCounty);
+            //            ywApplyEnter.setAddress(selectProvinces+selectCity+selectCounty);
             ywApplyEnter.setGsmc(companyNameEdi.getText().toString());
             ywApplyEnter.setLxr(companyUserNameEdi.getText().toString());
             ywApplyEnter.setLxdh(companyPhoneNumEdi.getText().toString());
             ywApplyEnter.setSqlx("01");//01-企业
-            if(selectRadio==0){
+            if (selectRadio == 0) {
                 ywApplyEnter.setLxbq("1001");
-            }else{
+            } else {
                 ywApplyEnter.setLxbq("1002");
             }
             return ywApplyEnter;
         }
 
     }
-    public void setYwApplyEnter(YwRzsq data){
-        ywApplyEnter=data;
-        if(ywApplyEnter.getLxbq().equals("1001")){
+
+    public void setYwApplyEnter(YwRzsq data) {
+        ywApplyEnter = data;
+        if (ywApplyEnter.getLxbq().equals("1001")) {
             privateCapitalRadio.setChecked(true);
-        }else{
+        } else {
             mediationRadio.setChecked(true);
         }
         ywApplyEnter.setShzt("00");
@@ -549,8 +591,8 @@ public class ApplyForCompanyFragment extends BaseFragment {
         ywApplyEnter.setGslogo("");
         ywApplyEnter.setGsimage("");
 
-//        ywApplyEnter.setCompanyImageOther("");
-//        ywApplyEnter.setAddress("");
+        //        ywApplyEnter.setCompanyImageOther("");
+        //        ywApplyEnter.setAddress("");
 
     }
 }

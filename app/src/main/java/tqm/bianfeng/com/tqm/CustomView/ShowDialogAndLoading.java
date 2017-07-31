@@ -16,7 +16,6 @@ public class ShowDialogAndLoading {
         public static ShowDialogAndLoading showDialogAndLoading=new ShowDialogAndLoading();
     }
     private ShowDialogAndLoading(){
-
     }
 
     public interface Linsener{
@@ -32,8 +31,67 @@ public class ShowDialogAndLoading {
 
     Context mContext;
 
+    /**
+     * 失败通知
+     */
+    public void showFailureDialog(Context context,String title,String countent){
+        new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText(title)
+                .setContentText(countent)
+                .showCancelButton(true)
+                .show();
+    }
 
+    /**
+     * 警告通知
+     */
+    public void showWarningDialog(Context context,String title,String countent){
+        new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText(title)
+                .setContentText(countent)
+                .showCancelButton(true)
+                .show();
+    }
 
+    /**
+     * 成功
+     * @param context
+     * @param title
+     * @param countent
+     */
+    public void showSuccessDialog(Context context,String title,String countent){
+        new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText(title)
+                .setContentText(countent)
+                .showCancelButton(true)
+                .show();
+    }
+
+    /**
+     *审核通过对话框
+     */
+    public void showAuthSuccessDialog(Context context,String title,String countent,String btn1,String btn2){
+        new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText(title)
+                .setContentText(countent)
+                .setCancelText(btn1)
+                .setConfirmText(btn2)
+                .showCancelButton(true)
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                    }
+                })
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        mLinsener.showBefore();
+                        sDialog.dismissWithAnimation();
+                    }
+                })
+                .show();
+    }
     public void showBeforeDialog(Context context,String title,String countent,String btn1,String btn2){
         new SweetAlertDialog(context, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                 .setTitleText(title)
@@ -79,6 +137,7 @@ public class ShowDialogAndLoading {
         mContext=context;
         pDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE)
                 .setTitleText(txt);
+
         pDialog.show();
         pDialog.setCancelable(false);
         countDownTimer = new CountDownTimer(1000 * 100, 1000) {
@@ -121,6 +180,8 @@ public class ShowDialogAndLoading {
             countDownTimer.onFinish();
         }
     }
+
+
 
 
 }

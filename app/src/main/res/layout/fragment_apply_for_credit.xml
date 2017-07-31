@@ -3,6 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -23,14 +24,14 @@
                 <ImageView
                     android:layout_width="@dimen/bigmdp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_apply_user"
+                    android:src="@drawable/ic_apply_name"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
 
-                    android:text="联系人"
+                    android:text="姓名"
                     style="@style/apply_text"
                     />
                 <View
@@ -60,7 +61,7 @@
                 <ImageView
                     android:layout_width="@dimen/bigmdp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_apply_phone"
+                    android:src="@drawable/ic_apply_personal_img"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
 
                 <TextView
@@ -78,7 +79,7 @@
                     android:layout_marginRight="@dimen/smallmdp"
                     android:background="@color/gray_light"/>
                 <AutoCompleteTextView
-                    android:id="@+id/company_phone_num_atv"
+                    android:id="@+id/company_institution_atv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.8"
@@ -120,7 +121,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.8"
-                    android:hint="公司电话"
+                    android:hint="联系电话"
                     android:inputType="phone"
                     android:maxLines="11"
                     style="@style/apply_edi"
@@ -142,10 +143,9 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
-                    android:text="公司地址"
+                    android:text="负责区域"
                     style="@style/apply_text"
                     />
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="0.8"
@@ -236,7 +236,7 @@
                     <ImageView
                         android:layout_width="@dimen/bigmdp"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_apply_personal_img"
+                        android:src="@drawable/ic_apply_aompany_img"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
                     <TextView
                         android:layout_width="wrap_content"

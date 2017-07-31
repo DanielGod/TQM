@@ -64,7 +64,7 @@ public class BankLoanAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         BankLoanItem data = getItem(position);
-        if ((data.getRateMin()-data.getRateMax())==0){
+        if ((data.getRateMin().equals(data.getRateMax()))){
             holder.annualReturnTv.setText(data.getRateMin() + "%");
         }else {
 
@@ -72,8 +72,8 @@ public class BankLoanAdapter extends BaseAdapter {
         }
         holder.institutionNameTv.setText(data.getInstitution());
         holder.titleTv.setText(data.getLoanName());
-        holder.purchaseMoneyTv.setText(data.getLoanMoneyMin() + "-" + data.getLoanMoneyMax() + "万");
-        holder.investmentTermTv.setText(data.getLoanPeriodMin() + "-" + data.getLoanPeriodMax() + "个月");
+        holder.purchaseMoneyTv.setText(data.getLoanPeriodMin() + "-" + data.getLoanPeriodMax() + "个月");
+        holder.investmentTermTv.setText(data.getLoanMoneyMin() + "-" + data.getLoanMoneyMax() + "万");
         holder.financViewsTv.setText(data.getLoanViews() + "");
         Picasso.with(mContext).load(NetWork.LOAD+"/getImg/"+data.getInstitutionIcon()+ Constan.IMGURL)
                 .placeholder(R.drawable.placeholder).into(holder.bankfinancingimg);
@@ -92,7 +92,6 @@ public class BankLoanAdapter extends BaseAdapter {
         this.datas = decoCompanyItemList;
         notifyDataSetChanged();
     }
-
     static class ViewHolder {
         @BindView(R.id.institutionName_tv)
         TextView institutionNameTv;

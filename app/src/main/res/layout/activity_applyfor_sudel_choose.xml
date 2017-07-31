@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    android:background="@drawable/apply_in_bg"
+              android:gravity="center_horizontal"
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/apply_for_choose_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hugehdp"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <LinearLayout
+        android:id="@+id/choose_company_apply_lin"
+        android:layout_width="@dimen/hugehxxxxxxxxxdp"
+        android:layout_height="@dimen/hugehxxxxxdp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/radio_orangetran_bg_shap"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/smallhdp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_choose_to_company_apply"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="入驻申请"
+            android:textSize="@dimen/bigsp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/choose_personal_apply_lin"
+        android:layout_width="@dimen/hugehxxxxxxxxxdp"
+        android:layout_height="@dimen/hugehxxxxxdp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:background="@drawable/radio_whitetran_bg_shap"
+        android:layout_marginTop="@dimen/smallhdp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_choose_to_personal_apply"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="贷款申请"
+            android:textSize="@dimen/bigsp"
+            android:textColor="@color/colorPrimary"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/choose_creditManager_apply_lin"
+        android:layout_width="@dimen/hugehxxxxxxxxxdp"
+        android:layout_height="@dimen/hugehxxxxxdp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/radio_orangetran_bg_shap"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/smallhdp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_choose_to_company_apply"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="付费"
+            android:textSize="@dimen/bigsp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+</LinearLayout>

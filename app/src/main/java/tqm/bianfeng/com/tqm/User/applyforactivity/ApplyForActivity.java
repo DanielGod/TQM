@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.soundcloud.android.crop.Crop;
@@ -50,7 +49,6 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCreditFrag
     ApplyForCompanyFragment applyForCompanyFragment;
     ApplyForPersonalFragment applyForPersonalFragment;
     ApplyForCreditFragment applyForCreditFragment;
-
     ShowDialogAndLoading showDialogAndLoading;
     String applyForId;
     @Override
@@ -77,20 +75,28 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCreditFrag
             title="信贷经理认证";
         }
         setToolbar(applyForCompanyToolbar, title);
-        getUserApplyMsg();
         commit.setEnabled(false);
         showDialogAndLoading= ShowDialogAndLoading.Show.showDialogAndLoading;
         showDialogAndLoading.setmLinsener(new ShowDialogAndLoading.Linsener() {
             @Override
             public void showBefore() {
-                save();
+                    save();
             }
 
             @Override
             public void showAfter() {
-                onBackPressed();
+              startActivity(new Intent(ApplyForActivity.this,ApplyForStatusActivity.class));
+                finish();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e("Daniel","---onStart---");
+        //获取入驻信息
+        getUserApplyMsg();
     }
 
     @DebugLog
@@ -98,7 +104,7 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCreditFrag
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("Daniel","多图选择返回："+requestCode);
-        Log.e("Daniel","多图选择返回data："+data.toString());
+        Log.e("Daniel","多图选择返回data："+data);
         Log.e("Daniel","多图选择返回resultCode："+resultCode);
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
@@ -132,18 +138,21 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCreditFrag
     }
     @OnClick(R.id.commit)
     public void onClick() {
+        if (ywApplyEnter==null){
+            ywApplyEnter = new YwRzsq();
+        }
         if(APPLYFORTYPE==APPLYFORCOMPANYTYPE){
+            //公司
             ywApplyEnter=applyForCompanyFragment.getYwApplyEnter();
+
         }else if(APPLYFORTYPE==APPLYFORPERSONALTYPE){
+            //个人
             ywApplyEnter=applyForPersonalFragment.getYwApplyEnter();
         }else {
+            //信贷经理
             ywApplyEnter=applyForCreditFragment.getYwApplyEnter();
         }
-
-        if(ywApplyEnter==null||ywApplyEnter.getLxdh().equals("")){
-            Toast.makeText(this, "联系电话不能为空", Toast.LENGTH_SHORT).show();
-
-        }else{
+        if(ywApplyEnter!=null){
             //提交
             showDialogAndLoading.showBeforeDialog(this,"是否提交","  ","取消","确定");
         }
@@ -176,13 +185,13 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCreditFrag
                         showDialogAndLoading.stopLoaading();
                         if(resultCode.getCode()==ResultCode.SECCESS){
                             showDialogAndLoading.showAfterDialog(ApplyForActivity.this,"提交成功","我们将于两个工作日内与您联系，请保持电话畅通","确定");
-                            User user = realm.where(User.class).findFirst();
-                            realm.beginTransaction();
-                            user.setUserType(ywApplyEnter.getLxbq());
-                            user.setApplyForStatu(ywApplyEnter.getShzt());
-                            Log.i("Daniel","审核状态："+ywApplyEnter.getShzt());
-                            realm.copyToRealmOrUpdate(user);
-                            realm.commitTransaction();
+//                            User user = realm.where(User.class).findFirst();
+//                            realm.beginTransaction();
+////                            user.setApplyForType(ywApplyEnter.getLxbq());
+//                            Log.i("Daniel","审核状态："+ywApplyEnter.getShzt());
+//                            user.setApplyForStatu(ywApplyEnter.getShzt());
+//                            realm.copyToRealmOrUpdate(user);
+//                            realm.commitTransaction();
                         }
                     }
                 });
@@ -196,14 +205,10 @@ public class ApplyForActivity extends BaseActivity implements ApplyForCreditFrag
                 .subscribe(new Observer<YwRzsq>() {
                     @Override
                     public void onCompleted() {
-
                     }
-
                     @Override
                     public void onError(Throwable e) {
-
                     }
-
                     @Override
                     public void onNext(YwRzsq ywApr) {
                         Log.i("Daniel","获取入驻信息："+ywApr.toString());

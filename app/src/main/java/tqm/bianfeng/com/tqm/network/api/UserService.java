@@ -1,6 +1,7 @@
 package tqm.bianfeng.com.tqm.network.api;
 
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import retrofit2.http.Field;
@@ -11,24 +12,30 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import rx.Observable;
+import tqm.bianfeng.com.tqm.main.vehicle.bean.VehicleSubmitResultCode;
 import tqm.bianfeng.com.tqm.pojo.BankInformItem;
+import tqm.bianfeng.com.tqm.pojo.Card;
+import tqm.bianfeng.com.tqm.pojo.DksqVO;
 import tqm.bianfeng.com.tqm.pojo.LawyerItem;
 import tqm.bianfeng.com.tqm.pojo.MyAttention;
+import tqm.bianfeng.com.tqm.pojo.PayTrans;
 import tqm.bianfeng.com.tqm.pojo.ReleaseActivityItem;
 import tqm.bianfeng.com.tqm.pojo.ReleaseLoanItem;
+import tqm.bianfeng.com.tqm.pojo.Reports;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithCompanyFile;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.UserActionNum;
+import tqm.bianfeng.com.tqm.pojo.UserPointA;
 import tqm.bianfeng.com.tqm.pojo.YwBankActivity;
+import tqm.bianfeng.com.tqm.pojo.YwDksq;
 import tqm.bianfeng.com.tqm.pojo.YwRzsq;
 import tqm.bianfeng.com.tqm.pojo.bank.BankActivityItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankFinancItem;
 import tqm.bianfeng.com.tqm.pojo.bank.BankListItems;
 import tqm.bianfeng.com.tqm.pojo.bank.BankLoanItem;
 import tqm.bianfeng.com.tqm.pojo.result.ResultCodeWithImgPathList;
-import tqm.bianfeng.com.tqm.pojo.result.ResultWithAuditCode;
 import tqm.bianfeng.com.tqm.pojo.result.ResultWithLink;
 import tqm.bianfeng.com.tqm.update.UpdateMsg;
 
@@ -226,9 +233,10 @@ public interface UserService {
 
     /**
      * 查看入驻申请当前状态
+     * sqr 申请人Id
      */
-    @GET("rzsq/shzt/{userId}")
-    Observable<ResultWithAuditCode> getStatus(@Path("userId") int userId);
+    @GET("rzsq/shzt/{sqr}")
+    Observable<Map<String,String>> getShzt(@Path("sqr") int sqr);
 
     /**
      * 纠错举报
@@ -312,6 +320,113 @@ public interface UserService {
     @GET("getStatistics/{userId}")
     Observable<List<UserActionNum>> getStatistics(@Path("userId") int userId);
 
+    /**
+     *获取订单对象
+     * @param viewType 01-待领取列表 02-已领取列表 03-显示数量
+     * @param userId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("dksq/getItem")
+    Observable<List<YwDksq>> getItem(@Field("viewType") String  viewType, @Field("userId") Integer  userId);
+
+    /**
+     *获取订单详情
+     * @param dksqId
+     * @param viewType
+     * @return
+     */
+    @GET("dksq/view/{userId}/{dksqId}/{viewType}")
+    Observable<DksqVO> getDksqVO(@Path("userId") Integer userId,@Path("dksqId") String dksqId, @Path("viewType") String viewType);
+
+    /**
+     * 获取详情是否免费
+     * @param userPhone
+     * @param userId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("dksq/isFree")
+    Observable<String> isFree(@Field("userPhone") String userPhone, @Field("userId") Integer  userId);
+
+    /**
+     * 付费
+     * @param dksqId
+     * @param userId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("dksq/saveLqmx")
+    Observable<ResultCode> saveLqmx(@Field("dksqId") String dksqId, @Field("userId") Integer  userId);
+
+    /**
+     * 车辆评估提交
+     * @param carAssess
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("car/")
+    Observable<VehicleSubmitResultCode> saveVehicleInformation(@Field("carAssess") String carAssess);
+
+    /**
+     * 名片上传
+     * @param file
+     * @param userId
+     * @return
+     */
+    @Multipart
+    @POST("card/upload")
+    Observable<ResultCode> saveVehicleCollection(@Part MultipartBody.Part file,@Part("userId") Integer userId);
+
+    /**
+     * 获取用户积分列表
+     * @param userId
+     * @return
+     */
+    @GET("getUserPointItem/{userId}")
+    Observable<List<UserPointA>> getUserPointItem(@Path("userId") Integer userId);
+
+    /**
+     * 用户实现签到
+     * @param userId
+     * @return
+     */
+    @GET("sign/{userId}")
+    Observable<ResultCode> sign(@Path("userId") Integer userId);
+
+    /**
+     * 名片收集
+     * @param userId
+     * @return
+     */
+    @GET("card/{userId}")
+    Observable<List<Card>> getCard(@Path("userId") Integer userId);
+
+    /**
+     * 纠错记录
+     * @param userId
+     * @return
+     */
+    @GET("getReports/{userId}")
+    Observable<List<Reports>> getReports(@Path("userId") Integer userId);
+
+    /**
+     * 交易接口
+     * @param userId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("pay/getPayTrans")
+    Observable<List<PayTrans>> getPayTrans(@Field("userId")  Integer userId);
+
+    /**
+     * 上传通讯录
+     * @param addressBook
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("saveAddressBook")
+    Observable<ResultCode> saveAddressBook(@Field("addressBook")  String addressBook);
 
 
 }

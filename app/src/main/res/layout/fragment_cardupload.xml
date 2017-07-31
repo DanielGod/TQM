@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+android:gravity="center"
+    >
+    <ImageView
+        android:id="@+id/card_img"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="@dimen/dp_240"
+        android:src="@drawable/cardcollection1"
+        android:adjustViewBounds="true"/>
+    <Button
+        android:id="@+id/commit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mediumhdp"
+        android:background="@drawable/apply_for_selector"
+        android:layout_margin="@dimen/smallmdp"
+        android:text="提交名片"
+        android:textSize="@dimen/mediumxsp"
+        android:textColor="@drawable/apply_for_text_color_selector"
+
+        />
+</LinearLayout>

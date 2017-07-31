@@ -23,6 +23,11 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
     Handler handler;
     String oldCode="";
 
+    public ILoginRegisterPresenterImpl(ILoginAndRegistered iLoginAndRegistered) {
+        super();
+        this.iLoginAndRegistered = iLoginAndRegistered;
+        handler = new Handler(Looper.getMainLooper());
+    }
     public void setOldCode(String phone,boolean isGet) {
         if(isGet){
             //网络获取验证码
@@ -56,13 +61,10 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
             oldCode="";
         }
     }
-    public ILoginRegisterPresenterImpl(ILoginAndRegistered iLoginAndRegistered) {
-        super();
-        this.iLoginAndRegistered = iLoginAndRegistered;
-        handler = new Handler(Looper.getMainLooper());
-    }
+
     //验证并注册或登录
     public void loginOrRegister(String phone,String code,String channel){
+        // TODO: 2017/7/4 验证码
         if(oldCode.equals("")||!oldCode.equals(code)){
             //验证码错误
             iLoginAndRegistered.loginOrRegisteredResult(1,false,"验证码不正确");

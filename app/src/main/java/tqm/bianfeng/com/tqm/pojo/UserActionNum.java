@@ -7,7 +7,7 @@ package tqm.bianfeng.com.tqm.pojo;
 public class UserActionNum {
 
     int num;
-    String mark;
+    String mark; //05 判断签到 0-未签到 1-签到  06-积分
 
     public int getNum() {
         return num;

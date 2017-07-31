@@ -1,11 +1,12 @@
 package tqm.bianfeng.com.tqm.main;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.DialogInterface;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -24,11 +25,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.blankj.utilcode.utils.StringUtils;
+import com.blankj.utilcode.utils.AppUtils;
+import com.blankj.utilcode.utils.PhoneUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.soundcloud.android.crop.Crop;
+import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,11 +48,13 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+import tqm.bianfeng.com.tqm.CustomView.RequestPermissions;
 import tqm.bianfeng.com.tqm.Dialog.BaseDialog;
 import tqm.bianfeng.com.tqm.Institutions.InstitutionsInFragment;
 import tqm.bianfeng.com.tqm.Institutions.SearchInstiutionsActivity;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.UserFragment;
+import tqm.bianfeng.com.tqm.Util.AppUtilsBd;
 import tqm.bianfeng.com.tqm.Util.DisplayUtil;
 import tqm.bianfeng.com.tqm.Util.NetUtils;
 import tqm.bianfeng.com.tqm.Util.PermissionsHelper;
@@ -59,6 +65,7 @@ import tqm.bianfeng.com.tqm.lawhelp.AllCityActivity;
 import tqm.bianfeng.com.tqm.lawhelp.LawHelpFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.LawAdd;
+import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.User;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.update.UpdateMsg;
@@ -66,10 +73,11 @@ import tqm.bianfeng.com.tqm.update.UpdateService;
 
 import static tqm.bianfeng.com.tqm.Util.PhotoGet.REQUEST_IMAGE_CAPTURE;
 
-public class MainActivity extends AppCompatActivity implements UserFragment.mListener, HomeFragment3.mListener, LawHelpFragment.mListener {
+public class MainActivity extends AppCompatActivity implements  UserFragment.mListener, HomeFragment4.mListener, LawHelpFragment.mListener {
     private static final String HOME_TAG = "home_flag";
     private static final String LAWHELP_TAG = "lawhelp_flag";
     private static final String INSTITUTIONSIN_TAG = "institutionsin_flag";
+
     private static final String CATHOME_TAG = "cathome_flag";
     private static final int CONTENT_HOME = 1;
     private static final int CONTENT_LAWHELP = 2;
@@ -107,6 +115,12 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     ImageView actionSearchImg;
     @BindView(R.id.home_login_txt)
     TextView homeLoginTxt;
+    String mVersion;//本地版本
+    private ContentResolver cr;
+    RequestPermissions requestPermissions;
+    private String channel;//渠道号
+    private String IMEI="android";//设备号
+    private String MAC;//mac地址
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,23 +128,8 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
+        requestPermissions = new RequestPermissions(this);
         compositeSubscription = new CompositeSubscription();
-        Window window = getWindow();
-        //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        //设置状态栏颜色
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
-        }
-        //        try {
-//            initSystemBar();
-//        } catch (Exception e) {
-//
-//        }
-//        //设置状态栏
-//        setSystemBarColor(R.color.black);
         //设置底部栏
         initBottomBar();
         //版本更新
@@ -139,8 +138,71 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         initNetWork(true);
         EventBus.getDefault().register(this);
         setBelow(0);
+        //获取本地版本
+        mVersion= AppUtils.getAppInfo(MainActivity.this).getVersionName();
+        if (Build.VERSION.SDK_INT < 23){
+            Log.e("Daniel","版本号小于23");
+            channel = AppUtilsBd.getChanel(getApplicationContext());
+            IMEI = PhoneUtils.getPhoneIMEI(getApplicationContext());
+            saveChannel(channel,IMEI);
+        }else {
+            //请求权限
+            requestPermission();
+        }
+
+    }
 
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.e("Daniel","requestCode："+requestCode);
+        switch (requestCode) {
+            case Constan.REQUEST_CODE_ALL_PERMISSIONS:
+                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    IMEI = PhoneUtils.getPhoneIMEI(MainActivity.this);
+                    Log.e("Daniel","获取IMEI："+IMEI);
+                }
+
+                //获取设备号
+                channel = AppUtilsBd.getChanel(getApplicationContext());
+                Log.e("Daniel","同意手机权限获取channel："+channel);
+//                if (StringUtils.isEmpty(channel) || StringUtils.isEmpty(IMEI)){
+//                    MAC=AppUtilsBd.getMacAddress2(MainActivity.this);
+//                    Log.e("Daniel","获取MAC："+MAC);
+//                }
+                    //保存渠道号，设备号
+                    saveChannel(channel, IMEI);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void saveChannel(String cl, String imei) {
+        Log.e("Daniel","saveChannel");
+        Log.e("Daniel","----channel-----"+ cl);
+        Log.e("Daniel","----IMEI----"+ imei);
+        //保存渠道号
+        NetWork.getBankService().saveChannel(cl, imei)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResultCode>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Daniel","----保存设备号，渠道号异常----"+e.toString());
+                        //                        countToEnter();
+                    }
+                    @DebugLog
+                    @Override
+                    public void onNext(ResultCode resultCode) {
+                        Log.e("Daniel","----getMsgv----"+resultCode.getMsg());
+                        //                        countToEnter();
+                    }
+                });
     }
 
     @Override
@@ -148,11 +210,8 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         super.onResume();
         setToolBarColorBg(tooleBarNowAlpha);
         //定位按钮信息更新
-        Log.e("Daniel", "----LawAdd---" + realm.where(LawAdd.class).findFirst());
         if (realm.where(LawAdd.class).findFirst() != null) {
-            Log.e("Daniel", "----LawAdd---" + realm.where(LawAdd.class).findFirst());
             if (!realm.where(LawAdd.class).findFirst().getCity().equals("")) {
-                Log.e("Daniel", "----LawAdd---" + realm.where(LawAdd.class).findFirst());
                 homeLocationTxt.setText(realm.where(LawAdd.class).findFirst().getCity());
                 locationStr = realm.where(LawAdd.class).findFirst().getCity();
             } else {
@@ -162,7 +221,14 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         } else {
             homeLocationTxt.setText(Constan.LOCATION);
             locationStr = Constan.LOCATION;
+
         }
+        MobclickAgent.onResume(this);
+    }
+
+    private void requestPermission() {
+        requestPermissions.requestAllPermissions();
+
     }
 
     /**
@@ -218,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
      *
      * @param contentHome
      */
-    HomeFragment3 homeFragment;
+    HomeFragment4 homeFragment;
     LawHelpFragment lawHelpFragment;
     InstitutionsInFragment institutionsInFragment;
     UserFragment userFragemnt;
@@ -228,10 +294,10 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
             case CONTENT_HOME:
                 String home_str = getResources().getString(R.string.home);
                 toolbarTitle.setText(home_str);
-                homeFragment = (HomeFragment3) getSupportFragmentManager().findFragmentByTag(HOME_TAG);
+                homeFragment = (HomeFragment4) getSupportFragmentManager().findFragmentByTag(HOME_TAG);
                 hideFragment(HOME_TAG);
                 if (homeFragment == null) {
-                    homeFragment = HomeFragment3.newInstance();
+                    homeFragment = HomeFragment4.newInstance();
                     getSupportFragmentManager().beginTransaction()
                             .add(R.id.container, homeFragment, HOME_TAG).commit();
                 } else {
@@ -343,7 +409,6 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
             Class activityClass) {
         startActivity(new Intent(MainActivity.this, activityClass));
     }
-
     public void changeUserHeadImg() {
         PermissionsHelper.verifyStoragePermissions(MainActivity.this);
         Log.i("gqf", "changeUserHeadImg");
@@ -397,12 +462,15 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     }
 
     UpdateMsg mUpdateMsg;
+    MaterialDialog mDialog;
+    ImageView unUpdateImg;
+    ImageView updateImg;
+    TextView version;
+    TextView updateContent;
     Observer<UpdateMsg> observer = new Observer<UpdateMsg>() {
         @Override
         public void onCompleted() {
-
         }
-
         @Override
         public void onError(Throwable e) {
             Log.e("gqf", "updateMsg" + e.getMessage());
@@ -411,50 +479,80 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
         @Override
         public void onNext(UpdateMsg updateMsg) {
             Log.e("gqf", "更新信息" + updateMsg.toString());
-            sharedPreferences= getSharedPreferences("version",
-                    Activity.MODE_PRIVATE);
-//            mLocationVersion=sharedPreferences.getString("version","");
-            if (StringUtils.isEmpty(sharedPreferences.getString("version",""))){
-                Log.e("gqf", "本地版本为空" );
-                //实例化SharedPreferences.Editor对象
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                //用putString的方法保存数据
-                editor.putString("version","0.0.1");
-                //提交当前数据
-                editor.apply();
-            }
+
+//            sharedPreferences= getSharedPreferences("version",
+//                    Activity.MODE_PRIVATE);
+////            mLocationVersion=sharedPreferences.getString("version","");
+//            if (StringUtils.isEmpty(sharedPreferences.getString("version",""))){
+//                Log.e("gqf", "本地版本为空" );
+//                //实例化SharedPreferences.Editor对象
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                //用putString的方法保存数据
+//                editor.putString("version","0.0.1");
+//                //提交当前数据
+//                editor.apply();
+//            }
             //与本地版本号对比
-            Log.e("gqf", "本地版本号" +sharedPreferences.getString("version",""));
-            if (BaseApplication.isUpdateForVersion(updateMsg.getVersionCode(), sharedPreferences.getString("version",""))) {
+            Log.e("gqf", "本地版本号" +mVersion);
+            if (BaseApplication.isUpdateForVersion(updateMsg.getVersionCode(), mVersion)) {
                 //Log.i("gqf",UpdateInformation.localVersion+"updateMsg"+updateMsg.toString());
                 mUpdateMsg = updateMsg;
-                if (alert == null) {
-                    alert = new AlertDialog.Builder(MainActivity.this);
-                }
-                alert.setTitle("软件升级")
-                        .setMessage(updateMsg.getUpdateContent())
-                        .setPositiveButton("更新", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                //开启更新服务UpdateService
-                                //这里为了把update更好模块化，可以传一些updateService依赖的值
-                                //如布局ID，资源ID，动态获取的标题,这里以app_name为例
-                                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                        != PackageManager.PERMISSION_GRANTED) {
-                                    //申请WRITE_EXTERNAL_STORAGE权限
-                                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                            WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
-                                } else {
-                                    startUpdateService(mUpdateMsg);
-                                }
-                            }
-                        })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                ISUPDATEAPP = false;
-                            }
-                        });
-                alert.create().show();
+//                if (alert == null) {
+//                    alert = new AlertDialog.Builder(MainActivity.this);
+//                }
+                mDialog = new MaterialDialog.Builder(MainActivity.this)
+                        .customView(R.layout.main_update_dialog, false).show();
+                View view = mDialog.getCustomView();
+                unUpdateImg = (ImageView) view.findViewById(R.id.updateDialog_unUpdate_img);
+                updateImg = (ImageView) view.findViewById(R.id.updateDialog_immediatelyUpdate_img);
+                updateContent = (TextView) view.findViewById(R.id.updateDialog_content_tv);
+                version = (TextView) view.findViewById(R.id.updateDialog_version_tv);
+                version.setText("V "+updateMsg.getVersionCode());
+                updateContent.setText(updateMsg.getUpdateContent());
+                updateImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            //申请WRITE_EXTERNAL_STORAGE权限
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                    WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+                        } else {
+                            startUpdateService(mUpdateMsg);
+                        }
+                    }
+                });
+                unUpdateImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mDialog.dismiss();
+                        ISUPDATEAPP = false;
+                    }
+                });
+//                alert.setTitle("软件升级")
+//                        .setMessage(updateMsg.getUpdateContent())
+//                        .setPositiveButton("更新", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                //开启更新服务UpdateService
+//                                //这里为了把update更好模块化，可以传一些updateService依赖的值
+//                                //如布局ID，资源ID，动态获取的标题,这里以app_name为例
+//                                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                                        != PackageManager.PERMISSION_GRANTED) {
+//                                    //申请WRITE_EXTERNAL_STORAGE权限
+//                                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                                            WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+//                                } else {
+//                                    startUpdateService(mUpdateMsg);
+//                                }
+//                            }
+//                        })
+//                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                                ISUPDATEAPP = false;
+//                            }
+//                        });
+//                alert.create().show();
             }
         }
     };
@@ -463,20 +561,15 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     //开起后台更新服务
     public void startUpdateService(UpdateMsg updateMsg) {
 //        Constan.localVersion  = mUpdateMsg.getVersionCode();
-        if (!StringUtils.isEmpty(mUpdateMsg.getVersionCode())){
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            //用putString的方法保存数据
-            editor.putString("version",mUpdateMsg.getVersionCode());
-            //提交当前数据
-            editor.apply();
-        }
         Log.e("gqf", "更新版本："+ mUpdateMsg.getVersionCode());
-        Log.e("gqf", "本地版本："+sharedPreferences.getString("version",""));
+        Log.e("gqf", "本地版本："+mVersion);
         Intent updateIntent = new Intent(MainActivity.this, UpdateService.class);
         updateIntent.putExtra("getUpdateContent", updateMsg.getUpdateContent());
         updateIntent.putExtra("getVersionCode", updateMsg.getVersionCode());
         updateIntent.putExtra("getVersionUrl", updateMsg.getUpdateUrl());
         startService(updateIntent);
+        Toast.makeText(this, "后台下载中", Toast.LENGTH_SHORT).show();
+        mDialog.dismiss();
     }
 
     //检测更新
@@ -636,6 +729,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
         //启动其他页面时修改toolbar颜色
 //        toolbar.getBackground().setAlpha(255);
 //        toolbarTitle.setAlpha(1);
@@ -645,6 +739,7 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home_location_txt:
+//                getContacts();
                 startActivity(new Intent(MainActivity.this, AllCityActivity.class));
                 break;
             case R.id.home_login_txt:
@@ -658,4 +753,24 @@ public class MainActivity extends AppCompatActivity implements UserFragment.mLis
                 break;
         }
     }
+
+    private void getContacts() {
+        Uri uri=Uri.parse("content://com.android.contacts/raw_contacts");
+        Cursor cursor=cr.query(uri,null,null,null,null);
+        while(cursor.moveToNext()){
+            int _id=cursor.getInt(cursor.getColumnIndex("_id"));
+            String display_name=cursor.getString(cursor.getColumnIndex("display_name"));
+            Log.i("test",_id+" "+display_name);
+            Uri uriData=Uri.parse("content://com.android.contacts/raw_contacts/"+_id+"/data");
+            Cursor cursorData=cr.query(uriData,null,null,null,null);
+            while(cursorData.moveToNext()){
+                String mimetype=cursorData.getString(cursorData.getColumnIndex("mimetype"));
+                String data1=cursorData.getString(cursorData.getColumnIndex("data1"));
+                if("vnd.android.cursor.item/phone_v2".equals(mimetype)){
+                    Log.i("test","  "+mimetype+" "+data1);
+                }
+            }
+        }
+    }
 }
+

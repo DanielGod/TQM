@@ -1,10 +1,10 @@
 [
     {
-        "merged": "H:\\AndroidStudio\\Project\\BFKJ\\AndroidStudio\\TQM\\library1\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_horizontal.xml",
-        "source": "H:\\AndroidStudio\\Project\\BFKJ\\AndroidStudio\\TQM\\library1\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_horizontal.xml"
+        "merged": "G:\\AndroidStudio\\Project\\BFKJ\\AndroidStudio\\TQM\\library1\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_horizontal.xml",
+        "source": "G:\\AndroidStudio\\Project\\BFKJ\\AndroidStudio\\TQM\\library1\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_horizontal.xml"
     },
     {
-        "merged": "H:\\AndroidStudio\\Project\\BFKJ\\AndroidStudio\\TQM\\library1\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_vertical.xml",
-        "source": "H:\\AndroidStudio\\Project\\BFKJ\\AndroidStudio\\TQM\\library1\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_vertical.xml"
+        "merged": "G:\\AndroidStudio\\Project\\BFKJ\\AndroidStudio\\TQM\\library1\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_vertical.xml",
+        "source": "G:\\AndroidStudio\\Project\\BFKJ\\AndroidStudio\\TQM\\library1\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_vertical.xml"
     }
 ]

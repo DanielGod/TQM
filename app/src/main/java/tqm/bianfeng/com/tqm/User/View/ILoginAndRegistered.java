@@ -12,5 +12,5 @@ public interface ILoginAndRegistered {
     public void resetUserHeadImg(boolean isChange);
     public void shouNetWorkActivity();
     public void showStatus(String code);
-    public void setNum(int num1,int num2,int num3,int num4);
+    public void setNum(int num1,int num2,int num3,int num4,int num5,int num6);
 }

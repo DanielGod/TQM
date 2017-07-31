@@ -6,13 +6,17 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.StrictMode;
 import android.os.Vibrator;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
+import com.lzy.okgo.OkGo;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.crashreport.CrashReport;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -104,11 +108,34 @@ public class BaseApplication extends MultiDexApplication {
         super.onCreate();
         //        LeakCanary.install(this);
         mList = new ArrayList<>();
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).schemaVersion(2).deleteRealmIfMigrationNeeded().build();
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(this)
+                .schemaVersion(2).deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(realmConfig);
         Config.DEBUG = true;
         UMShareAPI.get(this);
         Logger.addLogAdapter(new AndroidLogAdapter());
+        // bugly
+        CrashReport.initCrashReport(getApplicationContext(), "3c82f269d9", true);
+        //友盟场景配置
+        MobclickAgent.setScenarioType(getApplicationContext(), MobclickAgent.EScenarioType. E_UM_NORMAL);
+        //虚拟机忽略文件URI曝光
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
+//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                //                .addInterceptor(new LoggerInterceptor("TAG"))
+//                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+//                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+//                //其他配置
+//                .build();
+//
+//        OkHttpUtils.initClient(okHttpClient);
+//
+        OkGo.init(this);
+        OkGo.getInstance()
+                //打开该调试开关,控制台会使用 红色error 级别打印log,并不是错误,是为了显眼,不需要就不要加入该行
+                .debug("OkGo");
+
         /***
          * 初始化定位sdk，建议在Application中创建
          */

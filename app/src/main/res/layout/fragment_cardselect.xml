@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/mpsj"
+        android:adjustViewBounds="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/hugehdp">
+
+        <LinearLayout
+            android:id="@+id/pictureUpload_lin"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?android:selectableItemBackground"
+            android:clickable="true"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/hugehxxdp"
+                android:src="@drawable/pictureupload"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="名片上传"
+                android:textSize="@dimen/bigsp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:padding="@dimen/activity_horizontal_margin"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/photoUpload_lin"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?android:selectableItemBackground"
+            android:clickable="true"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/hugehxxdp"
+                android:src="@drawable/photoipload"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="拍照上传"
+                android:textSize="@dimen/bigsp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:padding="@dimen/activity_horizontal_margin"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

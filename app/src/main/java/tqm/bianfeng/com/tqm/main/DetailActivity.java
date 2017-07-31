@@ -44,6 +44,9 @@ import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.User;
+import tqm.bianfeng.com.tqm.pojo.bank.Constan;
+
+import static tqm.bianfeng.com.tqm.R.id.city;
 
 /**
  * Created by johe on 2017/3/15.
@@ -110,25 +113,6 @@ public class DetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
-
-        //        detailToolbar.inflateMenu(R.menu.collection_article_false);
-        //        detailToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-        //            @Override
-        //            public boolean onMenuItemClick(MenuItem item) {
-        //                if (item.getItemId() == R.id.collection_false) {
-        //                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        //                            != PackageManager.PERMISSION_GRANTED) {
-        //                        //申请WRITE_EXTERNAL_STORAGE权限
-        //                        ActivityCompat.requestPermissions(DetailActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-        //                                WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
-        //                    }
-        //                    share();
-        //                }
-        //                return false;
-        //            }
-        //        });
-
-
 
         detailType = getIntent().getStringExtra("detailType");
         detailId = getIntent().getIntExtra("detailId", -1);
@@ -217,8 +201,11 @@ public class DetailActivity extends BaseActivity {
         if(detailType.equals("01")){
             url = NetWork.LOAD+articlePath+"?module="+detailType+"&objId="+detailId+"&userId="+userId;
             shareUrl = NetWork.LOAD+articlePath;
+        }else if ("03".equals(detailType)){//贷款详情
+            Log.e(Constan.LOGTAGNAME,"detailType-city-detailId-userId:"+MainActivity.locationStr+detailId+userId);
+            url = NetWork.LOAD+"/app/loan/detail?city="+MainActivity.locationStr+"&loanId="+detailId+"&userId="+userId+"&mark=y";
+            shareUrl = NetWork.LOAD+"/app/loan/detail?city="+city+"&loanId="+detailId+"&userId="+userId+"&mark=n";
         }
-
 
         Log.i("gqf","getDetail"+detailTitle);
         Log.e("Daniel","------shareUrl---"+shareUrl);
@@ -269,8 +256,8 @@ public class DetailActivity extends BaseActivity {
                 @Override
                 public void run() {
                     Toast.makeText(DetailActivity.this, "js调用了Native函数传递参数：" + data, Toast.LENGTH_SHORT).show();
-                    //String text = logTextView.getText() +  "\njs调用了Native函数传递参数：" + str;
-                    //logTextView.setText(text);
+                    //String usedcar = logTextView.getText() +  "\njs调用了Native函数传递参数：" + str;
+                    //logTextView.setText(usedcar);
                 }
             });
         }

@@ -1,7 +1,5 @@
 package tqm.bianfeng.com.tqm.pojo.bank;
 
-import java.math.BigDecimal;
-
 /**
  * Created by Daniel on 2017/3/14.
  */
@@ -13,8 +11,8 @@ public class BankFinancItem {
     private String issuingCity;
     private String riskGrade;
     private String investmentTerm;
-    private BigDecimal annualReturn;
-    private BigDecimal purchaseMoney;
+    private String annualReturn;
+    private String purchaseMoney;
     private Integer financViews;
     private String presaleStatus;
     private String institutionIcon;
@@ -83,19 +81,19 @@ public class BankFinancItem {
         this.investmentTerm = investmentTerm;
     }
 
-    public BigDecimal getAnnualReturn() {
+    public String getAnnualReturn() {
         return annualReturn;
     }
 
-    public void setAnnualReturn(BigDecimal annualReturn) {
+    public void setAnnualReturn(String annualReturn) {
         this.annualReturn = annualReturn;
     }
 
-    public BigDecimal getPurchaseMoney() {
+    public String getPurchaseMoney() {
         return purchaseMoney;
     }
 
-    public void setPurchaseMoney(BigDecimal purchaseMoney) {
+    public void setPurchaseMoney(String purchaseMoney) {
         this.purchaseMoney = purchaseMoney;
     }
 

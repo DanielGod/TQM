@@ -150,7 +150,7 @@ public class ReleaseMyActivityActivity extends BaseActivity {
             @Override
             public void onTextChange(String text) {
                 ywBankActivity.setActivityContent(text);
-                //mPreview.setText(text);
+                //mPreview.setText(usedcar);
             }
         });
     }
@@ -530,7 +530,6 @@ public class ReleaseMyActivityActivity extends BaseActivity {
     }
 
     public void getActivity() {
-
         Subscription subscription = NetWork.getUserService().getReleaseActivity(activityId, realm.where(User.class).findFirst().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

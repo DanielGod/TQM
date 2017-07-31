@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp"
+    app:cardMaxElevation="2dp"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="true"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_horizontal_margin"
+        >
+        <ImageView
+            android:id="@+id/userCardRecode_pic_img"
+            android:layout_width="@dimen/hugehxxxxxdp"
+            android:layout_height="@dimen/hugehxxdp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_apply_logo"
+            android:adjustViewBounds="true"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/tinymdp"
+            >
+            <TextView
+                android:id="@+id/userCardRecode_statusCode_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="审核中"
+                android:gravity="right"
+                android:textColor="@color/red"
+                />
+            <TextView
+                android:id="@+id/userCardRecode_remark_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="返回信息"
+                android:gravity="right"
+                android:layout_marginTop="@dimen/tinymdp"
+                />
+            <TextView
+                android:id="@+id/userCardRecode_date_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="提交时间："
+                android:layout_marginTop="@dimen/bigmdp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

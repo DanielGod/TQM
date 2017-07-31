@@ -30,6 +30,7 @@ import java.util.Date;
 
 import tqm.bianfeng.com.tqm.Dialog.BaseDialog;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 
 public class PhotoGet {
     private View avatorView;
@@ -66,48 +67,6 @@ public class PhotoGet {
         }
         return mInstance;
     }
-
-    //    @Overridea
-    //    public void OnViewClick(View v) {
-    //        switch (v.getId()){
-    //            case R.id.tv_save:
-    //               // String intro=et_intro.getText().toString().trim();
-    ////                if (TextUtils.isEmpty(intro)) {
-    ////                    et_intro.setError("店铺描述不能为空");
-    ////                    et_intro.requestFocus();
-    ////                    return;
-    ////                }
-    //                if(headBase64!=null){
-    //                    TreeMap<String,String> treeMap1=new TreeMap<String, String>();
-    //                    treeMap1.put("operation", "setlogo");
-    //                    treeMap1.put("shop_logo", headBase64);
-    //                    treeMap1.put("token", token);
-    //                    setStoreInfo(treeMap1);
-    //                }else {
-    //                    showToast("请选择图片！");
-    //                }
-    ////                TreeMap<String,String> treeMap3=new TreeMap<String, String>();
-    ////                treeMap3.put("operation", "setbase");
-    ////                treeMap3.put("shop_desc", intro);
-    ////                treeMap3.put("token", token);
-    ////                setStoreInfo(treeMap3);
-    //                break;
-    //            case R.id.iv_storeicon:
-    //                showAvatarDialog();
-    //                break;
-    //            case R.id.photo_pop_tv_capture:
-    //                dialog.dismiss();
-    //                startCameraPicCut();
-    //                break;
-    //            case R.id.photo_pop_tv_album:
-    //                dialog.dismiss();
-    //                startImageCaptrue();
-    //                break;
-    //            case R.id.photo_pop_tv_cancel:
-    //                dialog.dismiss();
-    //                break;
-    //        }
-    //    }
 
     public void showAvatarDialog(Context context, BaseDialog dialog) {
         this.context = context;
@@ -325,11 +284,13 @@ public class PhotoGet {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            Constan.log("拍照photoFile："+photoFile);
+            Constan.log("拍照context："+context);
 
             if (photoFile != null) {
                 Uri photoUri = FileProvider.getUriForFile(context, "tqm.bianfeng.com.tqm", photoFile);
+                Constan.log("拍照photoUri："+photoUri);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-
                 mCurrentPhotoUri = photoUri;
 
                 ((Activity) context).startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);

@@ -10,12 +10,13 @@ android {
         applicationId "tqm.bianfeng.com.tqm"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
             // 设置支持的SO库架构
+            abiFilters 'armeabi' , 'x86' , 'armeabi-v7a', 'x86_64', 'arm64-v8a'
             //abiFilters 'armeabi', 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64','mips','mips64'
         }
         resConfigs "zh"
@@ -25,9 +26,9 @@ android {
     buildTypes {
         release {
             // 是否进行混淆
-            minifyEnabled true
-            shrinkResources true
-            zipAlignEnabled true
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
             //signingConfig signingConfigs.debug
             // 混淆文件的位置
             proguardFiles 'proguard-rules.pro'
@@ -41,11 +42,11 @@ android {
     }
     //渠道号
     productFlavors {
-        tqm01 {}
-//        tqm02 {}
-//        tqm03 {}
-//        tqm04 {}
-//        tqm05 {}
+        afwl001 {}
+        afwl002 {}
+//        afwl003 {}
+//        afwl004 {}
+//        afwl005 {}
 //        tqm06 {}
 //        tqm07 {}
 //        tqm08 {}
@@ -63,7 +64,7 @@ android {
 //        tqm20 {}
 
         productFlavors.all { flavor ->
-            flavor.manifestPlaceholders = [WEIJY_CHANNEL_VALUE: name]
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
 
     }
@@ -153,11 +154,15 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+
     /*freeline*/
 
     //    compile project(':library')
+
     //compile 'com.jph.takephoto:takephoto_library:4.0.3'
+
     //dependencies
+
     //    compile 'in.srain.cube:cube-sdk:1.0.44.38'
     compile files('libs/libapshare.jar')
     compile files('libs/SocialSDK_alipay.jar')
@@ -168,11 +173,13 @@ dependencies {
     compile('in.srain.cube:cube-sdk:1.0.44.38') {
         exclude module: 'support-v4'
     }
+    //友盟统计
+    compile 'com.umeng.analytics:analytics:latest.integration'
     compile files('libs/libddshare.jar')
     compile files('libs/SocialSDK_QQ_Simplify.jar')
     compile files('libs/SocialSDK_Sina_Simplify.jar')
     compile files('libs/SocialSDK_tencentWB.jar')
-    compile files('libs/SocialSDK_twitter.jar')
+    compile files('libs/SocialSDK_twitter.jar') 
     compile files('libs/SocialSDK_WeChat_Simplify.jar')
     compile files('libs/umeng_shareboard_widget.jar')
     compile files('libs/umeng_social_api.jar')
@@ -181,7 +188,6 @@ dependencies {
     compile files('libs/umeng_social_shareview.jar')
     compile files('libs/umeng_social_tool.jar')
     //dialog
-    compile project(':library1')
     compile files('libs/baidumapapi_base_v4_3_0.jar')
     compile files('libs/baidumapapi_cloud_v4_3_0.jar')
     compile files('libs/baidumapapi_map_v4_3_0.jar')
@@ -211,8 +217,10 @@ dependencies {
     compile files('libs/umeng_social_shareboard.jar')
     compile files('libs/umeng_social_shareview.jar')
     compile files('libs/umeng_social_tool.jar')
-    compile project(':library1')
+    //友盟统计
+    compile 'com.umeng.analytics:analytics:latest.integration'
     //多图选择
+
     //根据版本支持来配置,目前支持1.0.1
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'junit:junit:4.12'
@@ -265,10 +273,25 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.mcxiaoke.gradle:packer-helper:1.0.9'
     compile 'com.afollestad.material-dialogs:core:0.9.0.2'
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.8.0@aar'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
     compile 'com.orhanobut:logger:2.1.1'
+    compile 'org.apache.httpcomponents:httpcore:4.4.4'
+    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.2'
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    compile files('libs/alipaySdk-20170623-proguard.jar')
+    compile project(':indexlib')
+
+    //下载模块
+    compile 'com.lzy.net:okgo:2.0.0'
+    //可以单独使用，不需要依赖下方的扩展包
+    compile 'com.lzy.net:okrx:0.1.0'
+    //RxJava扩展支持，根据需要添加
+    compile 'com.lzy.net:okserver:1.1.0'
+
+    compile 'com.tencent.bugly:crashreport:2.2.0' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
+    compile 'com.tencent.bugly:nativecrashreport:3.0' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 }
+android { sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/usedcar'] } } }

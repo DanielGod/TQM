@@ -10,6 +10,6 @@ public interface IUserWorkPresenter {
     public void onClose();
     public void uploadUserHeadImg(File img,int userId);
     public void getUserMsg(String phone,String c);
-    public void getAuditCode(int userId);
     public void getNum(int userId);
+
 }

@@ -13,6 +13,8 @@
     <color name="max_transparent">#00000000</color> <!-- 全透明 -->
     <color name="black">#333333</color>
     <color name="gary_dark">#979797</color> <!-- 深灰色 -->
+    <!-- 全局背景色-->
+    <color name="bg">#F2F2F2</color>
 
 
     <color name="white">#ffffff</color>
@@ -67,7 +69,12 @@
     <color name="information_headColor1">#35CBF6</color>
     <color name="information_headColor3">#FFE07D</color>
     <color name="information_headColor2">#E3F8F6</color>
-    <!--机构中心-->
+    <!--分割线-->
     <!--<color name="InstitutionalCenter_tab">#0xff111111</color>-->
+    <color name="grid_divider_line">#d8d8d8</color>
+    <color name="EAEAEA">#EAEAEA</color>
+
+    <color name="partTranslucent">#39000000</color>
+    <color name="vehicleDialog_bg">#4A6680</color>
 
 </resources>

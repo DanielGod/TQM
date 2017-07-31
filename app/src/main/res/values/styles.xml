@@ -125,7 +125,7 @@
         <item name="android:textColor">@color/home_hotActivity_gray9</item>
     </style>
 
-    <!--title字体样式-text-->
+    <!--title字体样式-usedcar-->
     <style name="sty_title_tv">
         <item name="android:textSize">@dimen/mediumsp</item>
         <item name="android:lines">2</item>
@@ -133,20 +133,20 @@
         <item name="android:textColor">@color/home_hotActivity_gray3</item>
     </style>
 
-    <!--单位字体样式-text-->
+    <!--单位字体样式-usedcar-->
     <style name="sty_units_tv">
         <item name="android:textSize">@dimen/tinysp</item>
         <item name="android:textColor">@color/home_hotActivity_gray9</item>
     </style>
 
-    <!--列表lab样式-text-->
+    <!--列表lab样式-usedcar-->
     <style name="sty_listLab_tv">
         <item name="android:textSize">@dimen/smallsp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingRight">3dp</item>
         <item name="android:textColor">@color/home_hotActivity_gray3</item>
     </style>
-    <!--筛选-全部-text-->
+    <!--筛选-全部-usedcar-->
     <style name="filterAll_tv">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -155,7 +155,7 @@
         <item name="android:textSize">@dimen/smallsp</item>
         <item name="android:paddingBottom">1dp</item>
     </style>
-    <!--银行详情-值-text-->
+    <!--银行详情-值-usedcar-->
     <style name="listitemLayout_tv">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -172,6 +172,8 @@
         <item name="android:layout_height">@dimen/smallhdp</item>
         <item name="android:background">@android:color/white</item>
         <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
     </style>
     <!--点击效果-->
     <style name="itemClick">
@@ -238,7 +240,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/home_orange</item>
         <item name="android:layout_marginRight">@dimen/tinymdp</item>
-        <item name="android:layout_marginLeft">@dimen/tinymdp</item>
+
         <item name="android:layout_marginTop">@dimen/mediummxdp</item>
         <item name="android:layout_marginBottom">@dimen/mediummxdp</item>
     </style>
@@ -270,6 +272,46 @@
         <item name="android:textColor">@color/font_black_1</item>
         <item name="android:textColorHint">@color/font_black_5</item>
         <item name="android:textSize">@dimen/mediumsp</item>
+    </style>
+    <!--个人中心数量样式-->
+    <style name="user_collection_num">
+        <item name="android:textColor">@color/home_hotActivity_gray6</item>
+        <item name="android:textSize">@dimen/mediumxsp</item>
+        <item name="android:gravity">center_horizontal|bottom</item>
+    </style>
+
+    <!--订单详情item样式-->
+    <style name="orderDetial_listitem">
+        <item name="android:textColor">@color/home_hotActivity_gray6</item>
+        <item name="android:textSize">@dimen/mediumsp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/mediummdp</item>
+    </style>
+
+    <!--工具服务-->
+    <style name="use_toolService_lin">
+        <item name="android:paddingBottom">@dimen/tinymdp</item>
+        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="use_toolService_img">
+        <item name="android:paddingRight">@dimen/mediummxdp</item>
+        <item name="android:paddingLeft">@dimen/mediummxdp</item>
+        <item name="android:paddingTop">@dimen/mediummxdp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">3</item>
+        <item name="android:scaleX">0.8</item>
+        <item name="android:scaleY">0.8</item>
+    </style>
+
+    <style name="use_toolService_tv">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/font_black_1</item>
+        <item name="android:textSize">@dimen/smallsp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
 </resources>

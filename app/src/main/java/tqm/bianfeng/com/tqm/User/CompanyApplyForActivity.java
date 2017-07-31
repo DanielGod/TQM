@@ -81,8 +81,6 @@ public class CompanyApplyForActivity extends BaseActivity {
     PhotoGet photoGet;
     BaseDialog baseDialog;
     AlertDialog.Builder alert;
-    @BindView(R.id.YBJ_loding_txt)
-    TextView YBJLodingTxt;
     @BindView(R.id.loding_lin)
     LinearLayout lodingLin;
 
@@ -102,10 +100,9 @@ public class CompanyApplyForActivity extends BaseActivity {
         }
         applyForBtn.setEnabled(false);
         initEdi();
-        YBJLodingTxt.setText("提交中...");
+
         lodingLin.setVisibility(View.GONE);
 
-        YBJLodingTxt.setVisibility(View.GONE);
         toastType = new ToastType();
     }
     public void applyForError(){

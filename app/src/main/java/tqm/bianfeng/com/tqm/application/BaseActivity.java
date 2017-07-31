@@ -10,6 +10,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.umeng.analytics.MobclickAgent;
+
 import io.realm.Realm;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 import rx.subscriptions.CompositeSubscription;
@@ -45,12 +47,24 @@ public class BaseActivity extends SwipeBackActivity implements InitViewInterface
         toastType=new ToastType();
     }
 
-    public void setToolbar(Toolbar toolbar,String msg){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+
+
+    public void setToolbar(Toolbar toolbar, String msg){
         mToolbar=toolbar;
         toolbar.setTitle(msg);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setNavigationIcon(R.drawable.barcode__back_arrow);
-
         //setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +72,7 @@ public class BaseActivity extends SwipeBackActivity implements InitViewInterface
                 onBackPressed();
             }
         });
-        setSystemBarColor(R.color.colorPrimaryDark);
+//        setSystemBarColor(R.color.colorPrimaryDark);
     }
 
     public void setToolbar(boolean isHasBack,boolean isBackWrite,int textColor){

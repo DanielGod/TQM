@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/hugehxxxxdp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp"
+    app:cardMaxElevation="2dp"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="true"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin"
+        >
+
+        <TextView
+            android:id="@+id/userTransactionRecords_jynr_tv"
+            android:layout_width="@dimen/hugehxxxxxxxxxdp"
+            android:layout_height="wrap_content"
+            android:text="交易内容"
+            android:textColor="@color/home_hotActivity_gray6"
+           />
+
+        <TextView
+            android:id="@+id/userTransactionRecords_jyje_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥150"
+            android:textColor="@color/red"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+           />
+
+        <TextView
+            android:id="@+id/userTransactionRecords_jyrq_tv"
+            android:layout_width="@dimen/hugehxxxxxxxdp"
+            android:layout_height="wrap_content"
+            android:text="交易日期"
+            android:layout_marginTop="@dimen/smallmdp"
+            android:textColor="@color/home_hotActivity_gray6"
+            android:layout_below="@+id/userTransactionRecords_jynr_tv"
+            android:layout_alignParentStart="true"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

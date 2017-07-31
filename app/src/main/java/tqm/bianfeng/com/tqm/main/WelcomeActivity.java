@@ -1,6 +1,5 @@
 package tqm.bianfeng.com.tqm.main;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +11,8 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.blankj.utilcode.utils.PhoneUtils;
 import com.blankj.utilcode.utils.ScreenUtils;
 import com.squareup.picasso.Picasso;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -27,18 +24,15 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.Util.AppConstants;
-import tqm.bianfeng.com.tqm.Util.AppUtils;
 import tqm.bianfeng.com.tqm.Util.NetUtils;
 import tqm.bianfeng.com.tqm.Util.SpUtils;
 import tqm.bianfeng.com.tqm.featureguide.global.WelcomeGuideActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
-import tqm.bianfeng.com.tqm.pojo.ResultCode;
 
 public class WelcomeActivity extends Activity {
 
@@ -52,8 +46,9 @@ public class WelcomeActivity extends Activity {
 
     private CompositeSubscription mCompositeSubscription;
     private static final int TIMETOCOUNT = 3;
-    private String channel;//渠道号
-    private String IMEI;//设备号
+
+
+    public final static int REQUEST_READ_PHONE_STATE = 13;
 
 
     @Override
@@ -70,95 +65,89 @@ public class WelcomeActivity extends Activity {
         }
         ScreenUtils.hideStatusBar(this);
         setContentView(R.layout.activity_welcome);
-        mCompositeSubscription = new CompositeSubscription();
-        ButterKnife.bind(this);
-        channel = AppUtils.getChanel(getApplicationContext());
-//        Toast.makeText(this, "--------"+channel, Toast.LENGTH_SHORT).show();
-
-        Picasso.with(WelcomeActivity.this).load(R.drawable.qidongye).into(startPageImg);
-
-        if(!NetUtils.isConnected(this)){
+//        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
+//        //获取权限
+//        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
+//        }
+            mCompositeSubscription = new CompositeSubscription();
+            ButterKnife.bind(this);
+//            channel = AppUtilsBd.getChanel(getApplicationContext());
+            //        Toast.makeText(this, "--------"+channel, Toast.LENGTH_SHORT).show();
             Picasso.with(WelcomeActivity.this).load(R.drawable.qidongye).into(startPageImg);
-            countToEnter();
-        }else{
-            //countToEnter();
-            Subscription subscription = NetWork.getUserService().getImages("01")
-                    .subscribeOn(Schedulers.io())
-                    .timeout(100,TimeUnit.SECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<List<String>>() {
-                        @Override
-                        public void onCompleted() {
+            if(!NetUtils.isConnected(this)){
+                Picasso.with(WelcomeActivity.this).load(R.drawable.qidongye).into(startPageImg);
+                countToEnter();
+            }else{
+                //countToEnter();
+                Subscription subscription = NetWork.getUserService().getImages("01")
+                        .subscribeOn(Schedulers.io())
+                        .timeout(100,TimeUnit.SECONDS)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<List<String>>() {
+                            @Override
+                            public void onCompleted() {
 
-                        }
+                            }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            //Picasso.with(WelcomeActivity.this).load(R.drawable.qidongye).into(startPageImg);
-                            countToEnter();
-                        }
+                            @Override
+                            public void onError(Throwable e) {
+                                //Picasso.with(WelcomeActivity.this).load(R.drawable.qidongye).into(startPageImg);
+                                countToEnter();
+                            }
 
-                        @Override
-                        public void onNext(List<String> strings) {
-                            Log.e("gqf","onNext"+strings.toString());
-                            //Picasso.with(WelcomeActivity.this).load(NetWork.LOAD+strings.get(0)).error(R.drawable.qidongye).into(startPageImg);
-                            countToEnter();
-                        }
-                    });
-            mCompositeSubscription.add(subscription);
-            //获取设备号，保存渠道号
-            requestPhone();
-
-
-
-        }
+                            @Override
+                            public void onNext(List<String> strings) {
+                                Log.e("gqf","onNext"+strings.toString());
+                                //Picasso.with(WelcomeActivity.this).load(NetWork.LOAD+strings.get(0)).error(R.drawable.qidongye).into(startPageImg);
+                                countToEnter();
+                            }
+                        });
+                mCompositeSubscription.add(subscription);
+//                //获取设备号，保存渠道号
+//                IMEI = PhoneUtils.getPhoneIMEI(getApplicationContext());
+//                saveChannel();
+            }
     }
 
-    private void requestPhone() {
-        Log.e("Daniel","requestPhone");
-        RxPermissions.getInstance(this)
-                .request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE)
-                .subscribe(new Action1<Boolean>() {
-                    @DebugLog
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) {
-                            IMEI = PhoneUtils.getPhoneIMEI(getApplicationContext());
-                            saveChannel();
-                        } else {
-                            requestPermissionInfo();
-                        }
-                    }
-                });
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode) {
+//            case REQUEST_READ_PHONE_STATE:
+//                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+//                    //TODO
+//                    //获取设备号，保存渠道号
+//                    IMEI = PhoneUtils.getPhoneIMEI(getApplicationContext());
+//                    saveChannel();
+//                }
+//                break;
+//
+//            default:
+//                break;
+//        }
+//    }
 
-    private void saveChannel() {
-        Log.e("Daniel","saveChannel");
-        Log.e("Daniel","----channel-----"+channel);
-        Log.e("Daniel","----IMEI----"+IMEI);
-        //保存渠道号
-        NetWork.getBankService().saveChannel(channel,IMEI)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResultCode>() {
-                    @Override
-                    public void onCompleted() {
+//    private void requestPhone() {
+//        Log.e("Daniel","requestPhone");
+//        //动态获取权限
+//        new RxPermissions(this)
+//                .request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE)
+//                .subscribe(new Action1<Boolean>() {
+//                    @DebugLog
+//                    @Override
+//                    public void call(Boolean aBoolean) {
+//                        if (aBoolean) {
+//                            IMEI = PhoneUtils.getPhoneIMEI(getApplicationContext());
+//                            saveChannel();
+//                        } else {
+//                            requestPermissionInfo();
+//                        }
+//                    }
+//                });
+//    }
 
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-//                        countToEnter();
-                    }
-                    @DebugLog
-                    @Override
-                    public void onNext(ResultCode resultCode) {
-                        Log.e("Daniel","----getMsgv----"+resultCode.getMsg());
-//                        countToEnter();
-
-                    }
-                });
-    }
 
     private void requestPermissionInfo() {
         new MaterialDialog.Builder(this)
@@ -169,7 +158,6 @@ public class WelcomeActivity extends Activity {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         WelcomeActivity.this.finish();
-
                     }
                 }).show();
     }

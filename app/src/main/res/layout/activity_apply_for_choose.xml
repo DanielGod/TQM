@@ -39,7 +39,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="信贷经理申请"
+            android:text="信贷经理申请入口"
             android:textSize="@dimen/bigsp"
             android:textColor="@color/white"/>
     </LinearLayout>
@@ -59,13 +59,12 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:src="@drawable/ic_choose_to_personal_apply"/>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="个人申请"
+            android:text="个人申请入口"
             android:textSize="@dimen/bigsp"
             android:textColor="@color/colorPrimary"/>
     </LinearLayout>

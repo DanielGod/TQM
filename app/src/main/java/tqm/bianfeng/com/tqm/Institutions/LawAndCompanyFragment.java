@@ -31,6 +31,7 @@ import tqm.bianfeng.com.tqm.main.MainActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.InstitutionItem;
 import tqm.bianfeng.com.tqm.pojo.User;
+import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 
 /**
  * Created by johe on 2017/4/10.
@@ -75,7 +76,6 @@ public class LawAndCompanyFragment extends BaseFragment {
         datas = new ArrayList<>();
         initData();
 
-
         return view;
     }
 
@@ -93,24 +93,22 @@ public class LawAndCompanyFragment extends BaseFragment {
         if(realm.where(User.class).findFirst()!=null){
             userId=realm.where(User.class).findFirst().getUserId();
         }
-        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService().getInstitutionItem("0" + (index + 1),userId, page + 1, 10, MainActivity.locationStr)
+        Log.e(Constan.LOGTAGNAME,"测试index："+index);
+        Subscription getBankFinancItem_subscription = NetWork.getInstitutionService()
+                .getInstitutionItem("0" + (index + 1),userId, page + 1, 10, MainActivity.locationStr)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<InstitutionItem>>() {
                     @Override
                     public void onCompleted() {
-
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         defaultLoadview.lodingIsFailOrSucess(3);
                         if(loadMoreTxt!=null){
                             loadMoreTxt.loadMoreViewAnim(4);
                         }
-
                     }
-
                     @Override
                     public void onNext(List<InstitutionItem> institutionItems) {
                         for (InstitutionItem institutionItem : institutionItems) {

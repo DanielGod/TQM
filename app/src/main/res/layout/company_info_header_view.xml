@@ -53,7 +53,6 @@
                 android:gravity="center_vertical"
                 android:lines="1"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:text="简介：djaldjlanfkjfasdfasdfasdsndnalsndlask"
                 android:textColor="@color/font_black_2"
                 android:textSize="@dimen/mediumsp"
                 />
@@ -62,6 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -142,6 +142,92 @@
         android:orientation="vertical"
         >
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hugehxxdp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/tinyhdp"
+            android:paddingRight="@dimen/tinyhdp"
+            >
+            <LinearLayout
+                android:id="@+id/collection_lin1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="@dimen/mediummdp"
+                >
+                <ImageView
+                    android:layout_width="@dimen/tinyhdp"
+                    android:layout_height="@dimen/tinyhdp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/j2"
+                    />
+                <ImageView
+                    android:id="@+id/isCollect_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/tinymdp"
+                    android:paddingRight="@dimen/tinymdp"
+                    android:src="@drawable/j12"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/call_lin1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="@dimen/mediummdp"
+                >
+                <ImageView
+                    android:layout_width="@dimen/tinyhdp"
+                    android:layout_height="@dimen/tinyhdp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/j3"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/tinymdp"
+                    android:paddingRight="@dimen/tinymdp"
+                    android:src="@drawable/j5"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/go_website_lin"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="@dimen/mediummdp"
+                >
+                <ImageView
+                    android:layout_width="@dimen/tinyhdp"
+                    android:layout_height="@dimen/tinyhdp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/j4"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/tinymdp"
+                    android:paddingRight="@dimen/tinymdp"
+                    android:src="@drawable/j6"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mediummdp"
+            android:layout_marginLeft="@dimen/bottomBarMargin"
+            android:layout_marginRight="@dimen/bottomBarMargin"
+            android:background="@color/whitesmoke"/>
         <LinearLayout
             android:id="@+id/phone_num_lin"
             android:layout_width="match_parent"
@@ -151,7 +237,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/activity_horizontal_margin"
-
+android:visibility="gone"
             >
 
             <ImageView
@@ -246,6 +332,90 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_right_arrow"
                 />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/appDownload_lin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hugehxxdp"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            >
+            <ImageView
+                android:id="@+id/institution_Logo_img"
+                android:layout_width="@dimen/mediumxhdp"
+                android:layout_height="@dimen/mediumxhdp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/j10"
+                android:padding="@dimen/tinymdp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="2"
+                android:padding="@dimen/mediummdp"
+                >
+                <TextView
+                    android:id="@+id/institution_Title_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    />
+                <TextView
+                    android:id="@+id/institution_integraNum_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/mediummxdp"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+                <ImageView
+                android:id="@+id/appDownload_img"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/j11"
+                android:padding="@dimen/mediummdp"
+
+                />
+                <ImageView
+                    android:id="@+id/appDownloanding_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/xzz"
+                    android:padding="@dimen/mediummdp"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/appinstall_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/az"
+                    android:padding="@dimen/mediummdp"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/appOpen_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/dak"
+                    android:padding="@dimen/mediummdp"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

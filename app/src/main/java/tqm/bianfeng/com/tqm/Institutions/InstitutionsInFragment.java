@@ -26,8 +26,6 @@ public class InstitutionsInFragment extends Fragment {
         InstitutionsInFragment fragment = new InstitutionsInFragment();
         return fragment;
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,11 +35,8 @@ public class InstitutionsInFragment extends Fragment {
         InstitutionsViewPagerAdapter institutionsViewPagerAdapter=new InstitutionsViewPagerAdapter(getChildFragmentManager());
         viewpager.setAdapter(institutionsViewPagerAdapter);
         tablayout.setupWithViewPager(viewpager);
-
         return view;
     }
-
-
     @Override
     public void onDetach() {
         super.onDetach();

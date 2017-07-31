@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+    >
+
+    <LinearLayout
+        style="@style/home_bar_linear"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+        <TextView
+            style="@style/sty_home_title_line_tv"
+            />
+
+        <TextView
+            style="@style/sty_home_title_tv"
+            android:text="工具服务"
+            />
+
+        <TextView
+            android:id="@+id/apply_for_status_txt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/smallmdp"
+            android:text=""
+            android:textColor="@color/font_black_2"
+            android:textSize="@dimen/smallsp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hugehxxxxdp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+
+        >
+        <!--android:id="@+id/user_myLoan_lin"-->
+        <LinearLayout
+            android:id="@+id/user_apply_for_lin"
+            style="@style/use_toolService_lin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                style="@style/use_toolService_img"
+                android:src="@drawable/r7"
+                />
+
+            <TextView
+                style="@style/use_toolService_tv"
+                android:text="我的申请"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/grid_divider_line"
+            />
+
+        <LinearLayout
+            android:id="@+id/user_integralIndiana_lin"
+            style="@style/use_toolService_lin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/use_toolService_img"
+                android:src="@drawable/r9"
+                />
+
+            <TextView
+                style="@style/use_toolService_tv"
+                android:text="积分夺宝"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/grid_divider_line"
+            />
+
+        <LinearLayout
+            android:id="@+id/user_mmGame_lin"
+            style="@style/use_toolService_lin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/use_toolService_img"
+                android:src="@drawable/r10"
+                />
+
+            <TextView
+                style="@style/use_toolService_tv"
+                android:text="猫猫游戏"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/grid_divider_line"
+            />
+
+        <LinearLayout
+            android:id="@+id/user_feedback_lin"
+            style="@style/use_toolService_lin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/use_toolService_img"
+                android:src="@drawable/r11"
+                />
+
+            <TextView
+                style="@style/use_toolService_tv"
+                android:text="反馈"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grid_divider_line"
+        />
+    <LinearLayout
+        android:id="@+id/user_second_lin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hugehxxxxdp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        >
+            <LinearLayout
+                android:id="@+id/user_release_lin"
+                style="@style/use_toolService_lin"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+
+                >
+
+                <ImageView
+                    style="@style/use_toolService_img"
+                    android:src="@drawable/r8"
+                    />
+
+                <TextView
+                    style="@style/use_toolService_tv"
+                    android:text="发布信息"
+                    />
+
+            </LinearLayout>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/grid_divider_line"
+                />
+
+            <LinearLayout
+                android:id="@+id/user_transactoinrecords_lin"
+                style="@style/use_toolService_lin"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <ImageView
+                    style="@style/use_toolService_img"
+                    android:src="@drawable/jyjl"
+                    />
+
+                <TextView
+                    style="@style/use_toolService_tv"
+                    android:text="交易记录"
+                    />
+
+            </LinearLayout>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/grid_divider_line"
+                />
+
+            <LinearLayout
+                android:id="@+id/user_cardrecode_lin"
+                style="@style/use_toolService_lin"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    style="@style/use_toolService_img"
+                    android:src="@drawable/mp"
+                    />
+
+                <TextView
+                    style="@style/use_toolService_tv"
+                    android:text="名片收集"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/grid_divider_line"
+                />
+        <LinearLayout
+            android:id="@+id/user_correcterror_lin"
+            style="@style/use_toolService_lin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <ImageView
+                style="@style/use_toolService_img"
+                android:src="@drawable/jcjl"
+                />
+
+            <TextView
+                style="@style/use_toolService_tv"
+                android:text="纠错记录"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grid_divider_line"
+        />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hugehxxxxdp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:id="@+id/user_setting_lin"
+            style="@style/use_toolService_lin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                style="@style/use_toolService_img"
+                android:src="@drawable/r12"
+                />
+
+            <TextView
+                style="@style/use_toolService_tv"
+                android:text="设置"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/grid_divider_line"
+            />
+
+        <LinearLayout
+            android:id="@+id/user_aboutUs_lin"
+            style="@style/use_toolService_lin"
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/use_toolService_img"
+                android:src="@drawable/r13"
+                />
+
+            <TextView
+                style="@style/use_toolService_tv"
+                android:text="关于我们"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/grid_divider_line"
+            />
+
+        <LinearLayout
+            android:id="@+id/user_shapeAPP_lin"
+            style="@style/use_toolService_lin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/use_toolService_img"
+                android:src="@drawable/r14"
+                />
+
+            <TextView
+                style="@style/use_toolService_tv"
+                android:text="分享APP"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/grid_divider_line"
+            />
+
+        <LinearLayout
+            android:id="@+id/user_contact_lin"
+            style="@style/use_toolService_lin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                style="@style/use_toolService_img"
+                android:src="@drawable/r11"
+                />
+
+            <TextView
+                style="@style/use_toolService_tv"
+                android:text="通讯录"
+               />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

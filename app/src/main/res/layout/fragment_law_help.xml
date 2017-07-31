@@ -19,8 +19,6 @@
         app:ddmenuUnselectedIcon="@drawable/drop_down_unselected_icon"
         android:background="@color/white"
         />
-
-
     <include layout="@layout/fragment_loding"/>
 
 </RelativeLayout>

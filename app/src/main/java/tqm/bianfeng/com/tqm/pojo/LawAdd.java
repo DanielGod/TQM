@@ -11,11 +11,11 @@ import io.realm.annotations.PrimaryKey;
 
 public class LawAdd extends RealmObject{
     @PrimaryKey
-    int id;
-    String province="";
-    String city="";
-    String district="";
-    String specialField="";
+    private int id;
+    private String province="";
+    private String city="";
+    private String district="";
+    private String specialField="";
 
     public int getId() {
         return id;
@@ -58,33 +58,6 @@ public class LawAdd extends RealmObject{
     }
 
     public String getQueryParams(){
-//        String queryParams="{";
-//        boolean isHave=false;
-//        if(!province.equals("")){
-//            queryParams="\"province\":\" "+province+" \\\"";
-//            isHave=true;
-//        }
-//        if(!city.equals("")){
-//            if(isHave){
-//                queryParams=queryParams+",";
-//            }
-//            queryParams=queryParams+"\\\"city\\\":\\\""+city+"\\\"";
-//            isHave=true;
-//        }
-//        if(!district.equals("")){
-//            if(isHave){
-//                queryParams=queryParams+",";
-//            }
-//            queryParams=queryParams+"\\\"district\\\":\\\""+district+"\\\"";
-//            isHave=true;
-//        }
-//        if(!specialField.equals("")){
-//            if(isHave){
-//                queryParams=queryParams+",";
-//            }
-//            queryParams=queryParams+"\\\"specialField\\\":\\\""+specialField+"\\\"";
-//        }
-//        queryParams=queryParams+"}";
         Gson gson=new Gson();
         return gson.toJson(new queryParams(province,city,district,specialField));
     }

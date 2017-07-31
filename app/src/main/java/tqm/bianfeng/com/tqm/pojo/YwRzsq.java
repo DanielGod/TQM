@@ -7,31 +7,6 @@ import java.io.Serializable;
  * */
 public class YwRzsq implements Serializable{
 
-	@Override
-	public String toString() {
-		return "YwRzsq{" +
-				"id='" + id + '\'' +
-				", gsmc='" + gsmc + '\'' +
-				", province='" + province + '\'' +
-				", city='" + city + '\'' +
-				", county='" + county + '\'' +
-				", lxr='" + lxr + '\'' +
-				", lxdh='" + lxdh + '\'' +
-				", sqlx='" + sqlx + '\'' +
-				", lxbq='" + lxbq + '\'' +
-				", gslogo='" + gslogo + '\'' +
-				", gsimage='" + gsimage + '\'' +
-				", grmp='" + grmp + '\'' +
-				", shzt='" + shzt + '\'' +
-				", shbz='" + shbz + '\'' +
-				", srq=" + sqr +
-				'}';
-	}
-
-	/**
-	 * 
-	 */
-
 	private String id;
 	
 	private String gsmc;//公司名称
@@ -62,7 +37,16 @@ public class YwRzsq implements Serializable{
 	
 	private Integer sqr;//申请人ID
 	private Integer institutionId;//机构Id
+	private String institutionName;//机构名称
 	Long createDate;//申请日期
+
+	public String getInstitutionName() {
+		return institutionName;
+	}
+
+	public void setInstitutionName(String institutionName) {
+		this.institutionName = institutionName;
+	}
 
 	public Long getCreateDate() {
 		return createDate;
@@ -198,5 +182,29 @@ public class YwRzsq implements Serializable{
 
 	public void setSqr(Integer sqr) {
 		this.sqr = sqr;
+	}
+
+	@Override
+	public String toString() {
+		return "YwRzsq{" +
+				"id='" + id + '\'' +
+				", gsmc='" + gsmc + '\'' +
+				", province='" + province + '\'' +
+				", city='" + city + '\'' +
+				", county='" + county + '\'' +
+				", lxr='" + lxr + '\'' +
+				", lxdh='" + lxdh + '\'' +
+				", sqlx='" + sqlx + '\'' +
+				", lxbq='" + lxbq + '\'' +
+				", gslogo='" + gslogo + '\'' +
+				", gsimage='" + gsimage + '\'' +
+				", grmp='" + grmp + '\'' +
+				", shzt='" + shzt + '\'' +
+				", shbz='" + shbz + '\'' +
+				", sqr=" + sqr +
+				", institutionId=" + institutionId +
+				", institutionName='" + institutionName + '\'' +
+				", createDate=" + createDate +
+				'}';
 	}
 }

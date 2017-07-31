@@ -23,6 +23,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.CustomView.AutoHeightLayoutManager;
+import tqm.bianfeng.com.tqm.CustomView.IntentToDetail;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.adapter.BankLoanAdapter;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
@@ -53,6 +54,8 @@ public class MyFocuseFragment extends BaseFragment {
 
     private static final String TYPE="getMyAttentionItem";
     Gson gson;
+    IntentToDetail intentToDetail ;
+
 
     public static MyFocuseFragment newInstance(int position) {
         MyFocuseFragment fragment = new MyFocuseFragment();
@@ -76,6 +79,7 @@ public class MyFocuseFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_focuse, container, false);
         ButterKnife.bind(this, view);
+        intentToDetail = IntentToDetail.newInstance.intentToDetail;
         //initData();
         //initData();
         return view;
@@ -294,11 +298,12 @@ public class MyFocuseFragment extends BaseFragment {
             bankActivitionsAdapter.setOnItemClickListener(new HomeBankActivitysListAdapter.HomeBankActivitysItemClickListener() {
                 @Override
                 public void OnClickListener(int position) {
-                    Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra("detailType", DetailActivity.ACTIVITY_TYPE);
-                    intent.putExtra("detailId", bankActivitionsAdapter.getDataItem(position).getActivityId());
-                    intent.putExtra("detailTitle", bankActivitionsAdapter.getDataItem(position).getActivityTitle());
-                    startActivity(intent);
+                    startActivity(intentToDetail.ActivityToDetail(
+                            getActivity(),
+                            bankActivitionsAdapter.getDataItem(position).getActivityId(),
+                            bankActivitionsAdapter.getDataItem(position).getArticlePath(),
+                            bankActivitionsAdapter.getDataItem(position).getActivityTitle()
+                    ));
                 }
             });
             myFocuseList.setLayoutManager(new LinearLayoutManager(getActivity()));

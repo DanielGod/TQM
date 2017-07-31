@@ -1,5 +1,6 @@
 package tqm.bianfeng.com.tqm.application;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ public class BaseFragment extends Fragment{
     protected Realm realm;
     protected CompositeSubscription compositeSubscription;
     protected ToastType toastType;
+    protected Context mContext;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,6 +26,7 @@ public class BaseFragment extends Fragment{
         realm=Realm.getDefaultInstance();
         compositeSubscription=new CompositeSubscription();
         toastType=new ToastType();
+        mContext = getActivity();
     }
 
     @Override

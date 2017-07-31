@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="@dimen/smallmdp"
+              android:layout_marginRight="@dimen/smallmdp"
+              android:orientation="vertical">
+    <ScrollView
+        android:id="@+id/apply_statu_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--信贷经理展示信息-->
+            <LinearLayout
+                android:id="@+id/apply_for_creditManager_msg_lin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+              >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/smallhdp"
+                    android:layout_marginTop="@dimen/smallmdp"
+                    android:background="@drawable/write_radius_bg_shap"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/bigmdp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:src="@drawable/ic_apply_user"/>
+
+                    <TextView
+                        style="@style/apply_text"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:text="联系人"
+                        />
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/mediummxdp"
+                        android:layout_marginRight="@dimen/smallmdp"
+                        android:layout_marginTop="@dimen/mediummxdp"
+                        android:background="@color/gray_light"/>
+
+                    <TextView
+                        android:id="@+id/creditManager_user_edi"
+                        style="@style/apply_text"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.8"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/smallhdp"
+                    android:layout_marginTop="@dimen/smallmdp"
+                    android:background="@drawable/write_radius_bg_shap"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/bigmdp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:src="@drawable/ic_apply_name"/>
+
+                    <TextView
+                        style="@style/apply_text"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:text="所在机构"
+                        />
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/mediummxdp"
+                        android:layout_marginRight="@dimen/smallmdp"
+                        android:layout_marginTop="@dimen/mediummxdp"
+                        android:background="@color/gray_light"/>
+
+                    <TextView
+                        android:id="@+id/creditManager_institutions_edi"
+                        style="@style/apply_text"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.8"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/smallhdp"
+                    android:layout_marginTop="@dimen/smallmdp"
+                    android:background="@drawable/write_radius_bg_shap"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/bigmdp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:src="@drawable/ic_apply_time"/>
+
+                    <TextView
+                        style="@style/apply_text"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:text="电话"
+                        />
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/mediummxdp"
+                        android:layout_marginRight="@dimen/smallmdp"
+                        android:layout_marginTop="@dimen/mediummxdp"
+                        android:background="@color/gray_light"/>
+                    <TextView
+                        android:id="@+id/creditManager_phone_edi"
+                        style="@style/apply_text"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.8"
+                        />
+
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/smallhdp"
+                    android:layout_marginTop="@dimen/smallmdp"
+                    android:background="@drawable/write_radius_bg_shap"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/bigmdp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:src="@drawable/ic_apply_for_type"/>
+
+                    <TextView
+                        style="@style/apply_text"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:text="负责区域"
+                        />
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/mediummxdp"
+                        android:layout_marginRight="@dimen/smallmdp"
+                        android:layout_marginTop="@dimen/mediummxdp"
+                        android:background="@color/gray_light"/>
+
+                    <TextView
+                        android:id="@+id/creditManager_address_edi"
+                        style="@style/apply_text"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.8"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/hugehxxxxxdp"
+                android:background="@color/white"
+                android:layout_marginTop="@dimen/smallmdp"
+                android:layout_marginBottom="@dimen/smallmdp"
+                >
+                <LinearLayout
+                    android:id="@+id/payMoney_left_lin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="120元"
+                        android:gravity="center"
+                        android:textSize="@dimen/hugesp"
+                        android:textColor="@color/red"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="12个月"
+                        android:gravity="center"
+                        android:textColor="@color/home_hotActivity_gray6"
+                        android:textSize="@dimen/mediumsp"
+                        />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="@dimen/tinymdp"
+                    android:layout_height="match_parent"
+                    android:background="@color/whitesmoke"
+
+                    />
+                <LinearLayout
+                    android:id="@+id/payMoney_med_lin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="80元"
+                        android:gravity="center"
+                        android:textSize="@dimen/hugesp"
+                        android:textColor="@color/red"
+                        android:id="@+id/textView5"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="6个月"
+                        android:gravity="center"
+                        android:textColor="@color/home_hotActivity_gray6"
+                        android:textSize="@dimen/mediumsp"
+                        />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="@dimen/tinymdp"
+                    android:layout_height="match_parent"
+                    android:background="@color/whitesmoke"
+
+                    />
+                <LinearLayout
+                    android:id="@+id/payMoney_right_lin"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="50元"
+                    android:gravity="center"
+                    android:textSize="@dimen/hugesp"
+                    android:textColor="@color/red"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3个月"
+                    android:gravity="center"
+                    android:textColor="@color/home_hotActivity_gray6"
+                    android:textSize="@dimen/mediumsp"
+                    />
+
+            </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                >
+                <LinearLayout
+                    style="@style/home_bar_linear"
+                    android:paddingLeft="@dimen/mediummdp"
+                    >
+
+                    <TextView
+                        style="@style/sty_home_title_line_tv"
+                        android:layout_marginLeft="0dp"
+                        />
+
+                    <TextView
+                        style="@style/sty_home_title_tv"
+                        android:text="支付方式"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/white"
+                android:layout_marginTop="1dp"
+
+                >
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/msp_icon"
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="支付宝支付"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/bigsp"
+                    android:paddingLeft="@dimen/bigmdp"
+                    />
+                <CheckBox
+                    android:id="@+id/payWayChoice_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/payBottom_lin"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:visibility="gone"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="金额:"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/mediumsp"
+                android:layout_marginLeft="@dimen/smallmdp"
+                android:textColor="@color/home_hotActivity_gray3"
+                />
+            <TextView
+                android:id="@+id/totalPay_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="120"
+                android:gravity="center_vertical"
+                android:textColor="@color/red"
+                android:textSize="@dimen/bigxmdp"
+                android:layout_marginLeft="@dimen/smallmdp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="元"
+                android:gravity="center_vertical"
+                android:textColor="@color/red"
+                android:textSize="@dimen/bigmdp"
+                android:layout_marginLeft="@dimen/tinymdp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="@dimen/mediummxdp"
+            android:gravity="right"
+            >
+            <Button
+                android:id="@+id/commitPay_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/apply_for_selector"
+                android:text="去支付"
+                android:textSize="@dimen/mediumxsp"
+                android:textColor="@drawable/apply_for_text_color_selector"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

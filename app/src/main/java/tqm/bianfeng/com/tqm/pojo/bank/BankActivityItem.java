@@ -14,13 +14,59 @@ public class BankActivityItem {
      * atttenNum : 2
      */
 
-    private int activityId;
-    private String activityTitle;
-    private String institution;
-    private int activityViews;
-    private String imageUrl;
-    private int atttenNum;
+    private Integer activityId; // 活动Id
+
+    private String activityTitle; // 活动标题
+
+    private String institution; // 所属机构
+
+    private Integer activityViews;//浏览量
+
+    private String imageUrl; //活动图片
+
+    private Integer atttenNum;//关注量
+    private String statusCode;//状态:00-待审核;01-审核通过;02-审核未通过
+    private String remark;//备注
     private String articlePath;
+
+    private String institutionIcon; // 机构图片
+
+
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
+    }
+
+    public void setActivityViews(Integer activityViews) {
+        this.activityViews = activityViews;
+    }
+
+    public void setAtttenNum(Integer atttenNum) {
+        this.atttenNum = atttenNum;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getInstitutionIcon() {
+        return institutionIcon;
+    }
+
+    public void setInstitutionIcon(String institutionIcon) {
+        this.institutionIcon = institutionIcon;
+    }
 
     public String getArticlePath() {
         return articlePath;

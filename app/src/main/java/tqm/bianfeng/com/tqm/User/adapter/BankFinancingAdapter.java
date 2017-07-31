@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
@@ -76,7 +75,7 @@ public class BankFinancingAdapter extends RecyclerView.Adapter<BankFinancingAdap
         holder.annualReturnTv.setText(data.getAnnualReturn() + "%");
         holder.riskGradeNameTv.setText(data.getRiskGrade());
         holder.investmentTermTv.setText(data.getInvestmentTerm());
-        holder.purchaseMoneyTv.setText("" + data.getPurchaseMoney().setScale(0, BigDecimal.ROUND_DOWN));
+        holder.purchaseMoneyTv.setText("" + data.getPurchaseMoney());
         holder.financViewsTv.setText("" + data.getFinancViews());
         holder.rateNameTv.setText("预期年化");
 

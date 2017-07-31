@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.utils.StringUtils;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.io.File;
@@ -166,7 +167,6 @@ public class ApplyForPersonalFragment extends BaseFragment {
                     // max select image size, 9 by default. used width #.multi()
                     .single() // single mode
                     .multi(); // original select data set, used width #.multi()
-
             multiImageSelector.origin(mPersonalImgSelectPath);
             multiImageSelector.count(2);
             multiImageSelector.start(getActivity(), REQUEST_PERSION_IMAGE);
@@ -276,28 +276,37 @@ public class ApplyForPersonalFragment extends BaseFragment {
     }
 
     public YwRzsq getYwApplyEnter() {
+        if (StringUtils.isEmpty(phoneNumEdi.getText().toString())){
+            Toast.makeText(getActivity(),"请填写联系电话！",Toast.LENGTH_SHORT).show();
+            return null;
+        }else if(StringUtils.isEmpty(ywApplyEnter.getGrmp())){
+            Toast.makeText(getActivity(),"请上传个人名片！",Toast.LENGTH_SHORT).show();
+            return null;
+        }else {
+            if (selectRadio == 0) {
+                ywApplyEnter.setLxbq("2001");
+            } else {
+                ywApplyEnter.setLxbq("2002");
+            }
+            ywApplyEnter.setGsmc(userFirstName.getText().toString());
+            ywApplyEnter.setLxr(userName.getText().toString());
+            ywApplyEnter.setLxdh(phoneNumEdi.getText().toString());
+            ywApplyEnter.setSqlx("02");//02-个人
+            if(selectRadio==0){
+                ywApplyEnter.setLxbq("2001");
+            }else{
+                ywApplyEnter.setLxbq("2002");
+            }
+            //        ywApplyEnter.setIdCard(idNumEdi.getText().toString());
 
-        if (selectRadio == 0) {
-            ywApplyEnter.setLxbq("2001");
-        } else {
-            ywApplyEnter.setLxbq("2002");
         }
-        ywApplyEnter.setGsmc(userFirstName.getText().toString());
-        ywApplyEnter.setLxr(userName.getText().toString());
-        ywApplyEnter.setLxdh(phoneNumEdi.getText().toString());
-        ywApplyEnter.setSqlx("02");//02-个人
-        if(selectRadio==0){
-            ywApplyEnter.setLxbq("2001");
-        }else{
-            ywApplyEnter.setLxbq("2002");
-        }
-        //        ywApplyEnter.setIdCard(idNumEdi.getText().toString());
 
         return ywApplyEnter;
     }
 
     public void setYwApplyEnter(YwRzsq data) {
         ywApplyEnter = data;
+
         if (ywApplyEnter.getLxbq().equals("2001")) {
             privateCapitalRadio.setChecked(true);
         } else {

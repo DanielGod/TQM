@@ -9,12 +9,105 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/hugehdp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/img_toolbar_bg"
         android:fitsSystemWindows="true"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
 
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/linearLayout">
+
+            <ImageView
+                android:id="@+id/schedule1_img"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@color/red"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="基本信息"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/tinymdp"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:id="@+id/linearLayout2"
+            >
+            <ImageView
+                android:id="@+id/schedule2_img"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@color/red"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="资产信息"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/tinymdp"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:id="@+id/linearLayout3">
+            <ImageView
+                android:id="@+id/schedule3_img"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@color/red"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="信息提交"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/tinymdp"
+
+                />
+        </LinearLayout>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="@dimen/tinymdp"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="@dimen/mediumhdp"
+            android:layout_marginLeft="@dimen/mediumxhdp"
+            />
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="@dimen/tinymdp"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorPrimary"
+            android:layout_marginRight="@dimen/mediumxhdp"
+            android:layout_marginTop="@dimen/mediumhdp"
+            />
+
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/continar"

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/layout_unCommon_user_lin"
+              android:visibility="gone"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/home_bar_linear"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+        <TextView
+            style="@style/sty_home_title_line_tv"
+            />
+
+        <TextView
+            style="@style/sty_home_title_tv"
+            android:text="订单中心"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="12dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/smallmdp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_right_double"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hugehxxxxdp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/mediummdp"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            >
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/user_unreceived_lin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true"
+                android:orientation="vertical"
+                >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:paddingLeft="@dimen/mediummxdp"
+                    android:paddingRight="@dimen/mediummxdp"
+                    android:paddingTop="@dimen/mediummxdp"
+                    android:src="@drawable/r5"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="未领取"
+                    android:textColor="@color/font_black_1"
+                    android:textSize="@dimen/mediumsp"/>
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/order_unReceive_num_tv"
+                android:layout_width="@dimen/tinyhdp"
+                android:layout_height="@dimen/tinyhdp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/tinymdp"
+                android:background="@drawable/radio_orange_border_shap"
+                android:gravity="center"
+                android:paddingLeft="@dimen/tinymdp"
+                android:paddingRight="@dimen/tinymdp"
+                android:visibility="gone"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/smallsp"
+               />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1">
+        <LinearLayout
+            android:id="@+id/user_received_lin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="?android:selectableItemBackground"
+            android:clickable="true"
+            android:orientation="vertical"
+          >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:paddingLeft="@dimen/mediummxdp"
+                android:paddingRight="@dimen/mediummxdp"
+                android:paddingTop="@dimen/mediummxdp"
+                android:src="@drawable/r6"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="已领取"
+                android:textColor="@color/font_black_1"
+                android:textSize="@dimen/mediumsp"/>
+
+        </LinearLayout>
+            <TextView
+                android:id="@+id/order_receive_num_tv"
+                android:layout_width="@dimen/tinyhdp"
+                android:layout_height="@dimen/tinyhdp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/tinymdp"
+                android:background="@drawable/radio_orange_border_shap"
+                android:gravity="center"
+                android:paddingLeft="@dimen/tinymdp"
+                android:paddingRight="@dimen/tinymdp"
+                android:visibility="gone"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/smallsp"
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/user_mmGame_lin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="?android:selectableItemBackground"
+            android:clickable="true"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -8,15 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-
-import com.handmark.pulltorefresh.library.ILoadingLayout;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
 import rx.Observer;
@@ -32,8 +26,6 @@ import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 public class BankInformationFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
-    @BindView(R.id.main_pull_refresh_lv)
-    PullToRefreshListView mainPullRefreshLv;
 
     private Integer mParam1;
     private int pagNum = 1;
@@ -74,7 +66,6 @@ public class BankInformationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mCompositeSubscription = new CompositeSubscription();
-        initRefreshlv();
         initDate(mParam1+1, pagNum);
     }
 
@@ -84,40 +75,7 @@ public class BankInformationFragment extends Fragment {
         super.onStart();
     }
 
-    private void initRefreshlv() {
-        //设置刷新时显示的文本
-        ILoadingLayout startLayout = mainPullRefreshLv.getLoadingLayoutProxy(true, false);
-        startLayout.setPullLabel("正在下拉刷新...");
-        startLayout.setRefreshingLabel("正在刷新...");
-        startLayout.setReleaseLabel("放开以刷新");
 
-
-        ILoadingLayout endLayout = mainPullRefreshLv.getLoadingLayoutProxy(false, true);
-        endLayout.setPullLabel("正在上拉刷新...");
-        endLayout.setRefreshingLabel("加载中...");
-        endLayout.setReleaseLabel("放开以刷新");
-
-        mainPullRefreshLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                Log.i("Daniel", "---onPullDownToRefresh---");
-                initDate(null, 1);
-
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                Log.i("Daniel", "---onPullDownToRefresh---");
-                if (mPagItemSize > Constan.PAGESIZE) {
-                    pagNum = pagNum + 1;
-                    initDate(null, pagNum);
-                } else {
-                    mainPullRefreshLv.onRefreshComplete();
-                }
-            }
-        });
-
-    }
 
     private void initDate(Integer type, int pagNum) {
         Log.e("Daniel", "---type---" + type);
@@ -130,12 +88,7 @@ public class BankInformationFragment extends Fragment {
                     @Override
                     public void onCompleted() {
                         //设置可上拉刷新和下拉刷新
-                        Log.e("Daniel", "---mPagItemSize---" + mPagItemSize);
-                        if (mPagItemSize > Constan.PAGESIZE) {
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.BOTH);
-                        } else {
-                            mainPullRefreshLv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-                        }
+
                     }
 
                     @DebugLog
@@ -157,7 +110,6 @@ public class BankInformationFragment extends Fragment {
 
     private void setBankInformItemAdapter(List<BankInformItem> bankInformItems) {
         BankInfromationAdapter bankInfromationAdapter = new BankInfromationAdapter(getActivity(),bankInformItems);
-        mainPullRefreshLv.setAdapter(bankInfromationAdapter);
     }
 
 

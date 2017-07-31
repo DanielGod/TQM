@@ -184,13 +184,11 @@ public class LawHelpFragment extends BaseFragment {
                     initListData(true, lawAdd.getQueryParams(), 1);
                 }
             }
-            if(datas.size()==0){
+            if(datas.size()==0&&lawAdd!=null){
                 initListData(true, lawAdd.getQueryParams(), 1);
             }
         }
     }
-
-
     RecyclerView contentView;
 
     //获取数据
@@ -211,7 +209,8 @@ public class LawHelpFragment extends BaseFragment {
         if (realm.where(User.class).findFirst() != null) {
             userId = realm.where(User.class).findFirst().getUserId();
         }
-        Subscription getBankFinancItem_subscription = NetWork.getLawService().getLawyerItem(queryParams, userId, index, 10)
+        Subscription getBankFinancItem_subscription = NetWork.getLawService()
+                .getLawyerItem(queryParams, userId, index, 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<LawyerItem>>() {
@@ -333,9 +332,7 @@ public class LawHelpFragment extends BaseFragment {
                 .subscribe(new Observer<List<String>>() {
                     @Override
                     public void onCompleted() {
-
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         if (datas.size() == 0) {
@@ -405,6 +402,8 @@ public class LawHelpFragment extends BaseFragment {
         popupViews.add(districtView0);
         popupViews.add(districtView);
         popupViews.add(lawView);
+
+
         districtView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -431,13 +430,15 @@ public class LawHelpFragment extends BaseFragment {
         });
 
         RelativeLayout contentRel = new RelativeLayout(getActivity());
-        contentRel.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        contentRel.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
 
 
         //设置内容
         contentView = new RecyclerView(getActivity());
         //根据数据更新
-        contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
         //new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
         contentView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -445,7 +446,6 @@ public class LawHelpFragment extends BaseFragment {
         //初始化数据
         Log.e("gqf", lawAdd.getQueryParams());
         initListData(true, lawAdd.getQueryParams(), nowIndex + 1);
-
         contentRel.addView(contentView);
 
         dropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, contentRel);
@@ -453,11 +453,9 @@ public class LawHelpFragment extends BaseFragment {
             @Override
             public boolean onClickIndexOne(int index) {
                 //根据选择器是否下拉显示无数据提示
-
                 if (dropDownMenu.isShowing() || (!dropDownMenu.isShowing() && index == 1)) {
                     defaultLoadview.lodingIsFailOrSucess(2);
                 }
-
                 //跳转地址选择页
                 boolean returnB = true;
                 if (index == 0) {

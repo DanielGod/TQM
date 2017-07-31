@@ -117,13 +117,15 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_apply_user"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
-                    android:text="联系人"
+                    android:text="姓名"
                     style="@style/apply_text"
-                    />
+                    android:id="@+id/textView7"/>
+
                 <View
                     android:layout_width="0.5dp"
                     android:layout_height="match_parent"
@@ -200,7 +202,7 @@
                     <!--android:layout_height="match_parent"-->
                     <!--android:layout_weight="0.3"-->
                     <!--style="@style/apply_text"-->
-                    <!--android:text="身份证号"-->
+                    <!--android:usedcar="身份证号"-->
                     <!--/>-->
                 <!--<View-->
                     <!--android:layout_width="0.5dp"-->
@@ -237,7 +239,7 @@
             <ImageView
             android:layout_width="@dimen/bigmdp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_apply_personal_img"
+            android:src="@drawable/ic_apply_aompany_img"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
             <TextView
             android:layout_width="wrap_content"

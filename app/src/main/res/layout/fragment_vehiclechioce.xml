@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+                android:background="@color/white"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        >
+        <TextView
+            android:id="@+id/fragmentClose_tv"
+            android:layout_width="?actionBarSize"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="关闭"
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/fragmentTitle_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/home_hotActivity_gray3"
+            android:textSize="@dimen/bigmdp"
+            android:text="选品牌"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grid_divider_line"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+<!--品牌选择-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+    </android.support.v7.widget.RecyclerView>
+    <!--车系选择-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/carSeries_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@android:color/white">
+    </android.support.v7.widget.RecyclerView>
+    <!--车型选择-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/vehicleModel_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@android:color/white">
+    </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+    <include layout="@layout/fragment_loding"/>
+
+</RelativeLayout>

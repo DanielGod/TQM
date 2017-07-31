@@ -196,7 +196,10 @@ public class DropDownMenu extends LinearLayout {
                     }
                 }
                 else if(tab.getTag().equals("index0")){
-                    onClickLinsener.onClickIndexOne(0);
+                    if(onClickLinsener.onClickIndexOne(0)){
+                        switchMenu(tab);
+                    }
+//                    onClickLinsener.onClickIndexOne(0);
                 }else {
                     switchMenu(tab);
                     onClickLinsener.onClickIndexOne(2);

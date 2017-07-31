@@ -10,12 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.utils.StringUtils;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
@@ -75,17 +73,14 @@ public class BankFinancingAdapter extends BaseAdapter {
 
         holder.titleTv.setText(data.getProductName());
         holder.institutionNameTv.setText(data.getInstitution());
+        Log.e(Constan.LOGTAGNAME,"利率"+data.getAnnualReturn());
         holder.annualReturnTv.setText(data.getAnnualReturn() + "%");
-        //如果期限值为空或为“无限期” 不显示单位天
-        if (StringUtils.isEmpty(data.getInvestmentTerm()) || "无限期".equals(data.getInvestmentTerm())){
-            holder.investmentTermDayUnitTv.setVisibility(View.GONE);
-        }
         holder.investmentTermTv.setText(data.getInvestmentTerm());
         Log.e("Daniel", "理财机构icon：" + NetWork.LOAD + data.getInstitutionIcon());
         Picasso.with(mContext).load(NetWork.LOAD + data.getInstitutionIcon() + Constan.IMGURL)
                 .placeholder(R.drawable.logo).into(holder.institutionIconImg);
         if (!StringUtil.isBlank(data.getPurchaseMoney())) {
-            holder.purchaseMoneyTv.setText(data.getPurchaseMoney().setScale(0, BigDecimal.ROUND_DOWN) + "");
+            holder.purchaseMoneyTv.setText(data.getPurchaseMoney());
         } else {
             holder.purchaseMoneyTv.setText("0 元");
         }
@@ -136,9 +131,6 @@ public class BankFinancingAdapter extends BaseAdapter {
         CardView loanListitemCardview;
         @BindView(R.id.institutionIcon_img)
         ImageView institutionIconImg;
-        @BindView(R.id.investmentTerm_day_unit_tv)
-        TextView investmentTermDayUnitTv;
-
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

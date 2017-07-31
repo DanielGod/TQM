@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="false"
+              android:orientation="vertical">
+    <!--我的界面-->
+
+    <tqm.bianfeng.com.tqm.CustomView.MyScrollview
+        android:id="@+id/my_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/user_top_rel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_personalcenter_bg_"
+                android:minHeight="@dimen/hugehxxxxxxxdp"
+                >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/user_circle_img"
+                    android:layout_width="@dimen/hugehdp"
+                    android:layout_height="@dimen/hugehdp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:clickable="true"
+                    android:src="@drawable/ic_user_head_img"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/loginSuccess_lin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/user_login_registered_btn"
+                    android:layout_centerInParent="true"
+                    android:paddingLeft="@dimen/hugehxxxxxdp"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/tinyhdp"
+                        >
+                        <ImageView
+                            android:id="@+id/phoneLogo_img"
+                            android:layout_width="@dimen/activity_horizontal_margin"
+                            android:layout_height="@dimen/activity_horizontal_margin"
+                            android:src="@drawable/r1"
+                            android:layout_centerVertical="true"
+                            />
+
+                        <ImageView
+                            android:id="@+id/user_signIn_img"
+                            android:layout_width="@dimen/smallxhdp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/r2"
+                            android:adjustViewBounds="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/user_register_phone_num_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/tinyhdp"
+                            android:text="12345678900"
+                            android:textColor="@color/font_black_1"
+                            android:textSize="@dimen/mediumxsp"
+                            android:layout_toRightOf="@id/phoneLogo_img"
+                            android:layout_centerVertical="true"
+                        />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/ic_company_lin"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/activity_horizontal_margin"
+                        android:layout_below="@+id/user_login_registered_btn"
+                        >
+
+                        <ImageView
+                            android:id="@+id/ic_company_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:layout_centerVertical="true"
+                            />
+
+                        <TextView
+                            android:id="@+id/user_point_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/white"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            />
+
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/user_phong_num_edi"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/smallhdp"
+                    android:layout_below="@+id/user_circle_img"
+                    android:layout_marginLeft="@dimen/tinyhdp"
+                    android:layout_marginRight="@dimen/tinyhdp"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/write_radius_bg_shap"
+                    android:hint="请输入手机号"
+                    android:inputType="phone"
+                    android:paddingLeft="@dimen/smallmdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/mediumsp"
+
+                    />
+
+                <Button
+                    android:id="@+id/user_login_registered_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/smallhdp"
+                    android:layout_below="@+id/user_phong_num_edi"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/tinyhdp"
+                    android:layout_marginRight="@dimen/tinyhdp"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/apply_for_selector"
+                    android:text="免注册登录"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/mediumsp"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/hugehdp"
+                android:orientation="horizontal">
+                <!--我的发布-->
+                <LinearLayout
+                    android:id="@+id/my_release_lin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/tinymdp"
+                        android:layout_weight="1"
+                        >
+
+                        <ImageView
+                            android:id="@+id/release_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:padding="@dimen/smallmdp"
+                            android:visibility="gone"
+                            android:src="@drawable/ic_user_attestation"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/user_attestation_num"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            style="@style/user_collection_num"
+                            android:text="12"
+                            />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:text="我的发布"
+                        android:textColor="@color/font_black_1"
+                        android:textSize="@dimen/smallsp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:background="@color/whitesmoke"/>
+                <!--我的收藏-->
+                <LinearLayout
+                    android:id="@+id/bank_collection_lin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/tinymdp"
+                        android:layout_weight="1"
+                        >
+
+                        <ImageView
+                            android:id="@+id/collection_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:padding="@dimen/smallmdp"
+                            android:visibility="gone"
+                            android:src="@drawable/ic_user_fouces"
+                            />
+
+                        <TextView
+                            android:id="@+id/user_collection_num"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            style="@style/user_collection_num"
+                            android:text="0"
+
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true"/>
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:text="我的收藏"
+                        android:textColor="@color/font_black_1"
+                        android:textSize="@dimen/smallsp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:background="@color/whitesmoke"/>
+
+                <LinearLayout
+                    android:id="@+id/bank_focuse_lin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/tinymdp"
+                        android:layout_weight="1"
+                        >
+
+                        <ImageView
+                            android:id="@+id/focuse_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:visibility="gone"
+                            android:padding="@dimen/smallmdp"
+                            android:src="@drawable/ic_user_collection"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:id="@+id/user_fouces_num"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            style="@style/user_collection_num"
+                            android:text="0"
+
+                            />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:text="我的关注"
+                        android:textColor="@color/font_black_1"
+                        android:textSize="@dimen/smallsp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:background="@color/whitesmoke"/>
+
+                <LinearLayout
+                    android:id="@+id/bank_browse_lin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/tinymdp"
+                        android:layout_weight="1"
+                        >
+
+                        <ImageView
+                            android:id="@+id/read_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:padding="@dimen/smallmdp"
+                            android:visibility="gone"
+                            android:src="@drawable/ic_user_read"
+                            />
+                        <TextView
+                            android:id="@+id/user_read_num"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            style="@style/user_collection_num"
+
+                            android:text="0"
+                           />
+
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:text="浏览记录"
+                        android:textColor="@color/font_black_1"
+                        android:textSize="@dimen/smallsp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:background="@color/whitesmoke"/>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tinymdp"
+                android:background="@color/whitesmoke"/>
+            <include
+                layout="@layout/layout_uncommon_user"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/mediummdp"
+                android:background="@color/whitesmoke"/>
+
+            <include layout="@layout/layout_common_user"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/mediummdp"
+                android:background="@color/whitesmoke"/>
+        </LinearLayout>
+    </tqm.bianfeng.com.tqm.CustomView.MyScrollview>
+</LinearLayout>

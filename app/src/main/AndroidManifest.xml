@@ -3,16 +3,19 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="tqm.bianfeng.com.tqm">
 
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_LOGS"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <!--获取手机的联系人-->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"></uses-permission>
+    <uses-permission android:name="android.permission.READ_CONTACTS"></uses-permission>
+    <!-- 拨打电话权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <!-- <uses-sdk -->
     <!-- tools:overrideLibrary="com.umeng.socialize.evernote,com.umeng.socialize.pinterest" -->
     <!-- /> -->
@@ -36,7 +39,6 @@
     <!-- 用于申请获取蓝牙信息进行室内定位 -->
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-
     <application
         android:name=".application.BaseApplication"
         android:allowBackup="true"
@@ -53,14 +55,17 @@
         <!-- <meta-data -->
         <!-- android:name="UMENG_CHANNEL" -->
         <!-- android:value="${UMENG_CHANNEL_VALUE}" /> -->
+
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="58d1e1b875ca353afd00167d">
-        </meta-data>
+            android:value="58d1e1b875ca353afd00167d"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
         <!-- <meta-data android:name="com.amap.api.v2.apikey" android:value="1e2b67102660de66dc51062c86588eeb"> -->
         <!-- </meta-data> -->
         <!-- <service android:name="com.amap.api.location.APSService"></service> -->
-
+        <!--接受安装程序广播-->
         <activity
             android:name=".demoActivity"
             android:launchMode="singleTask"
@@ -92,9 +97,9 @@
             android:name=".featureguide.global.WelcomeGuideActivity"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"/>
 
-        <meta-data
-            android:name="WEIJY_CHANNEL"
-            android:value="${WEIJY_CHANNEL_VALUE}"/>
+        <!--<meta-data-->
+            <!--android:name="WEIJY_CHANNEL"-->
+            <!--android:value="${WEIJY_CHANNEL_VALUE}"/>-->
 
         <!-- 我的关注界面 -->
         <activity
@@ -244,7 +249,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
         </activity>
-        <!-- 多图选择界面 -->
+         <!-- 多图选择界面 -->
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize"/>
@@ -253,7 +258,7 @@
         <!-- 自定义URI 需要 provider -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="tqm.bianfeng.com.tqm"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">
@@ -354,12 +359,109 @@
             android:name="com.umeng.socialize.editorpage.ShareActivity"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.UMDefault"/>
-        <activity android:name=".bank.bankinformations.BankInformationActivity3">
+        <activity android:name=".bank.bankinformations.BankInformationActivity3"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".bank.bankinformations.BankInformationActivity4">
+
+        <activity android:name=".bank.bankinformations.BankInformationActivity4"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".bank.quickloan.QuickLoanActivity">
+        <!--快速贷款-->
+        <activity android:name=".bank.quickloan.QuickLoanActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
         </activity>
+        <!--基本信息-->
+        <activity android:name=".bank.quickloan.BasicInformationActivity"
+                  android:windowSoftInputMode="adjustPan"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
+        <!--资产信息-->
+        <activity android:name=".bank.quickloan.AssetInformationActivity"
+                  android:windowSoftInputMode="adjustPan"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
+        <!--申请提交-->
+        <activity android:name=".bank.quickloan.SubmitInformationActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
+        <!--我的申请-->
+        <activity android:name=".User.View.ApplyForSudelChooseActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
+        <!--订单中心-->
+        <activity android:name=".User.order.OrderActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
+        <!--订单详情-->
+        <activity android:name=".User.order.OrderDetailActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
+
+        <!--官网-->
+        <activity android:name=".main.WebsiteActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
+
+        <!--车辆评估-->
+        <activity android:name=".main.vehicle.VehicleEvaluationActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
+
+        <!--我的申请-->
+        <activity android:name=".User.applyforactivity.MyApplyForActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
+
+        <!--名片收集-->
+        <activity android:name=".main.cardcollection.CardCollectionActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
+
+        <!--积分列表-->
+        <activity android:name=".User.UserIntegralActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
+
+        <!--首页展示支付-->
+        <activity android:name=".User.applyforactivity.MyApplyForPayActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait">
+        </activity>
+
+        <!--选择车型-->
+        <!--支付宝-->
+        <!-- alipay sdk begin -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <!-- alipay sdk end -->
+
+
     </application>
 
 </manifest>

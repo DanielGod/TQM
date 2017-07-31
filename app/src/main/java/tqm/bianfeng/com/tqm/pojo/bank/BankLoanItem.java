@@ -22,12 +22,12 @@ public class BankLoanItem {
         private int loanId;
         private String loanName;
         private String loanType;
-        private float rateMin;
-        private float rateMax;
-        private float loanMoneyMin;
-        private float loanMoneyMax;
-        private int loanPeriodMin;
-        private int loanPeriodMax;
+        private String rateMin;
+        private String rateMax;
+        private String loanMoneyMin;
+        private String loanMoneyMax;
+        private String loanPeriodMin;
+        private String loanPeriodMax;
         private String institution;
         private int loanViews;
         private int atttenNum;
@@ -65,51 +65,51 @@ public class BankLoanItem {
             this.loanType = loanType;
         }
 
-        public float getRateMin() {
+        public String getRateMin() {
             return rateMin;
         }
 
-        public void setRateMin(float rateMin) {
+        public void setRateMin(String rateMin) {
             this.rateMin = rateMin;
         }
 
-        public float getRateMax() {
+        public String getRateMax() {
             return rateMax;
         }
 
-        public void setRateMax(float rateMax) {
+        public void setRateMax(String rateMax) {
             this.rateMax = rateMax;
         }
 
-        public float getLoanMoneyMin() {
+        public String getLoanMoneyMin() {
             return loanMoneyMin;
         }
 
-        public void setLoanMoneyMin(float loanMoneyMin) {
+        public void setLoanMoneyMin(String loanMoneyMin) {
             this.loanMoneyMin = loanMoneyMin;
         }
 
-        public float getLoanMoneyMax() {
+        public String getLoanMoneyMax() {
             return loanMoneyMax;
         }
 
-        public void setLoanMoneyMax(float loanMoneyMax) {
+        public void setLoanMoneyMax(String loanMoneyMax) {
             this.loanMoneyMax = loanMoneyMax;
         }
 
-        public int getLoanPeriodMin() {
+        public String getLoanPeriodMin() {
             return loanPeriodMin;
         }
 
-        public void setLoanPeriodMin(int loanPeriodMin) {
+        public void setLoanPeriodMin(String loanPeriodMin) {
             this.loanPeriodMin = loanPeriodMin;
         }
 
-        public int getLoanPeriodMax() {
+        public String getLoanPeriodMax() {
             return loanPeriodMax;
         }
 
-        public void setLoanPeriodMax(int loanPeriodMax) {
+        public void setLoanPeriodMax(String loanPeriodMax) {
             this.loanPeriodMax = loanPeriodMax;
         }
 

@@ -22,7 +22,6 @@ import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUser;
 import tqm.bianfeng.com.tqm.pojo.ResultCodeWithUserHeadImg;
 import tqm.bianfeng.com.tqm.pojo.User;
 import tqm.bianfeng.com.tqm.pojo.UserActionNum;
-import tqm.bianfeng.com.tqm.pojo.result.ResultWithAuditCode;
 
 /**
  * Created by johe on 2017/3/14.
@@ -89,7 +88,6 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                     @Override
                     public void onNext(ResultCodeWithUserHeadImg resultCodeWithUserHeadImg) {
                         if(resultCodeWithUserHeadImg.getCode()== ResultCode.SECCESS){
-
                             User user=realm.where(User.class).findFirst();
                             realm.beginTransaction();
                             user.setUserAvatar(resultCodeWithUserHeadImg.getUserAvatar());
@@ -145,29 +143,11 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                 });
         compositeSubscription.add(subscription);
     }
-    public void getAuditCode(int userId){
-        Subscription subscription = NetWork.getUserService().getStatus(userId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResultWithAuditCode>() {
-                    @Override
-                    public void onCompleted() {
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(ResultWithAuditCode resultWithAuditCode) {
-                        Log.i("Daniel","审核状态："+resultWithAuditCode.getShzt());
-                        iLoginAndRegistered.showStatus(resultWithAuditCode.getShzt());
-                    }
-                });
-        compositeSubscription.add(subscription);
-    }
+    /**
+     * 获取用户收藏关注等数量
+     * @param userId
+     */
     public void getNum(int userId){
         Subscription subscription = NetWork.getUserService().getStatistics(userId)
                 .subscribeOn(Schedulers.io())
@@ -175,9 +155,7 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                 .subscribe(new Observer<List<UserActionNum>>() {
                     @Override
                     public void onCompleted() {
-
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         Log.i("gqf","Throwable"+e.toString());
@@ -190,15 +168,14 @@ public class IUserWorkPresenterImpl extends BasePresenterImpl implements IUserWo
                         ReleaseActivity.release_loan_num=userActionNa.get(1).getNum();
 
                         iLoginAndRegistered.setNum((userActionNa.get(0).getNum()+userActionNa.get(1).getNum())
-                        ,userActionNa.get(2).getNum(),userActionNa.get(3).getNum(),userActionNa.get(4).getNum());
+                        ,userActionNa.get(2).getNum(),userActionNa.get(3).getNum(),userActionNa.get(4).getNum(),userActionNa.get(5).getNum(),userActionNa.get(6).getNum());
 
 
                     }
                 });
         compositeSubscription.add(subscription);
-
-
     }
+
     public void onClose(){
         super.onClose();
     }

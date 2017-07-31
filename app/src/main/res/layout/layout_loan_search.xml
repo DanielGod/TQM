@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="@color/whitesmoke"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/font_black_5"
+        />
+    <tqm.bianfeng.com.tqm.CustomView.DropDownMenu
+        android:id="@+id/dropDownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ddmenuTextSize="@dimen/mediumsp"
+        app:ddtextUnselectedColor="@color/black"
+        app:ddtextSelectedColor="@color/colorPrimary"
+        app:dddividerColor="@color/whitesmoke"
+        app:ddunderlineColor="@color/gray_light"
+        app:ddmenuSelectedIcon="@drawable/drop_down_selected_icon"
+        app:ddmaskColor="@color/transparent"
+        app:ddmenuBackgroundColor="@color/white"
+        app:ddmenuUnselectedIcon="@drawable/drop_down_unselected_icon"
+        android:background="@color/white"
+        />
+    <include layout="@layout/fragment_loding"/>
+</RelativeLayout>

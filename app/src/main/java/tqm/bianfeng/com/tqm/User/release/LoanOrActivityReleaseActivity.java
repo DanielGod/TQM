@@ -125,7 +125,7 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
         webView.getSettings().setBuiltInZoomControls(true);// 出现放大缩小提示
         webView.getSettings().setDisplayZoomControls(false);//隐藏缩放按钮
         webView.loadUrl(url);
-        //webView.loadDataWithBaseURL(url,getNewContent(IMAGE3),"text/html", "UTF-8", null);
+        //webView.loadDataWithBaseURL(url,getNewContent(IMAGE3),"usedcar/html", "UTF-8", null);
         //webView.setWebChromeClient(mWebChromeClient);
 
 

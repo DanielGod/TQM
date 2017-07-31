@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/userIntegral_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="?actionBarSize"
+            android:text="06-19"
+            android:gravity="center"
+            android:padding="@dimen/activity_horizontal_margin"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="?actionBarSize"
+            android:adjustViewBounds="true"
+            android:src="@drawable/logo"
+            android:scaleType="centerInside"
+            android:padding="@dimen/tinymdp"
+            />
+        <TextView
+            android:id="@+id/userIntegral_desc_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="app下载中共银行app"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/mediummdp"
+            />
+        <TextView
+            android:id="@+id/userIntegral_point_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="?actionBarSize"
+            android:text="+30"
+            android:gravity="center"
+            android:padding="@dimen/activity_horizontal_margin"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grid_divider_line"/>
+
+</LinearLayout>
