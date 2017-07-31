@@ -61,7 +61,6 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
             oldCode="";
         }
     }
-
     //验证并注册或登录
     public void loginOrRegister(String phone,String code,String channel){
         // TODO: 2017/7/4 验证码

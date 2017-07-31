@@ -20,8 +20,9 @@ public class AppUtilsBd {
     public static String getChanel(Context context){
         String channel = "nnn";
         try {
-            ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            channel= applicationInfo.metaData.getString("WEIJY_CHANNEL");
+            ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(),
+                    PackageManager.GET_META_DATA);
+            channel= applicationInfo.metaData.getString("UMENG_CHANNEL");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

@@ -45,6 +45,9 @@ public class Constan {
     //共有集合
     public static List<Contact> mContacts;//联系人列表
 
+    //渠道
+    public static String CHANNEL = "UMENG_CHANNEL";//友盟渠道名
+
 
     public static void log(String msg){
         Log.e(LOGTAGNAME,msg);

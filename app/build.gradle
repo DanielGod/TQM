@@ -20,7 +20,6 @@ android {
             //abiFilters 'armeabi', 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64','mips','mips64'
         }
         resConfigs "zh"
-
     }
 
     buildTypes {
@@ -42,8 +41,9 @@ android {
     }
     //渠道号
     productFlavors {
-        afwl001 {}
-        afwl002 {}
+        afwl {}
+//        afwl001 {}
+//        afwl002 {}
 //        afwl003 {}
 //        afwl004 {}
 //        afwl005 {}
@@ -123,19 +123,7 @@ buildscript {
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
     }
 }
-//android {
-//    productFlavors {
-//        kuan {}
-//        xiaomi {}
-//        qh360 {}
-//        baidu {}
-//        wandoujia {}
-//    }
-//
-//    productFlavors.all {
-//        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
-//    }
-//}
+
 android {
     //...
     signingConfigs {
