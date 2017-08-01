@@ -15,6 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-ignorewarning
 -dontusemixedcaseclassnames
 -dontshrink
 -dontoptimize

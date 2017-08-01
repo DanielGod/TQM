@@ -795,9 +795,9 @@ public class BankLoanActivity extends AppCompatActivity {
                 public void OnClickListener(int position) {
 //                    Toast.makeText(BankLoanActivity.this, ""+position, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(BankLoanActivity.this, DetailActivity.class);
-                    intent.putExtra("detailType", "03");
+                    intent.putExtra("detailType", "03");//贷款详情
                     intent.putExtra("detailId", loanAdapter.getDataItem(position).getLoanId());
-                    //            intent.putExtra("detailTitle", loanAdapter.getItem(position).getLoanName());
+                    intent.putExtra("detailTitle", loanAdapter.getDataItem(position).getLoanName());
                     startActivity(intent);
                 }
             });

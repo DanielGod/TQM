@@ -13,6 +13,7 @@ android {
         versionCode 3
         versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // 开启multidex
         multiDexEnabled true
         ndk {
             // 设置支持的SO库架构
@@ -22,13 +23,27 @@ android {
         resConfigs "zh"
     }
 
+    // 签名配置
+    signingConfigs {
+        release {
+            try {
+                storeFile file("./keystore/tqm.jks")
+                storePassword "123456"
+                keyAlias "bf"
+                keyPassword "123456"
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+    }
+
     buildTypes {
         release {
             // 是否进行混淆
-            minifyEnabled false
-            shrinkResources false
-            zipAlignEnabled false
-            //signingConfig signingConfigs.debug
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
             // 混淆文件的位置
             proguardFiles 'proguard-rules.pro'
         }
@@ -70,11 +85,17 @@ android {
     }
     sourceSets {
         main {
-            jniLibs.srcDirs 'libs'
+            jniLibs.srcDirs = ['libs']
         }
     }
-    configurations.all {
 
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+    configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             def requested = details.requested
             if (requested.group == 'com.android.support') {
@@ -83,21 +104,6 @@ android {
                 }
             }
         }
-    }
-
-    signingConfigs {
-        debug {
-            storeFile file('debug.keystore')
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
-        }
-//        debug {
-//            storeFile file('H:/java/andriodstudio/tongqianmao/TQMKey/tqm.jks')
-//            storePassword "android"
-//            keyAlias "androiddebugkey"
-//            keyPassword "android"
-//        }
     }
 
     // apk name def
@@ -167,7 +173,7 @@ dependencies {
     compile files('libs/SocialSDK_QQ_Simplify.jar')
     compile files('libs/SocialSDK_Sina_Simplify.jar')
     compile files('libs/SocialSDK_tencentWB.jar')
-    compile files('libs/SocialSDK_twitter.jar') 
+    compile files('libs/SocialSDK_twitter.jar')
     compile files('libs/SocialSDK_WeChat_Simplify.jar')
     compile files('libs/umeng_shareboard_widget.jar')
     compile files('libs/umeng_social_api.jar')
@@ -271,7 +277,6 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     compile files('libs/alipaySdk-20170623-proguard.jar')
     compile project(':indexlib')
-
     //下载模块
     compile 'com.lzy.net:okgo:2.0.0'
     //可以单独使用，不需要依赖下方的扩展包
@@ -279,7 +284,8 @@ dependencies {
     //RxJava扩展支持，根据需要添加
     compile 'com.lzy.net:okserver:1.1.0'
 
-    compile 'com.tencent.bugly:crashreport:2.2.0' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
-    compile 'com.tencent.bugly:nativecrashreport:3.0' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    compile "com.android.support:multidex:1.0.1" // 多dex配置
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+    compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
 }
 android { sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/usedcar'] } } }

@@ -44,7 +44,6 @@ import tqm.bianfeng.com.tqm.application.BaseActivity;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.User;
-import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 
 import static tqm.bianfeng.com.tqm.R.id.city;
 
@@ -199,10 +198,11 @@ public class DetailActivity extends BaseActivity {
         shareUrl=NetWork.LOAD + "/app/getDetail/" + detailType + "/" + detailId + "/"+"0" + "/n";
         Log.e("Daniel","------articlePath---"+articlePath);
         if(detailType.equals("01")){
+            //活动详情
             url = NetWork.LOAD+articlePath+"?module="+detailType+"&objId="+detailId+"&userId="+userId;
             shareUrl = NetWork.LOAD+articlePath;
-        }else if ("03".equals(detailType)){//贷款详情
-            Log.e(Constan.LOGTAGNAME,"detailType-city-detailId-userId:"+MainActivity.locationStr+detailId+userId);
+        }else if ("03".equals(detailType)){
+            //贷款详情
             url = NetWork.LOAD+"/app/loan/detail?city="+MainActivity.locationStr+"&loanId="+detailId+"&userId="+userId+"&mark=y";
             shareUrl = NetWork.LOAD+"/app/loan/detail?city="+city+"&loanId="+detailId+"&userId="+userId+"&mark=n";
         }

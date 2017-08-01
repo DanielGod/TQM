@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
                 }
 
                 //获取设备号
+//                  channel = WalleChannelReader.getChannel(getApplicationContext());
                 channel = AppUtilsBd.getChanel(getApplicationContext());
                 Log.e("Daniel","同意手机权限获取channel："+channel);
 //                if (StringUtils.isEmpty(channel) || StringUtils.isEmpty(IMEI)){
