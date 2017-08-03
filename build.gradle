@@ -18,8 +18,13 @@ buildscript {
         classpath 'com.antfortune.freeline:gradle:0.8.6'
         classpath 'com.mcxiaoke.gradle:packer-ng:1.0.9'
 
+        // tinkersupport插件, 其中lastest.release指拉取最新版本，也可以指定明确版本号，例如1.0.4
+        classpath "com.tencent.bugly:tinker-support:1.0.8"
+
         // 多渠道插件（多渠道打包推荐使用）
         classpath 'com.meituan.android.walle:plugin:1.1.3'
+
+
     }
 }
 

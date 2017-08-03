@@ -3,14 +3,17 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="tqm.bianfeng.com.tqm">
 
-
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_LOGS"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+
     <!--获取手机的联系人-->
     <uses-permission android:name="android.permission.GET_ACCOUNTS"></uses-permission>
     <uses-permission android:name="android.permission.READ_CONTACTS"></uses-permission>
@@ -22,25 +25,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
-    <!-- 用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <!-- 用于访问GPS定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- 用于读取手机当前的状态 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <!-- 用于申请调用A-GPS模块 -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-    <!-- 用于申请获取蓝牙信息进行室内定位 -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <application
-        android:name=".application.BaseApplication"
+        android:name=".application.Base2Application"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/logo"
@@ -49,22 +35,42 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon, android:theme">
 
-        <!-- <meta-data -->
-        <!-- android:name="com.baidu.lbsapi.API_KEY" -->
-        <!-- android:value="qpjb8N7jrtSbs8sCC9FRUWsxLYGXtowC"/> -->
-        <!-- <meta-data -->
-        <!-- android:name="UMENG_CHANNEL" -->
-        <!-- android:value="${UMENG_CHANNEL_VALUE}" /> -->
-
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="58d1e1b875ca353afd00167d"/>
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" />
-        <!-- <meta-data android:name="com.amap.api.v2.apikey" android:value="1e2b67102660de66dc51062c86588eeb"> -->
-        <!-- </meta-data> -->
-        <!-- <service android:name="com.amap.api.location.APSService"></service> -->
+        <!--<meta-data-->
+            <!--android:name="UMENG_CHANNEL"-->
+            <!--android:value="${UMENG_CHANNEL_VALUE}" />-->
+
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
+        <!-- 自定义URI 需要 provider -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+            </meta-data>
+        </provider>
+        <!-- Bugly  -->
+        <provider
+            android:name=".Util.BuglyFileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="name,authorities,exported,grantUriPermissions">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"
+                tools:replace="name,resource"/>
+        </provider>
+
         <!--接受安装程序广播-->
         <activity
             android:name=".demoActivity"
@@ -97,9 +103,6 @@
             android:name=".featureguide.global.WelcomeGuideActivity"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"/>
 
-        <!--<meta-data-->
-            <!--android:name="WEIJY_CHANNEL"-->
-            <!--android:value="${WEIJY_CHANNEL_VALUE}"/>-->
 
         <!-- 我的关注界面 -->
         <activity
@@ -255,18 +258,7 @@
             android:configChanges="orientation|screenSize"/>
         <!-- 裁剪 -->
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
-        <!-- 自定义URI 需要 provider -->
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true"
-            tools:replace="android:authorities">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths">
-            </meta-data>
-        </provider>
+
 
         <activity
             android:name=".User.MyBankActivityActivity"
@@ -346,7 +338,6 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-
                 <data android:scheme="tencent100424468"/>
             </intent-filter>
         </activity>

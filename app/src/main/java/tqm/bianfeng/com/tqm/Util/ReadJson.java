@@ -57,7 +57,6 @@ public class ReadJson {
             }
 
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -93,7 +92,6 @@ public class ReadJson {
                 addressModels.add(am);
             }
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

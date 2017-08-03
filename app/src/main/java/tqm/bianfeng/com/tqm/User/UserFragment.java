@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.meituan.android.walle.WalleChannelReader;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -54,7 +55,6 @@ import tqm.bianfeng.com.tqm.User.applyforactivity.MyApplyForActivity;
 import tqm.bianfeng.com.tqm.User.order.OrderActivity;
 import tqm.bianfeng.com.tqm.User.release.MyReleaseActivity;
 import tqm.bianfeng.com.tqm.User.release.ReleaseActivity;
-import tqm.bianfeng.com.tqm.Util.AppUtilsBd;
 import tqm.bianfeng.com.tqm.Util.PhoneUtils;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.main.vehicle.bean.Contact;
@@ -480,7 +480,10 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             mUser = realm.where(User.class).findFirst();
             Log.e("Daniel", "initView用户信息:" + mUser.toString());
             //开起信息同步
-            iUserWorkPresenter.getUserMsg(mUser.getUserPhone(), AppUtilsBd.getChanel(getActivity()));
+            // TODO: 2017/8/3 渠道号
+
+//            iUserWorkPresenter.getUserMsg(mUser.getUserPhone(),"afwl001");
+            iUserWorkPresenter.getUserMsg(mUser.getUserPhone(), WalleChannelReader.getChannel(getActivity()));
             //刷新数量标识
             iUserWorkPresenter.getNum(mUser.getUserId());
             //显示账户信息
@@ -586,7 +589,9 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             @Override
             public void onOk(String ediTxt, String code) {
                 //验证并注册或登录
-                iLoginRegisterPresenter.loginOrRegister(ediTxt, code, AppUtilsBd.getChanel(getActivity()));
+//                iLoginRegisterPresenter.loginOrRegister(ediTxt, code, "afwl001");
+                // TODO: 2017/8/3 渠道号
+                iLoginRegisterPresenter.loginOrRegister(ediTxt, code, WalleChannelReader.getChannel(getActivity()));
             }
 
             @Override

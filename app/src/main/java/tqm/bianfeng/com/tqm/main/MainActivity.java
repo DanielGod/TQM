@@ -31,6 +31,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.blankj.utilcode.utils.AppUtils;
 import com.blankj.utilcode.utils.PhoneUtils;
 import com.jaeger.library.StatusBarUtil;
+import com.meituan.android.walle.WalleChannelReader;
 import com.soundcloud.android.crop.Crop;
 import com.umeng.analytics.MobclickAgent;
 
@@ -54,13 +55,13 @@ import tqm.bianfeng.com.tqm.Institutions.InstitutionsInFragment;
 import tqm.bianfeng.com.tqm.Institutions.SearchInstiutionsActivity;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.User.UserFragment;
-import tqm.bianfeng.com.tqm.Util.AppUtilsBd;
 import tqm.bianfeng.com.tqm.Util.DisplayUtil;
 import tqm.bianfeng.com.tqm.Util.NetUtils;
 import tqm.bianfeng.com.tqm.Util.PermissionsHelper;
 import tqm.bianfeng.com.tqm.Util.PhotoGet;
 import tqm.bianfeng.com.tqm.Util.SystemBarTintManager;
 import tqm.bianfeng.com.tqm.application.BaseApplication;
+import tqm.bianfeng.com.tqm.application.BaseApplicationLike;
 import tqm.bianfeng.com.tqm.lawhelp.AllCityActivity;
 import tqm.bianfeng.com.tqm.lawhelp.LawHelpFragment;
 import tqm.bianfeng.com.tqm.network.NetWork;
@@ -142,7 +143,9 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
         mVersion= AppUtils.getAppInfo(MainActivity.this).getVersionName();
         if (Build.VERSION.SDK_INT < 23){
             Log.e("Daniel","版本号小于23");
-            channel = AppUtilsBd.getChanel(getApplicationContext());
+            channel = "afwl001";
+//            channel = WalleChannelReader.getChannel(getApplicationContext());
+//            channel = AppUtilsBd.getChanel(getApplicationContext());
             IMEI = PhoneUtils.getPhoneIMEI(getApplicationContext());
             saveChannel(channel,IMEI);
         }else {
@@ -165,8 +168,10 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
                 }
 
                 //获取设备号
-//                  channel = WalleChannelReader.getChannel(getApplicationContext());
-                channel = AppUtilsBd.getChanel(getApplicationContext());
+                // TODO: 2017/8/3 渠道号
+//                channel = "afwl001";
+                  channel = WalleChannelReader.getChannel(getApplicationContext());
+//                Toast.makeText(this, "渠道号："+channel, Toast.LENGTH_SHORT).show();
                 Log.e("Daniel","同意手机权限获取channel："+channel);
 //                if (StringUtils.isEmpty(channel) || StringUtils.isEmpty(IMEI)){
 //                    MAC=AppUtilsBd.getMacAddress2(MainActivity.this);
@@ -494,7 +499,7 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
 //                editor.apply();
 //            }
             //与本地版本号对比
-            Log.e("gqf", "本地版本号" +mVersion);
+
             if (BaseApplication.isUpdateForVersion(updateMsg.getVersionCode(), mVersion)) {
                 //Log.i("gqf",UpdateInformation.localVersion+"updateMsg"+updateMsg.toString());
                 mUpdateMsg = updateMsg;
@@ -682,7 +687,9 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
         } else {
 
             //            MyConfig.clearSharePre(this, "users");
-            ((BaseApplication) getApplication()).exit();
+//            Toast.makeText(MainActivity.this, "还未热更新！", Toast.LENGTH_SHORT).show();
+             BaseApplicationLike.exit();
+//            ((BaseApplicationLike) getApplication()).exit();
         }
     }
 

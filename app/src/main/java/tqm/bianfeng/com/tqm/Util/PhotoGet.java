@@ -28,6 +28,7 @@ import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import tqm.bianfeng.com.tqm.BuildConfig;
 import tqm.bianfeng.com.tqm.Dialog.BaseDialog;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
@@ -288,12 +289,17 @@ public class PhotoGet {
             Constan.log("拍照context："+context);
 
             if (photoFile != null) {
-                Uri photoUri = FileProvider.getUriForFile(context, "tqm.bianfeng.com.tqm", photoFile);
-                Constan.log("拍照photoUri："+photoUri);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                mCurrentPhotoUri = photoUri;
-
-                ((Activity) context).startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                try {
+                    Constan.log(" BuildConfig.APPLICATION_ID："+ BuildConfig.APPLICATION_ID);
+                    Uri photoUri = FileProvider.getUriForFile(context,  BuildConfig.APPLICATION_ID+".fileprovider", photoFile);
+                    Constan.log("拍照photoUri："+photoUri);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                    mCurrentPhotoUri = photoUri;
+                    ((Activity) context).startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                } catch (Exception e) {
+                    Constan.log(e.toString());
+                    e.printStackTrace();
+                }
             }
         }
     }

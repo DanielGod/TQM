@@ -10,8 +10,8 @@ android {
         applicationId "tqm.bianfeng.com.tqm"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 3
-        versionName "1.2"
+        versionCode 5
+        versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // 开启multidex
         multiDexEnabled true
@@ -25,6 +25,7 @@ android {
 
     // 签名配置
     signingConfigs {
+
         release {
             try {
                 storeFile file("./keystore/tqm.jks")
@@ -35,13 +36,16 @@ android {
                 throw new InvalidUserDataException(ex.toString())
             }
         }
+        debug {
+            storeFile file("./keystore/debug.keystore")
+        }
     }
 
     buildTypes {
         release {
             // 是否进行混淆
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             zipAlignEnabled true
             signingConfig signingConfigs.release
             // 混淆文件的位置
@@ -49,40 +53,40 @@ android {
         }
 
         debug {
-            minifyEnabled true
+            minifyEnabled false
             signingConfig signingConfigs.debug
             proguardFiles 'proguard-rules.pro'
         }
     }
     //渠道号
-    productFlavors {
-        afwl {}
-//        afwl001 {}
-//        afwl002 {}
-//        afwl003 {}
-//        afwl004 {}
-//        afwl005 {}
-//        tqm06 {}
-//        tqm07 {}
-//        tqm08 {}
-//        tqm09 {}
-//        tqm10 {}
-//        tqm11 {}
-//        tqm12 {}
-//        tqm13 {}
-//        tqm14 {}
-//        tqm15 {}
-//        tqm16 {}
-//        tqm17 {}
-//        tqm18 {}
-//        tqm19 {}
-//        tqm20 {}
-
-        productFlavors.all { flavor ->
-            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
-        }
-
-    }
+//    productFlavors {
+//        afwl {}
+////        afwl001 {}
+////        afwl002 {}
+////        afwl003 {}
+////        afwl004 {}
+////        afwl005 {}
+////        tqm06 {}
+////        tqm07 {}
+////        tqm08 {}
+////        tqm09 {}
+////        tqm10 {}
+////        tqm11 {}
+////        tqm12 {}
+////        tqm13 {}
+////        tqm14 {}
+////        tqm15 {}
+////        tqm16 {}
+////        tqm17 {}
+////        tqm18 {}
+////        tqm19 {}
+////        tqm20 {}
+//
+//        productFlavors.all { flavor ->
+//            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+//        }
+//
+//    }
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
@@ -94,7 +98,7 @@ android {
             dirs 'libs'
         }
     }
-
+    //强制使用相同版本的库
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             def requested = details.requested
@@ -107,13 +111,13 @@ android {
     }
 
     // apk name def
-    android.applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-//            output.outputFile = new File(output.outputFile.parent, "TQM" + "-" + buildType.name + "-v" +
-//                    defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk");
-            output.outputFile = new File(output.outputFile.parent, "TQM_${buildType.name}_${defaultConfig.versionName}_${defaultConfig.versionCode}_${variant.productFlavors[0].name}.apk");
-        }
-    }
+//    android.applicationVariants.all { variant ->
+//        variant.outputs.each { output ->
+////            output.outputFile = new File(output.outputFile.parent, "TQM" + "-" + buildType.name + "-v" +
+////                    defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk");
+//            output.outputFile = new File(output.outputFile.parent, "TQM_${buildType.name}_${defaultConfig.versionName}_${defaultConfig.versionCode}_${variant.productFlavors[0].name}.apk");
+//        }
+//    }
 }
 
 //def fileName = "myApk_${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
@@ -130,18 +134,18 @@ buildscript {
     }
 }
 
-android {
-    //...
-    signingConfigs {
-        release {
-            // 满足下面两个条件时需要此配置
-            // 1. Gradle版本 >= 2.14.1
-            // 2. Android Gradle Plugin 版本 >= 2.2.0
-            // 作用是只使用旧版签名，禁用V2版签名模式
-            v2SigningEnabled false
-        }
-    }
-}
+//android {
+//    //...
+//    signingConfigs {
+//        release {
+//            // 满足下面两个条件时需要此配置
+//            // 1. Gradle版本 >= 2.14.1
+//            // 2. Android Gradle Plugin 版本 >= 2.2.0
+//            // 作用是只使用旧版签名，禁用V2版签名模式
+//            v2SigningEnabled false
+//        }
+//    }
+//}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -264,7 +268,6 @@ dependencies {
     compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
     compile 'org.jsoup:jsoup:1.8.3'
     compile 'jp.wasabeef:richeditor-android:1.2.0@aar'
-    compile 'com.android.support:multidex:1.0.0'
     compile 'com.mcxiaoke.gradle:packer-helper:1.0.9'
     compile 'com.afollestad.material-dialogs:core:0.9.0.2'
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
@@ -283,9 +286,17 @@ dependencies {
     compile 'com.lzy.net:okrx:0.1.0'
     //RxJava扩展支持，根据需要添加
     compile 'com.lzy.net:okserver:1.1.0'
+// 多dex配置
+    compile "com.android.support:multidex:1.0.1"
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
 
-    compile "com.android.support:multidex:1.0.1" // 多dex配置
-    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
-    compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
 }
 android { sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/usedcar'] } } }
+
+
+// 依赖插件脚本
+apply from: 'tinker-support.gradle'
+
+// 多渠道使用walle示例（注：多渠道使用）
+apply from: 'multiple-channel.gradle'

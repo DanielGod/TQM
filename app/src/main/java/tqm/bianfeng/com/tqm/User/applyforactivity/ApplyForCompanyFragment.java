@@ -146,8 +146,6 @@ public class ApplyForCompanyFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         init();
     }
-
-    // TODO: 2017/7/1  
     public void init() {
         privateCapitalRadio.setChecked(true);
         iniEdi();

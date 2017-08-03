@@ -141,7 +141,6 @@ public class LoanOrActivityReleaseActivity extends BaseActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // TODO Auto-generated method stub
 
                 Log.i("gqf", "shouldOverrideUrlLoading..." + url);
                 countToEnter();

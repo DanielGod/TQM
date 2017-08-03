@@ -281,3 +281,8 @@
 #-keep class com.baidu.** {*;}
 #-keep class vi.com.** {*;}
 #-dontwarn com.baidu.**
+
+##bugly热更新
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+

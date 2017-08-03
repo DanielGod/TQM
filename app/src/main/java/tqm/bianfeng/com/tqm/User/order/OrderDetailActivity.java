@@ -33,6 +33,7 @@ import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.DksqVO;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.User;
+import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 
 /**
  * Created by johe on 2017/5/10.
@@ -204,6 +205,7 @@ public class OrderDetailActivity extends BaseActivity {
         orderDeatilLoanNumTv.setText(dksqVO.getDkje());
         orderDeatilLoanCityTv.setText(dksqVO.getSzcs());
         orderDeatilLoanTimeLimitTv.setText(dksqVO.getDkqx() + "");
+        Constan.log("贷款用途："+dksqVO.getDkyt());
         orderDeatilLoanUseTv.setText(dksqVO.getDkyt());
         if ("01".equals(dksqVO.getZysf())) {
             orderDeatilProfessionalIdentityTv.setText("上班族");

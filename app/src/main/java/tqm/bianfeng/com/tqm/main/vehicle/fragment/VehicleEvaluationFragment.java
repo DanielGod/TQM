@@ -120,8 +120,7 @@ public class VehicleEvaluationFragment extends BaseFragment {
         vehiclePhoneEdi.setText(realm.where(User.class).findFirst().getUserPhone());
         //初始化城市数据
         loadData();
-        //设置省下拉框
-        setATVData(vehicleEvaluationChoiceProvinceAtv, provinceNameStr);
+
         //设置车辆用途下拉框
         setATVData(vehiclePurposeAtv, mContext.getResources().getStringArray(R.array.vehicle_purpose));
         //设置车况下拉框
@@ -264,14 +263,20 @@ public class VehicleEvaluationFragment extends BaseFragment {
 
     private void loadData() {
         try {
-            InputStream inputStream = getActivity().getApplicationContext().getAssets().open("province.json");
+            InputStream inputStream = getActivity().getApplication().getAssets().open("province.json");
+            Log.e("Daniel", "inputStream：" + inputStream);
             provinceCityBean = new GsonBuilder().create().fromJson(new InputStreamReader(inputStream), ProvinceCityBean.class);
+            Log.e("Daniel", "provinceCityBean：" + provinceCityBean);
             Log.e("Daniel", "城市条数：" + provinceCityBean.getProvince().size());
             provinceList = provinceCityBean.getProvince();
+            Log.e("Daniel", "省份list：" +provinceList);
             provinceNameStr = new String[provinceList.size()];
             for (int i = 0; i < provinceList.size(); i++) {
                 provinceNameStr[i] = provinceList.get(i).getProName();
             }
+            //设置省下拉框
+            Constan.log("provinceNameStr:"+provinceNameStr);
+            setATVData(vehicleEvaluationChoiceProvinceAtv, provinceNameStr);
         } catch (Throwable e) {
             e.printStackTrace();
         }
