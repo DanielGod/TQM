@@ -41,6 +41,7 @@ public class Constan {
     public final static int REQUEST_CODE_EXTERNAL_STORAGE = 12;//储存
     public final static int REQUEST_CODE_READ_PHONE_STATE = 11;//获取手机设备权限
     public final static int REQUEST_CODE_ALL_PERMISSIONS = 10;//获取所需的所有权限
+    public final static int REQUEST_CODE_LOCATIONI = 9;//获取位置权限
 
     //共有集合
     public static List<Contact> mContacts;//联系人列表

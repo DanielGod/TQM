@@ -67,13 +67,16 @@ public class BaseApplicationLike extends DefaultApplicationLike {
         return assetManager;
     }
 
+//    public LocationClient mLocationClient = null;
+//    public BDLocationListener myListener = new MyLocationListener();
+
     @Override
     public void onCreate() {
         super.onCreate();
         mList = new ArrayList<>();
         // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId
         // 调试时，将第三个参数改为true
-        Bugly.init(getApplication(), "41391628b8", true);
+        Bugly.init(getApplication(), "41391628b8", false);
         //realm
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(getApplication())
                 .schemaVersion(2).deleteRealmIfMigrationNeeded().build();
@@ -93,6 +96,11 @@ public class BaseApplicationLike extends DefaultApplicationLike {
         OkGo.getInstance()
                 //打开该调试开关,控制台会使用 红色error 级别打印log,并不是错误,是为了显眼,不需要就不要加入该行
                 .debug("OkGo");
+//        //百度地图定位
+//        mLocationClient = new LocationClient(getApplication());
+//        //声明LocationClient类
+//        mLocationClient.registerLocationListener(myListener);
+//        //注册监听函数
 
     }
 

@@ -38,9 +38,11 @@ public class RequestPermissions {
         //所需要申请的权限数组
        String[] permissionsArray = new String[]{
                Manifest.permission.CAMERA,
-               Manifest.permission.READ_EXTERNAL_STORAGE,
                Manifest.permission.READ_CONTACTS,
-               Manifest.permission.READ_PHONE_STATE};
+               Manifest.permission.ACCESS_FINE_LOCATION,
+               Manifest.permission.READ_PHONE_STATE,
+               Manifest.permission.READ_EXTERNAL_STORAGE
+               };
         //还需申请的权限列表
         List<String> permissionsList = new ArrayList<String>();
 
@@ -57,15 +59,27 @@ public class RequestPermissions {
 
     }
     /**
+     * 请求位置权限
+     */
+    public void requestLocaltion(){
+        Log.e(Constan.LOGTAGNAME,"申请位置权限");
+            ActivityCompat.requestPermissions((Activity) mContext,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    Constan.REQUEST_CODE_LOCATIONI);
+    }
+    /**
      * 请求相机权限
      */
     public void requestCamera(){
-            Log.e(Constan.LOGTAGNAME,"申请相机，存储权限权限");
-        if(ContextCompat.checkSelfPermission(
-                mContext, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) mContext,
-                    new String[]{Manifest.permission.CAMERA},
+            Log.e(Constan.LOGTAGNAME,"申请相机，存储权限");
+        if(ContextCompat.checkSelfPermission(mContext,
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.CAMERA},
+                    Constan.REQUEST_CODE_CAMERA);
+        }
+        if (ContextCompat.checkSelfPermission(mContext,
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     Constan.REQUEST_CODE_CAMERA);
         }
     }
@@ -105,12 +119,8 @@ public class RequestPermissions {
 
     public void requestPhoneState(){
         Log.e(Constan.LOGTAGNAME,"申请phone设备权限");
-        if(ContextCompat.checkSelfPermission(
-                mContext, Manifest.permission.READ_PHONE_STATE)
-                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) mContext,
                     new String[]{Manifest.permission.READ_PHONE_STATE},
                     Constan.REQUEST_CODE_READ_PHONE_STATE);
         }
-    }
 }

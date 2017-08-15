@@ -22,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 import tqm.bianfeng.com.tqm.CustomView.SideBar;
 import tqm.bianfeng.com.tqm.R;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
@@ -99,24 +100,27 @@ public class AllCityListFragment extends BaseFragment {
     }
     //更新lawAdd本地数据
     public void updateLawAdd(final String city, final String province){
-
         Log.e(Constan.LOGTAGNAME,"更新lawAdd本地数据---city"+city);
         Log.e(Constan.LOGTAGNAME,"更新lawAdd本地数据---province"+province);
-        Log.e(Constan.LOGTAGNAME,"更新lawAdd本地数据---lawAdd"+lawAdd);
-        realm.beginTransaction();
-        if (lawAdd!=null) {
-            lawAdd.setCity(city);
-            lawAdd.setProvince(province);
-            realm.copyToRealmOrUpdate(lawAdd);
-        }else {
-            LawAdd lawAdd = realm.createObject(LawAdd.class);
-            lawAdd.setCity(city);
-            lawAdd.setProvince(province);
-            realm.copyToRealmOrUpdate(lawAdd);
-        }
-        realm.commitTransaction();
+        Log.e(Constan.LOGTAGNAME,"更新lawAdd本地数据---lawAdd1:"+lawAdd);
+        // Asynchronously update objects on a background thread
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                if (lawAdd!=null) {
+                    lawAdd.setCity(city);
+                    lawAdd.setProvince(province);
+                }else {
+                    lawAdd = realm.createObject(LawAdd.class);
+                    lawAdd.setCity(city);
+                    lawAdd.setProvince(province);
+                }
+            }
+        });
         mListener.CloseActivity();
+        Log.e(Constan.LOGTAGNAME,"更新lawAdd本地数据---lawAdd2:"+lawAdd);
     }
+
 
     public void initList(List<cityInfo> data) {
         //载入列表

@@ -31,6 +31,7 @@ import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.LawyerItem;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.User;
+import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 
 /**
  * Created by johe on 2017/3/14.
@@ -53,6 +54,7 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public LawListAdapter(Context mContext, List<LawyerItem> mDatas) {
+        Constan.log("LawListAdapter:mContext"+mContext+"mDatas:"+mDatas.toString());
         this.mContext = mContext;
         this.datas = mDatas;
         mLayoutInflater = LayoutInflater.from(mContext);
@@ -82,6 +84,7 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(getLayout(), parent, false);
         //View v = mLayoutInflater.inflate(R.layout.my_order_list_item, parent, false);
+        Constan.log("onCreateViewHolder");
         RecyclerView.ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
@@ -154,6 +157,8 @@ public class LawListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int p) {
         final ViewHolder mHolder = (ViewHolder) holder;
+        Constan.log("onCreateViewHolder");
+        Constan.log("getLawyerName:"+datas.get(p).getLawyerName());
         mHolder.lawyerNameTxt.setText(datas.get(p).getLawyerName());
         mHolder.contactTxt.setText(datas.get(p).getInstitutionName());
 

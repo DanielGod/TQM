@@ -425,9 +425,9 @@ public class TestFilterFragment extends Fragment {
                     public void onCompleted() {
                     }
 
-                    @DebugLog
                     @Override
                     public void onError(Throwable e) {
+                        Constan.log("获取机构异常e"+e.toString());
                     }
 
                     @DebugLog

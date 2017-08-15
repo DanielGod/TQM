@@ -1,6 +1,7 @@
 package tqm.bianfeng.com.tqm.main;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,10 +29,11 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.blankj.utilcode.utils.AppUtils;
 import com.blankj.utilcode.utils.PhoneUtils;
 import com.jaeger.library.StatusBarUtil;
-import com.meituan.android.walle.WalleChannelReader;
 import com.soundcloud.android.crop.Crop;
 import com.umeng.analytics.MobclickAgent;
 
@@ -64,10 +66,12 @@ import tqm.bianfeng.com.tqm.application.BaseApplication;
 import tqm.bianfeng.com.tqm.application.BaseApplicationLike;
 import tqm.bianfeng.com.tqm.lawhelp.AllCityActivity;
 import tqm.bianfeng.com.tqm.lawhelp.LawHelpFragment;
+import tqm.bianfeng.com.tqm.main.location.MyLocationListener;
 import tqm.bianfeng.com.tqm.network.NetWork;
 import tqm.bianfeng.com.tqm.pojo.LawAdd;
 import tqm.bianfeng.com.tqm.pojo.ResultCode;
 import tqm.bianfeng.com.tqm.pojo.User;
+import tqm.bianfeng.com.tqm.pojo.address.EvenAddress;
 import tqm.bianfeng.com.tqm.pojo.bank.Constan;
 import tqm.bianfeng.com.tqm.update.UpdateMsg;
 import tqm.bianfeng.com.tqm.update.UpdateService;
@@ -122,6 +126,9 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
     private String channel;//渠道号
     private String IMEI="android";//设备号
     private String MAC;//mac地址
+    ProgressDialog dialog;
+    public LocationClient mLocationClient = null;
+//    public BDLocationListener myListener = new MyLocationListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,15 +136,25 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
+        EventBus.getDefault().register(this);
         requestPermissions = new RequestPermissions(this);
         compositeSubscription = new CompositeSubscription();
+        lawAdd=realm.where(LawAdd.class).findFirst();
+        //百度地图定位
+        //声明LocationClient类
+        mLocationClient = new LocationClient(getApplicationContext());
+        //声明定位监听类
+        MyLocationListener myLocationListener = new MyLocationListener();
+        //注册监听函数
+        mLocationClient.registerLocationListener(myLocationListener);
+        //配置定位参数
+        initLocation();
         //设置底部栏
         initBottomBar();
         //版本更新
         updateApp();
         //网络判断
         initNetWork(true);
-        EventBus.getDefault().register(this);
         setBelow(0);
         //获取本地版本
         mVersion= AppUtils.getAppInfo(MainActivity.this).getVersionName();
@@ -150,11 +167,77 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
             saveChannel(channel,IMEI);
         }else {
             //请求权限
-            requestPermission();
+            requestPermissions.requestAllPermissions();
         }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(EvenAddress evenAddress) {
+        mLocationClient.stop();
+        homeLocationTxt.setText(evenAddress.getCity());
 
+        updateLawAdd(evenAddress.getCity(),evenAddress.getProvience());
+    }
+    LawAdd lawAdd;
+    //更新lawAdd本地数据
+    public void updateLawAdd(final String city, final String province){
+
+        Log.e(Constan.LOGTAGNAME,"更新lawAdd本地数据---city"+city);
+        Log.e(Constan.LOGTAGNAME,"更新lawAdd本地数据---province"+province);
+        Log.e(Constan.LOGTAGNAME,"更新lawAdd本地数据---isInTransaction:"+realm.isInTransaction());
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                if (lawAdd!=null) {
+                    lawAdd.setCity(city);
+                    lawAdd.setProvince(province);
+                }else {
+                    lawAdd = realm.createObject(LawAdd.class);
+                    lawAdd.setCity(city);
+                    lawAdd.setProvince(province);
+                }
+            }
+        });
+        Log.e(Constan.LOGTAGNAME,"MainActivity---lawAdd"+realm.where(LawAdd.class).findFirst());
     }
 
+    private void initLocation(){
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+
+        option.setCoorType("bd09ll");
+        //可选，默认gcj02，设置返回的定位结果坐标系
+
+        int span=1000;
+        option.setScanSpan(span);
+        //可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+
+        option.setIsNeedAddress(true);
+        //可选，设置是否需要地址信息，默认不需要
+
+        option.setOpenGps(true);
+        //可选，默认false,设置是否使用gps
+
+        option.setLocationNotify(true);
+        //可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果
+
+        option.setIsNeedLocationDescribe(true);
+        //可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+
+        option.setIsNeedLocationPoiList(true);
+        //可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+
+        option.setIgnoreKillProcess(false);
+        //可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+
+        option.SetIgnoreCacheException(false);
+        //可选，默认false，设置是否收集CRASH信息，默认收集
+
+        option.setEnableSimulateGps(false);
+        //可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
+        mLocationClient.setLocOption(option);
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -162,23 +245,36 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
         Log.e("Daniel","requestCode："+requestCode);
         switch (requestCode) {
             case Constan.REQUEST_CODE_ALL_PERMISSIONS:
-                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    IMEI = PhoneUtils.getPhoneIMEI(MainActivity.this);
-                    Log.e("Daniel","获取IMEI："+IMEI);
+                Log.e("Daniel","获取所有权限回调：");
+                for (int i = 0; i < permissions.length; i++) {
+                    if ("android.permission.READ_PHONE_STATE".equals(permissions[i])
+                            && (grantResults[i] == PackageManager.PERMISSION_GRANTED)) {
+                        IMEI = PhoneUtils.getPhoneIMEI(MainActivity.this);
+                        Log.e("Daniel","获取IMEI："+IMEI);
+                    }
+                    if ("android.permission.ACCESS_FINE_LOCATION".equals(permissions[i])
+                            && (grantResults[i] == PackageManager.PERMISSION_GRANTED)) {
+                        Log.e("Daniel","开始定位");
+                        //开启定位
+                        mLocationClient.start();
+                    }
                 }
-
                 //获取设备号
                 // TODO: 2017/8/3 渠道号
-//                channel = "afwl001";
-                  channel = WalleChannelReader.getChannel(getApplicationContext());
-//                Toast.makeText(this, "渠道号："+channel, Toast.LENGTH_SHORT).show();
-                Log.e("Daniel","同意手机权限获取channel："+channel);
-//                if (StringUtils.isEmpty(channel) || StringUtils.isEmpty(IMEI)){
-//                    MAC=AppUtilsBd.getMacAddress2(MainActivity.this);
-//                    Log.e("Daniel","获取MAC："+MAC);
-//                }
-                    //保存渠道号，设备号
-                    saveChannel(channel, IMEI);
+                channel = "afwl001";
+//                                  channel = WalleChannelReader.getChannel(getApplicationContext());
+                //                Toast.makeText(this, "渠道号："+channel, Toast.LENGTH_SHORT).show();
+                Log.e("Daniel","获取channel："+channel);
+                //保存渠道号，设备号
+                saveChannel(channel, IMEI);
+                break;
+            case Constan.REQUEST_CODE_LOCATIONI:
+                if (grantResults.length>0
+                        && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    Log.e("Daniel","开始定位");
+                    //开启定位
+                    mLocationClient.start();
+                }
                 break;
             default:
                 break;
@@ -230,11 +326,6 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
 
         }
         MobclickAgent.onResume(this);
-    }
-
-    private void requestPermission() {
-        requestPermissions.requestAllPermissions();
-
     }
 
     /**
@@ -631,7 +722,6 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
     public void initNetWork(boolean isShowDialog) {
         Log.i("gqf", "initNetWork" + NetUtils.isConnected(this));
         if (!NetUtils.isConnected(this)) {
-
             if (homeFragment != null) {
                 homeFragment.showViewWhenNetWork(false);
             }
@@ -662,6 +752,7 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
         super.onDestroy();
         compositeSubscription.unsubscribe();
         EventBus.getDefault().unregister(this);
+        realm.close();
     }
 
     //退出时的时间
@@ -748,7 +839,14 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
         switch (view.getId()) {
             case R.id.home_location_txt:
 //                getContacts();
-                startActivity(new Intent(MainActivity.this, AllCityActivity.class));
+                if(ContextCompat.checkSelfPermission(
+                        MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions.requestLocaltion();
+                }else {
+                    startActivity(new Intent(MainActivity.this, AllCityActivity.class));
+                }
+
                 break;
             case R.id.home_login_txt:
                 bottomBar.selectTab(3,false);
@@ -780,5 +878,6 @@ public class MainActivity extends AppCompatActivity implements  UserFragment.mLi
             }
         }
     }
+
 }
 

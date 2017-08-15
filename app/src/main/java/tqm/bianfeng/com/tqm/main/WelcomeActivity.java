@@ -116,7 +116,7 @@ public class WelcomeActivity extends Activity {
 //        switch (requestCode) {
 //            case REQUEST_READ_PHONE_STATE:
 //                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-//                    //TODO
+//
 //                    //获取设备号，保存渠道号
 //                    IMEI = PhoneUtils.getPhoneIMEI(getApplicationContext());
 //                    saveChannel();

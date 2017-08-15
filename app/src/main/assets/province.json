@@ -2605,7 +2605,14 @@
         "proName": "澳门特别行政区"
     },
     {
-        "citys": [],
+        "citys": [
+            {
+                "cityID":"408",
+                "cityName":"香港特别行政区",
+                "proID":"35",
+                "pinyin":"xianggang"
+            }
+        ],
         "pin": "X",
         "pinyin": "xianggang",
         "proID": "35",

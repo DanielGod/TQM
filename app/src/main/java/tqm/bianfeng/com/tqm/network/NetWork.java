@@ -23,7 +23,7 @@ import tqm.bianfeng.com.tqm.update.DownloadProgressListener;
  * Created by wjy on 16/9/1.
  */
 public class NetWork {
-
+    // TODO: 2017/8/4 地址
 //    public static final String LOAD="http://tqmadmin.dijiaapp.com/tqm-web";
 //    public static final String LOAD="http://139.224.17.235:8080/test";
     public static final String LOAD="http://211.149.235.17:8083/tqm-web";//测试

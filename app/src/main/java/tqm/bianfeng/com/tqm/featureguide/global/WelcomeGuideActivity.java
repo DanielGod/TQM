@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.utils.PhoneUtils;
-import com.meituan.android.walle.WalleChannelReader;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.ArrayList;
@@ -68,7 +67,7 @@ public class WelcomeGuideActivity extends Activity implements View.OnClickListen
         setContentView(R.layout.activity_guide);
         // TODO: 2017/8/3 渠道号
         channel="afwl001";
-        channel= WalleChannelReader.getChannel(getApplicationContext());
+//        channel= WalleChannelReader.getChannel(getApplicationContext());
         views = new ArrayList<View>();
 
         // 初始化引导页视图列表

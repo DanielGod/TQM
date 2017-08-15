@@ -50,19 +50,15 @@ public class CardSelectFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.pictureUpload_lin:
 //                addImg();
-                if(ContextCompat.checkSelfPermission(
-                        mContext, Manifest.permission.CAMERA)
-                        != PackageManager.PERMISSION_GRANTED) {
+                if(ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                        ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
                     requestPermissions.requestCamera();
                 }else {
                     MultiImageSelector multiImageSelector = MultiImageSelector.create(getActivity())
                             .showCamera(true) // show camera or not. true by default
-                            // max select image size, 9 by default. used width #.multi()
-                            .single();// single mode
-
+                            .single(); // single mode+
                     multiImageSelector.start(getActivity(), Constan.REQUEST_cardcollaction_IMAGE);
                 }
-
                 break;
             case R.id.photoUpload_lin:
 

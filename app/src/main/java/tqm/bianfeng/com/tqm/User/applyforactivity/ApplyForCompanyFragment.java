@@ -52,6 +52,7 @@ import rx.functions.Action1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.Util.GeneralTools;
 import tqm.bianfeng.com.tqm.Util.PhotoGet;
 import tqm.bianfeng.com.tqm.Util.ReadJson;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
@@ -201,7 +202,8 @@ public class ApplyForCompanyFragment extends BaseFragment {
     }
 
     private void setMultiImageSelector() {
-        MultiImageSelector multiImageSelector = MultiImageSelector.create(getActivity()).showCamera(true) // show camera or not. true by default
+        MultiImageSelector multiImageSelector = MultiImageSelector.create(getActivity())
+                .showCamera(true) // show camera or not. true by default
                 // max select image size, 9 by default. used width #.multi()
                 .single() // single mode
                 .multi(); // original select data set, used width #.multi()
@@ -380,6 +382,7 @@ public class ApplyForCompanyFragment extends BaseFragment {
         MultipartBody.Builder builder = new MultipartBody.Builder();
         for (int i = 0; i < imgPaths.size(); i++) {
             File f = new File(imgPaths.get(i));
+            Constan.log("上传文件大小："+ GeneralTools.FileUtils.getFileSize(f));
             if (f != null) {
                 Log.i("gqf", "File" + i);
                 if (f.exists()) {
@@ -400,7 +403,9 @@ public class ApplyForCompanyFragment extends BaseFragment {
         }
 
 
-        Subscription subscription = NetWork.getUserService().uploadCompanyFile(zichifile).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultCodeWithImgPathList>() {
+        Subscription subscription = NetWork.getUserService()
+                .uploadCompanyFile(zichifile).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultCodeWithImgPathList>() {
             @Override
             public void onCompleted() {
 

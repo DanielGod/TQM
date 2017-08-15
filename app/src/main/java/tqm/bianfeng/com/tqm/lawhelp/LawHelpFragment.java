@@ -23,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,6 +32,7 @@ import tqm.bianfeng.com.tqm.CustomView.DefaultLoadView;
 import tqm.bianfeng.com.tqm.CustomView.DropDownMenu;
 import tqm.bianfeng.com.tqm.CustomView.LoadMoreView;
 import tqm.bianfeng.com.tqm.R;
+import tqm.bianfeng.com.tqm.Util.GeneralTools;
 import tqm.bianfeng.com.tqm.application.BaseFragment;
 import tqm.bianfeng.com.tqm.lawhelp.adapter.LawListAdapter;
 import tqm.bianfeng.com.tqm.lawhelp.adapter.ListDropDownAdapter;
@@ -93,9 +95,11 @@ public class LawHelpFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.e("Daniel", "onCreateView" );
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_law_help, container, false);
         ButterKnife.bind(this, view);
+        lawAdd = realm.where(LawAdd.class).findFirst();
         defaultLoadview.lodingIsFailOrSucess(1);
         threeAddTools = ThreeAddTools.getTools();
         districts = new ArrayList<>();
@@ -107,38 +111,72 @@ public class LawHelpFragment extends BaseFragment {
     }
 
     public void initTopTxt() {
+        Log.e("Daniel", "initTopTxt----start：");
         //初始化查找数据
-        lawAdd = realm.where(LawAdd.class).findFirst();
-        if (lawAdd == null) {
-            lawAdd = new LawAdd();
-            lawAdd.setId(1);
-            realm.beginTransaction();
-            realm.insertOrUpdate(lawAdd);
-            realm.commitTransaction();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                if (lawAdd!=null) {
+                    Log.e("Daniel", "lawAdd1 " + lawAdd.getQueryParams());
+                    //更新顶部选择器文字
+                    if (!GeneralTools.StringUtils.isEmpty(lawAdd.getCity())) {
+                        headers[0] = lawAdd.getCity();
+                        headers[1] = "县区";
+                        city = lawAdd.getCity();
+                    }
+                    if (!GeneralTools.StringUtils.isEmpty(lawAdd.getDistrict())) {
+                        lawAdd.setDistrict("");
+                    }
+                    if (!GeneralTools.StringUtils.isEmpty(lawAdd.getSpecialField())) {
+                        lawAdd.setSpecialField("");
+                    }
+                }else {
+                    lawAdd = realm.createObject(LawAdd.class);
+                    lawAdd.setId(1);
+                }
+                Log.e("Daniel", "lawAdd2 " + lawAdd.getQueryParams());
+            }
+        });
 
-        } else {
-            realm.beginTransaction();
-            Log.i("gqf", "lawAdd" + lawAdd.toString());
-            //更新顶部选择器文字
-            if (!lawAdd.getCity().equals("")) {
-                headers[0] = lawAdd.getCity();
-                headers[1] = "县区";
-                city = lawAdd.getCity();
-            }
-            if (!lawAdd.getDistrict().equals("")) {
-                lawAdd.setDistrict("");
-            }
-            if (!lawAdd.getSpecialField().equals("")) {
-                lawAdd.setSpecialField("");
-            }
-            realm.copyToRealmOrUpdate(lawAdd);
-            realm.commitTransaction();
-        }
+//        Log.e("Daniel", "isInTransaction："+realm.isInTransaction());
+//        if (!realm.isInTransaction()){
+//            realm.beginTransaction();
+//        }
+//
+//        Log.e("Daniel", "lawAdd："+lawAdd);
+//        if (lawAdd == null) {
+//            lawAdd = new LawAdd();
+//            lawAdd.setId(1);
+////            realm.beginTransaction();
+//            realm.insertOrUpdate(lawAdd);
+////            realm.commitTransaction();
+//        } else {
+////            realm.beginTransaction();
+//            Log.e("Daniel", "lawAdd1 " + lawAdd.getQueryParams());
+//            //更新顶部选择器文字
+//            if (!lawAdd.getCity().equals("")) {
+//                headers[0] = lawAdd.getCity();
+//                headers[1] = "县区";
+//                city = lawAdd.getCity();
+//            }
+//            if (!lawAdd.getDistrict().equals("")) {
+//                lawAdd.setDistrict("");
+//            }
+//            if (!lawAdd.getSpecialField().equals("")) {
+//                lawAdd.setSpecialField("");
+//            }
+//            realm.copyToRealmOrUpdate(lawAdd);
+//        }
+//        Log.e("Daniel", "isInTransaction2："+realm.isInTransaction());
+//        realm.commitTransaction();
+//        Log.e("Daniel", "isInTransaction3："+realm.isInTransaction());
+        Log.e("Daniel", "initTopTxt----end：");
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        Log.e("Daniel", "onStart：");
         //根据所选城市加载区县
         if (lawAdd != null) {
             if (!lawAdd.getCity().equals("")) {
@@ -150,6 +188,8 @@ public class LawHelpFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.e("Daniel", "onResume" );
+        Log.e("Daniel", "dropDownMenu.isWork()："+dropDownMenu.isWork() );
         if (dropDownMenu.isWork()) {
             //判断条件信息是否改变，改变则重新加载列表
             lawAdd = realm.where(LawAdd.class).findFirst();
@@ -159,6 +199,7 @@ public class LawHelpFragment extends BaseFragment {
                     dropDownMenu.setTabTxtByIndex("县区", 2);
                     dropDownMenu.setTabTxtByIndex(city, 0);
                     initDistricts(lawAdd.getCity());
+                    Log.e("Daniel", "lawAdd" + lawAdd.getQueryParams());
                     initListData(true, lawAdd.getQueryParams(), 1);
                 }
             } else if (lawAdd.getCity().equals("")) {
@@ -169,7 +210,7 @@ public class LawHelpFragment extends BaseFragment {
                 initListData(true, lawAdd.getQueryParams(), 1);
             }
         }
-
+        initTopTxt();
     }
 
     @Override
@@ -193,7 +234,7 @@ public class LawHelpFragment extends BaseFragment {
 
     //获取数据
     public void initListData(final boolean isRefresh, String queryParams, int index) {
-        Log.e("gqf", index + "queryParams" + queryParams);
+        Log.e("Daniel", "initListData----start：");
         isOnLoading = true;
         //开始加载动画
             if (datas.size() > 0) {
@@ -209,6 +250,7 @@ public class LawHelpFragment extends BaseFragment {
         if (realm.where(User.class).findFirst() != null) {
             userId = realm.where(User.class).findFirst().getUserId();
         }
+        Log.e("Daniel", index + "queryParams" + queryParams);
         Subscription getBankFinancItem_subscription = NetWork.getLawService()
                 .getLawyerItem(queryParams, userId, index, 10)
                 .subscribeOn(Schedulers.io())
@@ -241,6 +283,7 @@ public class LawHelpFragment extends BaseFragment {
                         for (LawyerItem lawyerItem : lawyerItems) {
                             datas.add(lawyerItem);
                         }
+                        Log.e("Daniel",  "获取律师列表：" + datas);
 
                         //显示数据
                         initList(datas);
@@ -254,20 +297,23 @@ public class LawHelpFragment extends BaseFragment {
                     }
                 });
         compositeSubscription.add(getBankFinancItem_subscription);
+        Log.e("Daniel", "initListData----end：");
     }
 
     LoadMoreWrapper mLoadMoreWrapper;
 
     public void initList(List<LawyerItem> lawyerItems) {
+        Log.e("Daniel", "initList:lawyerItems"+lawyerItems.toString() );
         //数据有无提示判断
         if (lawyerItems.size() == 0) {
             defaultLoadview.lodingIsFailOrSucess(3);
         } else {
             defaultLoadview.lodingIsFailOrSucess(2);
         }
-        Log.e("gqf", "lawyerItems" + lawyerItems.toString());
+
         //初始化列表
         if (lawListAdapter == null) {
+            Log.e("Daniel", "lawListAdapter == null" );
             lawListAdapter = new LawListAdapter(getActivity(), lawyerItems);
             //自定义点击
             lawListAdapter.setOnItemClickListener(new LawListAdapter.MyItemClickListener() {
@@ -308,7 +354,7 @@ public class LawHelpFragment extends BaseFragment {
                 @Override
                 public void onLoadMoreRequested() {
                     //在此开起加载动画，更新数据
-                    Log.e("gqf", "onLoadMoreRequested");
+                    Log.e("Daniel", "onLoadMoreRequested");
                     if (lawListAdapter.getItemCount() % 10 == 0 && lawListAdapter.getItemCount() != 0) {
                         initListData(false, lawAdd.getQueryParams(), nowIndex + 1);
                     }
@@ -317,6 +363,7 @@ public class LawHelpFragment extends BaseFragment {
             contentView.setLayoutManager(new LinearLayoutManager(getActivity()));
             contentView.setAdapter(mLoadMoreWrapper);
         } else {
+            Log.e("Daniel", "lawListAdapter != null" );
             lawListAdapter.update(lawyerItems);
             mLoadMoreWrapper.notifyDataSetChanged();
         }
@@ -325,6 +372,7 @@ public class LawHelpFragment extends BaseFragment {
 
     //获取顶部选择器条件
     public void initSpecialFields() {
+        Log.e("Daniel", "initSpecialFields" );
         isOnLoading = true;
         Subscription getSpecialFields = NetWork.getLawService().getSpecialFields()
                 .subscribeOn(Schedulers.io())
@@ -344,7 +392,7 @@ public class LawHelpFragment extends BaseFragment {
                     public void onNext(List<String> strings) {
                         specialFields = strings;
                         specialFields.add(0, "不限");
-                        Log.e("gqf", "specialFields" + specialFields.toString());
+                        Log.e("Daniel", "specialFields" + specialFields.toString());
                         isOnLoading = false;
                         iniDropMenu();
                     }
@@ -355,14 +403,19 @@ public class LawHelpFragment extends BaseFragment {
 
     //根据所选城市加载县区
     public void initDistricts(String city) {
+        Log.e("Daniel", "initDistricts----start：");
         districts = threeAddTools.getDistrictsByCity(getActivity(), city);
         if (districts.size() > 0) {
             districts.set(0, "全部");
         }
-        Log.i("gqf", city + "districts" + districts.toString());
+        Log.i("Daniel", city + "districts" + districts.toString());
         //districtAdapter.update(districts);
+        //县区下拉列表
+        districtView = new ListView(getActivity());
+        districtView.setDividerHeight(0);
         districtAdapter = new ListDropDownAdapter(getActivity(), districts);
         districtView.setAdapter(districtAdapter);
+        Log.e("Daniel", "initDistricts----end：");
     }
 
     //更新本地存储
@@ -381,17 +434,17 @@ public class LawHelpFragment extends BaseFragment {
 
     //初始化选择器
     public void iniDropMenu() {
-
+        Log.e("Daniel", "iniDropMenu-----start" );
         ListView districtView0 = new ListView(getActivity());
         districtView0.setDividerHeight(0);
         districtAdapter = new ListDropDownAdapter(getActivity(), new ArrayList<String>());
         districtView0.setAdapter(districtAdapter);
 
-        //县区下拉列表
-        districtView = new ListView(getActivity());
-        districtView.setDividerHeight(0);
-        districtAdapter = new ListDropDownAdapter(getActivity(), districts);
-        districtView.setAdapter(districtAdapter);
+//        //县区下拉列表
+//        districtView = new ListView(getActivity());
+//        districtView.setDividerHeight(0);
+//        districtAdapter = new ListDropDownAdapter(getActivity(), districts);
+//        districtView.setAdapter(districtAdapter);
 
         //律师条件下拉列表
         ListView lawView = new ListView(getActivity());
@@ -442,12 +495,12 @@ public class LawHelpFragment extends BaseFragment {
         //new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
         contentView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        initTopTxt();
+//        initTopTxt();
         //初始化数据
-        Log.e("gqf", lawAdd.getQueryParams());
+        Log.e("Daniel", "getQueryParams："+lawAdd.getQueryParams());
         initListData(true, lawAdd.getQueryParams(), nowIndex + 1);
         contentRel.addView(contentView);
-
+        Log.e("Daniel", "addView----end：");
         dropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, contentRel);
         dropDownMenu.setOnClickLinsener(new DropDownMenu.OnClickLinsener() {
             @Override
@@ -475,13 +528,14 @@ public class LawHelpFragment extends BaseFragment {
             @Override
             public void onClose() {
                 //关闭时显示无数据提示
-                Log.i("gqf", "onClose");
+                Log.i("Daniel", "onClose");
                 if (contentView.getChildCount() == 0 || datas.size() == 0) {
                     defaultLoadview.lodingIsFailOrSucess(3);
                 }
             }
         });
         initDistricts(lawAdd.getCity());
+        Log.e("Daniel", "iniDropMenu-----end" );
     }
 
 

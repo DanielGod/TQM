@@ -64,10 +64,10 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
     //验证并注册或登录
     public void loginOrRegister(String phone,String code,String channel){
         // TODO: 2017/7/4 验证码
-        if(oldCode.equals("")||!oldCode.equals(code)){
-            //验证码错误
-            iLoginAndRegistered.loginOrRegisteredResult(1,false,"验证码不正确");
-        }else{
+//        if(oldCode.equals("")||!oldCode.equals(code)){
+//            //验证码错误
+//            iLoginAndRegistered.loginOrRegisteredResult(1,false,"验证码不正确");
+//        }else{
             //网络验证
             Subscription subscription = NetWork.getUserService().register(phone,channel)
                     .subscribeOn(Schedulers.io())
@@ -109,7 +109,7 @@ public class ILoginRegisterPresenterImpl extends BasePresenterImpl implements IL
                         }
                     });
             compositeSubscription.add(subscription);
-        }
+//        }
     }
 
 

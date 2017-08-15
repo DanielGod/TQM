@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.FrameLayout;
 
+import com.soundcloud.android.crop.Crop;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.nereo.multi_image_selector.MultiImageSelector;
@@ -53,6 +55,7 @@ public class CardCollectionActivity extends BaseActivity implements CardUploadFr
                             .showCamera(true) // show camera or not. true by default
                             // max select image size, 9 by default. used width #.multi()
                             .single();// single mode
+                           // original select data set, used width #.multi()
 
                     multiImageSelector.start(CardCollectionActivity.this, Constan.REQUEST_cardcollaction_IMAGE);
                 }else {
@@ -118,6 +121,12 @@ public class CardCollectionActivity extends BaseActivity implements CardUploadFr
             if (resultCode == RESULT_OK) {
                 setClick(1);
                 resultIntent = data;
+            }
+        }
+        if (requestCode == Crop.REQUEST_CROP) {//
+            Log.i("gqf", "handleCrop");
+            if(cardUploadFragment!=null){
+                cardUploadFragment.setLogo(resultCode, data);
             }
         }
     }

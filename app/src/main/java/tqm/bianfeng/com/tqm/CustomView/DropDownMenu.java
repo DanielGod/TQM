@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -136,7 +137,8 @@ public class DropDownMenu extends LinearLayout {
      * @param popupViews
      * @param contentView
      */
-    public void setDropDownMenu(@NonNull List<String> tabTexts, @NonNull List<View> popupViews, @NonNull View contentView) {
+    public void setDropDownMenu(List<String> tabTexts,  List<View> popupViews,  View contentView) {
+        Log.e("Daniel", "setDropDownMenu：");
         if (tabTexts.size() != popupViews.size()) {
             throw new IllegalArgumentException("params not match, tabTexts.size() should be equal popupViews.size()");
         }
@@ -172,6 +174,7 @@ public class DropDownMenu extends LinearLayout {
             popupMenuViews.addView(popupViews.get(i), i);
         }
         isWork=true;
+        Log.e("Daniel", "setDropDownMenu：isWork"+isWork);
     }
 
     private void addTab(@NonNull List<String> tabTexts, int i) {

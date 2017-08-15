@@ -145,8 +145,12 @@ public class CoordinatorTabLayout extends CoordinatorLayout {
 
                     }
                 }
-                if(myLinsener!=null) {
-                    myLinsener.openOrClose(isOpen,mTabLayout.getSelectedTabPosition());
+                try {
+                    if(myLinsener!=null) {
+                        myLinsener.openOrClose(isOpen,mTabLayout.getSelectedTabPosition());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 setTabBgColor(isOpen);
             }

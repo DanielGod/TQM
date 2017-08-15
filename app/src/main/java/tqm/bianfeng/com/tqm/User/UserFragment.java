@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.meituan.android.walle.WalleChannelReader;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -481,9 +480,8 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             Log.e("Daniel", "initView用户信息:" + mUser.toString());
             //开起信息同步
             // TODO: 2017/8/3 渠道号
-
-//            iUserWorkPresenter.getUserMsg(mUser.getUserPhone(),"afwl001");
-            iUserWorkPresenter.getUserMsg(mUser.getUserPhone(), WalleChannelReader.getChannel(getActivity()));
+            iUserWorkPresenter.getUserMsg(mUser.getUserPhone(),"afwl001");
+//            iUserWorkPresenter.getUserMsg(mUser.getUserPhone(), WalleChannelReader.getChannel(getActivity()));
             //刷新数量标识
             iUserWorkPresenter.getNum(mUser.getUserId());
             //显示账户信息
@@ -589,9 +587,9 @@ public class UserFragment extends BaseFragment implements ILoginAndRegistered {
             @Override
             public void onOk(String ediTxt, String code) {
                 //验证并注册或登录
-//                iLoginRegisterPresenter.loginOrRegister(ediTxt, code, "afwl001");
+                iLoginRegisterPresenter.loginOrRegister(ediTxt, code, "afwl001");
                 // TODO: 2017/8/3 渠道号
-                iLoginRegisterPresenter.loginOrRegister(ediTxt, code, WalleChannelReader.getChannel(getActivity()));
+//                iLoginRegisterPresenter.loginOrRegister(ediTxt, code, WalleChannelReader.getChannel(getActivity()));
             }
 
             @Override

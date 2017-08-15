@@ -290,7 +290,6 @@ public class CompanyInfoActivity extends BaseActivity {
                     setSystemBarColor(R.color.gary_dark);
                 }
             }
-
             @Override
             public void onBack() {
                 onBackPressed();

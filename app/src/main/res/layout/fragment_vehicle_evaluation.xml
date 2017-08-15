@@ -76,9 +76,10 @@
                     android:layout_height="match_parent"
                     android:hint="选择省"
                     style="@style/apply_edi"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:digits=""
                     android:focusableInTouchMode="false"
+                    android:drawableRight="@drawable/drop_down_unselected_icon"
                     />
                 <View
                     android:layout_width="0.5dp"
